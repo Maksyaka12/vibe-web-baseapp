@@ -11,6 +11,7 @@ import { publicClient } from './config/rpc';
 import Checker from './Checker';
 import { BaseAppView } from './components/BaseAppView';
 import NftClubPage from './pages/NftClubPage';
+import ContractsPage from './pages/ContractsPage';
 import BaseAppRewardsView from './components/BaseAppRewardsView';
 import './index.css';
 
@@ -89,6 +90,7 @@ function Nav() {
     { id: 'tokenomics', label: 'Tokenomics' },
     { id: 'hub', label: 'Rewards Hub' },
     { id: 'claim', label: 'Claim Portal' },
+    { id: 'contracts', label: 'Contracts & Adresses' },
     // { id: 'roadmap', label: 'Roadmap' },
     { id: 'chart', label: 'Chart' },
     { id: 'trade', label: 'Trade' }
@@ -3475,6 +3477,10 @@ function DomainRouter() {
       <Route path="/trade" element={<StandaloneLayout><Swap /></StandaloneLayout>} />
       <Route path="/claim" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker /></StandaloneLayout>} />
       <Route path="/profile" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker isProfileMode={true} /></StandaloneLayout>} />
+      <Route path="/contracts" element={<StandaloneLayout><ContractsPage /></StandaloneLayout>} />
+      <Route path="/adresses" element={<Navigate to="/contracts" replace />} />
+      <Route path="/addresses" element={<Navigate to="/contracts" replace />} />
+      <Route path="/docs" element={<Navigate to="/contracts" replace />} />
       <Route path="/checker" element={<Navigate to="/claim" replace />} />
       <Route path="/portal" element={<Navigate to="/claim" replace />} />
     </Routes>
