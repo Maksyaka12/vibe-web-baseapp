@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { Copy, Check, ArrowUpRight } from 'lucide-react';
 
 const CONTRACT_GROUPS = [
@@ -129,7 +129,7 @@ export default function ContractsPage() {
         <div className="sec-head" style={{ marginBottom: '36px' }}>
           <h2>Contracts & <span className="bl">Adresses</span>.</h2>
           <p className="sec-sub">
-            All verified onchain smart contracts and protocol addresses deployed on Base mainnet.
+            Transparency Zone. All verified smart contracts and addresses related to the $VIBE Economy.
           </p>
         </div>
 
