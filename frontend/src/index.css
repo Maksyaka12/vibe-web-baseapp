@@ -2001,7 +2001,7 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 }
 
 /* ==========================================================================
-   CONTRACTS & ADRESSES DOCS PAGE (FULL WIDTH)
+   CONTRACTS & ADRESSES DOCS PAGE
    ========================================================================== */
 
 .contracts-page-section {
@@ -2014,53 +2014,31 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   margin: 0 auto;
 }
 
-.docs-groups-full {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  width: 100%;
-}
-
-.docs-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.docs-group-label {
-  font-size: 0.74rem;
-  font-weight: 800;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
 .docs-cards-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .doc-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .doc-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border-color: var(--borderf);
 }
 
 .doc-card-header {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .doc-card-title {
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   font-weight: 800;
   color: var(--ink);
   margin: 0;
@@ -2072,17 +2050,17 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 8px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
 }
 
 .doc-addr-code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  font-size: 0.83rem;
+  font-size: 0.84rem;
   font-weight: 600;
-  color: #334155;
+  color: var(--ink);
   word-break: break-all;
   min-width: 0;
 }
@@ -2098,21 +2076,21 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 5px 10px;
   font-size: 0.78rem;
   font-weight: 800;
-  color: #475569;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .doc-copy-btn:hover {
-  background: #f1f5f9;
-  color: var(--ink);
-  border-color: #94a3b8;
+  background: #ffffff;
+  color: var(--blue);
+  border-color: var(--borderf);
 }
 
 .doc-copy-btn.copied {
@@ -2125,8 +2103,8 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(0, 82, 255, 0.06);
-  border: 1px solid rgba(0, 82, 255, 0.2);
+  background: rgba(0, 82, 255, 0.08);
+  border: 1px solid rgba(0, 82, 255, 0.25);
   border-radius: 6px;
   padding: 5px 10px;
   font-size: 0.78rem;
@@ -2144,6 +2122,9 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 @media (max-width: 768px) {
   .contracts-page-section {
     padding: 100px 0 60px 0;
+  }
+  .doc-card {
+    padding: 16px;
   }
   .doc-addr-row {
     flex-direction: column;
