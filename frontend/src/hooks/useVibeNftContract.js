@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { createPublicClient, http, fallback, parseEther, formatEther, encodeFunctionData, parseAbi } from 'viem';
-import { base } from 'viem/chains';
+import { parseEther, formatEther, encodeFunctionData, parseAbi } from 'viem';
+import { publicClient } from '../config/rpc';
 
 export const NFT_CONTRACT_ADDRESS = '0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886';
 export const OPENSEA_COLLECTION_URL = 'https://opensea.io/collection/vibeclubnft';
@@ -11,18 +11,6 @@ import { BUILDER_CODE, DATA_SUFFIX, BUILDER_CODE_HEX, appendBuilderSuffix } from
 export { BUILDER_CODE, DATA_SUFFIX, BUILDER_CODE_HEX };
 
 const withBuilderCode = appendBuilderSuffix;
-
-const RPC_TRANSPORTS = fallback([
-  http('https://mainnet.base.org'),
-  http('https://base.llamarpc.com'),
-  http('https://1rpc.io/base'),
-  http('https://base-mainnet.public.blastapi.io')
-], { rank: false });
-
-const publicClient = createPublicClient({
-  chain: base,
-  transport: RPC_TRANSPORTS
-});
 
 const NFT_ABI = parseAbi([
   'function name() view returns (string)',

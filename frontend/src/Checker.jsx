@@ -1,21 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { createPublicClient, http, fallback, formatUnits, parseAbi, encodeFunctionData, parseUnits, parseAbiItem } from 'viem';
-import { base } from 'viem/chains';
-
-const RPC_TRANSPORTS = fallback([
-  http('https://developer-access-mainnet.base.org'),
-  http('https://base-rpc.publicnode.com'),
-  http('https://mainnet.base.org'),
-  http('https://1rpc.io/base'),
-  http('https://base.llamarpc.com'),
-  http('https://base-mainnet.public.blastapi.io')
-], { rank: false });
-
-const getPublicClient = () => createPublicClient({
-  chain: base,
-  transport: RPC_TRANSPORTS
-});
+import { formatUnits, parseAbi, encodeFunctionData, parseUnits, parseAbiItem } from 'viem';
+import { getPublicClient, publicClient } from './config/rpc';
 import {
   CheckCircle2,
   Loader2,

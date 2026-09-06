@@ -1,18 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { createPublicClient, http, fallback, formatUnits } from 'viem';
-import { base } from 'viem/chains';
-
-const RPC_TRANSPORTS = fallback([
-  http('https://mainnet.base.org'),
-  http('https://base.llamarpc.com'),
-  http('https://1rpc.io/base'),
-  http('https://base-mainnet.public.blastapi.io')
-], { rank: false });
-
-const publicClient = createPublicClient({
-  chain: base,
-  transport: RPC_TRANSPORTS
-});
+import { formatUnits } from 'viem';
+import { publicClient } from '../config/rpc';
 
 const VIBE_TOKEN_ADDRESS = '0xb200000000000000000000df24ecb8bf51100a01';
 const ERC20_ABI = [

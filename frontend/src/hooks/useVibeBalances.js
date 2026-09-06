@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { createPublicClient, http, formatUnits, parseAbi } from 'viem';
-import { base } from 'viem/chains';
+import { formatUnits, parseAbi } from 'viem';
+import { publicClient } from '../config/rpc';
 
 const CA = '0xb200000000000000000000df24ecb8bf51100a01';
 const NFT_CA = '0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886';
@@ -85,12 +85,7 @@ export function useVibeBalances(address) {
 
     try {
       setLoading(true);
-      const client = createPublicClient({
-        chain: base,
-        transport: http('https://mainnet.base.org')
-      });
-
-      const results = await client.multicall({
+      const results = await publicClient.multicall({
         contracts: [
           {
             address: CA,

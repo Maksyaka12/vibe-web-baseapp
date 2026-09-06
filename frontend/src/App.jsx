@@ -7,6 +7,7 @@ import { privyWagmiConfig } from './config/privyWagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createPublicClient, http, formatUnits, parseAbiItem, parseAbi } from 'viem';
 import { base } from 'viem/chains';
+import { publicClient } from './config/rpc';
 import Checker from './Checker';
 import { BaseAppView } from './components/BaseAppView';
 import NftClubPage from './pages/NftClubPage';
@@ -284,48 +285,78 @@ function About() {
 }
 
 /* TOKENOMICS */
+const REVENUE_STATS_CACHE_KEY = 'vibe_revenue_stats_cache_v2';
+
+const formatRevenueNumber = (numStr) => {
+  const num = parseFloat(numStr);
+  if (isNaN(num)) return '0';
+  if (num >= 1000000) return (num / 1000000).toFixed(2).replace(/\.00$/, '') + 'M';
+  if (num >= 1000) return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  return num.toLocaleString();
+};
+
+const getInitialRevenueStats = () => {
+  const fallbackStats = {
+    totalBurned: '28.05M',
+    totalBurnedNum: 28052274,
+    communityRewards: '12.25M',
+    totalBuybacks: formatRevenueNumber(CONST_TOTAL_BUYBACK),
+    distributedRewards: formatRevenueNumber(CONST_DISTRIBUTED),
+    loading: false
+  };
+
+  if (typeof window === 'undefined') return fallbackStats;
+  try {
+    const cached = localStorage.getItem(REVENUE_STATS_CACHE_KEY);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (parsed && parsed.totalBurned && parsed.totalBuybacks && parsed.totalBurned !== '...') {
+        return {
+          ...fallbackStats,
+          ...parsed,
+          loading: false
+        };
+      }
+    }
+  } catch (e) {}
+  return fallbackStats;
+};
+
 function useRevenueStats() {
-  const [stats, setStats] = useState({
-    totalBuybacks: '...',
-    totalBurned: '...',
-    totalBurnedNum: 0,
-    communityRewards: '...',
-    distributedRewards: '...',
-    loading: true
-  });
+  const [stats, setStats] = useState(getInitialRevenueStats);
 
   useEffect(() => {
     let mounted = true;
     async function fetchStats() {
       try {
-        const client = createPublicClient({ chain: base, transport: http() });
         const abiBalance = parseAbiItem('function balanceOf(address account) view returns (uint256)');
         
         const [burnedRaw, rewardsRaw] = await Promise.all([
-          client.readContract({ address: CA, abi: [abiBalance], functionName: 'balanceOf', args: [BURN_WALLET] }),
-          client.readContract({ address: CA, abi: [abiBalance], functionName: 'balanceOf', args: [BUYBACK_WALLET] })
+          publicClient.readContract({ address: CA, abi: [abiBalance], functionName: 'balanceOf', args: [BURN_WALLET] }),
+          publicClient.readContract({ address: CA, abi: [abiBalance], functionName: 'balanceOf', args: [BUYBACK_WALLET] })
         ]);
 
-        const formatNumber = (numStr) => {
-          const num = parseFloat(numStr);
-          if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
-          if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-          return num.toLocaleString();
+        const burnedNum = parseFloat(formatUnits(burnedRaw, 18));
+        const newStats = {
+          totalBurned: formatRevenueNumber(burnedNum),
+          totalBurnedNum: burnedNum,
+          communityRewards: formatRevenueNumber(formatUnits(rewardsRaw, 18)),
+          totalBuybacks: formatRevenueNumber(CONST_TOTAL_BUYBACK),
+          distributedRewards: formatRevenueNumber(CONST_DISTRIBUTED),
+          loading: false
         };
 
         if (mounted) {
-          setStats({
-            totalBurned: formatNumber(formatUnits(burnedRaw, 18)),
-            totalBurnedNum: parseFloat(formatUnits(burnedRaw, 18)),
-            communityRewards: formatNumber(formatUnits(rewardsRaw, 18)),
-            totalBuybacks: formatNumber(CONST_TOTAL_BUYBACK),
-            distributedRewards: formatNumber(CONST_DISTRIBUTED),
-            loading: false
-          });
+          setStats(newStats);
+          try {
+            localStorage.setItem(REVENUE_STATS_CACHE_KEY, JSON.stringify(newStats));
+          } catch (e) {}
         }
       } catch (err) {
-        console.error("Error fetching revenue stats", err);
-        if (mounted) setStats(s => ({ ...s, loading: false }));
+        console.warn("Notice: Live stats fallback used", err);
+        if (mounted) {
+          setStats(prev => ({ ...prev, loading: false }));
+        }
       }
     }
     fetchStats();

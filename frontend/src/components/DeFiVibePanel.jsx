@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
-import { parseUnits, formatUnits, createPublicClient, http, encodeFunctionData } from 'viem';
-import { base } from 'viem/chains';
+import { parseUnits, formatUnits, encodeFunctionData } from 'viem';
+import { publicClient } from '../config/rpc';
 import { useUserBalances } from '../hooks/useUserBalances';
 import { BUILDER_CODE, DATA_SUFFIX, BUILDER_CODE_HEX, appendBuilderSuffix } from '../config/builderCode';
 
@@ -25,8 +25,6 @@ const ERC20_ABI = [
     type: 'function'
   }
 ];
-
-const publicClient = createPublicClient({ chain: base, transport: http() });
 
 export default function DeFiVibePanel({ player }) {
   const { authenticated, user, sendTransaction, login } = usePrivy();
