@@ -2009,6 +2009,11 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   min-height: 85vh;
 }
 
+.contracts-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .docs-groups-full {
   display: flex;
   flex-direction: column;

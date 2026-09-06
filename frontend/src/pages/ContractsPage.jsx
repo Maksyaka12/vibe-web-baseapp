@@ -123,7 +123,7 @@ function DocContractCard({ item }) {
 export default function ContractsPage() {
   return (
     <section className="contracts-page-section alt">
-      <div className="wrap">
+      <div className="wrap contracts-wrap">
         
         {/* Section Header styled consistently with other sections */}
         <div className="sec-head" style={{ marginBottom: '36px' }}>
