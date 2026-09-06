@@ -2001,132 +2001,19 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 }
 
 /* ==========================================================================
-   CONTRACTS & ADRESSES DOCS PAGE
+   CONTRACTS & ADRESSES DOCS PAGE (FULL WIDTH)
    ========================================================================== */
 
-.docs-page-container {
-  padding: 120px 0 80px 0;
+.contracts-page-section {
+  padding: 130px 0 100px 0;
   min-height: 85vh;
-  background: #ffffff;
 }
 
-.docs-layout {
-  display: flex;
-  gap: 56px;
-  align-items: flex-start;
-}
-
-.docs-sidebar {
-  width: 220px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 100px;
-  height: fit-content;
-}
-
-.docs-sidebar-section {
-  margin-bottom: 24px;
-}
-
-.docs-sidebar-title {
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: #94a3b8;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.docs-sidebar-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.docs-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #64748b;
-  padding: 6px 12px;
-  border-radius: 6px;
-  text-decoration: none;
-  transition: all 0.15s ease;
-}
-
-.docs-link.active {
-  color: var(--blue);
-  background: rgba(0, 82, 255, 0.06);
-  font-weight: 700;
-  border-left: 2.5px solid var(--blue);
-  border-radius: 0 6px 6px 0;
-}
-
-.docs-link:hover:not(.active) {
-  color: var(--ink);
-  background: #f8fafc;
-}
-
-.docs-sidebar-bottom {
-  padding-top: 14px;
-  border-top: 1px solid #f1f5f9;
-}
-
-.docs-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #94a3b8;
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.docs-back-btn:hover {
-  color: var(--blue);
-}
-
-.docs-main-content {
-  flex: 1;
-  min-width: 0;
-  max-width: 820px;
-}
-
-.docs-breadcrumb {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 6px;
-  letter-spacing: -0.01em;
-}
-
-.docs-title {
-  font-size: 2.25rem;
-  font-weight: 900;
-  color: #0f172a;
-  margin: 0 0 6px 0;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-}
-
-.docs-subtitle {
-  font-size: 0.95rem;
-  color: #64748b;
-  margin: 0 0 32px 0;
-  line-height: 1.5;
-}
-
-.docs-groups {
+.docs-groups-full {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  width: 100%;
 }
 
 .docs-group {
@@ -2137,7 +2024,7 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 .docs-group-label {
   font-size: 0.74rem;
   font-weight: 800;
-  color: #64748b;
+  color: var(--muted);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   margin-bottom: 10px;
@@ -2153,7 +2040,7 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 16px 20px;
+  padding: 18px 22px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -2168,16 +2055,16 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 }
 
 .doc-card-title {
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--ink);
   margin: 0 0 3px 0;
   letter-spacing: -0.01em;
 }
 
 .doc-card-desc {
-  font-size: 0.84rem;
-  color: #64748b;
+  font-size: 0.86rem;
+  color: var(--muted);
   margin: 0;
   line-height: 1.45;
 }
@@ -2186,41 +2073,27 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   background: #f8fafc;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  padding: 7px 12px;
+  padding: 8px 12px;
 }
 
-.doc-addr-text {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+.doc-addr-code {
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 0.83rem;
   font-weight: 600;
   color: #334155;
-  text-decoration: none;
   word-break: break-all;
-  transition: color 0.15s ease;
   min-width: 0;
 }
 
-.doc-addr-text:hover {
-  color: var(--blue);
-  text-decoration: underline;
-}
-
-.doc-addr-arrow {
-  color: #94a3b8;
+.doc-addr-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   flex-shrink: 0;
-  transition: transform 0.15s ease, color 0.15s ease;
-}
-
-.doc-addr-text:hover .doc-addr-arrow {
-  color: var(--blue);
-  transform: translate(1px, -1px);
 }
 
 .doc-copy-btn {
@@ -2230,12 +2103,11 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 0.76rem;
-  font-weight: 700;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
   color: #475569;
   cursor: pointer;
-  flex-shrink: 0;
   transition: all 0.15s ease;
 }
 
@@ -2251,21 +2123,37 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   color: #10b981;
 }
 
-@media (max-width: 900px) {
-  .docs-layout {
+.doc-scan-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 82, 255, 0.06);
+  border: 1px solid rgba(0, 82, 255, 0.2);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--blue);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.doc-scan-btn:hover {
+  background: var(--blue);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .contracts-page-section {
+    padding: 100px 0 60px 0;
+  }
+  .doc-addr-row {
     flex-direction: column;
-    gap: 32px;
+    align-items: stretch;
+    gap: 8px;
   }
-  .docs-sidebar {
-    width: 100%;
-    position: static;
-    display: none;
-  }
-  .docs-page-container {
-    padding: 95px 0 60px 0;
-  }
-  .docs-title {
-    font-size: 1.85rem;
+  .doc-addr-actions {
+    justify-content: flex-end;
   }
 }
 

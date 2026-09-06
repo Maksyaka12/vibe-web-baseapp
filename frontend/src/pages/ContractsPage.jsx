@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Copy, Check, ArrowUpRight, ArrowLeft, ShieldCheck, FileCode, Flame, Coins, Crown, ExternalLink, Database } from 'lucide-react';
+﻿import React, { useState } from 'react';
+import { Copy, Check, ArrowUpRight } from 'lucide-react';
 
 const CONTRACT_GROUPS = [
   {
@@ -75,9 +74,7 @@ const CONTRACT_GROUPS = [
 function DocContractCard({ item }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleCopy = () => {
     if (!item.address) return;
     navigator.clipboard.writeText(item.address).catch(() => {});
     setCopied(true);
@@ -94,25 +91,30 @@ function DocContractCard({ item }) {
       </div>
 
       <div className="doc-addr-row">
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="doc-addr-text"
-          title="Open in BaseScan"
-        >
-          <span>{item.address}</span>
-          <ArrowUpRight size={14} className="doc-addr-arrow" />
-        </a>
+        <code className="doc-addr-code">{item.address}</code>
 
-        <button
-          type="button"
-          onClick={handleCopy}
-          className={`doc-copy-btn ${copied ? 'copied' : ''}`}
-        >
-          {copied ? <Check size={14} strokeWidth={3} /> : <Copy size={14} />}
-          <span>{copied ? 'Copied' : 'Copy'}</span>
-        </button>
+        <div className="doc-addr-actions">
+          <button
+            type="button"
+            onClick={handleCopy}
+            className={`doc-copy-btn ${copied ? 'copied' : ''}`}
+            title="Copy Address"
+          >
+            {copied ? <Check size={14} strokeWidth={3} /> : <Copy size={14} />}
+            <span>{copied ? 'Copied' : 'Copy'}</span>
+          </button>
+          
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="doc-scan-btn"
+            title="View on BaseScan"
+          >
+            <span>BaseScan</span>
+            <ArrowUpRight size={13} strokeWidth={2.5} />
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -120,91 +122,32 @@ function DocContractCard({ item }) {
 
 export default function ContractsPage() {
   return (
-    <div className="docs-page-container">
-      <div className="docs-layout wrap">
+    <section className="contracts-page-section alt">
+      <div className="wrap">
         
-        {/* Left Docs Sidebar */}
-        <aside className="docs-sidebar">
-          <div className="docs-sidebar-section">
-            <span className="docs-sidebar-title">GETTING STARTED</span>
-            <ul className="docs-sidebar-links">
-              <li>
-                <Link to="/contracts" className="docs-link active">
-                  Contracts & Adresses
-                </Link>
-              </li>
-              <li>
-                <Link to="/tokenomics" className="docs-link">
-                  Tokenomics
-                </Link>
-              </li>
-              <li>
-                <Link to="/hub" className="docs-link">
-                  Rewards Hub
-                </Link>
-              </li>
-              <li>
-                <Link to="/claim" className="docs-link">
-                  Claim Portal
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div className="docs-sidebar-section">
-            <span className="docs-sidebar-title">RESOURCES</span>
-            <ul className="docs-sidebar-links">
-              <li>
-                <a href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01" target="_blank" rel="noopener noreferrer" className="docs-link">
-                  BaseScan Explorer <ArrowUpRight size={12} />
-                </a>
-              </li>
-              <li>
-                <a href="https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5" target="_blank" rel="noopener noreferrer" className="docs-link">
-                  Dexscreener <ArrowUpRight size={12} />
-                </a>
-              </li>
-              <li>
-                <a href="https://opensea.io/collection/vibeclubnft" target="_blank" rel="noopener noreferrer" className="docs-link">
-                  OpenSea Collection <ArrowUpRight size={12} />
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div className="docs-sidebar-bottom">
-            <Link to="/" className="docs-back-btn">
-              <ArrowLeft size={14} /> Back to Home
-            </Link>
-          </div>
-        </aside>
-
-        {/* Main Content Area */}
-        <main className="docs-main-content">
-          
-          <div className="docs-breadcrumb">Getting Started</div>
-          
-          <h1 className="docs-title">Contracts & Adresses</h1>
-          <p className="docs-subtitle">
+        {/* Section Header styled consistently with other sections */}
+        <div className="sec-head" style={{ marginBottom: '36px' }}>
+          <h2>Contracts & <span className="bl">Adresses</span>.</h2>
+          <p className="sec-sub">
             All verified onchain smart contracts and protocol addresses deployed on Base mainnet.
           </p>
+        </div>
 
-          <div className="docs-groups">
-            {CONTRACT_GROUPS.map((group, idx) => (
-              <div key={idx} className="docs-group">
-                <div className="docs-group-label">{group.groupTitle}</div>
-                <div className="docs-cards-list">
-                  {group.items.map((item) => (
-                    <DocContractCard key={item.id} item={item} />
-                  ))}
-                </div>
+        {/* Full width groups */}
+        <div className="docs-groups-full">
+          {CONTRACT_GROUPS.map((group, idx) => (
+            <div key={idx} className="docs-group">
+              <div className="docs-group-label">{group.groupTitle}</div>
+              <div className="docs-cards-list">
+                {group.items.map((item) => (
+                  <DocContractCard key={item.id} item={item} />
+                ))}
               </div>
-            ))}
-          </div>
-
-        </main>
+            </div>
+          ))}
+        </div>
 
       </div>
-    </div>
+    </section>
   );
 }
