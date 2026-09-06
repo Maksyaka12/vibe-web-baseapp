@@ -2045,7 +2045,7 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 18px 22px;
+  padding: 16px 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -2056,22 +2056,15 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 }
 
 .doc-card-header {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .doc-card-title {
-  font-size: 1.02rem;
+  font-size: 0.98rem;
   font-weight: 800;
   color: var(--ink);
-  margin: 0 0 3px 0;
-  letter-spacing: -0.01em;
-}
-
-.doc-card-desc {
-  font-size: 0.86rem;
-  color: var(--muted);
   margin: 0;
-  line-height: 1.45;
+  letter-spacing: -0.01em;
 }
 
 .doc-addr-row {
