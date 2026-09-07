@@ -238,7 +238,7 @@ export function BaseAppClaimView(props) {
     }
   };
 
-  const getShareTwitterUrl = (item) => {
+  const handleShareOnX = (item) => {
     const isRoyalty = item?.type === 'vibeclub' || item?.id?.includes('vibeclub') || item?.title?.toLowerCase().includes('royalty');
     const ep = item?.roundId || (item?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
     const amt = item?.amount ? Number(item.amount).toLocaleString('en-US') : (ep === 2 ? '17,117' : '22,935');
@@ -247,7 +247,30 @@ export function BaseAppClaimView(props) {
       ? `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${amt} $VIBE claimed in ${roundTitle} on @VIBEDOG_BASE! Holding Vibe Club NFT unlocks passive $VIBE payouts every 10 days.\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`
       : `I just claimed +${amt} $VIBE Holder Rewards on @VIBEDOG_BASE! 💎🐶 100M tokens distributed to 5M+ holders. Check eligibility:`;
     const url = 'https://vibehome.dog/claim';
-    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    const fullText = `${text}\n${url}`;
+
+    const isMobile = typeof navigator !== 'undefined' && (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      ('ontouchstart' in window && window.innerWidth <= 768)
+    );
+
+    const appUrl = `twitter://post?message=${encodeURIComponent(fullText)}`;
+    const webUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+    if (isMobile) {
+      window.location.href = appUrl;
+      const timer = setTimeout(() => {
+        window.open(webUrl, '_blank', 'noopener,noreferrer');
+      }, 1500);
+
+      const handleBlur = () => {
+        clearTimeout(timer);
+        window.removeEventListener('blur', handleBlur);
+      };
+      window.addEventListener('blur', handleBlur);
+    } else {
+      window.open(webUrl, '_blank', 'noopener,noreferrer');
+    }
   };
 
   // Calculate user total claimed & expired
@@ -1233,10 +1256,8 @@ export function BaseAppClaimView(props) {
                 <div style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
                   STEP 2
                 </div>
-                <a
-                  href={getShareTwitterUrl(shareModalItem)}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => handleShareOnX(shareModalItem)}
                   style={{
                     width: '100%',
                     boxSizing: 'border-box',
@@ -1248,7 +1269,7 @@ export function BaseAppClaimView(props) {
                     fontFamily: "'Press Start 2P', monospace",
                     fontSize: '6.5px',
                     fontWeight: 900,
-                    textDecoration: 'none',
+                    cursor: 'pointer',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -1258,7 +1279,7 @@ export function BaseAppClaimView(props) {
                 >
                   <Share2 size={14} />
                   <span>SHARE ON 𝕏</span>
-                </a>
+                </button>
               </div>
             </div>
           </div>

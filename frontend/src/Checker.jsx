@@ -3239,8 +3239,26 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     const currentTitle = royaltyModalData.roundName || activeRoyaltyRound.name;
                     const currentAmt = (royaltyModalData.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US');
                     const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${currentAmt} $VIBE claimed in Vibe Club ${currentTitle} on Base!\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`;
+                    const isMobile = typeof navigator !== 'undefined' && (
+                      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                      ('ontouchstart' in window && window.innerWidth <= 768)
+                    );
+                    const appUrl = `twitter://post?message=${encodeURIComponent(tweetText)}`;
                     const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-                    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+
+                    if (isMobile) {
+                      window.location.href = appUrl;
+                      const timer = setTimeout(() => {
+                        window.open(shareUrl, '_blank', 'noopener,noreferrer');
+                      }, 1500);
+                      const handleBlur = () => {
+                        clearTimeout(timer);
+                        window.removeEventListener('blur', handleBlur);
+                      };
+                      window.addEventListener('blur', handleBlur);
+                    } else {
+                      window.open(shareUrl, '_blank', 'noopener,noreferrer');
+                    }
                   }}
                   className="royalty-modal-btn"
                   style={{
