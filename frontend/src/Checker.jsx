@@ -2132,7 +2132,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minHeight: '145px',
+                                height: '175px',
                                 boxSizing: 'border-box',
                                 gap: '6px'
                               }}
@@ -2158,7 +2158,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minHeight: '145px',
+                                height: '175px',
                                 boxSizing: 'border-box',
                                 gap: '6px'
                               }}
@@ -2353,7 +2353,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minHeight: '145px',
+                                height: '175px',
                                 boxSizing: 'border-box',
                                 gap: '6px'
                               }}
@@ -2379,7 +2379,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 flexDirection: 'column',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minHeight: '145px',
+                                height: '175px',
                                 boxSizing: 'border-box',
                                 gap: '6px'
                               }}
