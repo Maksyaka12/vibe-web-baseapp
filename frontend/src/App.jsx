@@ -1257,6 +1257,17 @@ export function getStakingEpochStatus(ep, currentTime = new Date()) {
   return 'upcoming';
 }
 
+export function getRewardEpochStatus(ep, currentTime = new Date()) {
+  const current = currentTime instanceof Date ? currentTime : new Date(currentTime);
+  if (ep.status === 'ended' || ep.status === 'completed' || (ep.nextSnapshotDate && current >= ep.nextSnapshotDate)) {
+    return 'ended';
+  }
+  if (ep.dateObj && current >= ep.dateObj) {
+    return 'active';
+  }
+  return 'upcoming';
+}
+
 const STAKING_EPOCHS = [
   {
     epoch: 'Epoch 1',
@@ -1574,35 +1585,35 @@ function Rewards({ isBaseAppMode = false } = {}) {
   };
 
   const filteredHolderUnlocks = HOLDER_UNLOCKS.filter(u => {
-    const isUnlocked = now >= u.dateObj;
+    const status = getRewardEpochStatus(u, now);
     if (holderFilter === 'all') return true;
-    if (holderFilter === 'active') return isUnlocked && u.status !== 'ended';
-    if (holderFilter === 'upcoming' || holderFilter === 'locked') return !isUnlocked;
-    if (holderFilter === 'ended' || holderFilter === 'completed') return u.status === 'ended' || u.status === 'completed';
+    if (holderFilter === 'active') return status === 'active';
+    if (holderFilter === 'upcoming' || holderFilter === 'locked') return status === 'upcoming';
+    if (holderFilter === 'ended' || holderFilter === 'completed') return status === 'ended';
     return true;
   });
 
   const holderCounts = {
     all: HOLDER_UNLOCKS.length,
-    active: HOLDER_UNLOCKS.filter(u => now >= u.dateObj && u.status !== 'ended').length,
-    upcoming: HOLDER_UNLOCKS.filter(u => now < u.dateObj).length,
-    ended: HOLDER_UNLOCKS.filter(u => u.status === 'ended' || u.status === 'completed').length
+    active: HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'active').length,
+    upcoming: HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'upcoming').length,
+    ended: HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'ended').length
   };
 
   const filteredVibeClubEpochs = VIBECLUB_EPOCHS.filter(u => {
-    const isUnlocked = now >= u.dateObj;
+    const status = getRewardEpochStatus(u, now);
     if (vibeClubFilter === 'all') return true;
-    if (vibeClubFilter === 'active') return isUnlocked && u.status !== 'ended';
-    if (vibeClubFilter === 'upcoming' || vibeClubFilter === 'locked') return !isUnlocked;
-    if (vibeClubFilter === 'ended' || vibeClubFilter === 'completed') return u.status === 'ended' || u.status === 'completed';
+    if (vibeClubFilter === 'active') return status === 'active';
+    if (vibeClubFilter === 'upcoming' || vibeClubFilter === 'locked') return status === 'upcoming';
+    if (vibeClubFilter === 'ended' || vibeClubFilter === 'completed') return status === 'ended';
     return true;
   });
 
   const vibeClubCounts = {
     all: VIBECLUB_EPOCHS.length,
-    active: VIBECLUB_EPOCHS.filter(u => now >= u.dateObj && u.status !== 'ended').length,
-    upcoming: VIBECLUB_EPOCHS.filter(u => now < u.dateObj).length,
-    ended: VIBECLUB_EPOCHS.filter(u => u.status === 'ended' || u.status === 'completed').length
+    active: VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'active').length,
+    upcoming: VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'upcoming').length,
+    ended: VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'ended').length
   };
 
   const filteredGiveaways = GIVEAWAYS_DATA.filter(e => {
@@ -1650,14 +1661,14 @@ function Rewards({ isBaseAppMode = false } = {}) {
     let upcoming = 0;
 
     if (catId === 'holders') {
-      active = HOLDER_UNLOCKS.filter(u => now >= u.dateObj).length;
-      upcoming = HOLDER_UNLOCKS.filter(u => now < u.dateObj).length;
+      active = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'active').length;
+      upcoming = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'upcoming').length;
     } else if (catId === 'staking') {
       active = STAKING_EPOCHS.filter(e => getStakingEpochStatus(e, now) === 'active').length;
       upcoming = STAKING_EPOCHS.filter(e => getStakingEpochStatus(e, now) === 'upcoming').length;
     } else if (catId === 'vibe-club') {
-      active = VIBECLUB_EPOCHS.filter(u => now >= u.dateObj).length;
-      upcoming = VIBECLUB_EPOCHS.filter(u => now < u.dateObj).length;
+      active = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'active').length;
+      upcoming = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'upcoming').length;
     } else if (catId === 'giveaways') {
       active = GIVEAWAYS_DATA.filter(e => e.status === 'ongoing').length;
       upcoming = GIVEAWAYS_DATA.filter(e => e.status !== 'ended' && e.status !== 'ongoing').length;
@@ -2521,22 +2532,27 @@ function Rewards({ isBaseAppMode = false } = {}) {
                 }}
               >
                 {filteredVibeClubEpochs.map((ep, idx) => {
-                  const isUnlocked = now >= ep.dateObj;
+                  const status = getRewardEpochStatus(ep, now);
+                  const isActive = status === 'active';
+                  const isCompleted = status === 'ended';
+                  const isUpcoming = status === 'upcoming';
 
                   return (
                     <div
                       key={ep.epoch || idx}
                       style={{
-                        background: isUnlocked
+                        background: isActive
                           ? 'linear-gradient(145deg, rgba(215, 246, 255, 0.85) 0%, rgba(240, 252, 255, 0.95) 100%)'
+                          : isCompleted
+                          ? 'linear-gradient(145deg, rgba(241, 245, 249, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%)'
                           : 'linear-gradient(145deg, rgba(225, 248, 255, 0.55) 0%, rgba(245, 253, 255, 0.8) 100%)',
-                        border: isUnlocked ? '2px solid var(--blue)' : '1.5px solid rgba(0, 160, 255, 0.25)',
+                        border: isActive ? '2px solid var(--blue)' : isCompleted ? '1.5px solid #cbd5e1' : '1.5px solid rgba(0, 160, 255, 0.25)',
                         borderRadius: '22px',
                         padding: '18px 20px',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        boxShadow: isUnlocked ? '0 12px 36px -4px rgba(0, 82, 255, 0.16), 0 2px 10px rgba(0, 0, 0, 0.04)' : '0 4px 16px rgba(0, 82, 255, 0.05)',
+                        boxShadow: isActive ? '0 12px 36px -4px rgba(0, 82, 255, 0.16), 0 2px 10px rgba(0, 0, 0, 0.04)' : '0 4px 16px rgba(0, 82, 255, 0.05)',
                         position: 'relative',
                         transition: 'all 0.2s'
                       }}
@@ -2553,8 +2569,8 @@ function Rewards({ isBaseAppMode = false } = {}) {
                                 height: '38px',
                                 borderRadius: '50%',
                                 objectFit: 'cover',
-                                border: isUnlocked ? '2px solid var(--blue)' : '1.5px solid rgba(0, 160, 255, 0.3)',
-                                boxShadow: '0 2px 8px rgba(0, 82, 255, 0.15)',
+                                border: isActive ? '2px solid var(--blue)' : isCompleted ? '1.5px solid #cbd5e1' : '1.5px solid rgba(0, 160, 255, 0.3)',
+                                boxShadow: isActive ? '0 2px 8px rgba(0, 82, 255, 0.15)' : 'none',
                                 flexShrink: 0
                               }}
                             />
@@ -2571,22 +2587,24 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isUnlocked ? '#ecfdf5' : 'rgba(255, 255, 255, 0.9)',
-                              color: isUnlocked ? '#059669' : '#64748b',
-                              border: isUnlocked ? '1px solid #a7f3d0' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: isActive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: isActive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: isActive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isUnlocked ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: isActive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
-                            {isUnlocked ? (
+                            {isActive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={ep.nextSnapshotDate} />
                               </>
+                            ) : isCompleted ? (
+                              'Ended'
                             ) : (
                               <>
                                 <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
@@ -2610,7 +2628,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                           <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
                             <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Royalty Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isUnlocked ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
+                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
                             {ep.poolAmount}
                           </div>
                         </div>
@@ -2621,25 +2639,25 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <ShieldCheck size={12} color="#0284c7" /> Requirement
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>NFT Holder</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>NFT Holder</strong>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 255, 255, 0.65)', padding: '7px 11px', borderRadius: '10px', border: '1px solid rgba(0, 160, 255, 0.12)', gap: '8px' }}>
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <Clock size={12} color="#0284c7" /> Holder Snapshot
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{ep.snapshotTime}</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{ep.snapshotTime}</strong>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 255, 255, 0.65)', padding: '7px 11px', borderRadius: '10px', border: '1px solid rgba(0, 160, 255, 0.12)', gap: '8px' }}>
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <Calendar size={12} color="#0284c7" /> Claim Date
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{ep.claimDate}</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{ep.claimDate}</strong>
                           </div>
                         </div>
                       </div>
 
-                      {/* Action Button: Claim redirect or Locked */}
-                      {isUnlocked ? (
+                      {/* Action Button: Claim redirect, Claim Ended, or Locked */}
+                      {isActive ? (
                         <Link
                           to="/claim"
                           className="btn-fill"
@@ -2663,6 +2681,28 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         >
                           <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
                         </Link>
+                      ) : isCompleted ? (
+                        <button
+                          disabled
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '11px 14px',
+                            fontSize: '0.86rem',
+                            fontWeight: 800,
+                            borderRadius: '12px',
+                            background: '#f1f5f9',
+                            color: '#94a3b8',
+                            border: '1.5px solid #cbd5e1',
+                            cursor: 'not-allowed',
+                            whiteSpace: 'nowrap',
+                            gap: '6px'
+                          }}
+                        >
+                          <Clock size={13} /> Claim Ended
+                        </button>
                       ) : (
                         <button
                           disabled
@@ -2852,22 +2892,27 @@ function Rewards({ isBaseAppMode = false } = {}) {
                 }}
               >
                 {filteredHolderUnlocks.map((u, idx) => {
-                  const isUnlocked = now >= u.dateObj;
+                  const status = getRewardEpochStatus(u, now);
+                  const isActive = status === 'active';
+                  const isCompleted = status === 'ended';
+                  const isUpcoming = status === 'upcoming';
 
                   return (
                     <div
                       key={u.unlock || idx}
                       style={{
-                        background: isUnlocked
+                        background: isActive
                           ? 'linear-gradient(145deg, rgba(215, 246, 255, 0.85) 0%, rgba(240, 252, 255, 0.95) 100%)'
+                          : isCompleted
+                          ? 'linear-gradient(145deg, rgba(241, 245, 249, 0.9) 0%, rgba(248, 250, 252, 0.95) 100%)'
                           : 'linear-gradient(145deg, rgba(225, 248, 255, 0.55) 0%, rgba(245, 253, 255, 0.8) 100%)',
-                        border: isUnlocked ? '2px solid var(--blue)' : '1.5px solid rgba(0, 160, 255, 0.25)',
+                        border: isActive ? '2px solid var(--blue)' : isCompleted ? '1.5px solid #cbd5e1' : '1.5px solid rgba(0, 160, 255, 0.25)',
                         borderRadius: '22px',
                         padding: '18px 20px',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        boxShadow: isUnlocked ? '0 12px 36px -4px rgba(0, 82, 255, 0.16), 0 2px 10px rgba(0, 0, 0, 0.04)' : '0 4px 16px rgba(0, 82, 255, 0.05)',
+                        boxShadow: isActive ? '0 12px 36px -4px rgba(0, 82, 255, 0.16), 0 2px 10px rgba(0, 0, 0, 0.04)' : '0 4px 16px rgba(0, 82, 255, 0.05)',
                         position: 'relative',
                         transition: 'all 0.2s'
                       }}
@@ -2884,8 +2929,8 @@ function Rewards({ isBaseAppMode = false } = {}) {
                                 height: '38px',
                                 borderRadius: '50%',
                                 objectFit: 'cover',
-                                border: isUnlocked ? '2px solid var(--blue)' : '1.5px solid rgba(0, 160, 255, 0.3)',
-                                boxShadow: '0 2px 8px rgba(0, 82, 255, 0.15)',
+                                border: isActive ? '2px solid var(--blue)' : isCompleted ? '1.5px solid #cbd5e1' : '1.5px solid rgba(0, 160, 255, 0.3)',
+                                boxShadow: isActive ? '0 2px 8px rgba(0, 82, 255, 0.15)' : 'none',
                                 flexShrink: 0
                               }}
                             />
@@ -2902,22 +2947,24 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isUnlocked ? '#ecfdf5' : 'rgba(255, 255, 255, 0.9)',
-                              color: isUnlocked ? '#059669' : '#64748b',
-                              border: isUnlocked ? '1px solid #a7f3d0' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: isActive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: isActive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: isActive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isUnlocked ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: isActive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
-                            {isUnlocked ? (
+                            {isActive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={u.nextSnapshotDate} />
                               </>
+                            ) : isCompleted ? (
+                              'Ended'
                             ) : (
                               <>
                                 <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
@@ -2941,8 +2988,8 @@ function Rewards({ isBaseAppMode = false } = {}) {
                           <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
                             <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Rewards Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isUnlocked ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
-                            {u.poolAmount} <span style={{ fontSize: isBaseAppMode ? '7.5px' : '0.88rem', color: isBaseAppMode ? '#00f5ff' : isUnlocked ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>$VIBE</span>
+                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
+                            {u.poolAmount} <span style={{ fontSize: isBaseAppMode ? '7.5px' : '0.88rem', color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>$VIBE</span>
                           </div>
                         </div>
 
@@ -2952,25 +2999,25 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <ShieldCheck size={12} color="#0284c7" /> Requirement
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>5M+ $VIBE Balance</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>5M+ $VIBE Balance</strong>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 255, 255, 0.65)', padding: '7px 11px', borderRadius: '10px', border: '1px solid rgba(0, 160, 255, 0.12)', gap: '8px' }}>
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <Clock size={12} color="#0284c7" /> Balance Snapshot
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{u.snapshotTime}</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{u.snapshotTime}</strong>
                           </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255, 255, 255, 0.65)', padding: '7px 11px', borderRadius: '10px', border: '1px solid rgba(0, 160, 255, 0.12)', gap: '8px' }}>
                             <span style={{ color: '#64748b', fontWeight: 700, fontSize: '0.74rem', whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
                               <Calendar size={12} color="#0284c7" /> Unlock Date
                             </span>
-                            <strong style={{ color: isUnlocked ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{u.unlockDate}</strong>
+                            <strong style={{ color: isActive ? 'var(--ink)' : '#475569', fontWeight: 700, fontSize: '0.76rem', whiteSpace: 'nowrap', textAlign: 'right' }}>{u.unlockDate}</strong>
                           </div>
                         </div>
                       </div>
 
-                      {/* Action Button: Claim redirect or Locked */}
-                      {isUnlocked ? (
+                      {/* Action Button: Claim redirect, Claim Ended, or Locked */}
+                      {isActive ? (
                         <Link
                           to="/claim"
                           className="btn-fill"
@@ -2994,6 +3041,28 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         >
                           <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
                         </Link>
+                      ) : isCompleted ? (
+                        <button
+                          disabled
+                          style={{
+                            width: '100%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '11px 14px',
+                            fontSize: '0.86rem',
+                            fontWeight: 800,
+                            borderRadius: '12px',
+                            background: '#f1f5f9',
+                            color: '#94a3b8',
+                            border: '1.5px solid #cbd5e1',
+                            cursor: 'not-allowed',
+                            whiteSpace: 'nowrap',
+                            gap: '6px'
+                          }}
+                        >
+                          <Clock size={13} /> Claim Ended
+                        </button>
                       ) : (
                         <button
                           disabled

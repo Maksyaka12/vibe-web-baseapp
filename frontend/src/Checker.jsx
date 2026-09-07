@@ -481,12 +481,14 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
   // Check Claim Status for Round 1 Holder
   const isHolderRound1Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'holder-1')) || claimStatus['holder-1'] === 'claimed';
-  const isHolderRound1Live = currentTime >= new Date(HOLDER_ROUNDS[0].targetDate);
+  const isHolderRound1Ended = currentTime >= new Date(HOLDER_ROUNDS[0].nextSnapshotDate || '2026-09-25T00:00:00Z');
+  const isHolderRound1Live = currentTime >= new Date(HOLDER_ROUNDS[0].targetDate) && !isHolderRound1Ended;
   const isHolderRound1Available = isHolderRound1Live && !isHolderRound1Claimed;
 
   // Check Claim Status for Royalty 1 Vibe Club
   const isVibeClubRoyalty1Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'vibeclub-1')) || claimStatus['vibeclub-1'] === 'claimed';
-  const isVibeClubRoyalty1Live = currentTime >= new Date(VIBECLUB_ROUNDS[0].targetDate);
+  const isVibeClubRoyalty1Ended = currentTime >= new Date(VIBECLUB_ROUNDS[0].nextSnapshotDate || '2026-09-07T00:00:00Z');
+  const isVibeClubRoyalty1Live = currentTime >= new Date(VIBECLUB_ROUNDS[0].targetDate) && !isVibeClubRoyalty1Ended;
   const isVibeClubRoyalty1Available = isVibeClubRoyalty1Live && !isVibeClubRoyalty1Claimed;
 
   // Available claim count (where user is eligible and ready to claim)
@@ -495,8 +497,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const totalAvailableCount = availableHolderCount + availableVibeClubCount;
 
   // Next Upcoming Unlocks to Display
-  const upcomingHolderRound = isHolderRound1Live ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
-  const upcomingVibeClubRound = isVibeClubRoyalty1Live ? VIBECLUB_ROUNDS[1] : VIBECLUB_ROUNDS[0];
+  const upcomingHolderRound = (isHolderRound1Live || isHolderRound1Ended) ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
+  const upcomingVibeClubRound = (isVibeClubRoyalty1Live || isVibeClubRoyalty1Ended) ? VIBECLUB_ROUNDS[1] : VIBECLUB_ROUNDS[0];
 
   // ⚡ High-Speed Admin Metrics Unified Multicall (<350ms)
   const fetchAdminMetrics = async (overrideType, overrideEpoch, overrideCa) => {
