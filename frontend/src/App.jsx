@@ -1595,16 +1595,17 @@ function ClaimCountdownButton({ targetDate, href = "/claim" }) {
         fontSize: '0.86rem',
         fontWeight: 800,
         borderRadius: '12px',
-        background: 'rgba(255, 255, 255, 0.85)',
-        color: '#64748b',
-        border: '1.5px solid rgba(0, 160, 255, 0.25)',
-        cursor: 'not-allowed',
+        background: 'var(--blue)',
+        color: '#ffffff',
+        border: 'none',
+        cursor: 'default',
         whiteSpace: 'nowrap',
         gap: '6px',
-        fontVariantNumeric: 'tabular-nums'
+        fontVariantNumeric: 'tabular-nums',
+        boxShadow: '0 4px 16px rgba(0, 0, 255, 0.28)'
       }}
     >
-      <Clock size={13} color="#0284c7" /> Claim in {timeLeft}
+      <Clock size={14} color="#ffffff" /> Claim in {timeLeft}
     </button>
   );
 }
@@ -2664,21 +2665,26 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isClaimLive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
-                              color: isClaimLive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
-                              border: isClaimLive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: (isClaimLive || isActive) ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: (isClaimLive || isActive) ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: (isClaimLive || isActive) ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isClaimLive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: (isClaimLive || isActive) ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
                             {isClaimLive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={ep.nextSnapshotDate} />
+                              </>
+                            ) : isActive ? (
+                              <>
+                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
+                                Active
                               </>
                             ) : isCompleted ? (
                               'Ended'
@@ -2794,7 +2800,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             }}
                           >
                             <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            Snapshot Completed
+                            Snapshot Completed: {ep.snapshotTime}
                           </div>
                         </>
                       ) : isActive ? (
@@ -2813,7 +2819,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             }}
                           >
                             <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            Snapshot Completed
+                            Snapshot Completed: {ep.snapshotTime}
                           </div>
                         </>
                       ) : (
@@ -3061,21 +3067,26 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isClaimLive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
-                              color: isClaimLive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
-                              border: isClaimLive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: (isClaimLive || isActive) ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: (isClaimLive || isActive) ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: (isClaimLive || isActive) ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isClaimLive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: (isClaimLive || isActive) ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
                             {isClaimLive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={u.nextSnapshotDate} />
+                              </>
+                            ) : isActive ? (
+                              <>
+                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
+                                Active
                               </>
                             ) : isCompleted ? (
                               'Ended'
@@ -3191,7 +3202,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             }}
                           >
                             <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            Snapshot Completed
+                            Snapshot Completed: {u.snapshotTime}
                           </div>
                         </>
                       ) : isActive ? (
@@ -3210,7 +3221,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             }}
                           >
                             <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            Snapshot Completed
+                            Snapshot Completed: {u.snapshotTime}
                           </div>
                         </>
                       ) : (
