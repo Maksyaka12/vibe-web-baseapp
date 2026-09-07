@@ -2740,94 +2740,97 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           style={{
                             background: '#ffffff',
                             border: '1.5px solid #a7f3d0',
-                            borderRadius: '18px',
-                            padding: '16px 24px',
+                            borderRadius: '16px',
+                            padding: '14px 18px',
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            flexWrap: 'wrap',
-                            gap: '14px',
-                            boxShadow: '0 4px 16px rgba(16, 185, 129, 0.06)'
+                            flexDirection: 'column',
+                            gap: '12px',
+                            boxShadow: '0 4px 14px rgba(16, 185, 129, 0.05)'
                           }}
                         >
-                          {/* Left: Event info */}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <Check size={20} color="#10b981" strokeWidth={3} />
+                          {/* Top Row: Checkmark + Title (no subtitle) */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                              <Check size={16} color="#10b981" strokeWidth={3} />
                             </div>
-                            <div>
-                              <strong style={{ fontSize: '1rem', color: 'var(--ink)', fontWeight: 900, display: 'block' }}>
-                                {item?.title || 'Rewards Claim'}
-                              </strong>
-                              <span style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 700 }}>
-                                Successfully Claimed on Base
-                              </span>
-                            </div>
+                            <strong style={{ fontSize: '0.92rem', color: 'var(--ink)', fontWeight: 900, lineHeight: 1.25 }}>
+                              {item?.title || 'Rewards Claim'}
+                            </strong>
                           </div>
 
-                          {/* Right: BaseScan button + Share button + Amount */}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                            {/* BaseScan Tx Link */}
-                            <a
-                              href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
-                              target="_blank"
-                              rel="noreferrer"
-                              style={{
-                                background: '#f0fdf4',
-                                border: '1.5px solid #86efac',
-                                color: '#15803d',
-                                padding: '7px 12px',
-                                borderRadius: '9px',
-                                fontSize: '0.78rem',
-                                fontWeight: 800,
-                                textDecoration: 'none',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '5px',
-                                transition: 'all 0.2s ease',
-                                boxShadow: '0 2px 6px rgba(16, 185, 129, 0.08)'
-                              }}
-                              onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#4ade80'; }}
-                              onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
-                            >
-                              <span>BaseScan</span>
-                              <ArrowUpRight size={13} strokeWidth={2.5} />
-                            </a>
-
-                            {(item?.type === 'vibeclub' || item?.id?.includes('vibeclub')) && (
-                              <button
-                                onClick={() => {
-                                  const epId = item?.roundId || (item?.id?.includes('2') ? 2 : (item?.id?.includes('1') ? 1 : activeRoyaltyEpochId));
-                                  setRoyaltyModalData({
-                                    epochId: epId,
-                                    roundName: item?.title || `Royalty ${epId}`,
-                                    amount: item?.amount || (epId === 2 ? 17117 : 22935)
-                                  });
-                                  setShowRoyaltySuccessModal(true);
-                                }}
+                          {/* Bottom Row: BaseScan & Share pills + Claim Amount in ONE single line */}
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', width: '100%' }}>
+                            {/* Action Pills */}
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+                              {/* BaseScan Tx Link */}
+                              <a
+                                href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
+                                target="_blank"
+                                rel="noreferrer"
                                 style={{
-                                  background: '#000000',
-                                  color: '#ffffff',
-                                  border: 'none',
-                                  padding: '7px 13px',
-                                  borderRadius: '9px',
-                                  fontSize: '0.78rem',
+                                  background: '#f0fdf4',
+                                  border: '1.5px solid #86efac',
+                                  color: '#15803d',
+                                  padding: '5px 10px',
+                                  borderRadius: '8px',
+                                  fontSize: '0.74rem',
                                   fontWeight: 800,
-                                  cursor: 'pointer',
+                                  textDecoration: 'none',
                                   display: 'inline-flex',
                                   alignItems: 'center',
-                                  gap: '5px',
-                                  transition: 'all 0.2s ease',
-                                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.12)'
+                                  gap: '4px',
+                                  transition: 'all 0.15s ease',
+                                  boxShadow: '0 1px 3px rgba(16, 185, 129, 0.08)',
+                                  whiteSpace: 'nowrap'
                                 }}
-                                onMouseEnter={(e) => { e.currentTarget.style.background = '#1e293b'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.background = '#000000'; }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#4ade80'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
                               >
-                                <Share2 size={13} /> Share
-                              </button>
-                            )}
-                            <div style={{ fontSize: '1.25rem', fontWeight: 900, color: '#10b981', minWidth: '135px', textAlign: 'right' }}>
-                              +{typeof item?.amount === 'number' ? item.amount.toLocaleString('en-US') : (item?.amount || '0')} <span style={{ fontSize: '0.85rem', color: 'var(--blue)', fontWeight: 800 }}>$VIBE</span>
+                                <span>BaseScan</span>
+                                <ArrowUpRight size={12} strokeWidth={2.5} />
+                              </a>
+
+                              {/* Share Button (Only for Vibe Club Royalties) */}
+                              {(item?.type === 'vibeclub' || item?.id?.includes('vibeclub')) && (
+                                <button
+                                  onClick={() => {
+                                    const epId = item?.roundId || (item?.id?.includes('2') ? 2 : (item?.id?.includes('1') ? 1 : activeRoyaltyEpochId));
+                                    setRoyaltyModalData({
+                                      epochId: epId,
+                                      roundName: item?.title || `Royalty ${epId}`,
+                                      amount: item?.amount || (epId === 2 ? 17117 : 22935)
+                                    });
+                                    setShowRoyaltySuccessModal(true);
+                                  }}
+                                  style={{
+                                    background: '#000000',
+                                    color: '#ffffff',
+                                    border: 'none',
+                                    padding: '5px 11px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.74rem',
+                                    fontWeight: 800,
+                                    cursor: 'pointer',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '5px',
+                                    transition: 'all 0.15s ease',
+                                    boxShadow: '0 1px 4px rgba(0, 0, 0, 0.12)',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                  onMouseEnter={(e) => { e.currentTarget.style.background = '#1e293b'; }}
+                                  onMouseLeave={(e) => { e.currentTarget.style.background = '#000000'; }}
+                                >
+                                  <Share2 size={12} />
+                                  <span>Share</span>
+                                </button>
+                              )}
+                            </div>
+
+                            {/* Amount */}
+                            <div style={{ fontSize: '1.02rem', fontWeight: 900, color: '#10b981', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                              +{typeof item?.amount === 'number' ? item.amount.toLocaleString('en-US') : (item?.amount || '0')}{' '}
+                              <span style={{ fontSize: '0.78rem', color: 'var(--blue)', fontWeight: 800 }}>$VIBE</span>
                             </div>
                           </div>
                         </div>
