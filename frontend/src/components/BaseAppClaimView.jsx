@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckCircle2,
@@ -8,7 +8,8 @@ import {
   Share2,
   X,
   Download,
-  Check
+  Check,
+  Clock
 } from 'lucide-react';
 
 const O1 = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453';
@@ -48,6 +49,104 @@ function formatCountdownLive(targetIso) {
   } catch {
     return '';
   }
+}
+
+function BaseAppClaimCountdownButton({ targetDate, onClaim }) {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (!targetDate) return '';
+    const now = new Date().getTime();
+    const target = new Date(targetDate).getTime();
+    const diff = target - now;
+    if (diff <= 0) return '00H 00M 00S';
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`;
+  });
+
+  const [isReached, setIsReached] = useState(() => {
+    if (!targetDate) return false;
+    return new Date().getTime() >= new Date(targetDate).getTime();
+  });
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      if (!targetDate) return;
+      const now = new Date().getTime();
+      const target = new Date(targetDate).getTime();
+      const diff = target - now;
+      if (diff <= 0) {
+        setIsReached(true);
+        setTimeLeft('00H 00M 00S');
+      } else {
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        const pad = (n) => String(n).padStart(2, '0');
+        setTimeLeft(`${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`);
+      }
+    };
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  if (isReached) {
+    return (
+      <button
+        onClick={onClaim}
+        style={{
+          width: '100%',
+          padding: '12px',
+          fontSize: '8px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px',
+          background: 'rgba(0, 255, 136, 0.18)',
+          border: '2px solid #00ff88',
+          color: '#00ff88',
+          borderRadius: '10px',
+          fontFamily: "'Press Start 2P', monospace",
+          fontWeight: 900,
+          cursor: 'pointer',
+          boxSizing: 'border-box',
+          textShadow: 'none',
+          boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)'
+        }}
+      >
+        <span style={{ color: '#00ff88' }}>CLAIM REWARD NOW</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+      </button>
+    );
+  }
+
+  return (
+    <button
+      disabled
+      style={{
+        width: '100%',
+        padding: '12px',
+        fontSize: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        background: 'rgba(0, 255, 136, 0.12)',
+        border: '1.5px solid #00ff88',
+        color: '#00ff88',
+        borderRadius: '10px',
+        fontFamily: "'Press Start 2P', monospace",
+        fontWeight: 900,
+        boxSizing: 'border-box',
+        textShadow: 'none',
+        cursor: 'default',
+        boxShadow: '0 0 16px rgba(0, 255, 136, 0.2)'
+      }}
+    >
+      <Clock size={13} color="#00ff88" strokeWidth={2.5} />
+      <span style={{ color: '#00ff88' }}>CLAIM IN {timeLeft}</span>
+    </button>
+  );
 }
 
 export function BaseAppClaimView(props) {
@@ -387,247 +486,377 @@ export function BaseAppClaimView(props) {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {/* Card 1: Holder Unlock 2 */}
-          <div
-            style={{
-              background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-              border: '1.5px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '16px',
-              padding: '16px 14px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            {/* Header: Title + Round + Status Pill */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>UNLOCK 2</span>
-              </div>
-              <span
-                style={{
-                  fontSize: '6px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontWeight: 800,
-                  color: isHolderEligibleLive ? '#00ff88' : '#ff4466',
-                  background: isHolderEligibleLive ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 68, 102, 0.15)',
-                  border: isHolderEligibleLive ? '1px solid #00ff88' : '1px solid #ff4466',
-                  borderRadius: '6px',
-                  padding: '3.5px 7px',
-                  letterSpacing: '0.3px',
-                  boxShadow: isHolderEligibleLive ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
-                }}
-              >
-                {isHolderEligibleLive ? 'ELIGIBLE' : 'NOT ELIGIBLE'}
-              </span>
-            </div>
-
-            {/* 2-Column Info Grid: Countdown & Requirement */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-              {/* Box 1: Snapshot Countdown */}
-              <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
-                <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                  SNAPSHOT COUNTDOWN
-                </div>
-                <div style={{ fontSize: '7.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                  {formatCountdownLive(upcomingHolderRound?.snapshotIso)}
-                </div>
-              </div>
-
-              {/* Box 2: Requirement */}
-              <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
-                <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                  REQUIREMENT
-                </div>
-                <div style={{ fontSize: '7px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                  Hold 5M+ $VIBE
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Eligibility Banner / Action */}
-            {isHolderEligibleLive ? (
+          {/* Card 1: Holder Unlock */}
+          {(() => {
+            const isHolderSnapshotDone = Boolean(upcomingHolderRound?.snapshotIso && (currentTime instanceof Date ? currentTime.getTime() : new Date().getTime()) >= new Date(upcomingHolderRound.snapshotIso).getTime());
+            return (
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(0, 255, 136, 0.1)',
-                  border: '1px solid rgba(0, 255, 136, 0.35)',
-                  borderRadius: '10px',
-                  padding: '8px 10px'
+                  background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
+                  border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                  borderRadius: '16px',
+                  padding: '16px 14px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
                 }}
               >
-                <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
-                <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                  YOU ARE ELIGIBLE! YOU HOLD 5M+ $VIBE
-                </span>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    background: 'rgba(255, 68, 102, 0.08)',
-                    border: '1px solid rgba(255, 68, 102, 0.3)',
-                    borderRadius: '10px',
-                    padding: '8px 10px'
-                  }}
-                >
-                  <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5 }}>
-                    NOT ELIGIBLE YET! YOU NEED TO HOLD 5M+ $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
+                {/* Header: Title + Round + Status Pill */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 2').toUpperCase()}</span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: '6px',
+                      fontFamily: "'Press Start 2P', monospace",
+                      fontWeight: 800,
+                      color: isHolderSnapshotDone ? '#00ff88' : (isHolderEligibleLive ? '#00ff88' : '#ff4466'),
+                      background: isHolderSnapshotDone ? 'rgba(0, 255, 136, 0.15)' : (isHolderEligibleLive ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 68, 102, 0.15)'),
+                      border: isHolderSnapshotDone ? '1px solid #00ff88' : (isHolderEligibleLive ? '1px solid #00ff88' : '1px solid #ff4466'),
+                      borderRadius: '6px',
+                      padding: '3.5px 7px',
+                      letterSpacing: '0.3px',
+                      boxShadow: (isHolderSnapshotDone || isHolderEligibleLive) ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
+                    }}
+                  >
+                    {isHolderSnapshotDone ? 'ACTIVE' : (isHolderEligibleLive ? 'ELIGIBLE' : 'NOT ELIGIBLE')}
                   </span>
                 </div>
-                <a
-                  href={O1}
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1.5px solid #ff4466',
-                    color: '#ff4466',
-                    borderRadius: '8px',
-                    padding: '10px 12px',
-                    fontSize: '7.5px',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontWeight: 900,
-                    textAlign: 'center',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span>BUY $VIBE</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
-                </a>
-              </div>
-            )}
-          </div>
 
-          {/* Card 2: Vibe Club Royalty 2 */}
-          <div
-            style={{
-              background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-              border: '1.5px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '16px',
-              padding: '16px 14px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            {/* Header: Title + Round + Status Pill */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingVibeClubRound?.name || 'ROYALTY 2').toUpperCase()}</span>
-              </div>
-              <span
-                style={{
-                  fontSize: '6px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontWeight: 800,
-                  color: hasNft ? '#00ff88' : '#ff4466',
-                  background: hasNft ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 68, 102, 0.15)',
-                  border: hasNft ? '1px solid #00ff88' : '1px solid #ff4466',
-                  borderRadius: '6px',
-                  padding: '3.5px 7px',
-                  letterSpacing: '0.3px',
-                  boxShadow: hasNft ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
-                }}
-              >
-                {hasNft ? 'ELIGIBLE' : 'NOT ELIGIBLE'}
-              </span>
-            </div>
+                {/* 2-Column Info Grid: Countdown & Requirement */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+                  {/* Box 1: Snapshot Countdown / Completed */}
+                  <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
+                    <div style={{ fontSize: '5.5px', color: isHolderSnapshotDone ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      {isHolderSnapshotDone ? (
+                        <>
+                          <Check size={8} color="#00ff88" strokeWidth={3} />
+                          <span>SNAPSHOT COMPLETED</span>
+                        </>
+                      ) : (
+                        <span>SNAPSHOT COUNTDOWN</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: isHolderSnapshotDone ? '6.5px' : '7.5px', color: isHolderSnapshotDone ? '#00ff88' : '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                      {isHolderSnapshotDone ? (upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC') : formatCountdownLive(upcomingHolderRound?.snapshotIso)}
+                    </div>
+                  </div>
 
-            {/* 2-Column Info Grid: Countdown & Requirement */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
-              {/* Box 1: Snapshot Countdown */}
-              <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
-                <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                  SNAPSHOT COUNTDOWN
+                  {/* Box 2: Requirement */}
+                  <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
+                    <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
+                      REQUIREMENT
+                    </div>
+                    <div style={{ fontSize: '7px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                      Hold 5M+ $VIBE
+                    </div>
+                  </div>
                 </div>
-                <div style={{ fontSize: '7.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                  {formatCountdownLive(upcomingVibeClubRound?.snapshotIso)}
-                </div>
-              </div>
 
-              {/* Box 2: Requirement */}
-              <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
-                <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                  REQUIREMENT
-                </div>
-                <div style={{ fontSize: '7px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                  Hold Vibe Club NFT
-                </div>
+                {/* Bottom Eligibility Banner / Action */}
+                {isHolderSnapshotDone ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <BaseAppClaimCountdownButton
+                      targetDate={upcomingHolderRound?.targetDate}
+                      onClaim={() => {
+                        const el = document.getElementById('available-claims-section');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                    />
+                    {isHolderEligibleLive ? (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          background: 'rgba(0, 255, 136, 0.1)',
+                          border: '1px solid rgba(0, 255, 136, 0.35)',
+                          borderRadius: '10px',
+                          padding: '8px 10px'
+                        }}
+                      >
+                        <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                          YOU ARE ELIGIBLE! YOU HOLD 5M+ $VIBE
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          background: 'rgba(255, 68, 102, 0.08)',
+                          border: '1px solid rgba(255, 68, 102, 0.3)',
+                          borderRadius: '10px',
+                          padding: '8px 10px',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5 }}>
+                          NOT ELIGIBLE! YOU DIDN'T HOLD 5M+ $VIBE AT SNAPSHOT
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  isHolderEligibleLive ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        background: 'rgba(0, 255, 136, 0.1)',
+                        border: '1px solid rgba(0, 255, 136, 0.35)',
+                        borderRadius: '10px',
+                        padding: '8px 10px'
+                      }}
+                    >
+                      <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                        YOU ARE ELIGIBLE! YOU HOLD 5M+ $VIBE
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'rgba(255, 68, 102, 0.08)',
+                          border: '1px solid rgba(255, 68, 102, 0.3)',
+                          borderRadius: '10px',
+                          padding: '8px 10px'
+                        }}
+                      >
+                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5 }}>
+                          NOT ELIGIBLE YET! YOU NEED TO HOLD 5M+ $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
+                        </span>
+                      </div>
+                      <a
+                        href={O1}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          width: '100%',
+                          boxSizing: 'border-box',
+                          background: 'rgba(255, 68, 102, 0.15)',
+                          border: '1.5px solid #ff4466',
+                          color: '#ff4466',
+                          borderRadius: '8px',
+                          padding: '10px 12px',
+                          fontSize: '7.5px',
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontWeight: 900,
+                          textAlign: 'center',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
+                        }}
+                      >
+                        <span>BUY $VIBE</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
+                      </a>
+                    </div>
+                  )
+                )}
               </div>
-            </div>
+            );
+          })()}
 
-            {/* Bottom Eligibility Banner / Action */}
-            {hasNft ? (
+          {/* Card 2: Vibe Club Royalty */}
+          {(() => {
+            const isVibeClubSnapshotDone = Boolean(upcomingVibeClubRound?.snapshotIso && (currentTime instanceof Date ? currentTime.getTime() : new Date().getTime()) >= new Date(upcomingVibeClubRound.snapshotIso).getTime());
+            const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
+            const isRoyaltyEligibleNow = hasRoyaltyProof || hasNft;
+            return (
               <div
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(0, 255, 136, 0.1)',
-                  border: '1px solid rgba(0, 255, 136, 0.35)',
-                  borderRadius: '10px',
-                  padding: '8px 10px'
+                  background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
+                  border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                  borderRadius: '16px',
+                  padding: '16px 14px',
+                  boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
                 }}
               >
-                <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
-                <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                  YOU ARE ELIGIBLE! YOU ARE A VIBE CLUB MEMBER!
-                </span>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    background: 'rgba(255, 68, 102, 0.08)',
-                    border: '1px solid rgba(255, 68, 102, 0.3)',
-                    borderRadius: '10px',
-                    padding: '8px 10px'
-                  }}
-                >
-                  <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    NOT ELIGIBLE YET! JOIN VIBE CLUB TO BECOME ELIGIBLE
+                {/* Header: Title + Round + Status Pill */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingVibeClubRound?.name || 'ROYALTY 2').toUpperCase()}</span>
+                  </div>
+                  <span
+                    style={{
+                      fontSize: '6px',
+                      fontFamily: "'Press Start 2P', monospace",
+                      fontWeight: 800,
+                      color: isVibeClubSnapshotDone ? '#00ff88' : (hasNft ? '#00ff88' : '#ff4466'),
+                      background: isVibeClubSnapshotDone ? 'rgba(0, 255, 136, 0.15)' : (hasNft ? 'rgba(0, 255, 136, 0.15)' : 'rgba(255, 68, 102, 0.15)'),
+                      border: isVibeClubSnapshotDone ? '1px solid #00ff88' : (hasNft ? '1px solid #00ff88' : '1px solid #ff4466'),
+                      borderRadius: '6px',
+                      padding: '3.5px 7px',
+                      letterSpacing: '0.3px',
+                      boxShadow: (isVibeClubSnapshotDone || hasNft) ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
+                    }}
+                  >
+                    {isVibeClubSnapshotDone ? 'ACTIVE' : (hasNft ? 'ELIGIBLE' : 'NOT ELIGIBLE')}
                   </span>
                 </div>
-                <Link
-                  to="/vibeclub"
-                  style={{
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1.5px solid #ff4466',
-                    color: '#ff4466',
-                    borderRadius: '8px',
-                    padding: '10px 12px',
-                    fontSize: '7.5px',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontWeight: 900,
-                    textAlign: 'center',
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span>MINT NFT</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
-                </Link>
+
+                {/* 2-Column Info Grid: Countdown & Requirement */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+                  {/* Box 1: Snapshot Countdown / Completed */}
+                  <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
+                    <div style={{ fontSize: '5.5px', color: isVibeClubSnapshotDone ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      {isVibeClubSnapshotDone ? (
+                        <>
+                          <Check size={8} color="#00ff88" strokeWidth={3} />
+                          <span>SNAPSHOT COMPLETED</span>
+                        </>
+                      ) : (
+                        <span>SNAPSHOT COUNTDOWN</span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: isVibeClubSnapshotDone ? '6.5px' : '7.5px', color: isVibeClubSnapshotDone ? '#00ff88' : '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                      {isVibeClubSnapshotDone ? (upcomingVibeClubRound?.snapshotDate || 'Sep 7, 00:00 UTC') : formatCountdownLive(upcomingVibeClubRound?.snapshotIso)}
+                    </div>
+                  </div>
+
+                  {/* Box 2: Requirement */}
+                  <div style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '10px', padding: '9px 10px' }}>
+                    <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
+                      REQUIREMENT
+                    </div>
+                    <div style={{ fontSize: '7px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                      Hold Vibe Club NFT
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Eligibility Banner / Action */}
+                {isVibeClubSnapshotDone ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <BaseAppClaimCountdownButton
+                      targetDate={upcomingVibeClubRound?.targetDate}
+                      onClaim={() => {
+                        if (activeRoyaltyEpochId && vibeClubRewardAmount) {
+                          handleClaim('vibeclub', activeRoyaltyEpochId, vibeClubRewardAmount);
+                        } else {
+                          const el = document.getElementById('available-claims-section');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                    />
+                    {isRoyaltyEligibleNow ? (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          background: 'rgba(0, 255, 136, 0.1)',
+                          border: '1px solid rgba(0, 255, 136, 0.35)',
+                          borderRadius: '10px',
+                          padding: '8px 10px'
+                        }}
+                      >
+                        <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                          YOU ARE ELIGIBLE! YOU ARE A VIBE CLUB MEMBER!
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          background: 'rgba(255, 68, 102, 0.08)',
+                          border: '1px solid rgba(255, 68, 102, 0.3)',
+                          borderRadius: '10px',
+                          padding: '8px 10px',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                          NOT ELIGIBLE! YOU DIDN'T HOLD NFT AT SNAPSHOT
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  hasNft ? (
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        background: 'rgba(0, 255, 136, 0.1)',
+                        border: '1px solid rgba(0, 255, 136, 0.35)',
+                        borderRadius: '10px',
+                        padding: '8px 10px'
+                      }}
+                    >
+                      <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                        YOU ARE ELIGIBLE! YOU ARE A VIBE CLUB MEMBER!
+                      </span>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          background: 'rgba(255, 68, 102, 0.08)',
+                          border: '1px solid rgba(255, 68, 102, 0.3)',
+                          borderRadius: '10px',
+                          padding: '8px 10px'
+                        }}
+                      >
+                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                          NOT ELIGIBLE YET! JOIN VIBE CLUB TO BECOME ELIGIBLE
+                        </span>
+                      </div>
+                      <Link
+                        to="/vibeclub"
+                        style={{
+                          width: '100%',
+                          boxSizing: 'border-box',
+                          background: 'rgba(255, 68, 102, 0.15)',
+                          border: '1.5px solid #ff4466',
+                          color: '#ff4466',
+                          borderRadius: '8px',
+                          padding: '10px 12px',
+                          fontSize: '7.5px',
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontWeight: 900,
+                          textAlign: 'center',
+                          textDecoration: 'none',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
+                        }}
+                      >
+                        <span>MINT NFT</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
+                      </Link>
+                    </div>
+                  )
+                )}
               </div>
-            )}
-          </div>
+            );
+          })()}
         </div>
       </div>
 

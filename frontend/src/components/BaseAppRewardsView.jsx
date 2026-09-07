@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
-import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
@@ -120,20 +120,20 @@ function BaseAppClaimCountdownButton({ targetDate }) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '8px',
-        background: '#0284c7',
-        border: '1.5px solid #38bdf8',
-        color: '#ffffff',
+        background: 'rgba(0, 255, 136, 0.12)',
+        border: '1.5px solid #00ff88',
+        color: '#00ff88',
         borderRadius: '10px',
         fontFamily: "'Press Start 2P', monospace",
         fontWeight: 900,
         boxSizing: 'border-box',
         textShadow: 'none',
         cursor: 'default',
-        boxShadow: '0 0 16px rgba(2, 132, 199, 0.4)'
+        boxShadow: '0 0 16px rgba(0, 255, 136, 0.2)'
       }}
     >
-      <Clock size={13} color="#ffffff" strokeWidth={2.5} />
-      <span>CLAIM IN {timeLeft}</span>
+      <Clock size={13} color="#00ff88" strokeWidth={2.5} />
+      <span style={{ color: '#00ff88' }}>CLAIM IN {timeLeft}</span>
     </button>
   );
 }
@@ -955,7 +955,10 @@ export default function BaseAppRewardsView({
             <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS ROYALTY PAYOUTS</div>
-                <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>COMPLETED</div>
+                <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                  <span>COMPLETED</span>
+                </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -980,8 +983,9 @@ export default function BaseAppRewardsView({
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.poolAmount}</div>
-                      <div style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>ENDED</div>
+                      <div style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>
+                        {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : (u.poolAmount !== 'TBA' ? `${u.poolAmount} $VIBE` : u.poolAmount)}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1222,7 +1226,10 @@ export default function BaseAppRewardsView({
             <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS STAKING EPOCHS</div>
-                <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>COMPLETED</div>
+                <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                  <span>COMPLETED</span>
+                </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

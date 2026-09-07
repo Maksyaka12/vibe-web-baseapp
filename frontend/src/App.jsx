@@ -1595,17 +1595,17 @@ function ClaimCountdownButton({ targetDate, href = "/claim" }) {
         fontSize: '0.86rem',
         fontWeight: 800,
         borderRadius: '12px',
-        background: 'var(--blue)',
-        color: '#ffffff',
-        border: 'none',
+        background: 'rgba(5, 150, 105, 0.12)',
+        border: '1.5px solid #059669',
+        color: '#059669',
         cursor: 'default',
         whiteSpace: 'nowrap',
         gap: '6px',
         fontVariantNumeric: 'tabular-nums',
-        boxShadow: '0 4px 16px rgba(0, 0, 255, 0.28)'
+        boxShadow: '0 0 16px rgba(5, 150, 105, 0.2)'
       }}
     >
-      <Clock size={14} color="#ffffff" /> Claim in {timeLeft}
+      <Clock size={14} color="#059669" /> Claim in {timeLeft}
     </button>
   );
 }
