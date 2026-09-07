@@ -1463,7 +1463,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                   {isAvailableOpen && (
                 <div className="checker-section-panel">
-                  {(isHolderRound1Available || isVibeClubRoyalty1Available) ? (
+                  {(isHolderRound1Available || activeRoyaltyAvailable) ? (
                     <div className="rewards-grid-2">
                       
                       {/* 1. Holder Rewards Active Claim Card */}
