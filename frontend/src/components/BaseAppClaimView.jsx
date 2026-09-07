@@ -16,6 +16,8 @@ import {
   Loader2
 } from 'lucide-react';
 
+const CA = '0xb200000000000000000000df24ecb8bf51100a01';
+
 function formatCompactBalance(val) {
   if (val === null || val === undefined) return '0 $VIBE';
   const num = Number(val);
@@ -1077,31 +1079,29 @@ export function BaseAppClaimView(props) {
                         </button>
                       )}
 
-                      {/* BaseScan Tx Link */}
-                      {item.txHash && (
-                        <a
-                          href={`https://basescan.org/tx/${item.txHash}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            background: 'rgba(0, 245, 255, 0.1)',
-                            border: '1px solid rgba(0, 245, 255, 0.35)',
-                            color: '#00f5ff',
-                            borderRadius: '8px',
-                            padding: '5px 8px',
-                            fontSize: '6px',
-                            fontFamily: "'Press Start 2P', monospace",
-                            fontWeight: 800,
-                            textDecoration: 'none',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '3px'
-                          }}
-                        >
-                          <span>BaseScan</span>
-                          <ArrowUpRight size={9} />
-                        </a>
-                      )}
+                      {/* BaseScan Tx Link (Always shown for Royalty 1, Royalty 2, Holder 1 and all claims) */}
+                      <a
+                        href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          background: 'rgba(0, 245, 255, 0.1)',
+                          border: '1px solid rgba(0, 245, 255, 0.35)',
+                          color: '#00f5ff',
+                          borderRadius: '8px',
+                          padding: '5px 8px',
+                          fontSize: '6px',
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontWeight: 800,
+                          textDecoration: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px'
+                        }}
+                      >
+                        <span>BaseScan</span>
+                        <ArrowUpRight size={9} />
+                      </a>
                     </div>
                   </div>
 

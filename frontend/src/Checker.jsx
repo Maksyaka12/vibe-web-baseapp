@@ -332,11 +332,29 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   };
 
   // Lightweight sync of claimed transaction history for Holder Rewards
+  // Lightweight sync of claimed transaction history for Holder Rewards
   const syncClaimHistory = async (client, userAddress) => {
     try {
       const existingHistory = JSON.parse(localStorage.getItem(`vibe_claim_history_${userAddress.toLowerCase()}`) || '[]');
       const existingItem = existingHistory.find(h => h && h.id === 'holder-1');
       const holderAmount = round1Data?.claims?.[userAddress.toLowerCase()]?.amount || 126127;
+      let txHash = existingItem?.txHash || null;
+
+      if (!txHash) {
+        try {
+          const currentBlock = await client.getBlockNumber();
+          const logs = await client.getLogs({
+            address: CA,
+            event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
+            args: { from: DISTRIBUTOR_CA, to: userAddress },
+            fromBlock: currentBlock > 50000n ? (currentBlock - 49000n) : 0n,
+            toBlock: currentBlock
+          });
+          if (logs && logs.length > 0) {
+            txHash = logs[logs.length - 1].transactionHash;
+          }
+        } catch (e) {}
+      }
 
       const syncedItem = {
         id: 'holder-1',
@@ -344,7 +362,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         roundId: 1,
         title: 'Holder Rewards · Unlock 1',
         amount: holderAmount,
-        txHash: existingItem?.txHash || null,
+        txHash: txHash || existingItem?.txHash || null,
         timestamp: existingItem?.timestamp || '2026-08-26T14:00:00.000Z'
       };
 
@@ -368,6 +386,23 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const defaultAmt = roundId === 2 ? 17117 : 22935;
       const defaultTime = roundId === 2 ? '2026-09-07T14:00:00.000Z' : '2026-08-28T14:00:00.000Z';
       const royaltyAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
+      let txHash = existingItem?.txHash || null;
+
+      if (!txHash) {
+        try {
+          const currentBlock = await client.getBlockNumber();
+          const logs = await client.getLogs({
+            address: CA,
+            event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
+            args: { from: targetCa, to: userAddress },
+            fromBlock: currentBlock > 50000n ? (currentBlock - 49000n) : 0n,
+            toBlock: currentBlock
+          });
+          if (logs && logs.length > 0) {
+            txHash = logs[logs.length - 1].transactionHash;
+          }
+        } catch (e) {}
+      }
 
       const syncedItem = {
         id: `vibeclub-${roundId}`,
@@ -375,7 +410,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         roundId: roundId,
         title: `Vibe Club Royalties · Royalty ${roundId}`,
         amount: royaltyAmount,
-        txHash: existingItem?.txHash || null,
+        txHash: txHash || existingItem?.txHash || null,
         timestamp: existingItem?.timestamp || defaultTime
       };
 
@@ -2579,8 +2614,35 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             </div>
                           </div>
 
-                          {/* Right: Share button (left) + Amount (right) */}
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                          {/* Right: BaseScan button + Share button + Amount */}
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                            {/* BaseScan Tx Link */}
+                            <a
+                              href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                background: '#f0fdf4',
+                                border: '1.5px solid #86efac',
+                                color: '#15803d',
+                                padding: '7px 12px',
+                                borderRadius: '9px',
+                                fontSize: '0.78rem',
+                                fontWeight: 800,
+                                textDecoration: 'none',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '5px',
+                                transition: 'all 0.2s ease',
+                                boxShadow: '0 2px 6px rgba(16, 185, 129, 0.08)'
+                              }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#4ade80'; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
+                            >
+                              <span>BaseScan</span>
+                              <ArrowUpRight size={13} strokeWidth={2.5} />
+                            </a>
+
                             {(item?.type === 'vibeclub' || item?.id?.includes('vibeclub')) && (
                               <button
                                 onClick={() => {
