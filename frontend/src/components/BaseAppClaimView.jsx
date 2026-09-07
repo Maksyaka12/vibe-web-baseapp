@@ -6,6 +6,7 @@ import {
   AlertCircle,
   RefreshCw,
   ArrowUpRight,
+  ArrowRight,
   Share2,
   X,
   Download,
@@ -14,8 +15,6 @@ import {
   Gift,
   Loader2
 } from 'lucide-react';
-
-const O1 = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453';
 
 function formatCompactBalance(val) {
   if (val === null || val === undefined) return '0 $VIBE';
@@ -757,10 +756,9 @@ export function BaseAppClaimView(props) {
                           NOT ELIGIBLE YET! YOU NEED TO HOLD 5M+ $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
                         </span>
                       </div>
-                      <a
-                        href={O1}
-                        target="_blank"
-                        rel="noreferrer"
+                      <Link
+                        to={typeof window !== 'undefined' && window.location.pathname.startsWith('/app') ? '/app/buy' : '/buy'}
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                         style={{
                           width: '100%',
                           boxSizing: 'border-box',
@@ -781,8 +779,8 @@ export function BaseAppClaimView(props) {
                           boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
                         }}
                       >
-                        <span>BUY $VIBE</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
-                      </a>
+                        <span>BUY $VIBE</span> <ArrowRight size={12} color="#ff4466" strokeWidth={2.5} />
+                      </Link>
                     </div>
                   )
                 )}
@@ -1032,27 +1030,29 @@ export function BaseAppClaimView(props) {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {/* Share Button (No arrow, clean pixel button) */}
-                      <button
-                        onClick={() => setShareModalItem(item)}
-                        style={{
-                          background: 'rgba(255, 255, 255, 0.08)',
-                          border: '1px solid rgba(255, 255, 255, 0.35)',
-                          color: '#ffffff',
-                          borderRadius: '8px',
-                          padding: '5px 10px',
-                          fontSize: '6.5px',
-                          fontFamily: "'Press Start 2P', monospace",
-                          fontWeight: 800,
-                          cursor: 'pointer',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '4px'
-                        }}
-                      >
-                        <Share2 size={10} />
-                        <span>Share</span>
-                      </button>
+                      {/* Share Button (Only for Vibe Club Royalties) */}
+                      {isRoyalty && (
+                        <button
+                          onClick={() => setShareModalItem(item)}
+                          style={{
+                            background: 'rgba(255, 255, 255, 0.08)',
+                            border: '1px solid rgba(255, 255, 255, 0.35)',
+                            color: '#ffffff',
+                            borderRadius: '8px',
+                            padding: '5px 10px',
+                            fontSize: '6.5px',
+                            fontFamily: "'Press Start 2P', monospace",
+                            fontWeight: 800,
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          <Share2 size={10} />
+                          <span>Share</span>
+                        </button>
+                      )}
 
                       {/* BaseScan Tx Link */}
                       {item.txHash && (
