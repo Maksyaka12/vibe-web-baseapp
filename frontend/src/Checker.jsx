@@ -41,6 +41,14 @@ const O1 = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf5
 const VIBECLUB_MINT_URL = 'https://vibeverse.dog/vibeclub';
 import { BUILDER_CODE, DATA_SUFFIX, BUILDER_CODE_HEX, appendBuilderSuffix } from './config/builderCode';
 
+export function getRoyaltyBannerUrl(epochId) {
+  const epoch = Number(epochId) || 1;
+  if (epoch === 1) {
+    return '/vibe-club-royalties-banner.jpg';
+  }
+  return `/vibe-club-royalties-${epoch}.jfif`;
+}
+
 const MIN_HOLDER_BALANCE = 5000000; // 5M $VIBE
 
 const DISTRIBUTOR_ABI = parseAbi([
@@ -169,6 +177,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const [claimStatus, setClaimStatus] = useState({});
   const [claimedHistory, setClaimedHistory] = useState([]);
   const [showRoyaltySuccessModal, setShowRoyaltySuccessModal] = useState(false);
+  const [royaltyModalData, setRoyaltyModalData] = useState({
+    epochId: 2,
+    roundName: 'Royalty 2',
+    amount: 17117
+  });
 
   // Collapsible Section States
   const [isAvailableOpen, setIsAvailableOpen] = useState(true);
@@ -930,6 +943,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
       setClaimStatus(prev => ({ ...prev, [claimKey]: 'claimed' }));
       if (type === 'vibeclub') {
+        setRoyaltyModalData({
+          epochId: roundId,
+          roundName: `Royalty ${roundId}`,
+          amount: amountNum
+        });
         setShowRoyaltySuccessModal(true);
       }
     } catch (err) {
@@ -942,7 +960,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const [downloadingBanner, setDownloadingBanner] = useState(false);
   const handleDownloadRoyaltyBanner = async () => {
     setDownloadingBanner(true);
-    const imageUrl = '/vibe-club-royalties-banner.jpg';
+    const currentEpoch = royaltyModalData.epochId || activeRoyaltyEpochId || 2;
+    const imageUrl = getRoyaltyBannerUrl(currentEpoch);
+    const fileName = `vibe-club-royalties-${currentEpoch}-claimed.jpg`;
     try {
       const isMobileDevice = typeof navigator !== 'undefined' && (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
@@ -954,12 +974,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         try {
           const response = await fetch(imageUrl);
           const blob = await response.blob();
-          const file = new File([blob], 'vibe-club-royalties-claimed.jpg', { type: 'image/jpeg' });
+          const file = new File([blob], fileName, { type: 'image/jpeg' });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
-              title: 'Vibe Club Royalties Claimed',
-              text: 'Vibe Club Royalties Claimed 🐶💰'
+              title: `Vibe Club Royalty ${currentEpoch} Claimed`,
+              text: `Vibe Club Royalty ${currentEpoch} Claimed 🐶💰`
             });
             setDownloadingBanner(false);
             return;
@@ -975,12 +995,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       // 2. On Desktop: Direct Instant File Download
       const link = document.createElement('a');
       link.href = imageUrl;
-      link.download = 'vibe-club-royalties-claimed.jpg';
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } catch (e) {
-      console.error('Download error:', e);
+      console.error('Download banner error:', e);
       window.open(imageUrl, '_blank');
     } finally {
       setDownloadingBanner(false);
@@ -1884,7 +1904,14 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   <CheckCircle2 size={16} color="#059669" /> Claimed Successfully
                                 </button>
                                 <button
-                                  onClick={() => setShowRoyaltySuccessModal(true)}
+                                  onClick={() => {
+                                    setRoyaltyModalData({
+                                      epochId: activeRoyaltyEpochId,
+                                      roundName: activeRoyaltyRound.name,
+                                      amount: vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)
+                                    });
+                                    setShowRoyaltySuccessModal(true);
+                                  }}
                                   style={{
                                     width: '100%',
                                     padding: '10px 16px',
@@ -2556,7 +2583,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                             {(item?.type === 'vibeclub' || item?.id?.includes('vibeclub')) && (
                               <button
-                                onClick={() => setShowRoyaltySuccessModal(true)}
+                                onClick={() => {
+                                  const epId = item?.roundId || (item?.id?.includes('2') ? 2 : (item?.id?.includes('1') ? 1 : activeRoyaltyEpochId));
+                                  setRoyaltyModalData({
+                                    epochId: epId,
+                                    roundName: item?.title || `Royalty ${epId}`,
+                                    amount: item?.amount || (epId === 2 ? 17117 : 22935)
+                                  });
+                                  setShowRoyaltySuccessModal(true);
+                                }}
                                 style={{
                                   background: '#000000',
                                   color: '#ffffff',
@@ -3079,7 +3114,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
             {/* Subtitle */}
             <p className="royalty-modal-sub">
-              You’ve claimed <strong style={{ color: '#0284c7', fontWeight: 900 }}>22,935 $VIBE</strong> in Vibe Club Royalties 🐶🔥
+              You’ve claimed <strong style={{ color: '#0284c7', fontWeight: 900 }}>+{(royaltyModalData.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE</strong> in Vibe Club {royaltyModalData.roundName || activeRoyaltyRound.name} 🐶🔥
             </p>
 
             {/* Royalty Banner Image */}
@@ -3094,13 +3129,21 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               }}
             >
               <img
-                src="/vibe-club-royalties-banner.jpg"
-                alt="Vibe Club Royalties Banner"
+                src={getRoyaltyBannerUrl(royaltyModalData.epochId || activeRoyaltyEpochId)}
+                alt={`Vibe Club ${royaltyModalData.roundName || activeRoyaltyRound.name} Banner`}
                 style={{
                   width: '100%',
                   height: 'auto',
                   display: 'block',
                   borderRadius: '16px'
+                }}
+                onError={(e) => {
+                  const ep = royaltyModalData.epochId || activeRoyaltyEpochId;
+                  if (!e.currentTarget.src.includes('.jpg')) {
+                    e.currentTarget.src = `/vibe-club-royalties-${ep}.jpg`;
+                  } else {
+                    e.currentTarget.src = '/vibe-club-royalties-banner.jpg';
+                  }
                 }}
               />
             </div>
@@ -3192,7 +3235,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 </div>
                 <button
                   onClick={() => {
-                    const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`;
+                    const currentEp = royaltyModalData.epochId || activeRoyaltyEpochId;
+                    const currentTitle = royaltyModalData.roundName || activeRoyaltyRound.name;
+                    const currentAmt = (royaltyModalData.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US');
+                    const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${currentAmt} $VIBE claimed in Vibe Club ${currentTitle} on Base!\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`;
                     const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
                     window.open(shareUrl, '_blank', 'noopener,noreferrer');
                   }}

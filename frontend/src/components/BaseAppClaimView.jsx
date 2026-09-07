@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getRoyaltyBannerUrl } from '../Checker';
 import {
   CheckCircle2,
   AlertCircle,
@@ -191,7 +192,9 @@ export function BaseAppClaimView(props) {
   // Download / Save Banner
   const handleDownloadBanner = async () => {
     setDownloadingBanner(true);
-    const imageUrl = '/vibe-club-royalties-banner.jpg';
+    const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
+    const imageUrl = getRoyaltyBannerUrl(ep);
+    const fileName = `vibe-club-royalties-${ep}-claimed.jpg`;
     try {
       const isMobileDevice = typeof navigator !== 'undefined' && (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
@@ -202,12 +205,12 @@ export function BaseAppClaimView(props) {
         try {
           const response = await fetch(imageUrl);
           const blob = await response.blob();
-          const file = new File([blob], 'vibe-reward-claimed.jpg', { type: 'image/jpeg' });
+          const file = new File([blob], fileName, { type: 'image/jpeg' });
           if (navigator.canShare({ files: [file] })) {
             await navigator.share({
               files: [file],
-              title: 'Vibe Rewards Claimed',
-              text: 'Vibe Rewards Claimed 🐶💰'
+              title: `Vibe Rewards Royalty ${ep} Claimed`,
+              text: `Vibe Rewards Royalty ${ep} Claimed 🐶💰`
             });
             setDownloadingBanner(false);
             return;
@@ -222,7 +225,7 @@ export function BaseAppClaimView(props) {
 
       const link = document.createElement('a');
       link.href = imageUrl;
-      link.download = 'vibe-reward-claimed.jpg';
+      link.download = fileName;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -236,10 +239,12 @@ export function BaseAppClaimView(props) {
 
   const getShareTwitterUrl = (item) => {
     const isRoyalty = item?.type === 'vibeclub' || item?.id?.includes('vibeclub') || item?.title?.toLowerCase().includes('royalty');
-    const amt = item?.amount ? Number(item.amount).toLocaleString() : '22,935';
+    const ep = item?.roundId || (item?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
+    const amt = item?.amount ? Number(item.amount).toLocaleString('en-US') : (ep === 2 ? '17,117' : '22,935');
+    const roundTitle = item?.title || `Vibe Club · Royalty ${ep}`;
     const text = isRoyalty
-      ? `I just claimed ${amt} $VIBE royalties from Vibe Club on @VIBEDOG_BASE! 👑🐶 Holding my NFT and sharing 20% royalties every 10 days.`
-      : `I just claimed ${amt} $VIBE Holder Rewards on @VIBEDOG_BASE! 💎🐶 100M tokens distributed to 5M+ holders. Check eligibility:`;
+      ? `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${amt} $VIBE claimed in ${roundTitle} on @VIBEDOG_BASE! Holding Vibe Club NFT unlocks passive $VIBE payouts every 10 days.\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`
+      : `I just claimed +${amt} $VIBE Holder Rewards on @VIBEDOG_BASE! 💎🐶 100M tokens distributed to 5M+ holders. Check eligibility:`;
     const url = 'https://vibehome.dog/claim';
     return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
   };
@@ -1056,15 +1061,23 @@ export function BaseAppClaimView(props) {
             </h3>
 
             <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, margin: '0 0 16px 0' }}>
-              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || 22935).toLocaleString()} $VIBE</strong> in {shareModalItem.title} 🐶🔥
+              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 2}`} 🐶🔥
             </p>
 
             {/* Banner Preview */}
             <div style={{ borderRadius: '14px', overflow: 'hidden', border: '1.5px solid rgba(0, 245, 255, 0.35)', marginBottom: '18px' }}>
               <img
-                src="/vibe-club-royalties-banner.jpg"
+                src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2)))}
                 alt="Claim Banner"
                 style={{ width: '100%', height: 'auto', display: 'block' }}
+                onError={(e) => {
+                  const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
+                  if (!e.currentTarget.src.includes('.jpg')) {
+                    e.currentTarget.src = `/vibe-club-royalties-${ep}.jpg`;
+                  } else {
+                    e.currentTarget.src = '/vibe-club-royalties-banner.jpg';
+                  }
+                }}
               />
             </div>
 
