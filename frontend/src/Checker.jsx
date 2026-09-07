@@ -49,14 +49,65 @@ export function getRoyaltyBannerUrl(epochId) {
   return `/vibe-club-royalties-${epoch}.jfif`;
 }
 
-// Helper to fetch exact historical claim transactions from Base block explorer (<200ms)
-export async function fetchUserClaimTransactions(userAddress) {
+// Helper to fetch exact historical claim transactions from on-chain RPC logs + Base block explorer
+export async function fetchUserClaimTransactions(userAddress, customClient = null) {
   if (!userAddress) return {};
   try {
-    let url = `https://base.blockscout.com/api/v2/addresses/${userAddress.toLowerCase()}/token-transfers?type=ERC-20&token=${CA}`;
     const map = {};
+    const lowerUser = userAddress.toLowerCase();
     const DISTRIBUTOR_CA_LOWER = DISTRIBUTOR_CA.toLowerCase();
     const ROYALTY_CA_LOWER = ROYALTY_DISTRIBUTOR_CA.toLowerCase();
+
+    // Expected allocations for this user if available in proof data
+    const expHolder1 = round1Data?.claims?.[lowerUser]?.amount;
+    const expRoyalty1 = royalty1Data?.claims?.[lowerUser]?.amount;
+    const expRoyalty2 = royalty2Data?.claims?.[lowerUser]?.amount;
+
+    // 1. Direct on-chain RPC getLogs for the most recent ~9,000 blocks (captures active round claims with 100% precision)
+    try {
+      const client = customClient || getPublicClient();
+      const currentBlock = await client.getBlockNumber();
+      const logs = await client.getLogs({
+        address: CA,
+        event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
+        args: { to: userAddress },
+        fromBlock: currentBlock > 9000n ? (currentBlock - 9000n) : 0n,
+        toBlock: currentBlock
+      });
+
+      if (logs && logs.length > 0) {
+        for (const log of logs) {
+          const from = log.args.from?.toLowerCase();
+          const valNum = Number(formatUnits(log.args.value || 0n, 18));
+          // Strictly ignore large emergency admin withdrawals (e.g. > 500,000 $VIBE)
+          if (valNum > 500000) continue;
+
+          if (from === ROYALTY_CA_LOWER) {
+            // For Royalty 2 (active around Sep 7):
+            if (!map['vibeclub-2'] || (expRoyalty2 && Math.abs(valNum - expRoyalty2) < 1)) {
+              map['vibeclub-2'] = {
+                txHash: log.transactionHash,
+                amount: expRoyalty2 || valNum,
+                timestamp: new Date().toISOString()
+              };
+            }
+          } else if (from === DISTRIBUTOR_CA_LOWER) {
+            if (!map['holder-1'] || (expHolder1 && Math.abs(valNum - expHolder1) < 1)) {
+              map['holder-1'] = {
+                txHash: log.transactionHash,
+                amount: expHolder1 || valNum,
+                timestamp: new Date().toISOString()
+              };
+            }
+          }
+        }
+      }
+    } catch (rpcLogErr) {
+      console.warn('RPC log query error:', rpcLogErr);
+    }
+
+    // 2. Query Base explorer API (Blockscout) for full history across all rounds
+    let url = `https://base.blockscout.com/api/v2/addresses/${lowerUser}/token-transfers?type=ERC-20&token=${CA}`;
     let pageCount = 0;
 
     while (url && pageCount < 6) {
@@ -71,11 +122,15 @@ export async function fetchUserClaimTransactions(userAddress) {
           const timestamp = item?.timestamp;
           const valueNum = Number(BigInt(item?.total?.value || 0) / 10n**18n);
 
+          // Strictly ignore large emergency admin withdrawals
+          if (valueNum > 500000) continue;
+
           if (from === DISTRIBUTOR_CA_LOWER) {
             const isUnlock1 = !timestamp || new Date(timestamp).getTime() < new Date('2026-09-20').getTime();
             const roundKey = isUnlock1 ? 'holder-1' : 'holder-2';
-            if (!map[roundKey]) {
-              map[roundKey] = { txHash, timestamp, amount: valueNum };
+            const expectedAmt = isUnlock1 ? expHolder1 : null;
+            if (!map[roundKey] || (expectedAmt && Math.abs(valueNum - expectedAmt) < 1)) {
+              map[roundKey] = { txHash, timestamp, amount: expectedAmt || valueNum };
             }
           } else if (from === ROYALTY_CA_LOWER) {
             const txTime = new Date(timestamp).getTime();
@@ -83,18 +138,21 @@ export async function fetchUserClaimTransactions(userAddress) {
             const sep12 = new Date('2026-09-12T00:00:00Z').getTime();
             
             let royaltyKey = 'vibeclub-1';
+            let expectedAmt = expRoyalty1;
             if (txTime >= sep1 && txTime < sep12) {
               royaltyKey = 'vibeclub-2';
+              expectedAmt = expRoyalty2;
             } else if (txTime >= sep12) {
               royaltyKey = 'vibeclub-3';
+              expectedAmt = null;
             }
-            if (!map[royaltyKey]) {
-              map[royaltyKey] = { txHash, timestamp, amount: valueNum };
+            if (!map[royaltyKey] || (expectedAmt && Math.abs(valueNum - expectedAmt) < 1)) {
+              map[royaltyKey] = { txHash, timestamp, amount: expectedAmt || valueNum };
             }
           }
         }
       }
-      url = data?.next_page_params ? (`https://base.blockscout.com/api/v2/addresses/${userAddress.toLowerCase()}/token-transfers?` + new URLSearchParams(data.next_page_params).toString()) : null;
+      url = data?.next_page_params ? (`https://base.blockscout.com/api/v2/addresses/${lowerUser}/token-transfers?` + new URLSearchParams(data.next_page_params).toString()) : null;
     }
     return map;
   } catch (err) {
@@ -316,7 +374,29 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         const stored = localStorage.getItem(`vibe_claim_history_${address.toLowerCase()}`);
         if (stored) {
           const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed)) setClaimedHistory(getSortedClaimedHistory(parsed));
+          if (Array.isArray(parsed)) {
+            const sanitized = parsed.map(item => {
+              if (item.id === 'vibeclub-2') {
+                const correctAmt = royalty2Data?.claims?.[address.toLowerCase()]?.amount || 17117;
+                const isBadTx = item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa' || (item.amount && item.amount > 500000);
+                return {
+                  ...item,
+                  amount: correctAmt,
+                  txHash: isBadTx ? null : item.txHash
+                };
+              }
+              if (item.id === 'vibeclub-1') {
+                const correctAmt = royalty1Data?.claims?.[address.toLowerCase()]?.amount || 22935;
+                return { ...item, amount: correctAmt };
+              }
+              if (item.id === 'holder-1') {
+                const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
+                return { ...item, amount: correctAmt };
+              }
+              return item;
+            });
+            setClaimedHistory(getSortedClaimedHistory(sanitized));
+          }
         }
       } catch {}
 
@@ -328,9 +408,18 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
             let changed = false;
             const updated = prev.map(item => {
               const info = txMap[item.id];
-              if (info && (!item.txHash || !item.txHash.startsWith('0x'))) {
-                changed = true;
-                return { ...item, txHash: info.txHash, timestamp: info.timestamp || item.timestamp };
+              if (info) {
+                const isBadTx = !item.txHash || !item.txHash.startsWith('0x') || item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
+                const isBadAmt = !item.amount || item.amount > 500000;
+                if (isBadTx || isBadAmt || (info.txHash && info.txHash !== item.txHash)) {
+                  changed = true;
+                  return {
+                    ...item,
+                    txHash: info.txHash || item.txHash,
+                    timestamp: info.timestamp || item.timestamp,
+                    amount: (info.amount && info.amount <= 500000) ? info.amount : item.amount
+                  };
+                }
               }
               return item;
             });
@@ -415,9 +504,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const existingItem = existingHistory.find(h => h && h.id === 'holder-1');
       const holderAmount = round1Data?.claims?.[userAddress.toLowerCase()]?.amount || 126127;
       const txInfo = txMap['holder-1'];
-      const txHash = txInfo?.txHash || existingItem?.txHash || null;
+      let txHash = (txInfo?.txHash && txInfo.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa')
+        ? txInfo.txHash
+        : ((existingItem?.txHash && existingItem.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') ? existingItem.txHash : null);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || '2026-08-26T14:00:00.000Z';
-      const amount = txInfo?.amount || existingItem?.amount || holderAmount;
+      const amount = holderAmount;
 
       const syncedItem = {
         id: 'holder-1',
@@ -450,9 +541,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const defaultTime = roundId === 2 ? '2026-09-07T14:00:00.000Z' : '2026-08-28T14:00:00.000Z';
       const royaltyAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
       const txInfo = txMap[`vibeclub-${roundId}`];
-      const txHash = txInfo?.txHash || existingItem?.txHash || null;
+      let txHash = (txInfo?.txHash && txInfo.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa')
+        ? txInfo.txHash
+        : ((existingItem?.txHash && existingItem.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') ? existingItem.txHash : null);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || defaultTime;
-      const amount = txInfo?.amount || existingItem?.amount || royaltyAmount;
+      const amount = royaltyAmount;
 
       const syncedItem = {
         id: `vibeclub-${roundId}`,
@@ -555,7 +648,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       let txMap = {};
       if (hasAnyClaim) {
         try {
-          txMap = await fetchUserClaimTransactions(address);
+          txMap = await fetchUserClaimTransactions(address, client);
         } catch (e) {}
       }
 
