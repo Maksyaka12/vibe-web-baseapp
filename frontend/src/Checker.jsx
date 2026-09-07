@@ -27,6 +27,7 @@ import {
 } from 'lucide-react';
 import round1Data from './data/round_1_proofs.json';
 import royalty1Data from './data/royalty_1_proofs.json';
+import royalty2Data from './data/royalty_2_proofs.json';
 import nftNames from './data/nftNames.json';
 import { BaseAppClaimView } from './components/BaseAppClaimView';
 import { BaseAppProfileView } from './components/BaseAppProfileView';
@@ -58,7 +59,7 @@ const HOLDER_ROUNDS = [
 
 const VIBECLUB_ROUNDS = [
   { id: 1, name: 'Royalty 1', pool: '2,500,000 $VIBE', snapshotDate: 'Aug 28, 00:00 UTC', snapshotIso: '2026-08-28T00:00:00Z', claimDate: 'Aug 28', targetDate: '2026-08-28T14:00:00Z', nextSnapshotDate: '2026-09-07T00:00:00Z' },
-  { id: 2, name: 'Royalty 2', pool: 'TBA', snapshotDate: 'Sep 7, 00:00 UTC', snapshotIso: '2026-09-07T00:00:00Z', claimDate: 'Sep 7', targetDate: '2026-09-07T14:00:00Z', nextSnapshotDate: '2026-09-17T00:00:00Z' },
+  { id: 2, name: 'Royalty 2', pool: '1,900,000 $VIBE', snapshotDate: 'Sep 7, 00:00 UTC', snapshotIso: '2026-09-07T00:00:00Z', claimDate: 'Sep 7', targetDate: '2026-09-07T14:00:00Z', nextSnapshotDate: '2026-09-17T00:00:00Z' },
   { id: 3, name: 'Royalty 3', pool: 'TBA', snapshotDate: 'Sep 17, 00:00 UTC', snapshotIso: '2026-09-17T00:00:00Z', claimDate: 'Sep 17', targetDate: '2026-09-17T14:00:00Z', nextSnapshotDate: '2026-09-27T00:00:00Z' },
   { id: 4, name: 'Royalty 4', pool: 'TBA', snapshotDate: 'Sep 27, 00:00 UTC', snapshotIso: '2026-09-27T00:00:00Z', claimDate: 'Sep 27', targetDate: '2026-09-27T14:00:00Z', nextSnapshotDate: '2026-10-07T00:00:00Z' },
   { id: 5, name: 'Royalty 5', pool: 'TBA', snapshotDate: 'Oct 7, 00:00 UTC', snapshotIso: '2026-10-07T00:00:00Z', claimDate: 'Oct 7', targetDate: '2026-10-07T14:00:00Z', nextSnapshotDate: '2026-10-17T00:00:00Z' },
@@ -221,8 +222,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const getSortedClaimedHistory = (list) => {
     if (!Array.isArray(list)) return [];
     return [...list].sort((a, b) => {
-      const defaultTimeA = a?.id === 'vibeclub-1' ? '2026-08-28T14:00:00.000Z' : '2026-08-26T14:00:00.000Z';
-      const defaultTimeB = b?.id === 'vibeclub-1' ? '2026-08-28T14:00:00.000Z' : '2026-08-26T14:00:00.000Z';
+      const defaultTimeA = a?.id === 'vibeclub-2' ? '2026-09-07T14:00:00.000Z' : (a?.id === 'vibeclub-1' ? '2026-08-28T14:00:00.000Z' : '2026-08-26T14:00:00.000Z');
+      const defaultTimeB = b?.id === 'vibeclub-2' ? '2026-09-07T14:00:00.000Z' : (b?.id === 'vibeclub-1' ? '2026-08-28T14:00:00.000Z' : '2026-08-26T14:00:00.000Z');
       const timeA = new Date(a?.timestamp || defaultTimeA).getTime();
       const timeB = new Date(b?.timestamp || defaultTimeB).getTime();
       return timeB - timeA;
@@ -345,25 +346,28 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   };
 
   // Lightweight sync of claimed transaction history for Vibe Club Royalties
-  const syncRoyaltyClaimHistory = async (client, userAddress, targetCa) => {
+  const syncRoyaltyClaimHistory = async (client, userAddress, targetCa, roundId = 1) => {
     try {
       const existingHistory = JSON.parse(localStorage.getItem(`vibe_claim_history_${userAddress.toLowerCase()}`) || '[]');
-      const existingItem = existingHistory.find(h => h && h.id === 'vibeclub-1');
-      const royaltyAmount = royalty1Data?.claims?.[userAddress.toLowerCase()]?.amount || 22935;
+      const existingItem = existingHistory.find(h => h && h.id === `vibeclub-${roundId}`);
+      const rData = roundId === 2 ? royalty2Data : royalty1Data;
+      const defaultAmt = roundId === 2 ? 17117 : 22935;
+      const defaultTime = roundId === 2 ? '2026-09-07T14:00:00.000Z' : '2026-08-28T14:00:00.000Z';
+      const royaltyAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
 
       const syncedItem = {
-        id: 'vibeclub-1',
+        id: `vibeclub-${roundId}`,
         type: 'vibeclub',
-        roundId: 1,
-        title: 'Vibe Club Royalties · Royalty 1',
+        roundId: roundId,
+        title: `Vibe Club Royalties · Royalty ${roundId}`,
         amount: royaltyAmount,
         txHash: existingItem?.txHash || null,
-        timestamp: existingItem?.timestamp || '2026-08-28T14:00:00.000Z'
+        timestamp: existingItem?.timestamp || defaultTime
       };
 
       setClaimedHistory(prev => {
         const prevList = Array.isArray(prev) ? prev : [];
-        const updated = getSortedClaimedHistory([syncedItem, ...prevList.filter(h => h && h.id !== 'vibeclub-1')]);
+        const updated = getSortedClaimedHistory([syncedItem, ...prevList.filter(h => h && h.id !== `vibeclub-${roundId}`)]);
         localStorage.setItem(`vibe_claim_history_${userAddress.toLowerCase()}`, JSON.stringify(updated));
         return updated;
       });
@@ -411,6 +415,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
             abi: parseAbi(['function hasClaimed(uint256, address) view returns (bool)']),
             functionName: 'hasClaimed',
             args: [1n, address]
+          },
+          {
+            address: targetRoyaltyCa,
+            abi: parseAbi(['function hasClaimed(uint256, address) view returns (bool)']),
+            functionName: 'hasClaimed',
+            args: [2n, address]
           }
         ],
         allowFailure: true
@@ -448,7 +458,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       }
       if (results[4]?.status === 'success' && results[4].result === true) {
         setClaimStatus(prev => ({ ...prev, 'vibeclub-1': 'claimed' }));
-        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa);
+        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 1);
+      }
+      if (results[5]?.status === 'success' && results[5].result === true) {
+        setClaimStatus(prev => ({ ...prev, 'vibeclub-2': 'claimed' }));
+        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 2);
       }
     } catch (e) {
       console.warn("Background balance fetch error:", e);
@@ -470,15 +484,6 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const hasConfirmedHolderClaim = !!userProofData;
   const holderRewardAmount = userProofData ? (userProofData.amount || 0) : (isHolderEligibleLive ? 500000 : 0);
 
-  // Proof data for Royalty 1 Vibe Club
-  const userRoyaltyProofData = (address && royalty1Data && royalty1Data.claims) ? royalty1Data.claims[address.toLowerCase()] : null;
-  const isVibeClubEligible = (nftCount !== null && nftCount > 0) || !!userRoyaltyProofData;
-  const hasConfirmedRoyaltyClaim = !!userRoyaltyProofData;
-  const vibeClubRewardAmount = userRoyaltyProofData ? (userRoyaltyProofData.amount || 0) : (isVibeClubEligible ? 22935 : 0);
-
-  // Check if connected wallet is Admin / Contract Owner
-  const isAdmin = !!(address && (address.toLowerCase() === ADMIN_WALLET.toLowerCase()));
-
   // Check Claim Status for Round 1 Holder
   const isHolderRound1Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'holder-1')) || claimStatus['holder-1'] === 'claimed';
   const isHolderRound1Ended = currentTime >= new Date(HOLDER_ROUNDS[0].nextSnapshotDate || '2026-09-25T00:00:00Z');
@@ -491,25 +496,51 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const isVibeClubRoyalty1Live = currentTime >= new Date(VIBECLUB_ROUNDS[0].targetDate) && !isVibeClubRoyalty1Ended;
   const isVibeClubRoyalty1Available = isVibeClubRoyalty1Live && !isVibeClubRoyalty1Claimed;
 
+  // Check Claim Status for Royalty 2 Vibe Club
+  const isVibeClubRoyalty2Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'vibeclub-2')) || claimStatus['vibeclub-2'] === 'claimed';
+  const isVibeClubRoyalty2Ended = currentTime >= new Date(VIBECLUB_ROUNDS[1].nextSnapshotDate || '2026-09-17T00:00:00Z');
+  const isVibeClubRoyalty2Live = currentTime >= new Date(VIBECLUB_ROUNDS[1].targetDate) && !isVibeClubRoyalty2Ended;
+  const isVibeClubRoyalty2Available = isVibeClubRoyalty2Live && !isVibeClubRoyalty2Claimed;
+
+  // Active Royalty Round & Proof Data
+  const activeRoyaltyEpochId = isVibeClubRoyalty1Ended ? 2 : 1;
+  const activeRoyaltyRound = isVibeClubRoyalty1Ended ? VIBECLUB_ROUNDS[1] : VIBECLUB_ROUNDS[0];
+  const activeRoyaltyData = activeRoyaltyEpochId === 2 ? royalty2Data : royalty1Data;
+  const userRoyaltyProofData = (address && activeRoyaltyData && activeRoyaltyData.claims) ? activeRoyaltyData.claims[address.toLowerCase()] : null;
+  const isVibeClubEligible = (nftCount !== null && nftCount > 0) || !!userRoyaltyProofData;
+  const hasConfirmedRoyaltyClaim = !!userRoyaltyProofData;
+  const vibeClubRewardAmount = userRoyaltyProofData ? (userRoyaltyProofData.amount || 0) : (isVibeClubEligible ? (activeRoyaltyEpochId === 2 ? 17117 : 22935) : 0);
+
+  const activeRoyaltyClaimed = activeRoyaltyEpochId === 2 ? isVibeClubRoyalty2Claimed : isVibeClubRoyalty1Claimed;
+  const activeRoyaltyLive = activeRoyaltyEpochId === 2 ? isVibeClubRoyalty2Live : isVibeClubRoyalty1Live;
+  const activeRoyaltyAvailable = activeRoyaltyEpochId === 2 ? isVibeClubRoyalty2Available : isVibeClubRoyalty1Available;
+
+  // Check if connected wallet is Admin / Contract Owner
+  const isAdmin = !!(address && (address.toLowerCase() === ADMIN_WALLET.toLowerCase()));
+
   // Available claim count (where user is eligible and ready to claim)
   const availableHolderCount = (isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? 1 : 0;
-  const availableVibeClubCount = (isVibeClubRoyalty1Available && isVibeClubEligible) ? 1 : 0;
+  const availableVibeClubCount = (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? 1 : 0;
   const totalAvailableCount = availableHolderCount + availableVibeClubCount;
 
   // Next Upcoming Unlocks to Display
   const upcomingHolderRound = (isHolderRound1Live || isHolderRound1Ended) ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
-  const upcomingVibeClubRound = (isVibeClubRoyalty1Live || isVibeClubRoyalty1Ended) ? VIBECLUB_ROUNDS[1] : VIBECLUB_ROUNDS[0];
+  const upcomingVibeClubRound = isVibeClubRoyalty2Live || isVibeClubRoyalty2Ended
+    ? VIBECLUB_ROUNDS[2]
+    : (isVibeClubRoyalty1Live || isVibeClubRoyalty1Ended
+      ? VIBECLUB_ROUNDS[1]
+      : VIBECLUB_ROUNDS[0]);
 
   // ⚡ High-Speed Admin Metrics Unified Multicall (<350ms)
   const fetchAdminMetrics = async (overrideType, overrideEpoch, overrideCa) => {
     try {
       const type = overrideType || adminDistributorType;
-      const epoch = overrideEpoch || adminEpochId || '1';
+      const epoch = overrideEpoch || adminEpochId || (isVibeClubRoyalty1Ended ? '2' : '1');
       const client = getPublicClient();
       const claims = Object.values(
         type === 'holder'
           ? (round1Data?.claims || {})
-          : (royalty1Data?.claims || {})
+          : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {}))
       );
       const targetCa = type === 'holder' ? DISTRIBUTOR_CA : (overrideCa || adminCustomRoyaltyCa || ROYALTY_DISTRIBUTOR_CA);
 
@@ -546,8 +577,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         }
       }
 
-      const totalWallets = claims.length || (type === 'holder' ? 42 : 109);
-      const totalPool = type === 'holder' ? 10000000 : 2500000;
+      const totalWallets = claims.length || (type === 'holder' ? 42 : (epoch === '2' ? 111 : 109));
+      const totalPool = type === 'holder' ? 10000000 : (epoch === '2' ? 1900000 : 2500000);
 
       const newMetrics = {
         contractBalance,
@@ -1005,6 +1036,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               hasConfirmedRoyaltyClaim={hasConfirmedRoyaltyClaim}
               isVibeClubRoyalty1Available={isVibeClubRoyalty1Available}
               isVibeClubRoyalty1Claimed={isVibeClubRoyalty1Claimed}
+              activeRoyaltyEpochId={activeRoyaltyEpochId}
+              activeRoyaltyRound={activeRoyaltyRound}
+              activeRoyaltyAvailable={activeRoyaltyAvailable}
+              activeRoyaltyClaimed={activeRoyaltyClaimed}
               totalAvailableCount={totalAvailableCount}
               upcomingHolderRound={upcomingHolderRound}
               upcomingVibeClubRound={upcomingVibeClubRound}
@@ -1012,6 +1047,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               VIBECLUB_ROUNDS={VIBECLUB_ROUNDS}
               round1Data={round1Data}
               royalty1Data={royalty1Data}
+              royalty2Data={royalty2Data}
               isAdmin={isAdmin}
               adminMetrics={adminMetrics}
               adminDistributorType={adminDistributorType}
@@ -1667,7 +1703,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       )}
 
                       {/* 2. Vibe Club Royalties Active Claim Card */}
-                      {isVibeClubRoyalty1Available && (
+                      {activeRoyaltyAvailable && (
                         <div
                           className="checker-reward-card"
                           style={{
@@ -1699,7 +1735,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     Vibe Club Royalties
                                   </h4>
                                   <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'rgba(0, 200, 255, 0.1)', color: '#0284c7', border: '1px solid rgba(0, 200, 255, 0.25)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
-                                    Royalty 1
+                                    {activeRoyaltyRound.name}
                                   </span>
                                 </div>
                               </div>
@@ -1742,7 +1778,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 <Crown size={12} color="#0284c7" /> Royalty Pool
                               </div>
                               <div style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
-                                2,500,000 <span style={{ fontSize: '0.86rem', color: '#0284c7', fontWeight: 800 }}>$VIBE</span>
+                                {activeRoyaltyRound.pool.replace(' $VIBE', '')} <span style={{ fontSize: '0.86rem', color: '#0284c7', fontWeight: 800 }}>$VIBE</span>
                               </div>
                             </div>
 
@@ -1770,7 +1806,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   </h5>
                                   
                                   <div style={{ fontSize: '2.0rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.03em', lineHeight: 1, margin: 0 }}>
-                                    {(vibeClubRewardAmount || 22935).toLocaleString('en-US')} <span style={{ fontSize: '1.0rem', color: '#0284c7', fontWeight: 900 }}>$VIBE</span>
+                                    {(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} <span style={{ fontSize: '1.0rem', color: '#0284c7', fontWeight: 900 }}>$VIBE</span>
                                   </div>
                                 </div>
                               ) : (
@@ -1796,7 +1832,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     style={{ width: 70, height: 70, objectFit: 'contain' }}
                                   />
                                   <h5 style={{ fontSize: '1.05rem', color: '#ef4444', margin: 0, fontWeight: 900 }}>
-                                    Not Eligible for Royalty 1
+                                    Not Eligible for {activeRoyaltyRound.name}
                                   </h5>
                                   <a
                                     href={VIBECLUB_MINT_URL}
@@ -1824,7 +1860,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                           {/* Action Button */}
                           <div>
-                            {isVibeClubRoyalty1Claimed ? (
+                            {activeRoyaltyClaimed ? (
                               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 <button
                                   disabled
@@ -1870,8 +1906,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               </div>
                             ) : (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? (
                               <button
-                                onClick={() => handleClaim('vibeclub', 1, vibeClubRewardAmount)}
-                                disabled={claimStatus['vibeclub-1'] === 'claiming'}
+                                onClick={() => handleClaim('vibeclub', activeRoyaltyEpochId, vibeClubRewardAmount)}
+                                disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId}`] === 'claiming'}
                                 className="btn-fill"
                                 style={{
                                   width: '100%',
@@ -1884,13 +1920,13 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   cursor: 'pointer'
                                 }}
                               >
-                                {claimStatus['vibeclub-1'] === 'claiming' ? (
+                                {claimStatus[`vibeclub-${activeRoyaltyEpochId}`] === 'claiming' ? (
                                   <>
                                     <Loader2 size={16} className="spin" /> Confirming Claim...
                                   </>
                                 ) : (
                                   <>
-                                    <Gift size={16} /> Claim {(vibeClubRewardAmount || 22935).toLocaleString('en-US')} $VIBE
+                                    <Gift size={16} /> Claim {(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
                                   </>
                                 )}
                               </button>
@@ -2647,9 +2683,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   <button
                     onClick={() => {
                       setAdminDistributorType('royalty');
-                      setAdminEpochId('1');
-                      setAdminMerkleRoot(royalty1Data?.merkleRoot || '');
-                      fetchAdminMetrics('royalty', '1', adminCustomRoyaltyCa || ROYALTY_DISTRIBUTOR_CA);
+                      const rEpoch = isVibeClubRoyalty1Ended ? '2' : '1';
+                      setAdminEpochId(rEpoch);
+                      setAdminMerkleRoot((rEpoch === '2' ? royalty2Data?.merkleRoot : royalty1Data?.merkleRoot) || '');
+                      fetchAdminMetrics('royalty', rEpoch, adminCustomRoyaltyCa || ROYALTY_DISTRIBUTOR_CA);
                     }}
                     style={{
                       flex: 1,
@@ -2743,7 +2780,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       Unclaimed in Round
                     </div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: '#fbbf24' }}>
-                      {adminMetrics.metricsLoading ? '...' : (adminMetrics.unclaimedTokens !== undefined ? adminMetrics.unclaimedTokens : Math.max(0, (adminDistributorType === 'holder' ? 10000000 : 2500000) - (adminMetrics.claimedTokens || 0))).toLocaleString('en-US') + ' $VIBE'}
+                      {adminMetrics.metricsLoading ? '...' : (adminMetrics.unclaimedTokens !== undefined ? adminMetrics.unclaimedTokens : Math.max(0, (adminDistributorType === 'holder' ? 10000000 : (adminEpochId === '2' ? 1900000 : 2500000)) - (adminMetrics.claimedTokens || 0))).toLocaleString('en-US') + ' $VIBE'}
                     </div>
                   </div>
                 </div>
@@ -2757,7 +2794,23 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     <input
                       type="number"
                       value={adminEpochId}
-                      onChange={(e) => setAdminEpochId(e.target.value)}
+                      onChange={(e) => {
+                        const newEpoch = e.target.value;
+                        setAdminEpochId(newEpoch);
+                        if (adminDistributorType === 'royalty') {
+                          if (newEpoch === '2') {
+                            setAdminMerkleRoot(royalty2Data?.merkleRoot || '');
+                          } else if (newEpoch === '1') {
+                            setAdminMerkleRoot(royalty1Data?.merkleRoot || '');
+                          }
+                          fetchAdminMetrics('royalty', newEpoch, adminCustomRoyaltyCa || ROYALTY_DISTRIBUTOR_CA);
+                        } else {
+                          if (newEpoch === '1') {
+                            setAdminMerkleRoot(round1Data?.merkleRoot || '');
+                          }
+                          fetchAdminMetrics('holder', newEpoch, DISTRIBUTOR_CA);
+                        }
+                      }}
                       placeholder="Round"
                       style={{
                         background: 'rgba(15, 23, 42, 0.8)',

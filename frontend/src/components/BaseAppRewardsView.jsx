@@ -4,6 +4,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
+import royalty2Data from '../data/royalty_2_proofs.json';
 
 function formatClaimCountdown(targetDate) {
   if (!targetDate) return '';
@@ -114,11 +115,14 @@ export default function BaseAppRewardsView({
   const upcomingVibeClubs = VIBECLUB_EPOCHS.filter(u => u.epoch !== featuredVibeClub.epoch);
 
   // Dynamic eligibility calculation for featured/active Vibe Club Royalty
-  // (Checks Merkle proof snapshot for Royalty 1, or Vibe Club NFT ownership)
+  // (Checks Merkle proof snapshot for Royalty 1/2, or Vibe Club NFT ownership)
   const isVibeClubActiveEligible = (() => {
     if (!authenticated || !userAddress) return false;
     const epochNum = parseInt(featuredVibeClub?.epoch?.replace(/\D/g, '') || '1', 10);
     if (epochNum === 1 && royalty1Data?.claims?.[userAddress]) {
+      return true;
+    }
+    if (epochNum === 2 && royalty2Data?.claims?.[userAddress]) {
       return true;
     }
     if (userNftCount > 0) {

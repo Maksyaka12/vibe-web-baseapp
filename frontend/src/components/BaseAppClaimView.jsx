@@ -75,6 +75,11 @@ export function BaseAppClaimView(props) {
     hasConfirmedRoyaltyClaim,
     isVibeClubRoyalty1Available,
     isVibeClubRoyalty1Claimed,
+    activeRoyaltyEpochId,
+    activeRoyaltyRound,
+    activeRoyaltyAvailable,
+    activeRoyaltyClaimed,
+    royalty2Data,
     totalAvailableCount,
     upcomingHolderRound,
     upcomingVibeClubRound
@@ -300,8 +305,8 @@ export function BaseAppClaimView(props) {
               </div>
             )}
 
-            {/* Vibe Club Royalty 1 Claim Card */}
-            {isVibeClubRoyalty1Available && isVibeClubEligible && (
+            {/* Vibe Club Royalty Active Claim Card */}
+            {((activeRoyaltyAvailable !== undefined ? activeRoyaltyAvailable : isVibeClubRoyalty1Available) && isVibeClubEligible) && (
               <div
                 style={{
                   background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
@@ -315,7 +320,7 @@ export function BaseAppClaimView(props) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <span style={{ fontSize: '14px' }}>👑</span>
                     <span style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      VIBE CLUB · ROYALTY 1
+                      VIBE CLUB · {(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 1}`).toUpperCase()}
                     </span>
                   </div>
                   <span style={{ fontSize: '6px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3px 6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
@@ -341,8 +346,8 @@ export function BaseAppClaimView(props) {
                 </div>
 
                 <button
-                  onClick={() => handleClaim('vibeclub', 1, vibeClubRewardAmount)}
-                  disabled={claimStatus['vibeclub-1'] === 'claiming'}
+                  onClick={() => handleClaim('vibeclub', activeRoyaltyEpochId || 1, vibeClubRewardAmount)}
+                  disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming'}
                   style={{
                     width: '100%',
                     background: 'rgba(0, 255, 136, 0.18)',
@@ -353,7 +358,7 @@ export function BaseAppClaimView(props) {
                     fontFamily: "'Press Start 2P', monospace",
                     fontSize: '8.5px',
                     fontWeight: 900,
-                    cursor: claimStatus['vibeclub-1'] === 'claiming' ? 'not-allowed' : 'pointer',
+                    cursor: claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming' ? 'not-allowed' : 'pointer',
                     boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
@@ -362,7 +367,7 @@ export function BaseAppClaimView(props) {
                   }}
                 >
                   <span style={{ color: '#00ff88' }}>
-                    {claimStatus['vibeclub-1'] === 'claiming' ? 'CLAIMING ON BASE...' : 'CLAIM ROYALTIES NOW'}
+                    {claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming' ? 'CLAIMING ON BASE...' : 'CLAIM ROYALTIES NOW'}
                   </span>
                   <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
                 </button>
@@ -517,7 +522,7 @@ export function BaseAppClaimView(props) {
             {/* Header: Title + Round + Status Pill */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>ROYALTY 2</span>
+                VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingVibeClubRound?.name || 'ROYALTY 2').toUpperCase()}</span>
               </div>
               <span
                 style={{

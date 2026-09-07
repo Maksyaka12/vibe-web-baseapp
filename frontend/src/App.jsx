@@ -1375,7 +1375,7 @@ const STAKING_EPOCHS = [
 
 const VIBECLUB_EPOCHS = [
   { epoch: 'Royalty 1', snapshotTime: '28 Aug, 00:00 UTC', claimDate: '28 Aug, 14:00 UTC', snapshotDateObj: new Date('2026-08-28T00:00:00Z'), dateObj: new Date('2026-08-28T14:00:00Z'), nextSnapshotDate: new Date('2026-09-07T00:00:00Z'), poolAmount: '2,500,000 $VIBE' },
-  { epoch: 'Royalty 2', snapshotTime: '7 Sep, 00:00 UTC', claimDate: '7 Sep, 14:00 UTC', snapshotDateObj: new Date('2026-09-07T00:00:00Z'), dateObj: new Date('2026-09-07T14:00:00Z'), nextSnapshotDate: new Date('2026-09-17T00:00:00Z'), poolAmount: 'TBA' },
+  { epoch: 'Royalty 2', snapshotTime: '7 Sep, 00:00 UTC', claimDate: '7 Sep, 14:00 UTC', snapshotDateObj: new Date('2026-09-07T00:00:00Z'), dateObj: new Date('2026-09-07T14:00:00Z'), nextSnapshotDate: new Date('2026-09-17T00:00:00Z'), poolAmount: '1,900,000 $VIBE' },
   { epoch: 'Royalty 3', snapshotTime: '17 Sep, 00:00 UTC', claimDate: '17 Sep, 14:00 UTC', snapshotDateObj: new Date('2026-09-17T00:00:00Z'), dateObj: new Date('2026-09-17T14:00:00Z'), nextSnapshotDate: new Date('2026-09-27T00:00:00Z'), poolAmount: 'TBA' },
   { epoch: 'Royalty 4', snapshotTime: '27 Sep, 00:00 UTC', claimDate: '27 Sep, 14:00 UTC', snapshotDateObj: new Date('2026-09-27T00:00:00Z'), dateObj: new Date('2026-09-27T14:00:00Z'), nextSnapshotDate: new Date('2026-10-07T00:00:00Z'), poolAmount: 'TBA' },
   { epoch: 'Royalty 5', snapshotTime: '7 Oct, 00:00 UTC', claimDate: '7 Oct, 14:00 UTC', snapshotDateObj: new Date('2026-10-07T00:00:00Z'), dateObj: new Date('2026-10-07T14:00:00Z'), nextSnapshotDate: new Date('2026-10-17T00:00:00Z'), poolAmount: 'TBA' },
