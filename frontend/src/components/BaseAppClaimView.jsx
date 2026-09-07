@@ -240,24 +240,16 @@ export function BaseAppClaimView(props) {
     }
   };
 
-  const handleShareOnX = (item) => {
-    const isRoyalty = item?.type === 'vibeclub' || item?.id?.includes('vibeclub') || item?.title?.toLowerCase().includes('royalty');
-    const ep = item?.roundId || (item?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
-    const amt = item?.amount ? Number(item.amount).toLocaleString('en-US') : (ep === 2 ? '17,117' : '22,935');
-    const roundTitle = item?.title || `Vibe Club · Royalty ${ep}`;
-    const text = isRoyalty
-      ? `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${amt} $VIBE claimed in ${roundTitle} on @VIBEDOG_BASE! Holding Vibe Club NFT unlocks passive $VIBE payouts every 10 days.\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`
-      : `I just claimed +${amt} $VIBE Holder Rewards on @VIBEDOG_BASE! 💎🐶 100M tokens distributed to 5M+ holders. Check eligibility:`;
-    const url = 'https://vibehome.dog/claim';
-    const fullText = `${text}\n${url}`;
+  const handleShareOnX = () => {
+    const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin Club → vibeverse.dog/vibeclub?ref=x`;
 
     const isMobile = typeof navigator !== 'undefined' && (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
       ('ontouchstart' in window && window.innerWidth <= 768)
     );
 
-    const appUrl = `twitter://post?message=${encodeURIComponent(fullText)}`;
-    const webUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    const appUrl = `twitter://post?message=${encodeURIComponent(tweetText)}`;
+    const webUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
     if (isMobile) {
       window.location.href = appUrl;

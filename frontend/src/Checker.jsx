@@ -3297,10 +3297,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 </div>
                 <button
                   onClick={() => {
-                    const currentEp = royaltyModalData.epochId || activeRoyaltyEpochId;
-                    const currentTitle = royaltyModalData.roundName || activeRoyaltyRound.name;
-                    const currentAmt = (royaltyModalData.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US');
-                    const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\n+${currentAmt} $VIBE claimed in Vibe Club ${currentTitle} on Base!\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin → https://vibeverse.dog/vibeclub?ref=x`;
+                    const tweetText = `JUST CLAIMED MY NFT ROYALTIES 🐶💰\n\nHolding Vibe Club NFT unlocks passive $VIBE payouts every 10 days to all Club Members\n\nJoin Club → vibeverse.dog/vibeclub?ref=x`;
                     const isMobile = typeof navigator !== 'undefined' && (
                       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
                       ('ontouchstart' in window && window.innerWidth <= 768)
