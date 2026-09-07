@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
-import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle } from 'lucide-react';
+import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
@@ -40,6 +40,104 @@ function ActiveClaimCountdown({ targetDate }) {
   return <span>{timeLeft}</span>;
 }
 
+function BaseAppClaimCountdownButton({ targetDate }) {
+  const [timeLeft, setTimeLeft] = useState(() => {
+    if (!targetDate) return '';
+    const now = new Date().getTime();
+    const target = new Date(targetDate).getTime();
+    const diff = target - now;
+    if (diff <= 0) return '00H 00M 00S';
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+    const pad = (n) => String(n).padStart(2, '0');
+    return `${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`;
+  });
+
+  const [isReached, setIsReached] = useState(() => {
+    if (!targetDate) return false;
+    return new Date().getTime() >= new Date(targetDate).getTime();
+  });
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      if (!targetDate) return;
+      const now = new Date().getTime();
+      const target = new Date(targetDate).getTime();
+      const diff = target - now;
+      if (diff <= 0) {
+        setIsReached(true);
+        setTimeLeft('00H 00M 00S');
+      } else {
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        const pad = (n) => String(n).padStart(2, '0');
+        setTimeLeft(`${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`);
+      }
+    };
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  if (isReached) {
+    return (
+      <Link
+        to="/claim"
+        style={{
+          width: '100%',
+          padding: '12px',
+          fontSize: '8px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '8px',
+          textDecoration: 'none',
+          background: 'rgba(0, 255, 136, 0.12)',
+          border: '1.5px solid #00ff88',
+          color: '#00ff88',
+          borderRadius: '10px',
+          fontFamily: "'Press Start 2P', monospace",
+          fontWeight: 900,
+          transition: 'all 0.2s',
+          boxSizing: 'border-box',
+          textShadow: 'none'
+        }}
+      >
+        <span style={{ color: '#00ff88' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      disabled
+      style={{
+        width: '100%',
+        padding: '12px',
+        fontSize: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        background: '#0284c7',
+        border: '1.5px solid #38bdf8',
+        color: '#ffffff',
+        borderRadius: '10px',
+        fontFamily: "'Press Start 2P', monospace",
+        fontWeight: 900,
+        boxSizing: 'border-box',
+        textShadow: 'none',
+        cursor: 'default',
+        boxShadow: '0 0 16px rgba(2, 132, 199, 0.4)'
+      }}
+    >
+      <Clock size={13} color="#ffffff" strokeWidth={2.5} />
+      <span>CLAIM IN {timeLeft}</span>
+    </button>
+  );
+}
+
 const stripYear = (str) => {
   if (!str) return '';
   return str.replace(/\s\d{4},/, ',');
@@ -51,6 +149,18 @@ const getEpochStatus = (ep, currentTime = new Date()) => {
     return 'ended';
   }
   if (ep.startDateObj && current >= ep.startDateObj) {
+    return 'active';
+  }
+  return 'upcoming';
+};
+
+const getRewardEpochStatus = (ep, currentTime = new Date()) => {
+  const current = currentTime instanceof Date ? currentTime : new Date(currentTime);
+  if (ep.status === 'ended' || ep.status === 'completed' || (ep.nextSnapshotDate && current >= ep.nextSnapshotDate)) {
+    return 'ended';
+  }
+  const start = ep.snapshotDateObj || ep.dateObj;
+  if (start && current >= start) {
     return 'active';
   }
   return 'upcoming';
@@ -110,9 +220,16 @@ export default function BaseAppRewardsView({
   })();
 
   // Vibe Club calculations
-  const activeVibeClubs = VIBECLUB_EPOCHS.filter(u => now >= u.dateObj);
-  const featuredVibeClub = activeVibeClubs[0] || VIBECLUB_EPOCHS[0];
-  const upcomingVibeClubs = VIBECLUB_EPOCHS.filter(u => u.epoch !== featuredVibeClub.epoch);
+  const activeVibeClubs = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'active');
+  const endedVibeClubs = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'ended');
+  const upcomingVibeClubs = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'upcoming');
+
+  const featuredVibeClub = activeVibeClubs[0] || upcomingVibeClubs[0] || endedVibeClubs[endedVibeClubs.length - 1] || VIBECLUB_EPOCHS[0];
+  const featuredVibeClubStatus = getRewardEpochStatus(featuredVibeClub, now);
+  const isFeaturedVibeClubClaimLive = featuredVibeClubStatus === 'active' && featuredVibeClub.dateObj && now >= featuredVibeClub.dateObj;
+
+  const otherUpcomingVibeClubs = upcomingVibeClubs.filter(u => u.epoch !== featuredVibeClub.epoch);
+  const otherEndedVibeClubs = endedVibeClubs.filter(u => u.epoch !== featuredVibeClub.epoch);
 
   // Dynamic eligibility calculation for featured/active Vibe Club Royalty
   // (Checks Merkle proof snapshot for Royalty 1/2, or Vibe Club NFT ownership)
@@ -138,7 +255,9 @@ export default function BaseAppRewardsView({
 
   const featuredStaking = activeStakings[0] || upcomingStakings[0] || endedStakings[endedStakings.length - 1] || STAKING_EPOCHS[0];
   const featuredStakingStatus = getEpochStatus(featuredStaking, now);
-  const otherStakings = STAKING_EPOCHS.filter(e => e.epoch !== featuredStaking.epoch);
+
+  const otherUpcomingStakings = upcomingStakings.filter(e => e.epoch !== featuredStaking.epoch);
+  const otherEndedStakings = endedStakings.filter(e => e.epoch !== featuredStaking.epoch);
 
   // Giveaways calculations (All active ongoing vs Past ended)
   const activeGiveaways = GIVEAWAYS_DATA.filter(e => e.status === 'ongoing');
@@ -583,12 +702,22 @@ export default function BaseAppRewardsView({
                   <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00ff88' }} />
                   <div>
                     <div style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredVibeClub.epoch}</div>
-                    <div style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>CLAIM IS LIVE</div>
+                    <div style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      {isFeaturedVibeClubClaimLive ? 'CLAIM IS LIVE' : featuredVibeClubStatus === 'active' ? 'ACTIVE' : featuredVibeClubStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
+                    </div>
                   </div>
                 </div>
-                <div style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
-                  <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
+                <div style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                  {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
+                  {isFeaturedVibeClubClaimLive ? (
+                    <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
+                  ) : featuredVibeClubStatus === 'active' ? (
+                    'ACTIVE'
+                  ) : featuredVibeClubStatus === 'ended' ? (
+                    'ENDED'
+                  ) : (
+                    'UPCOMING'
+                  )}
                 </div>
               </div>
 
@@ -606,40 +735,84 @@ export default function BaseAppRewardsView({
                   <div style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>REQUIREMENT</div>
                   <div style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", whiteSpace: 'nowrap', textShadow: 'none' }}>Vibe Club NFT Holder</div>
                 </div>
-                <div style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
-                    <CheckCircle2 size={9} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>SNAPSHOT COMPLETED</span>
+                <div style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px', overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '3px', overflow: 'hidden' }}>
+                    <CheckCircle2 size={8} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: '4.8px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, whiteSpace: 'nowrap' }}>SNAPSHOT COMPLETED</span>
                   </div>
                   <div style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredVibeClub.snapshotTime)}</div>
                 </div>
               </div>
 
-              {/* Direct Claim Action Button (Explicit Green text & border) */}
-              <Link
-                to="/claim"
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  textDecoration: 'none',
-                  background: 'rgba(0, 255, 136, 0.12)',
-                  border: '1.5px solid #00ff88',
-                  color: '#00ff88',
-                  borderRadius: '10px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontWeight: 900,
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  textShadow: 'none'
-                }}
-              >
-                <span style={{ color: '#00ff88' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
-              </Link>
+              {/* Direct Claim / Pre-claim Countdown / Disabled Action Button */}
+              {isFeaturedVibeClubClaimLive ? (
+                <Link
+                  to="/claim"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    textDecoration: 'none',
+                    background: 'rgba(0, 255, 136, 0.12)',
+                    border: '1.5px solid #00ff88',
+                    color: '#00ff88',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900,
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box',
+                    textShadow: 'none'
+                  }}
+                >
+                  <span style={{ color: '#00ff88' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                </Link>
+              ) : featuredVibeClubStatus === 'active' ? (
+                <BaseAppClaimCountdownButton targetDate={featuredVibeClub.dateObj} />
+              ) : featuredVibeClubStatus === 'ended' ? (
+                <button
+                  disabled
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#94a3b8',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900
+                  }}
+                >
+                  CLAIM ENDED
+                </button>
+              ) : (
+                <button
+                  disabled
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#94a3b8',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900
+                  }}
+                >
+                  LOCKED
+                </button>
+              )}
 
               {/* Dynamic Eligibility Indicator Under Claim Button */}
               {authenticated ? (
@@ -670,14 +843,14 @@ export default function BaseAppRewardsView({
           )}
 
           {/* Upcoming Royalty Schedule (Header: EVERY 10 DAYS + 11th Extra Card) */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+          <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>MORE ROYALTY PAYOUTS</div>
               <div style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>EVERY 10 DAYS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {upcomingVibeClubs.map((u, i) => {
+              {otherUpcomingVibeClubs.map((u, i) => {
                 const roundKey = u.epoch || `vibe-epoch-${i}`;
                 const isTooltipOpen = activeTooltip === roundKey;
                 return (
@@ -760,7 +933,7 @@ export default function BaseAppRewardsView({
                 );
               })}
 
-              {/* 11th Extra Card: More Royalty Epochs Notice */}
+              {/* Extra Card: More Royalty Epochs Notice */}
               <div
                 style={{
                   background: 'rgba(2, 11, 26, 0.75)',
@@ -776,6 +949,45 @@ export default function BaseAppRewardsView({
               </div>
             </div>
           </div>
+
+          {/* Previous Royalty Payouts */}
+          {otherEndedVibeClubs.length > 0 && (
+            <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS ROYALTY PAYOUTS</div>
+                <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>COMPLETED</div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {otherEndedVibeClubs.map((u, i) => (
+                  <div
+                    key={u.epoch || i}
+                    style={{
+                      background: 'rgba(2, 11, 26, 0.75)',
+                      border: '1px solid rgba(0, 245, 255, 0.2)',
+                      borderRadius: '10px',
+                      padding: '10px 12px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
+                      <div style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        ENDED: 7 Sep, 00:00 UTC
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.poolAmount}</div>
+                      <div style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>ENDED</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -951,95 +1163,44 @@ export default function BaseAppRewardsView({
             </div>
           )}
 
-          {/* Staking Epochs Schedule List */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+          {/* Staking Upcoming Epochs List */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>MORE STAKING EPOCHS</div>
               <div style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>EVERY 10 DAYS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {otherStakings.map((u, i) => {
-                const uStatus = getEpochStatus(u, now);
-                return (
-                  <div
-                    key={u.epoch || i}
-                    style={{
-                      background: 'rgba(2, 11, 26, 0.75)',
-                      border: uStatus === 'ended' ? '1px solid rgba(0, 245, 255, 0.3)' : uStatus === 'active' ? '1px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.15)',
-                      borderRadius: '10px',
-                      padding: '10px 12px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
-                      <div style={{ fontSize: '6.5px', color: uStatus === 'ended' ? '#88aacc' : '#ffd700', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                        {uStatus === 'ended' ? `ENDED: ${stripYear(u.endTime)}` : stripYear(u.startTime)}
-                      </div>
-                    </div>
-                    <div>
-                      {uStatus === 'ended' ? (
-                        <a
-                          href={u.link || O1_STAKING_VAULT}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            fontSize: '6.5px',
-                            color: '#00f5ff',
-                            border: '1px solid #00f5ff',
-                            background: 'rgba(0, 245, 255, 0.15)',
-                            padding: '6px 9px',
-                            borderRadius: '6px',
-                            textDecoration: 'none',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            fontFamily: "'Press Start 2P', monospace",
-                            fontWeight: 800,
-                            whiteSpace: 'nowrap'
-                          }}
-                        >
-                          <span style={{ color: '#00f5ff' }}>Withdraw &amp; Claim</span> <ArrowUpRight size={10} color="#00f5ff" />
-                        </a>
-                      ) : uStatus === 'active' ? (
-                        <a
-                          href={u.link || O1_STAKING_VAULT}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            fontSize: '6.5px',
-                            color: '#00ff88',
-                            border: '1px solid #00ff88',
-                            background: 'rgba(0, 255, 136, 0.15)',
-                            padding: '6px 9px',
-                            borderRadius: '6px',
-                            textDecoration: 'none',
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            fontFamily: "'Press Start 2P', monospace",
-                            fontWeight: 800,
-                            whiteSpace: 'nowrap'
-                          }}
-                        >
-                          <span style={{ color: '#00ff88' }}>Stake &amp; Earn</span> <ArrowUpRight size={10} color="#00ff88" />
-                        </a>
-                      ) : (
-                        <div style={{ textAlign: 'right' }}>
-                          <div style={{ fontSize: '8px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.poolAmount}</div>
-                          <div style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>UPCOMING</div>
-                        </div>
-                      )}
+              {otherUpcomingStakings.map((u, i) => (
+                <div
+                  key={u.epoch || i}
+                  style={{
+                    background: 'rgba(2, 11, 26, 0.75)',
+                    border: '1px solid rgba(0, 245, 255, 0.15)',
+                    borderRadius: '10px',
+                    padding: '10px 12px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: '8px'
+                  }}
+                >
+                  <div>
+                    <div style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
+                    <div style={{ fontSize: '6.5px', color: '#ffd700', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      {stripYear(u.startTime)}
                     </div>
                   </div>
-                );
-              })}
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '8px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      {u.poolAmount} {u.poolAmount !== 'TBA' && '$VIBE'}
+                    </div>
+                    <div style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>UPCOMING</div>
+                  </div>
+                </div>
+              ))}
 
-              {/* 5th Extra Card: More Staking Vaults Notice */}
+              {/* More Staking Vaults Notice */}
               <div
                 style={{
                   background: 'rgba(2, 11, 26, 0.75)',
@@ -1055,6 +1216,65 @@ export default function BaseAppRewardsView({
               </div>
             </div>
           </div>
+
+          {/* Staking Previous Epochs List */}
+          {otherEndedStakings.length > 0 && (
+            <div style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS STAKING EPOCHS</div>
+                <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>COMPLETED</div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {otherEndedStakings.map((u, i) => (
+                  <div
+                    key={u.epoch || i}
+                    style={{
+                      background: 'rgba(2, 11, 26, 0.75)',
+                      border: '1px solid rgba(0, 245, 255, 0.3)',
+                      borderRadius: '10px',
+                      padding: '10px 12px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
+                      <div style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        ENDED: {stripYear(u.endTime)}
+                      </div>
+                    </div>
+                    <div>
+                      <a
+                        href={u.link || O1_STAKING_VAULT}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{
+                          fontSize: '6.5px',
+                          color: '#00f5ff',
+                          border: '1px solid #00f5ff',
+                          background: 'rgba(0, 245, 255, 0.15)',
+                          padding: '6px 9px',
+                          borderRadius: '6px',
+                          textDecoration: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontWeight: 800,
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        <span style={{ color: '#00f5ff' }}>Withdraw &amp; Claim</span> <ArrowUpRight size={10} color="#00f5ff" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
