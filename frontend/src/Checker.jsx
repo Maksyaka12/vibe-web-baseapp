@@ -137,80 +137,6 @@ function formatCompactBalance(val) {
   return `${num.toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`;
 }
 
-function ClaimCountdownButton({ targetDate, onClaim }) {
-  const [timeLeft, setTimeLeft] = useState(() => formatCountdown(targetDate));
-  const [isLive, setIsLive] = useState(() => {
-    if (!targetDate) return true;
-    return new Date().getTime() >= new Date(targetDate).getTime();
-  });
-
-  useEffect(() => {
-    if (!targetDate) return;
-    const interval = setInterval(() => {
-      const nowMs = new Date().getTime();
-      const targetMs = new Date(targetDate).getTime();
-      if (nowMs >= targetMs) {
-        setIsLive(true);
-      } else {
-        setTimeLeft(formatCountdown(targetDate));
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  if (isLive) {
-    return (
-      <button
-        onClick={onClaim}
-        className="btn-fill"
-        style={{
-          width: '100%',
-          padding: '11px 14px',
-          fontSize: '0.86rem',
-          fontWeight: 800,
-          borderRadius: '12px',
-          background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-          border: '1.5px solid #10b981',
-          color: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '6px',
-          cursor: 'pointer',
-          boxShadow: '0 4px 16px rgba(16, 185, 129, 0.35)'
-        }}
-      >
-        <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
-      </button>
-    );
-  }
-
-  return (
-    <button
-      disabled
-      style={{
-        width: '100%',
-        padding: '11px 14px',
-        fontSize: '0.86rem',
-        fontWeight: 800,
-        borderRadius: '12px',
-        background: 'rgba(16, 185, 129, 0.12)',
-        border: '1.5px solid #10b981',
-        color: '#10b981',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '6px',
-        cursor: 'default',
-        boxShadow: '0 0 16px rgba(16, 185, 129, 0.2)'
-      }}
-    >
-      <Clock size={15} color="#10b981" strokeWidth={2.5} />
-      <span>Claim in {timeLeft}</span>
-    </button>
-  );
-}
-
 export default function Checker({ isBaseAppMode = false, isProfileMode = false } = {}) {
   const { ready, authenticated, user, login, logout } = usePrivy();
   const { wallets } = useWallets();
@@ -2150,51 +2076,27 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               </span>
                             </div>
                           </div>
-                          {currentTime >= new Date(upcomingHolderRound?.snapshotIso) ? (
-                            <span
-                              style={{
-                                padding: '3px 8px',
-                                borderRadius: '99px',
-                                fontSize: '0.66rem',
-                                fontWeight: 900,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.04em',
-                                background: 'rgba(16, 185, 129, 0.1)',
-                                color: '#10b981',
-                                border: '1px solid #10b981',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0
-                              }}
-                            >
-                              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-                              Active
-                            </span>
-                          ) : (
-                            <span
-                              style={{
-                                padding: '3px 8px',
-                                borderRadius: '99px',
-                                fontSize: '0.66rem',
-                                fontWeight: 900,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.04em',
-                                background: 'rgba(255, 255, 255, 0.9)',
-                                color: '#64748b',
-                                border: '1px solid rgba(0, 160, 255, 0.25)',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0
-                              }}
-                            >
-                              <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
-                              Locked
-                            </span>
-                          )}
+                          <span
+                            style={{
+                              padding: '3px 8px',
+                              borderRadius: '99px',
+                              fontSize: '0.66rem',
+                              fontWeight: 900,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.04em',
+                              background: 'rgba(255, 255, 255, 0.9)',
+                              color: '#64748b',
+                              border: '1px solid rgba(0, 160, 255, 0.25)',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              whiteSpace: 'nowrap',
+                              flexShrink: 0
+                            }}
+                          >
+                            <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
+                            Locked
+                          </span>
                         </div>
 
                         {/* Metric Box (Rewards Pool) */}
@@ -2284,97 +2186,77 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   background: '#ef4444'
                                 }}
                               >
-                                Buy &amp; Hold 5M+ $VIBE <ArrowUpRight size={13} />
+                                Buy & Hold 5M+ $VIBE <ArrowUpRight size={13} />
                               </a>
                             </div>
                           )}
                         </div>
                       </div>
 
-                      {currentTime >= new Date(upcomingHolderRound?.snapshotIso) ? (
-                        <>
-                          <ClaimCountdownButton
-                            targetDate={upcomingHolderRound?.targetDate}
-                            onClaim={() => {
-                              const el = document.getElementById('available-claims-section');
-                              if (el) el.scrollIntoView({ behavior: 'smooth' });
-                            }}
-                          />
-                          <div
-                            style={{
-                              marginTop: '10px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              fontSize: '0.74rem',
-                              color: '#059669',
-                              fontWeight: 700
-                            }}
-                          >
-                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            <span>Snapshot Completed: {upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC'}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {/* Countdown Status Pill */}
-                          <div
-                            style={{
-                              width: '100%',
-                              padding: '11px 14px',
-                              borderRadius: '12px',
-                              background: '#f8fafc',
-                              border: '1.5px solid rgba(0, 140, 255, 0.18)',
-                              color: '#475569',
-                              fontWeight: 800,
-                              fontSize: '0.84rem',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '8px',
-                              boxSizing: 'border-box'
-                            }}
-                          >
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
-                              <Lock size={13} /> Claim opens {upcomingHolderRound?.unlockDate || 'Sep 25'}
-                            </span>
-                            <span
-                              style={{
-                                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                                fontSize: '0.76rem',
-                                fontWeight: 900,
-                                background: 'rgba(0, 82, 255, 0.08)',
-                                color: 'var(--blue)',
-                                border: '1px solid rgba(0, 82, 255, 0.2)',
-                                padding: '2px 6px',
-                                borderRadius: '6px',
-                                letterSpacing: '0.03em',
-                                whiteSpace: 'nowrap'
-                              }}
-                            >
-                              {formatDigitalCountdown(upcomingHolderRound?.targetDate)}
-                            </span>
-                          </div>
+                      {/* Countdown Status Pill */}
+                      <div
+                        style={{
+                          width: '100%',
+                          padding: '11px 14px',
+                          borderRadius: '12px',
+                          background: '#f8fafc',
+                          border: '1.5px solid rgba(0, 140, 255, 0.18)',
+                          color: '#475569',
+                          fontWeight: 800,
+                          fontSize: '0.84rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          boxSizing: 'border-box'
+                        }}
+                      >
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
+                          <Lock size={13} /> Claim opens {upcomingHolderRound?.unlockDate || 'Sep 25'}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                            fontSize: '0.76rem',
+                            fontWeight: 900,
+                            background: 'rgba(0, 82, 255, 0.08)',
+                            color: 'var(--blue)',
+                            border: '1px solid rgba(0, 82, 255, 0.2)',
+                            padding: '2px 6px',
+                            borderRadius: '6px',
+                            letterSpacing: '0.03em',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          {formatDigitalCountdown(upcomingHolderRound?.targetDate)}
+                        </span>
+                      </div>
 
-                          {/* Snapshot Status Caption */}
-                          <div
-                            style={{
-                              marginTop: '10px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              fontSize: '0.74rem',
-                              color: '#64748b',
-                              fontWeight: 700
-                            }}
-                          >
+                      {/* Snapshot Status Caption */}
+                      <div
+                        style={{
+                          marginTop: '10px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.74rem',
+                          color: '#64748b',
+                          fontWeight: 700
+                        }}
+                      >
+                        {currentTime >= new Date(upcomingHolderRound?.snapshotIso) ? (
+                          <>
+                            <Check size={12} color="#10b981" strokeWidth={3} />
+                            <span>Snapshot taken: {upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC'}</span>
+                          </>
+                        ) : (
+                          <>
                             <Clock size={12} color="#64748b" />
                             <span>Snapshot date: {upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC'}</span>
-                          </div>
-                        </>
-                      )}
+                          </>
+                        )}
+                      </div>
                     </div>
 
                     {/* 2. Next Vibe Club Royalty Card */}
@@ -2415,51 +2297,27 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               </span>
                             </div>
                           </div>
-                          {currentTime >= new Date(upcomingVibeClubRound?.snapshotIso) ? (
-                            <span
-                              style={{
-                                padding: '3px 8px',
-                                borderRadius: '99px',
-                                fontSize: '0.66rem',
-                                fontWeight: 900,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.04em',
-                                background: 'rgba(16, 185, 129, 0.1)',
-                                color: '#10b981',
-                                border: '1px solid #10b981',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0
-                              }}
-                            >
-                              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981' }} />
-                              Active
-                            </span>
-                          ) : (
-                            <span
-                              style={{
-                                padding: '3px 8px',
-                                borderRadius: '99px',
-                                fontSize: '0.66rem',
-                                fontWeight: 900,
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.04em',
-                                background: 'rgba(255, 255, 255, 0.9)',
-                                color: '#64748b',
-                                border: '1px solid rgba(0, 160, 255, 0.25)',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                whiteSpace: 'nowrap',
-                                flexShrink: 0
-                              }}
-                            >
-                              <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
-                              Locked
-                            </span>
-                          )}
+                          <span
+                            style={{
+                              padding: '3px 8px',
+                              borderRadius: '99px',
+                              fontSize: '0.66rem',
+                              fontWeight: 900,
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.04em',
+                              background: 'rgba(255, 255, 255, 0.9)',
+                              color: '#64748b',
+                              border: '1px solid rgba(0, 160, 255, 0.25)',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              whiteSpace: 'nowrap',
+                              flexShrink: 0
+                            }}
+                          >
+                            <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
+                            Locked
+                          </span>
                         </div>
 
                         {/* Metric Box (Royalty Pool) */}
@@ -2556,94 +2414,70 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         </div>
                       </div>
 
-                      {currentTime >= new Date(upcomingVibeClubRound?.snapshotIso) ? (
-                        <>
-                          <ClaimCountdownButton
-                            targetDate={upcomingVibeClubRound?.targetDate}
-                            onClaim={() => {
-                              if (activeRoyaltyEpochId && vibeClubRewardAmount) {
-                                handleClaim('vibeclub', activeRoyaltyEpochId, vibeClubRewardAmount);
-                              } else {
-                                const el = document.getElementById('available-claims-section');
-                                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                              }
-                            }}
-                          />
-                          <div
-                            style={{
-                              marginTop: '10px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              fontSize: '0.74rem',
-                              color: '#059669',
-                              fontWeight: 700
-                            }}
-                          >
-                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
-                            <span>Snapshot Completed: {upcomingVibeClubRound?.snapshotDate || 'Sep 7, 00:00 UTC'}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          {/* Countdown Status Pill */}
-                          <div
-                            style={{
-                              width: '100%',
-                              padding: '11px 14px',
-                              borderRadius: '12px',
-                              background: '#f8fafc',
-                              border: '1.5px solid rgba(0, 140, 255, 0.18)',
-                              color: '#475569',
-                              fontWeight: 800,
-                              fontSize: '0.84rem',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '8px',
-                              boxSizing: 'border-box'
-                            }}
-                          >
-                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
-                              <Lock size={13} /> Claim opens {upcomingVibeClubRound?.claimDate || 'Aug 28'}
-                            </span>
-                            <span
-                              style={{
-                                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
-                                fontSize: '0.76rem',
-                                fontWeight: 900,
-                                background: 'rgba(0, 82, 255, 0.08)',
-                                color: 'var(--blue)',
-                                border: '1px solid rgba(0, 82, 255, 0.2)',
-                                padding: '2px 6px',
-                                borderRadius: '6px',
-                                letterSpacing: '0.03em',
-                                whiteSpace: 'nowrap'
-                              }}
-                            >
-                              {formatDigitalCountdown(upcomingVibeClubRound?.targetDate)}
-                            </span>
-                          </div>
+                      {/* Countdown Status Pill */}
+                      <div
+                        style={{
+                          width: '100%',
+                          padding: '11px 14px',
+                          borderRadius: '12px',
+                          background: '#f8fafc',
+                          border: '1.5px solid rgba(0, 140, 255, 0.18)',
+                          color: '#475569',
+                          fontWeight: 800,
+                          fontSize: '0.84rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          boxSizing: 'border-box'
+                        }}
+                      >
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
+                          <Lock size={13} /> Claim opens {upcomingVibeClubRound?.claimDate || 'Aug 28'}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+                            fontSize: '0.76rem',
+                            fontWeight: 900,
+                            background: 'rgba(0, 82, 255, 0.08)',
+                            color: 'var(--blue)',
+                            border: '1px solid rgba(0, 82, 255, 0.2)',
+                            padding: '2px 6px',
+                            borderRadius: '6px',
+                            letterSpacing: '0.03em',
+                            whiteSpace: 'nowrap'
+                          }}
+                        >
+                          {formatDigitalCountdown(upcomingVibeClubRound?.targetDate)}
+                        </span>
+                      </div>
 
-                          {/* Snapshot Status Caption */}
-                          <div
-                            style={{
-                              marginTop: '10px',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              gap: '6px',
-                              fontSize: '0.74rem',
-                              color: '#64748b',
-                              fontWeight: 700
-                            }}
-                          >
+                      {/* Snapshot Status Caption */}
+                      <div
+                        style={{
+                          marginTop: '10px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px',
+                          fontSize: '0.74rem',
+                          color: '#64748b',
+                          fontWeight: 700
+                        }}
+                      >
+                        {currentTime >= new Date(upcomingVibeClubRound?.snapshotIso) ? (
+                          <>
+                            <Check size={12} color="#10b981" strokeWidth={3} />
+                            <span>Snapshot taken: {upcomingVibeClubRound?.snapshotDate || 'Aug 28, 00:00 UTC'}</span>
+                          </>
+                        ) : (
+                          <>
                             <Clock size={12} color="#64748b" />
                             <span>Snapshot date: {upcomingVibeClubRound?.snapshotDate || 'Aug 28, 00:00 UTC'}</span>
-                          </div>
-                        </>
-                      )}
+                          </>
+                        )}
+                      </div>
                     </div>
 
                   </div>
