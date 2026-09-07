@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { Copy, Check, Menu, X, ArrowRight, ArrowUpRight, ArrowRightCircle, TrendingUp, Clock, Rocket, Globe, Star, Crown, Laptop, Loader2, Flame, Gift, Users, ShieldCheck, Calculator, Calendar, RotateCcw, Gamepad2, Coins, Sparkles, Lock, ChevronDown, HelpCircle } from 'lucide-react';
+import { Copy, Check, Menu, X, ArrowRight, ArrowUpRight, ArrowRightCircle, TrendingUp, Clock, Rocket, Globe, Star, Crown, Laptop, Loader2, Flame, Gift, Users, ShieldCheck, Calculator, Calendar, RotateCcw, Gamepad2, Coins, Sparkles, Lock, ChevronDown, HelpCircle, CheckCircle2 } from 'lucide-react';
 import { PrivyProvider } from '@privy-io/react-auth';
 import { WagmiProvider as PrivyWagmiProvider } from '@privy-io/wagmi';
 import { privyWagmiConfig } from './config/privyWagmi';
@@ -1534,6 +1534,81 @@ function ActiveClaimCountdown({ targetDate }) {
   return <span>{timeLeft}</span>;
 }
 
+function ClaimCountdownButton({ targetDate, href = "/claim" }) {
+  const [isLive, setIsLive] = useState(() => {
+    if (!targetDate) return true;
+    return new Date().getTime() >= new Date(targetDate).getTime();
+  });
+  const [timeLeft, setTimeLeft] = useState(() => formatCountdown(targetDate));
+
+  useEffect(() => {
+    if (!targetDate) return;
+    const interval = setInterval(() => {
+      const nowMs = new Date().getTime();
+      const targetMs = new Date(targetDate).getTime();
+      if (nowMs >= targetMs) {
+        setIsLive(true);
+      } else {
+        setTimeLeft(formatCountdown(targetDate));
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [targetDate]);
+
+  if (isLive) {
+    return (
+      <Link
+        to={href}
+        className="btn-fill"
+        style={{
+          background: 'var(--blue)',
+          color: '#ffffff',
+          padding: '11px 14px',
+          fontSize: '0.86rem',
+          fontWeight: 800,
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px',
+          width: '100%',
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+          boxShadow: '0 4px 16px rgba(0, 0, 255, 0.3)',
+          transition: 'all 0.15s'
+        }}
+      >
+        <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      disabled
+      style={{
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '11px 14px',
+        fontSize: '0.86rem',
+        fontWeight: 800,
+        borderRadius: '12px',
+        background: 'rgba(255, 255, 255, 0.85)',
+        color: '#64748b',
+        border: '1.5px solid rgba(0, 160, 255, 0.25)',
+        cursor: 'not-allowed',
+        whiteSpace: 'nowrap',
+        gap: '6px',
+        fontVariantNumeric: 'tabular-nums'
+      }}
+    >
+      <Clock size={13} color="#0284c7" /> Claim in {timeLeft}
+    </button>
+  );
+}
+
 function Rewards({ isBaseAppMode = false } = {}) {
   const [activeTab, setActiveTab] = useState(null);
   const [stakingFilter, setStakingFilter] = useState('all');
@@ -2537,6 +2612,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                   const isActive = status === 'active';
                   const isCompleted = status === 'ended';
                   const isUpcoming = status === 'upcoming';
+                  const isClaimLive = isActive && ep.dateObj && now >= ep.dateObj;
 
                   return (
                     <div
@@ -2588,18 +2664,18 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isActive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
-                              color: isActive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
-                              border: isActive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: isClaimLive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: isClaimLive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: isClaimLive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isActive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: isClaimLive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
-                            {isActive ? (
+                            {isClaimLive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={ep.nextSnapshotDate} />
@@ -2657,32 +2733,8 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         </div>
                       </div>
 
-                      {/* Action Button: Claim redirect, Claim Ended, or Locked */}
-                      {isActive ? (
-                        <Link
-                          to="/claim"
-                          className="btn-fill"
-                          style={{
-                            background: 'var(--blue)',
-                            color: '#ffffff',
-                            padding: '11px 14px',
-                            fontSize: '0.86rem',
-                            fontWeight: 800,
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '6px',
-                            width: '100%',
-                            textDecoration: 'none',
-                            whiteSpace: 'nowrap',
-                            boxShadow: '0 4px 16px rgba(0, 0, 255, 0.3)',
-                            transition: 'all 0.15s'
-                          }}
-                        >
-                          <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
-                        </Link>
-                      ) : isCompleted ? (
+                      {/* Action Button: Claim redirect, Pre-claim countdown, Claim Ended, or Locked */}
+                      {isCompleted ? (
                         <button
                           disabled
                           style={{
@@ -2704,6 +2756,66 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         >
                           <Clock size={13} /> Claim Ended
                         </button>
+                      ) : isClaimLive ? (
+                        <>
+                          <Link
+                            to="/claim"
+                            className="btn-fill"
+                            style={{
+                              background: 'var(--blue)',
+                              color: '#ffffff',
+                              padding: '11px 14px',
+                              fontSize: '0.86rem',
+                              fontWeight: 800,
+                              borderRadius: '12px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '6px',
+                              width: '100%',
+                              textDecoration: 'none',
+                              whiteSpace: 'nowrap',
+                              boxShadow: '0 4px 16px rgba(0, 0, 255, 0.3)',
+                              transition: 'all 0.15s'
+                            }}
+                          >
+                            <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
+                          </Link>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '5px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              color: '#059669',
+                              marginTop: '8px'
+                            }}
+                          >
+                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
+                            Snapshot Completed
+                          </div>
+                        </>
+                      ) : isActive ? (
+                        <>
+                          <ClaimCountdownButton targetDate={ep.dateObj} />
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '5px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              color: '#059669',
+                              marginTop: '8px'
+                            }}
+                          >
+                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
+                            Snapshot Completed
+                          </div>
+                        </>
                       ) : (
                         <button
                           disabled
@@ -2897,6 +3009,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                   const isActive = status === 'active';
                   const isCompleted = status === 'ended';
                   const isUpcoming = status === 'upcoming';
+                  const isClaimLive = isActive && u.dateObj && now >= u.dateObj;
 
                   return (
                     <div
@@ -2948,18 +3061,18 @@ function Rewards({ isBaseAppMode = false } = {}) {
                               fontWeight: 900,
                               textTransform: 'uppercase',
                               letterSpacing: '0.04em',
-                              background: isActive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
-                              color: isActive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
-                              border: isActive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
+                              background: isClaimLive ? '#ecfdf5' : isCompleted ? '#f1f5f9' : 'rgba(255, 255, 255, 0.9)',
+                              color: isClaimLive ? '#059669' : isCompleted ? '#64748b' : '#64748b',
+                              border: isClaimLive ? '1px solid #a7f3d0' : isCompleted ? '1px solid #cbd5e1' : '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '5px',
                               whiteSpace: 'nowrap',
                               flexShrink: 0,
-                              boxShadow: isActive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
+                              boxShadow: isClaimLive ? '0 2px 8px rgba(16, 185, 129, 0.15)' : 'none'
                             }}
                           >
-                            {isActive ? (
+                            {isClaimLive ? (
                               <>
                                 <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
                                 <ActiveClaimCountdown targetDate={u.nextSnapshotDate} />
@@ -3017,32 +3130,8 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         </div>
                       </div>
 
-                      {/* Action Button: Claim redirect, Claim Ended, or Locked */}
-                      {isActive ? (
-                        <Link
-                          to="/claim"
-                          className="btn-fill"
-                          style={{
-                            background: 'var(--blue)',
-                            color: '#ffffff',
-                            padding: '11px 14px',
-                            fontSize: '0.86rem',
-                            fontWeight: 800,
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '6px',
-                            width: '100%',
-                            textDecoration: 'none',
-                            whiteSpace: 'nowrap',
-                            boxShadow: '0 4px 16px rgba(0, 0, 255, 0.3)',
-                            transition: 'all 0.15s'
-                          }}
-                        >
-                          <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
-                        </Link>
-                      ) : isCompleted ? (
+                      {/* Action Button: Claim redirect, Pre-claim countdown, Claim Ended, or Locked */}
+                      {isCompleted ? (
                         <button
                           disabled
                           style={{
@@ -3064,6 +3153,66 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         >
                           <Clock size={13} /> Claim Ended
                         </button>
+                      ) : isClaimLive ? (
+                        <>
+                          <Link
+                            to="/claim"
+                            className="btn-fill"
+                            style={{
+                              background: 'var(--blue)',
+                              color: '#ffffff',
+                              padding: '11px 14px',
+                              fontSize: '0.86rem',
+                              fontWeight: 800,
+                              borderRadius: '12px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '6px',
+                              width: '100%',
+                              textDecoration: 'none',
+                              whiteSpace: 'nowrap',
+                              boxShadow: '0 4px 16px rgba(0, 0, 255, 0.3)',
+                              transition: 'all 0.15s'
+                            }}
+                          >
+                            <span>Claim</span> <ArrowUpRight size={15} strokeWidth={2.5} />
+                          </Link>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '5px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              color: '#059669',
+                              marginTop: '8px'
+                            }}
+                          >
+                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
+                            Snapshot Completed
+                          </div>
+                        </>
+                      ) : isActive ? (
+                        <>
+                          <ClaimCountdownButton targetDate={u.dateObj} />
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '5px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              color: '#059669',
+                              marginTop: '8px'
+                            }}
+                          >
+                            <CheckCircle2 size={13} color="#059669" strokeWidth={2.5} />
+                            Snapshot Completed
+                          </div>
+                        </>
                       ) : (
                         <button
                           disabled
