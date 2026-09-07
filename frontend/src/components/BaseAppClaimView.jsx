@@ -10,7 +10,9 @@ import {
   X,
   Download,
   Check,
-  Clock
+  Clock,
+  Gift,
+  Loader2
 } from 'lucide-react';
 
 const O1 = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453';
@@ -351,15 +353,28 @@ export function BaseAppClaimView(props) {
                   boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '14px' }}>💎</span>
-                    <span style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      HOLDER REWARDS · UNLOCK 1
-                    </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 1').toUpperCase()}</span>
                   </div>
-                  <span style={{ fontSize: '6px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3px 6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    READY
+                  <span
+                    style={{
+                      fontSize: '6px',
+                      color: '#00ff88',
+                      background: 'rgba(0, 255, 136, 0.15)',
+                      border: '1px solid #00ff88',
+                      borderRadius: '6px',
+                      padding: '3.5px 7px',
+                      fontFamily: "'Press Start 2P', monospace",
+                      fontWeight: 800,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      boxShadow: '0 0 8px rgba(0, 255, 136, 0.25)'
+                    }}
+                  >
+                    <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                    CLAIM LIVE
                   </span>
                 </div>
 
@@ -372,16 +387,16 @@ export function BaseAppClaimView(props) {
                     marginBottom: '12px'
                   }}
                 >
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                    YOUR REWARD ALLOCATION:
+                  <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+                    YOU'RE ELIGIBLE FOR CLAIM
                   </div>
-                  <div style={{ fontSize: '13px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                    +{holderRewardAmount.toLocaleString()} $VIBE
+                  <div style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
+                    +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
                   </div>
                 </div>
 
                 <button
-                  onClick={() => handleClaim('holder', 1, holderRewardAmount)}
+                  onClick={() => handleClaim('holder', 1, holderRewardAmount || 500000)}
                   disabled={claimStatus['holder-1'] === 'claiming'}
                   style={{
                     width: '100%',
@@ -391,21 +406,59 @@ export function BaseAppClaimView(props) {
                     padding: '12px',
                     color: '#00ff88',
                     fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8.5px',
+                    fontSize: '8px',
                     fontWeight: 900,
                     cursor: claimStatus['holder-1'] === 'claiming' ? 'not-allowed' : 'pointer',
                     boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px'
+                    gap: '7px'
                   }}
                 >
-                  <span style={{ color: '#00ff88' }}>
-                    {claimStatus['holder-1'] === 'claiming' ? 'CLAIMING ON BASE...' : 'CLAIM REWARD NOW'}
-                  </span>
-                  <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                  {claimStatus['holder-1'] === 'claiming' ? (
+                    <>
+                      <Loader2 size={13} className="spin" color="#00ff88" />
+                      <span style={{ color: '#00ff88' }}>CLAIMING ON BASE...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Gift size={13} color="#00ff88" strokeWidth={2.5} />
+                      <span style={{ color: '#00ff88' }}>
+                        CLAIM +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
+                      </span>
+                    </>
+                  )}
                 </button>
+
+                {/* Claim window ends caption with countdown */}
+                <div
+                  style={{
+                    marginTop: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '5px',
+                    fontSize: '6.5px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    color: '#88aacc'
+                  }}
+                >
+                  <Clock size={11} color="#88aacc" />
+                  <span>CLAIM WINDOW ENDS:</span>
+                  <span
+                    style={{
+                      color: '#00f5ff',
+                      background: 'rgba(0, 245, 255, 0.1)',
+                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      padding: '2px 5px',
+                      borderRadius: '4px',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    {formatCountdownLive(upcomingHolderRound?.targetDate || '2026-09-25T14:00:00Z')}
+                  </span>
+                </div>
               </div>
             )}
 
@@ -420,15 +473,28 @@ export function BaseAppClaimView(props) {
                   boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ fontSize: '14px' }}>👑</span>
-                    <span style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      VIBE CLUB · {(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 1}`).toUpperCase()}
-                    </span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                  <div style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 2}`).toUpperCase()}</span>
                   </div>
-                  <span style={{ fontSize: '6px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3px 6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    READY
+                  <span
+                    style={{
+                      fontSize: '6px',
+                      color: '#00ff88',
+                      background: 'rgba(0, 255, 136, 0.15)',
+                      border: '1px solid #00ff88',
+                      borderRadius: '6px',
+                      padding: '3.5px 7px',
+                      fontFamily: "'Press Start 2P', monospace",
+                      fontWeight: 800,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      boxShadow: '0 0 8px rgba(0, 255, 136, 0.25)'
+                    }}
+                  >
+                    <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                    CLAIM LIVE
                   </span>
                 </div>
 
@@ -441,17 +507,28 @@ export function BaseAppClaimView(props) {
                     marginBottom: '12px'
                   }}
                 >
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                    YOUR REWARD ALLOCATION:
+                  <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+                    YOU'RE ELIGIBLE FOR CLAIM
                   </div>
-                  <div style={{ fontSize: '13px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                    +{vibeClubRewardAmount.toLocaleString()} $VIBE
+                  <div style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
+                    +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
                   </div>
                 </div>
 
                 <button
-                  onClick={() => handleClaim('vibeclub', activeRoyaltyEpochId || 1, vibeClubRewardAmount)}
-                  disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming'}
+                  onClick={async () => {
+                    const ep = activeRoyaltyEpochId || 2;
+                    const amt = vibeClubRewardAmount || (ep === 2 ? 17117 : 22935);
+                    await handleClaim('vibeclub', ep, amt);
+                    setShareModalItem({
+                      id: `vibeclub-${ep}`,
+                      type: 'vibeclub',
+                      roundId: ep,
+                      title: `Vibe Club · Royalty ${ep}`,
+                      amount: amt
+                    });
+                  }}
+                  disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming'}
                   style={{
                     width: '100%',
                     background: 'rgba(0, 255, 136, 0.18)',
@@ -460,21 +537,59 @@ export function BaseAppClaimView(props) {
                     padding: '12px',
                     color: '#00ff88',
                     fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8.5px',
+                    fontSize: '8px',
                     fontWeight: 900,
-                    cursor: claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming' ? 'not-allowed' : 'pointer',
+                    cursor: claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming' ? 'not-allowed' : 'pointer',
                     boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px'
+                    gap: '7px'
                   }}
                 >
-                  <span style={{ color: '#00ff88' }}>
-                    {claimStatus[`vibeclub-${activeRoyaltyEpochId || 1}`] === 'claiming' ? 'CLAIMING ON BASE...' : 'CLAIM ROYALTIES NOW'}
-                  </span>
-                  <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                  {claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming' ? (
+                    <>
+                      <Loader2 size={13} className="spin" color="#00ff88" />
+                      <span style={{ color: '#00ff88' }}>CLAIMING ON BASE...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Gift size={13} color="#00ff88" strokeWidth={2.5} />
+                      <span style={{ color: '#00ff88' }}>
+                        CLAIM +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
+                      </span>
+                    </>
+                  )}
                 </button>
+
+                {/* Claim window ends caption with countdown */}
+                <div
+                  style={{
+                    marginTop: '10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '5px',
+                    fontSize: '6.5px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    color: '#88aacc'
+                  }}
+                >
+                  <Clock size={11} color="#88aacc" />
+                  <span>CLAIM WINDOW ENDS:</span>
+                  <span
+                    style={{
+                      color: '#00f5ff',
+                      background: 'rgba(0, 245, 255, 0.1)',
+                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      padding: '2px 5px',
+                      borderRadius: '4px',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    {formatCountdownLive(upcomingVibeClubRound?.targetDate || activeRoyaltyRound?.nextSnapshotDate || '2026-09-17T14:00:00Z')}
+                  </span>
+                </div>
               </div>
             )}
           </div>
