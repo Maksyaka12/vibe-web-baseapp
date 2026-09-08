@@ -23,15 +23,18 @@ const shortAddress = (a) => (a ? a.slice(0, 6) + '...' + a.slice(-4) : '');
 const DEX_ITEMS = [
   {
     name: 'O1 Exchange',
-    url: 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453'
+    url: 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453',
+    logo: '/o1-logo.png'
   },
   {
     name: 'Dexscreener',
-    url: 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5'
+    url: 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5',
+    logo: '/dexscreener-logo.jpg'
   },
   {
     name: 'GeckoTerminal',
-    url: 'https://www.geckoterminal.com/uk/base/pools/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5'
+    url: 'https://www.geckoterminal.com/uk/base/pools/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5',
+    logo: '/geckoterminal-logo.jpg'
   }
 ];
 
@@ -497,9 +500,22 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                         textTransform: 'uppercase'
                       }}
                     >
-                      <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {item.name}
-                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                        <img
+                          src={item.logo}
+                          alt={item.name}
+                          style={{
+                            width: '13px',
+                            height: '13px',
+                            borderRadius: '3px',
+                            objectFit: 'cover',
+                            flexShrink: 0
+                          }}
+                        />
+                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                          {item.name}
+                        </span>
+                      </div>
                       <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </a>
                   ))}
