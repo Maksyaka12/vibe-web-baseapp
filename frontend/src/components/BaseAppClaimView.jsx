@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getRoyaltyBannerUrl } from '../Checker';
 import {
   CheckCircle2,
+  XCircle,
   AlertCircle,
   RefreshCw,
   ArrowUpRight,
@@ -765,21 +766,23 @@ export function BaseAppClaimView(props) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '6px',
+                        gap: '7px',
                         background: 'rgba(255, 68, 102, 0.12)',
                         border: '1.5px solid rgba(255, 68, 102, 0.5)',
                         borderRadius: '10px',
-                        padding: '11px 10px',
+                        padding: '11px 12px',
                         textAlign: 'center',
                         textDecoration: 'none',
-                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.15)',
+                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.18)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <span style={{ fontSize: '5.8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, fontWeight: 900 }}>
-                        BUY $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE →
+                      <XCircle size={14} color="#ff4466" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 900 }}>
+                        BUY $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
+                      <ArrowRight size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}
@@ -935,21 +938,23 @@ export function BaseAppClaimView(props) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '6px',
+                        gap: '7px',
                         background: 'rgba(255, 68, 102, 0.12)',
                         border: '1.5px solid rgba(255, 68, 102, 0.5)',
                         borderRadius: '10px',
-                        padding: '11px 10px',
+                        padding: '11px 12px',
                         textAlign: 'center',
                         textDecoration: 'none',
-                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.15)',
+                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.18)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <span style={{ fontSize: '5.8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, fontWeight: 900 }}>
-                        JOIN VIBE CLUB BEFORE SNAPSHOT TO BECOME ELIGIBLE →
+                      <XCircle size={14} color="#ff4466" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 900 }}>
+                        JOIN VIBE CLUB BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
+                      <ArrowRight size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}

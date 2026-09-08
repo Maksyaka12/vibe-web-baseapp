@@ -204,27 +204,57 @@ export function BaseAppProfileView(props) {
             />
           </div>
 
-          {/* Right Column: Name, Status Pill, Address & Refresh */}
+          {/* Right Column: Address/Refresh top, Name middle, Dual Badges bottom */}
           <div
             style={{
               flex: 1,
               minWidth: 0,
-              padding: '14px 14px',
+              padding: '12px 14px',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
-              gap: '8px',
+              justifyContent: 'space-between',
+              gap: '6px',
               boxSizing: 'border-box'
             }}
           >
-            {/* NFT Name (Always Single Line with smart auto-scaling font) */}
+            {/* Top Row: Address & Refresh */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '6px' }}>
+              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {address.slice(0, 6)}...{address.slice(-4)}
+              </span>
+              <button
+                onClick={() => fetchBalances(true)}
+                disabled={loading}
+                title="Refresh Balances"
+                style={{
+                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
+                  border: '1px solid rgba(0, 245, 255, 0.4)',
+                  color: '#00f5ff',
+                  borderRadius: '5px',
+                  padding: '3px 6px',
+                  fontSize: '5.5px',
+                  fontFamily: "'Press Start 2P', monospace",
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '3px',
+                  boxShadow: '0 0 6px rgba(0, 245, 255, 0.2)',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <RefreshCw size={7} className={loading ? 'spin' : ''} />
+                <span>{loading ? '...' : 'Refresh'}</span>
+              </button>
+            </div>
+
+            {/* Middle: NFT Name (Always Single Line with smart auto-scaling font) */}
             <div
               style={{
                 fontSize: getNftFontSize(nftDisplayName),
                 color: '#ffffff',
                 fontFamily: "'Press Start 2P', monospace",
                 fontWeight: 900,
-                margin: 0,
+                margin: '2px 0',
                 lineHeight: 1.25,
                 letterSpacing: '0.2px',
                 whiteSpace: 'nowrap',
@@ -237,53 +267,91 @@ export function BaseAppProfileView(props) {
               {nftDisplayName}
             </div>
 
-            {/* Member Status Pill */}
-            <div>
+            {/* Bottom Badges: Vibe Club Status + 5M+ Holder Status */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+              {/* Badge 1: Vibe Club Status */}
               {hasNft ? (
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88', flexShrink: 0 }} />
-                  <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4.5px',
+                    background: 'rgba(0, 255, 136, 0.15)',
+                    border: '1px solid #00ff88',
+                    borderRadius: '6px',
+                    padding: '3.5px 7px',
+                    width: 'fit-content'
+                  }}
+                >
+                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
                     Vibe Club Member
                   </span>
                 </div>
               ) : (
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255, 68, 102, 0.15)', border: '1px solid #ff4466', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 6px #ff4466', flexShrink: 0 }} />
-                  <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    Not a Member
+                <Link
+                  to={getLinkPath('/vibeclub')}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4.5px',
+                    background: 'rgba(255, 68, 102, 0.15)',
+                    border: '1px solid #ff4466',
+                    borderRadius: '6px',
+                    padding: '3.5px 7px',
+                    width: 'fit-content',
+                    textDecoration: 'none',
+                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
+                  }}
+                >
+                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 5px #ff4466', flexShrink: 0 }} />
+                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    JOIN VIBE CLUB · MINT NFT ↗
+                  </span>
+                </Link>
+              )}
+
+              {/* Badge 2: 5M+ Holder Status */}
+              {isHolderEligibleLive ? (
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4.5px',
+                    background: 'rgba(0, 255, 136, 0.15)',
+                    border: '1px solid #00ff88',
+                    borderRadius: '6px',
+                    padding: '3.5px 7px',
+                    width: 'fit-content'
+                  }}
+                >
+                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    5M+ $VIBE HOLDER
                   </span>
                 </div>
+              ) : (
+                <Link
+                  to={getLinkPath('/buy')}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4.5px',
+                    background: 'rgba(255, 68, 102, 0.15)',
+                    border: '1px solid #ff4466',
+                    borderRadius: '6px',
+                    padding: '3.5px 7px',
+                    width: 'fit-content',
+                    textDecoration: 'none',
+                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
+                  }}
+                >
+                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 5px #ff4466', flexShrink: 0 }} />
+                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    BUY 5M+ $VIBE ↗
+                  </span>
+                </Link>
               )}
-            </div>
-
-            {/* Address & Refresh */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {address.slice(0, 6)}...{address.slice(-4)}
-              </span>
-              <button
-                onClick={() => fetchBalances(true)}
-                disabled={loading}
-                title="Refresh Balances"
-                style={{
-                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
-                  border: '1px solid rgba(0, 245, 255, 0.4)',
-                  color: '#00f5ff',
-                  borderRadius: '6px',
-                  padding: '3.5px 7px',
-                  fontSize: '5.5px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '3px',
-                  boxShadow: '0 0 8px rgba(0, 245, 255, 0.2)',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <RefreshCw size={8} className={loading ? 'spin' : ''} />
-                <span>{loading ? 'Updating...' : 'Refresh'}</span>
-              </button>
             </div>
           </div>
         </div>
