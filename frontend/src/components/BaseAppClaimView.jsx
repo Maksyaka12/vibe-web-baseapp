@@ -744,6 +744,7 @@ export function BaseAppClaimView(props) {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '6px',
                         background: 'rgba(0, 255, 136, 0.1)',
                         border: '1px solid rgba(0, 255, 136, 0.35)',
@@ -751,8 +752,8 @@ export function BaseAppClaimView(props) {
                         padding: '8px 10px'
                       }}
                     >
-                      <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                      <CheckCircle2 size={12} color="#00ff88" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, whiteSpace: 'nowrap' }}>
                         YOU ARE ELIGIBLE! YOU HOLD 5M+ $VIBE
                       </span>
                     </div>
@@ -766,23 +767,22 @@ export function BaseAppClaimView(props) {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '7px',
-                        background: 'rgba(255, 68, 102, 0.12)',
-                        border: '1.5px solid rgba(255, 68, 102, 0.5)',
+                        gap: '6px',
+                        background: 'rgba(255, 68, 102, 0.1)',
+                        border: '1px solid rgba(255, 68, 102, 0.4)',
                         borderRadius: '10px',
-                        padding: '11px 12px',
-                        textAlign: 'center',
+                        padding: '8px 10px',
                         textDecoration: 'none',
-                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.18)',
+                        boxShadow: '0 0 12px rgba(255, 68, 102, 0.15)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <XCircle size={14} color="#ff4466" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 900 }}>
+                      <XCircle size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
                         BUY $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
-                      <ArrowRight size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <ArrowRight size={10} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}
@@ -917,6 +917,7 @@ export function BaseAppClaimView(props) {
                       style={{
                         display: 'flex',
                         alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '6px',
                         background: 'rgba(0, 255, 136, 0.1)',
                         border: '1px solid rgba(0, 255, 136, 0.35)',
@@ -924,37 +925,37 @@ export function BaseAppClaimView(props) {
                         padding: '8px 10px'
                       }}
                     >
-                      <CheckCircle2 size={13} color="#00ff88" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                      <CheckCircle2 size={12} color="#00ff88" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, whiteSpace: 'nowrap' }}>
                         YOU ARE ELIGIBLE! YOU ARE A VIBE CLUB MEMBER!
                       </span>
                     </div>
                   ) : (
                     <Link
-                      to="/vibeclub"
+                      to={typeof window !== 'undefined' && window.location.pathname.startsWith('/app') ? '/app/vibeclub' : '/vibeclub'}
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                       style={{
                         width: '100%',
                         boxSizing: 'border-box',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '7px',
-                        background: 'rgba(255, 68, 102, 0.12)',
-                        border: '1.5px solid rgba(255, 68, 102, 0.5)',
+                        gap: '6px',
+                        background: 'rgba(255, 68, 102, 0.1)',
+                        border: '1px solid rgba(255, 68, 102, 0.4)',
                         borderRadius: '10px',
-                        padding: '11px 12px',
-                        textAlign: 'center',
+                        padding: '8px 10px',
                         textDecoration: 'none',
-                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.18)',
+                        boxShadow: '0 0 12px rgba(255, 68, 102, 0.15)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <XCircle size={14} color="#ff4466" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 900 }}>
-                        JOIN VIBE CLUB BEFORE SNAPSHOT TO BECOME ELIGIBLE
+                      <XCircle size={12} color="#ff4466" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
+                        MINT NFT BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
-                      <ArrowRight size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <ArrowRight size={10} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}
