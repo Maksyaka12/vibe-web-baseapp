@@ -10,8 +10,9 @@ import {
   Crown,
   ShieldCheck,
   Gift,
-  ArrowRightCircle,
+  ArrowRight,
   ArrowUpRight,
+  ArrowRightCircle,
   Loader2,
   TrendingUp,
   Calendar,
@@ -336,7 +337,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             </div>
           </div>
 
-          {/* Reserved for Community Banner */}
+          {/* Current Community Pool Banner */}
           <div
             style={{
               background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
@@ -350,14 +351,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             }}
           >
             <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
-              Reserved for Community:
+              Current community pool:
             </span>
             <span style={{ fontSize: '12px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
               {loading ? <Loader2 size={16} className="spin"/> : communityRewards}
             </span>
           </div>
 
-          {/* Buyback Address Card */}
+          {/* Buyback Address Card: Clean text + Basescan button */}
           <div
             style={{
               background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
@@ -365,40 +366,38 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               borderRadius: '14px',
               padding: '12px 14px',
               display: 'flex',
-              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'space-between',
               gap: '10px'
             }}
           >
-            <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.4 }}>
+            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.4 }}>
               Buyback, Burn & Rewards Address
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
-              <div style={{ background: 'rgba(2, 11, 26, 0.85)', border: '1px solid rgba(0, 245, 255, 0.18)', borderRadius: '8px', padding: '7px 10px', fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace" }}>
-                {BUYBACK_WALLET.slice(0, 6)}...{BUYBACK_WALLET.slice(-4)}
-              </div>
-              <a
-                href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  background: 'rgba(0, 82, 255, 0.2)',
-                  border: '1.5px solid #0052ff',
-                  color: '#ffffff',
-                  padding: '7px 12px',
-                  borderRadius: '8px',
-                  fontSize: '6.5px',
-                  fontWeight: 900,
-                  fontFamily: "'Press Start 2P', monospace",
-                  textDecoration: 'none'
-                }}
-              >
-                <span>BASESCAN</span>
-                <ArrowUpRight size={11} strokeWidth={2.5} />
-              </a>
-            </div>
+            </span>
+            <a
+              href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                background: 'rgba(0, 82, 255, 0.2)',
+                border: '1.5px solid #0052ff',
+                color: '#ffffff',
+                padding: '7px 12px',
+                borderRadius: '8px',
+                fontSize: '6.5px',
+                fontWeight: 900,
+                fontFamily: "'Press Start 2P', monospace",
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                flexShrink: 0
+              }}
+            >
+              <span>BASESCAN</span>
+              <ArrowUpRight size={11} strokeWidth={2.5} />
+            </a>
           </div>
 
           {/* Buyback Donut Chart Card */}
@@ -458,8 +457,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   {/* Right Callout: Community 70% */}
                   <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
                   <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="74" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Reserved for</text>
-                  <text x="106" y="86" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
+                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
@@ -532,7 +530,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    VibeVerse App <span style={{ color: '#3b82f6' }}>(30%)</span>
+                    VibeVerse App (30%)
                   </div>
                   <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Rewards pool inside the upcoming Vibe Verse App
@@ -546,7 +544,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    $VIBE Staking <span style={{ color: '#a855f7' }}>(15%)</span>
+                    $VIBE Staking (15%)
                   </div>
                   <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Yield for locking $VIBE in verified staking pool on o1
@@ -560,7 +558,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Vibe Club NFTs <span style={{ color: '#10b981' }}>(15%)</span>
+                    Vibe Club NFTs (15%)
                   </div>
                   <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Direct royalties for holders of the 333 Vibe Club NFTs
@@ -574,7 +572,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Reserve <span style={{ color: '#f59e0b' }}>(40%)</span>
+                    Reserve (40%)
                   </div>
                   <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Buffer for continuous reward refills and marketing
@@ -582,31 +580,30 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
               </div>
 
-              {/* Hub Link CTA */}
+              {/* Hub Link CTA - Clean header + arrow */}
               <Link
                 to={hubLink}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  justifyContent: 'space-between',
                   padding: '12px 14px',
                   borderRadius: '10px',
                   background: 'linear-gradient(90deg, #0052ff 0%, #00aaff 100%)',
                   textDecoration: 'none',
-                  marginTop: '4px'
+                  marginTop: '6px',
+                  boxSizing: 'border-box'
                 }}
               >
-                <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Gift color="#ffffff" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Gift color="#ffffff" size={12} />
+                  </div>
+                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                     EXPLORE REWARDS HUB
-                  </div>
-                  <div style={{ fontSize: '6px', color: 'rgba(255, 255, 255, 0.85)', fontFamily: "'Press Start 2P', monospace", marginTop: '3px' }}>
-                    Track available rewards →
-                  </div>
+                  </span>
                 </div>
+                <ArrowRight size={14} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -814,31 +811,30 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
               </div>
 
-              {/* Join Vibe Club CTA */}
+              {/* Join Vibe Club CTA - Clean header + arrow */}
               <Link
                 to="/app/vibeclub"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  justifyContent: 'space-between',
                   padding: '12px 14px',
                   borderRadius: '10px',
                   background: 'linear-gradient(90deg, #b8860b 0%, #ffd700 100%)',
                   textDecoration: 'none',
-                  marginTop: '4px'
+                  marginTop: '6px',
+                  boxSizing: 'border-box'
                 }}
               >
-                <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Crown color="#020b1a" size={14} strokeWidth={2.5} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Crown color="#020b1a" size={12} strokeWidth={2.5} />
+                  </div>
+                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
                     JOIN VIBE CLUB
-                  </div>
-                  <div style={{ fontSize: '6px', color: 'rgba(2, 11, 26, 0.8)', fontFamily: "'Press Start 2P', monospace", marginTop: '3px', fontWeight: 800 }}>
-                    Mint your NFT →
-                  </div>
+                  </span>
                 </div>
+                <ArrowRight size={14} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -870,7 +866,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
                   </filter>
                   <filter id="nftBlueGlow2" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#0052ff" floodOpacity="0.4" />
                   </filter>
                 </defs>
 
@@ -893,14 +889,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   {/* Right Callout: Community 20% */}
                   <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
                   <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="74" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Reserved for</text>
-                  <text x="106" y="86" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 20%</text>
+                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 20%</text>
 
                   {/* Left Callout: Burn 80% */}
                   <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
                   <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
                   <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 80%</text>
 
+                  {/* Center text */}
                   <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
                   <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
                 </g>
@@ -1035,31 +1031,30 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
               </div>
 
-              {/* Claim Eligibility CTA */}
+              {/* Claim Eligibility CTA - Clean header + arrow */}
               <Link
                 to={claimLink}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  justifyContent: 'space-between',
                   padding: '12px 14px',
                   borderRadius: '10px',
                   background: 'linear-gradient(90deg, #0052ff 0%, #00f5ff 100%)',
                   textDecoration: 'none',
-                  marginTop: '4px'
+                  marginTop: '6px',
+                  boxSizing: 'border-box'
                 }}
               >
-                <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                  <Check color="#ffffff" size={14} strokeWidth={3} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Check color="#020b1a" size={14} strokeWidth={3} />
+                  </div>
+                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
                     CHECK YOUR ELIGIBILITY
-                  </div>
-                  <div style={{ fontSize: '6px', color: 'rgba(2, 11, 26, 0.85)', fontFamily: "'Press Start 2P', monospace", marginTop: '3px', fontWeight: 800 }}>
-                    Qualify for next distribution →
-                  </div>
+                  </span>
                 </div>
+                <ArrowRight size={14} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -1125,7 +1120,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
   }
 
   // ═════════════════════════════════════════════════════════════════════
-  // ── ORIGINAL WEB THEME RENDERING (UNTOUCHED) ──
+  // ── ORIGINAL WEB THEME RENDERING (WITH COMM POOL & 70%/20% UPDATES) ──
   // ═════════════════════════════════════════════════════════════════════
   return (
     <section id="tokenomics" className="alt">
@@ -1199,19 +1194,19 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* Left Side: Stat Tiles */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', flex: 1 }}>
-              <div className="stile" style={{ margin: 0, padding: '24px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div className="stile" style={{ margin: 0, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <span className="v">{loading ? <Loader2 size={24} className="spin"/> : totalBuybacks}</span>
                 <span className="l">Total Buyback</span>
               </div>
-              <div className="stile" style={{ margin: 0, padding: '24px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div className="stile" style={{ margin: 0, padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <span className="v" style={{ color: '#ef4444' }}>{loading ? <Loader2 size={24} className="spin"/> : totalBurned}</span>
                 <span className="l">Total Burned</span>
               </div>
             </div>
 
-            {/* Thinner Full-Width Card 1: Reserved for Community */}
+            {/* Thinner Full-Width Card 1: Current community pool */}
             <div className="stile rev-thin-card">
-              <span className="rev-thin-label">Reserved for Community:</span>
+              <span className="rev-thin-label">Current community pool:</span>
               <span className="rev-thin-val">
                 {loading ? <Loader2 size={20} className="spin"/> : communityRewards}
               </span>
@@ -1235,7 +1230,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Side: Buyback Program */}
-          <div className="tok-card" style={{ padding: '28px 20px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative' }}>
+          <div className="tok-card" style={{ padding: '32px 24px', textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', position: 'relative' }}>
             <div>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '4px', color: 'var(--ink)' }}>Buyback Program</h3>
               <p className="sub" style={{ fontSize: '0.85rem', color: 'var(--muted)', margin: 0 }}>Strategic utilization of revenue generated.</p>
@@ -1264,29 +1259,34 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <g transform="translate(210, 140)">
                   <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
 
+                  {/* 70% Community */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#blueGradient)" strokeWidth="18"
                           strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
                           transform="rotate(-90)" filter="url(#blueGlow)" style={{ transition: 'all 0.5s ease' }} />
 
+                  {/* 30% Burn */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#burnGradient)" strokeWidth="18"
                           strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
                           transform="rotate(-90)" filter="url(#redGlow)" style={{ transition: 'all 0.5s ease' }} />
 
+                  {/* Left Callout (Burn 30% - Top Left) */}
                   <circle cx="-65" cy="-47" r="4" fill="#ef4444" />
                   <polyline points="-65,-47 -95,-70 -125,-70" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 30%</text>
 
+                  {/* Right Callout (Community 70% - Bottom Right) */}
                   <circle cx="47" cy="65" r="4" fill="#0052ff" />
                   <polyline points="47,65 75,90 115,90" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="122" y="84" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Reserved for</text>
-                  <text x="122" y="99" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
+                  <text x="122" y="94" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
 
+                  {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
                   <text x="0" y="18" fill="var(--muted)" fontSize="10" fontWeight="800" textAnchor="middle" letterSpacing="1.5px">BUYBACKS</text>
                 </g>
               </svg>
             </div>
 
+            {/* Bottom Legend Pills */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '8px', flexWrap: 'wrap' }}>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: '#ef4444' }}>
                 <Flame size={14} /> Burn 30%
@@ -1599,23 +1599,27 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <g transform="translate(210, 140)">
                   <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
 
+                  {/* 20% Community */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#nftBlueGrad)" strokeWidth="18"
                           strokeLinecap="round" pathLength="100" strokeDasharray="15 100" strokeDashoffset="-2.5"
                           transform="rotate(-90)" filter="url(#nftBlueGlow)" style={{ transition: 'all 0.5s ease' }} />
 
+                  {/* 80% Burn */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#nftBurnGrad)" strokeWidth="18"
                           strokeLinecap="round" pathLength="100" strokeDasharray="75 100" strokeDashoffset="-22.5"
                           transform="rotate(-90)" filter="url(#nftRedGlow)" style={{ transition: 'all 0.5s ease' }} />
 
-                  <circle cx="47" cy="65" r="4" fill="#0052ff" />
-                  <polyline points="47,65 75,90 115,90" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="122" y="84" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Reserved for</text>
-                  <text x="122" y="99" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
-
+                  {/* Left Callout (Burn 80% - Top Left) */}
                   <circle cx="-65" cy="-47" r="4" fill="#ef4444" />
                   <polyline points="-65,-47 -95,-70 -125,-70" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 80%</text>
 
+                  {/* Right Callout (Community 20% - Top Right) */}
+                  <circle cx="47" cy="-65" r="4" fill="#0052ff" />
+                  <polyline points="47,-65 80,-80 120,-80" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="125" y="-76" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
+
+                  {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
                   <text x="0" y="18" fill="var(--muted)" fontSize="10" fontWeight="800" textAnchor="middle" letterSpacing="1.5px">MINT REVENUE</text>
                 </g>

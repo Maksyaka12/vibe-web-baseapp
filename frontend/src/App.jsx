@@ -487,9 +487,9 @@ function Tokenomics() {
               </div>
             </div>
 
-            {/* Thinner Full-Width Card 1: Reserved for Community */}
+            {/* Thinner Full-Width Card 1: Current community pool */}
             <div className="stile rev-thin-card">
-              <span className="rev-thin-label">Reserved for Community:</span>
+              <span className="rev-thin-label">Current community pool:</span>
               <span className="rev-thin-val">
                 {loading ? <Loader2 size={20} className="spin"/> : communityRewards}
               </span>
@@ -543,7 +543,7 @@ function Tokenomics() {
                   {/* Track Ring */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
 
-                  {/* 70% Reserved for Community */}
+                  {/* 70% Community */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#blueGradient)" strokeWidth="18"
                           strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
                           transform="rotate(-90)" filter="url(#blueGlow)" style={{ transition: 'all 0.5s ease' }} />
@@ -558,11 +558,10 @@ function Tokenomics() {
                   <polyline points="-65,-47 -95,-70 -125,-70" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 30%</text>
 
-                  {/* Right Callout (Reserved for Community 70% - Bottom Right) */}
+                  {/* Right Callout (Community 70% - Bottom Right) */}
                   <circle cx="47" cy="65" r="4" fill="#0052ff" />
                   <polyline points="47,65 75,90 115,90" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="122" y="84" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Reserved for</text>
-                  <text x="122" y="99" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
+                  <text x="122" y="94" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
@@ -925,11 +924,10 @@ function Tokenomics() {
                   <polyline points="-65,-47 -95,-70 -125,-70" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 80%</text>
 
-                  {/* Right Callout (Reserved for Community 20% - Top Right at 10% of circle) */}
+                  {/* Right Callout (Community 20% - Top Right at 10% of circle) */}
                   <circle cx="47" cy="-65" r="4" fill="#0052ff" />
                   <polyline points="47,-65 80,-80 120,-80" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="125" y="-86" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Reserved for</text>
-                  <text x="125" y="-71" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
+                  <text x="125" y="-76" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
