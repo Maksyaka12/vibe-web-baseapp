@@ -6,6 +6,8 @@ import { BaseAppBottomNav } from './BaseAppBottomNav';
 import Checker from '../Checker';
 import NftClubPage from '../pages/NftClubPage';
 import DeFiVibePanel from './DeFiVibePanel';
+import TokenomicsPage from '../pages/TokenomicsPage';
+import ContractsPage from '../pages/ContractsPage';
 import './BaseAppTheme.css';
 
 class BaseAppErrorBoundary extends React.Component {
@@ -61,6 +63,8 @@ export function BaseAppView({ RewardsComponent }) {
     if (path.includes('claim') || path.includes('checker')) return 'claim';
     if (path.includes('vibeclub') || path.includes('vibe-club') || path.includes('mint') || path.includes('nft')) return 'vibeclub';
     if (path.includes('profile')) return 'profile';
+    if (path.includes('tokenomics')) return 'tokenomics';
+    if (path.includes('contracts')) return 'contracts';
     return 'hub';
   };
 
@@ -84,6 +88,10 @@ export function BaseAppView({ RewardsComponent }) {
       navigate(prefix ? '/app/vibeclub' : '/vibeclub', { replace: false });
     } else if (tabId === 'profile') {
       navigate(prefix ? '/app/profile' : '/profile', { replace: false });
+    } else if (tabId === 'tokenomics') {
+      navigate(prefix ? '/app/tokenomics' : '/tokenomics', { replace: false });
+    } else if (tabId === 'contracts') {
+      navigate(prefix ? '/app/contracts' : '/contracts', { replace: false });
     } else {
       navigate(prefix ? '/app/hub' : '/hub', { replace: false });
     }
@@ -177,6 +185,10 @@ export function BaseAppView({ RewardsComponent }) {
             <Checker isBaseAppMode={true} isProfileMode={activeTab === 'profile'} />
           ) : activeTab === 'vibeclub' ? (
             <NftClubPage isEmbeddedInBaseApp={true} />
+          ) : activeTab === 'tokenomics' ? (
+            <TokenomicsPage isBaseAppMode={true} />
+          ) : activeTab === 'contracts' ? (
+            <ContractsPage isBaseAppMode={true} />
           ) : (
             RewardsComponent ? <RewardsComponent isBaseAppMode={true} /> : null
           )}

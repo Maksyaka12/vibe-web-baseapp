@@ -3696,7 +3696,7 @@ function DomainRouter() {
         }
       />
       {/* <Route path="/about" element={<StandaloneLayout><About /></StandaloneLayout>} /> */}
-      <Route path="/tokenomics" element={<StandaloneLayout><Tokenomics /></StandaloneLayout>} />
+      <Route path="/tokenomics" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Tokenomics /></StandaloneLayout>} />
       <Route path="/hub" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
       <Route path="/rewards" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
       <Route path="/events" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
@@ -3707,7 +3707,7 @@ function DomainRouter() {
       <Route path="/trade" element={<StandaloneLayout><Swap /></StandaloneLayout>} />
       <Route path="/claim" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker /></StandaloneLayout>} />
       <Route path="/profile" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker isProfileMode={true} /></StandaloneLayout>} />
-      <Route path="/contracts" element={<StandaloneLayout><ContractsPage /></StandaloneLayout>} />
+      <Route path="/contracts" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><ContractsPage /></StandaloneLayout>} />
       <Route path="/adresses" element={<Navigate to="/contracts" replace />} />
       <Route path="/addresses" element={<Navigate to="/contracts" replace />} />
       <Route path="/docs" element={<Navigate to="/contracts" replace />} />
