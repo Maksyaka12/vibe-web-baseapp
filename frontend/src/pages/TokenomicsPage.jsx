@@ -1,6 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Flame, Users, Clock, Calculator, Gamepad2, Coins, Crown, ShieldCheck, Gift, ArrowRightCircle, ArrowUpRight, Loader2 } from 'lucide-react';
+import {
+  Flame,
+  Users,
+  Clock,
+  Calculator,
+  Gamepad2,
+  Coins,
+  Crown,
+  ShieldCheck,
+  Gift,
+  ArrowRightCircle,
+  ArrowUpRight,
+  Loader2,
+  TrendingUp,
+  Calendar,
+  Check
+} from 'lucide-react';
 import { parseAbiItem, formatUnits } from 'viem';
 import { publicClient } from '../config/rpc';
 
@@ -141,6 +157,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
   const totalSupplyStr = loading ? <Loader2 size={16} className="spin"/> : (totalBurnedNum > 0 ? formatSupply(currentTotalSupply) : '1B');
 
   const hubLink = isBaseAppMode ? '/app/hub' : '/hub';
+  const claimLink = isBaseAppMode ? '/app/claim' : '/claim';
   const vibeClubLink = isBaseAppMode ? '/app/vibeclub' : 'https://vibeverse.dog/vibeclub';
 
   // ═════════════════════════════════════════════════════════════════════
@@ -164,13 +181,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
       background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
       border: '1.5px solid rgba(0, 245, 255, 0.25)',
       borderRadius: '14px',
-      padding: '14px 10px',
+      padding: '12px 10px',
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '6px',
+      gap: '5px',
       boxSizing: 'border-box'
     };
 
@@ -202,7 +219,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         
         {/* ── BLOCK 1: TOKENOMICS INFO ── */}
         <div style={{ textAlign: 'center', marginBottom: '22px' }}>
-          <h2 style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3 }}>
+          <h2 style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             $VIBE <span style={{ color: '#00f5ff' }}>TOKENOMICS</span>
           </h2>
           <div
@@ -216,85 +233,83 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               borderRadius: '99px',
               padding: '7px 14px',
               maxWidth: '100%',
-              boxSizing: 'border-box',
-              marginBottom: '12px'
+              boxSizing: 'border-box'
             }}
           >
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
             <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-              FAIR LAUNCH · 100% COMMUNITY DISTRIBUTION
+              FAIR LAUNCH · NO TEAM ALLOCATIONS · NO INSIDER BUYS
             </span>
           </div>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 auto' }}>
-            Fair launch via o1.exchange. Zero BS. No team allocations. No insider buys.
-          </p>
         </div>
 
         {/* 4 Stat Tiles */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '32px' }}>
           {/* Total Supply */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-              {totalSupplyStr}
-            </span>
             <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Total Supply
             </span>
+            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              {totalSupplyStr}
+            </span>
             {!loading && totalBurnedNum > 0 && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '6px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', padding: '2px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", marginTop: '2px' }}>
-                <Flame size={10} strokeWidth={2.5} /> {totalBurned}
-              </span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+                <Flame size={10} color="#ff4d4d" strokeWidth={2.5} />
+                <span>{totalBurned}</span>
+              </div>
             )}
           </div>
 
           {/* Circulating */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-              {circulatingStr}
-            </span>
             <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Circulating
             </span>
+            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              {circulatingStr}
+            </span>
             {!loading && totalBurnedNum > 0 && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '6px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)', color: '#ef4444', padding: '2px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", marginTop: '2px' }}>
-                <Flame size={10} strokeWidth={2.5} /> {totalBurned}
-              </span>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+                <Flame size={10} color="#ff4d4d" strokeWidth={2.5} />
+                <span>{totalBurned}</span>
+              </div>
             )}
           </div>
 
           {/* Vesting */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-              100M
-            </span>
             <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Vesting Rewards
             </span>
-            <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginTop: '2px' }}>
-              10% monthly
+            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              100M
+            </span>
+            <span style={{ display: 'inline-block', fontSize: '6.5px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+              10% MONTHLY
             </span>
           </div>
 
           {/* Monthly Unlock */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-              10M
-            </span>
             <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Monthly Unlock
             </span>
-            <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginTop: '2px' }}>
-              To holders
+            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              10M
+            </span>
+            <span style={{ display: 'inline-block', fontSize: '6.5px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+              TO HOLDERS
             </span>
           </div>
         </div>
 
         {/* ── BLOCK 2: REVENUE ECONOMY ── */}
-        <div style={{ textAlign: 'center', marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3 }}>
+        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
+          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REVENUE <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 auto' }}>
+          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
             Creator Revenue is going towards buybacks and actions aimed at strengthening the token economy.
           </p>
         </div>
@@ -303,20 +318,20 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* 2 Stats: Total Buyback & Total Burned */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
             <div style={tileStyle}>
-              <span style={{ fontSize: '12px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-                {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
-              </span>
               <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Buyback
+              </span>
+              <span style={{ fontSize: '12px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+                {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
               </span>
             </div>
 
             <div style={tileStyle}>
-              <span style={{ fontSize: '12px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-                {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
-              </span>
               <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Burned
+              </span>
+              <span style={{ fontSize: '12px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+                {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
               </span>
             </div>
           </div>
@@ -397,9 +412,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               </p>
             </div>
 
-            {/* SVG Donut Chart */}
-            <div style={{ width: '100%', maxWidth: '320px', margin: '8px auto 4px auto' }}>
-              <svg viewBox="0 0 320 180" style={{ width: '100%', height: 'auto', display: 'block' }}>
+            {/* SVG Donut Chart with Callout Branches */}
+            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
+              <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="bpBurnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#ff5f5f" />
@@ -409,29 +424,46 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="0%" stopColor="#00f5ff" />
                     <stop offset="100%" stopColor="#0052ff" />
                   </linearGradient>
+                  <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                  </filter>
                 </defs>
 
-                <g transform="translate(160, 90)">
+                <g transform="translate(210, 125)">
                   {/* Track */}
-                  <circle cx="0" cy="0" r="54" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
 
                   {/* Community 70% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="68 100" strokeDashoffset="-2"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
+                    transform="rotate(-90)" filter="url(#bpBlueGlow)"
                   />
 
                   {/* Burn 30% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="26 100" strokeDashoffset="-72"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
+                    transform="rotate(-90)" filter="url(#bpRedGlow)"
                   />
 
+                  {/* Left Callout: Burn 30% */}
+                  <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
+                  <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
+
+                  {/* Right Callout: Community 70% */}
+                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
+                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="74" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Reserved for</text>
+                  <text x="106" y="86" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
+
                   {/* Center Text */}
-                  <text x="0" y="-2" fill="#ffffff" fontSize="16" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
+                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
+                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
                 </g>
               </svg>
             </div>
@@ -449,11 +481,11 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         </div>
 
         {/* ── BLOCK 3: REWARDS ECONOMY ── */}
-        <div style={{ textAlign: 'center', marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3 }}>
+        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
+          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REWARDS <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 auto' }}>
+          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
             Constitutes the 70% reserved for the community in the Buyback Program.
           </p>
         </div>
@@ -590,9 +622,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               </p>
             </div>
 
-            {/* SVG Donut */}
-            <div style={{ width: '100%', maxWidth: '320px', margin: '8px auto 4px auto' }}>
-              <svg viewBox="0 0 320 180" style={{ width: '100%', height: 'auto', display: 'block' }}>
+            {/* SVG Donut with Callout Branches */}
+            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
+              <svg viewBox="0 0 420 260" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="commBlueGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3b82f6" />
@@ -610,37 +642,67 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="0%" stopColor="#fbbf24" />
                     <stop offset="100%" stopColor="#f59e0b" />
                   </linearGradient>
+
+                  <filter id="commBlueGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#0052ff" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="commPurpleGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#7c3aed" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="commGreenGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#10b981" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="commAmberGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#f59e0b" floodOpacity="0.4" />
+                  </filter>
                 </defs>
 
-                <g transform="translate(160, 90)">
-                  <circle cx="0" cy="0" r="54" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                <g transform="translate(210, 130)">
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
 
                   {/* VibeVerse 30% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#commBlueGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="28 100" strokeDashoffset="-2"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#commBlueGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="26 100" strokeDashoffset="-2"
+                    transform="rotate(-90)" filter="url(#commBlueGlow2)"
                   />
                   {/* Staking 15% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#commPurpleGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="13 100" strokeDashoffset="-32"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#commPurpleGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-32"
+                    transform="rotate(-90)" filter="url(#commPurpleGlow2)"
                   />
                   {/* NFT Club 15% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#commGreenGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="13 100" strokeDashoffset="-47"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#commGreenGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-47"
+                    transform="rotate(-90)" filter="url(#commGreenGlow2)"
                   />
                   {/* Reserve 40% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#commAmberGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="38 100" strokeDashoffset="-62"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#commAmberGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="36 100" strokeDashoffset="-62"
+                    transform="rotate(-90)" filter="url(#commAmberGlow2)"
                   />
 
-                  <text x="0" y="-2" fill="#ffffff" fontSize="16" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
+                  {/* Callouts */}
+                  <circle cx="56" cy="-40" r="3.5" fill="#3b82f6" />
+                  <polyline points="56,-40 85,-60 115,-60" fill="none" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="120" y="-56" fill="#3b82f6" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">VibeVerse 30%</text>
+
+                  <circle cx="48" cy="48" r="3.5" fill="#a855f7" />
+                  <polyline points="48,48 72,70 100,70" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="73" fill="#a855f7" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
+
+                  <circle cx="-11" cy="67" r="3.5" fill="#10b981" />
+                  <polyline points="-11,67 -35,82 -70,82" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-76" y="85" fill="#10b981" fontSize="7.5" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
+
+                  <circle cx="-65" cy="-21" r="3.5" fill="#f59e0b" />
+                  <polyline points="-65,-21 -90,-48 -120,-48" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-126" y="-44" fill="#f59e0b" fontSize="7.5" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 40%</text>
+
+                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
                   <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">COMMUNITY</text>
                 </g>
               </svg>
@@ -665,16 +727,16 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         </div>
 
         {/* ── BLOCK 4: VIBE CLUB ECONOMY ── */}
-        <div style={{ textAlign: 'center', marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3 }}>
+        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
+          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             VIBE CLUB <span style={{ color: '#ffd700' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 auto' }}>
+          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
             Official $VIBE NFT collection fully integrated into B20 economy.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '36px' }}>
           {/* Breakdown Card */}
           <div style={cardStyle}>
             <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 4px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
@@ -792,9 +854,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               </p>
             </div>
 
-            {/* SVG Donut */}
-            <div style={{ width: '100%', maxWidth: '320px', margin: '8px auto 4px auto' }}>
-              <svg viewBox="0 0 320 180" style={{ width: '100%', height: 'auto', display: 'block' }}>
+            {/* SVG Donut with Callout Branches */}
+            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
+              <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="nftBurnGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#ff5f5f" />
@@ -804,26 +866,43 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="0%" stopColor="#00f5ff" />
                     <stop offset="100%" stopColor="#0052ff" />
                   </linearGradient>
+                  <filter id="nftRedGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="nftBlueGlow2" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                  </filter>
                 </defs>
 
-                <g transform="translate(160, 90)">
-                  <circle cx="0" cy="0" r="54" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                <g transform="translate(210, 125)">
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
 
                   {/* Community 20% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#nftBlueGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="18 100" strokeDashoffset="-2"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#nftBlueGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="15 100" strokeDashoffset="-2.5"
+                    transform="rotate(-90)" filter="url(#nftBlueGlow2)"
                   />
                   {/* Burn 80% */}
                   <circle
-                    cx="0" cy="0" r="54" fill="none" stroke="url(#nftBurnGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="78 100" strokeDashoffset="-22"
-                    transform="rotate(-90)"
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#nftBurnGrad2)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="75 100" strokeDashoffset="-22.5"
+                    transform="rotate(-90)" filter="url(#nftRedGlow2)"
                   />
 
-                  <text x="0" y="-2" fill="#ffffff" fontSize="16" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="6" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
+                  {/* Right Callout: Community 20% */}
+                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
+                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="74" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Reserved for</text>
+                  <text x="106" y="86" fill="#00f5ff" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 20%</text>
+
+                  {/* Left Callout: Burn 80% */}
+                  <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
+                  <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 80%</text>
+
+                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
+                  <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
                 </g>
               </svg>
             </div>
@@ -836,6 +915,207 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1px solid rgba(0, 245, 255, 0.3)', padding: '5px 10px', borderRadius: '8px', fontSize: '6.5px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                 <Users size={12} /> COMMUNITY 20%
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── BLOCK 5: VESTING DETAILS ── */}
+        <div id="vesting-details" style={{ marginBottom: '18px', marginTop: '10px', scrollMarginTop: '80px' }}>
+          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+            VESTING <span style={{ color: '#00f5ff' }}>DETAILS</span>
+          </h2>
+          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
+            100M tokens vested. Every month 10M unlocks and get distributed among holders.
+          </p>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+          {/* Holder Rewards Card */}
+          <div style={cardStyle}>
+            <h3 style={{ fontSize: '8.5px', fontWeight: 900, margin: '0 0 4px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              HOLDER REWARDS · 100M $VIBE
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <img src="/vibe-logo.png" alt="Vibe" style={{ width: '18px', height: '18px', borderRadius: '4px', objectFit: 'cover' }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    $VIBE Holders
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Hold 5M+ $VIBE to qualify
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(0, 82, 255, 0.15)', 'rgba(0, 82, 255, 0.3)')}>
+                  <TrendingUp color="#00f5ff" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Allocation Size
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    The more you hold, the larger your allocation
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
+                  <ShieldCheck color="#10b981" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Max Allocation Cap
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Set to prevent whale dominance & ensure fair distribution
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <Calculator color="#00f5ff" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Allocation Calculation
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Proportionally calculated based on holding balance
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(124, 58, 237, 0.15)', 'rgba(124, 58, 237, 0.3)')}>
+                  <Clock color="#a855f7" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Snapshot Schedule
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Balance snapshot at 00:00 UTC on the day of unlock
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(245, 158, 11, 0.15)', 'rgba(245, 158, 11, 0.3)')}>
+                  <Calendar color="#f59e0b" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Claim Window
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Stays open for 30 days until the next unlock
+                  </div>
+                </div>
+              </div>
+
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+                  <Flame color="#ef4444" size={14} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Unclaimed Tokens
+                  </div>
+                  <div style={{ fontSize: '6px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Permanently burned
+                  </div>
+                </div>
+              </div>
+
+              {/* Claim Eligibility CTA */}
+              <Link
+                to={claimLink}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  background: 'linear-gradient(90deg, #0052ff 0%, #00f5ff 100%)',
+                  textDecoration: 'none',
+                  marginTop: '4px'
+                }}
+              >
+                <div style={{ width: '26px', height: '26px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <Check color="#ffffff" size={14} strokeWidth={3} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                    CHECK YOUR ELIGIBILITY
+                  </div>
+                  <div style={{ fontSize: '6px', color: 'rgba(2, 11, 26, 0.85)', fontFamily: "'Press Start 2P', monospace", marginTop: '3px', fontWeight: 800 }}>
+                    Qualify for next distribution →
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* Unlock Schedule Card */}
+          <div style={cardStyle}>
+            <div>
+              <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                UNLOCK SCHEDULE
+              </h3>
+              <p style={{ fontSize: '6.5px', color: '#88aacc', margin: '0 0 12px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                Aug 2026 → May 2027
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              {UNLOCKS.map((u, i) => {
+                const isUnlocked = new Date(u.iso || u.d) <= new Date();
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '8px 10px',
+                      background: 'rgba(2, 11, 26, 0.7)',
+                      border: '1px solid rgba(0, 245, 255, 0.12)',
+                      borderRadius: '8px',
+                      gap: '8px'
+                    }}
+                  >
+                    <span style={{ fontSize: '6.5px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
+                      {u.d}
+                    </span>
+                    <span style={{ fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                      {u.a}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '6px',
+                        fontWeight: 900,
+                        fontFamily: "'Press Start 2P', monospace",
+                        textTransform: 'uppercase',
+                        padding: '3px 6px',
+                        borderRadius: '4px',
+                        background: isUnlocked ? 'rgba(0, 255, 136, 0.15)' : 'rgba(136, 170, 204, 0.1)',
+                        border: isUnlocked ? '1px solid rgba(0, 255, 136, 0.3)' : '1px solid rgba(136, 170, 204, 0.2)',
+                        color: isUnlocked ? '#00ff88' : '#88aacc'
+                      }}
+                    >
+                      {isUnlocked ? 'UNLOCKED' : 'LOCKED'}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -1349,6 +1629,72 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 82, 255, 0.08)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--blue)' }}>
                 <Users size={14} /> Community 20%
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* BLOCK 5: VESTING DETAILS */}
+        <div id="vesting-details" className="sec-head" style={{ marginBottom: '40px', marginTop: '40px', scrollMarginTop: '90px' }}>
+          <h2>Vesting <span className="bl">Details</span>.</h2>
+          <p className="sec-sub">100M tokens vested. Every month 10M unlocks and get distributed among holders.</p>
+        </div>
+
+        <div className="tok-layout">
+          <div>
+            <div className="tok-card">
+              <h3 style={{ marginBottom: '20px' }}>Holder Rewards · 100M $VIBE</h3>
+              <div className="who">
+                <div className="who-r">
+                  <div className="who-ico"><img src="/vibe-logo.png" className="who-img-sq" /></div>
+                  <div className="who-t">$VIBE Holders<span>Hold 5M+ $VIBE to qualify</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><TrendingUp color="var(--blue)" size={20}/></div>
+                  <div className="who-t">Allocation Size<span>The more you hold, the larger your allocation</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><ShieldCheck color="var(--blue)" size={20}/></div>
+                  <div className="who-t">Max Allocation Cap<span>Set to prevent whale dominance & ensure fair distribution</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Calculator color="var(--blue)" size={20}/></div>
+                  <div className="who-t">Allocation Calculation<span>Proportionally calculated based on holding balance</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Clock color="var(--blue)" size={20}/></div>
+                  <div className="who-t">Snapshot Schedule<span>Balance snapshot at 00:00 UTC on the day of unlock</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Calendar color="var(--blue)" size={20}/></div>
+                  <div className="who-t">Claim Window<span>Stays open for 30 days until the next unlock</span></div>
+                </div>
+                <div className="who-r">
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Flame color="#ef4444" size={20}/></div>
+                  <div className="who-t">Unclaimed Tokens<span>Permanently burned</span></div>
+                </div>
+                <Link to={claimLink} className="who-r" style={{textDecoration:'none', cursor:'pointer', background:'var(--blue)'}}>
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Check color="#fff" size={20}/></div>
+                  <div className="who-t" style={{color:'#fff'}}>Check your eligibility<span style={{color:'rgba(255,255,255,0.8)'}}>Qualify for the next distribution <ArrowRightCircle size={14} style={{verticalAlign:'middle', marginLeft:4}}/></span></div>
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="sched">
+            <h3>Unlock Schedule</h3>
+            <p className="sub">Aug 2026 &rarr; May 2027</p>
+            <div className="ul-wrap">
+              {UNLOCKS.map((u,i)=>{
+                const isUnlocked = new Date(u.iso || u.d) <= new Date();
+                return (
+                  <div key={i} className="ul-r">
+                    <span className="ul-d">{u.d}</span>
+                    <span className="ul-a">{u.a}</span>
+                    <span className="ul-s" style={{ color: isUnlocked ? 'var(--blue)' : 'inherit', fontWeight: isUnlocked ? 'bold' : 'normal' }}>
+                      {isUnlocked ? 'unlocked' : 'locked'}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
