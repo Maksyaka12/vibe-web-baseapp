@@ -1214,6 +1214,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               currentTime={currentTime}
               claimedHistory={claimedHistory}
               isHolderEligibleLive={isHolderEligibleLive}
+              totalAvailableCount={(isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive) ? 1 : 0) + (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? 1 : 0)}
+              totalAvailableTokens={((isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? (holderRewardAmount || 500000) : 0) + ((activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? (vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)) : 0)}
+              totalExpiredCount={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? 1 : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? 1 : 0)}
+              totalExpiredTokens={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? (royalty1Data.claims[address.toLowerCase()].amount || 22935) : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? (round1Data.claims[address.toLowerCase()].amount || 126127) : 0)}
             />
           ) : (
             <BaseAppClaimView

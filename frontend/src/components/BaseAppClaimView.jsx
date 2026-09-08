@@ -654,7 +654,7 @@ export function BaseAppClaimView(props) {
                       boxShadow: (isHolderSnapshotDone || isHolderEligibleLive) ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
                     }}
                   >
-                    {isHolderSnapshotDone ? 'ACTIVE' : (isHolderEligibleLive ? 'ELIGIBLE' : 'NOT ELIGIBLE')}
+                    {isHolderSnapshotDone ? 'ACTIVE' : (isHolderEligibleLive ? 'ELIGIBLE' : 'NOT ELIGIBLE YET')}
                   </span>
                 </div>
 
@@ -756,49 +756,31 @@ export function BaseAppClaimView(props) {
                       </span>
                     </div>
                   ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          background: 'rgba(255, 68, 102, 0.08)',
-                          border: '1px solid rgba(255, 68, 102, 0.3)',
-                          borderRadius: '10px',
-                          padding: '8px 10px'
-                        }}
-                      >
-                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5 }}>
-                          NOT ELIGIBLE YET! YOU NEED TO HOLD 5M+ $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
-                        </span>
-                      </div>
-                      <Link
-                        to={typeof window !== 'undefined' && window.location.pathname.startsWith('/app') ? '/app/buy' : '/buy'}
-                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        style={{
-                          width: '100%',
-                          boxSizing: 'border-box',
-                          background: 'rgba(255, 68, 102, 0.15)',
-                          border: '1.5px solid #ff4466',
-                          color: '#ff4466',
-                          borderRadius: '8px',
-                          padding: '10px 12px',
-                          fontSize: '7.5px',
-                          fontFamily: "'Press Start 2P', monospace",
-                          fontWeight: 900,
-                          textAlign: 'center',
-                          textDecoration: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '6px',
-                          boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
-                        }}
-                      >
-                        <span>BUY $VIBE</span> <ArrowRight size={12} color="#ff4466" strokeWidth={2.5} />
-                      </Link>
-                    </div>
+                    <Link
+                      to={typeof window !== 'undefined' && window.location.pathname.startsWith('/app') ? '/app/buy' : '/buy'}
+                      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                      style={{
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        background: 'rgba(255, 68, 102, 0.12)',
+                        border: '1.5px solid rgba(255, 68, 102, 0.5)',
+                        borderRadius: '10px',
+                        padding: '11px 10px',
+                        textAlign: 'center',
+                        textDecoration: 'none',
+                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.15)',
+                        transition: 'all 0.2s ease',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{ fontSize: '5.8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, fontWeight: 900 }}>
+                        BUY $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE →
+                      </span>
+                    </Link>
                   )
                 )}
               </div>
@@ -839,7 +821,7 @@ export function BaseAppClaimView(props) {
                       boxShadow: (isVibeClubSnapshotDone || hasNft) ? '0 0 8px rgba(0, 255, 136, 0.25)' : '0 0 8px rgba(255, 68, 102, 0.2)'
                     }}
                   >
-                    {isVibeClubSnapshotDone ? 'ACTIVE' : (hasNft ? 'ELIGIBLE' : 'NOT ELIGIBLE')}
+                    {isVibeClubSnapshotDone ? 'ACTIVE' : (hasNft ? 'ELIGIBLE' : 'NOT ELIGIBLE YET')}
                   </span>
                 </div>
 
@@ -945,48 +927,30 @@ export function BaseAppClaimView(props) {
                       </span>
                     </div>
                   ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          background: 'rgba(255, 68, 102, 0.08)',
-                          border: '1px solid rgba(255, 68, 102, 0.3)',
-                          borderRadius: '10px',
-                          padding: '8px 10px'
-                        }}
-                      >
-                        <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                          NOT ELIGIBLE YET! JOIN VIBE CLUB TO BECOME ELIGIBLE
-                        </span>
-                      </div>
-                      <Link
-                        to="/vibeclub"
-                        style={{
-                          width: '100%',
-                          boxSizing: 'border-box',
-                          background: 'rgba(255, 68, 102, 0.15)',
-                          border: '1.5px solid #ff4466',
-                          color: '#ff4466',
-                          borderRadius: '8px',
-                          padding: '10px 12px',
-                          fontSize: '7.5px',
-                          fontFamily: "'Press Start 2P', monospace",
-                          fontWeight: 900,
-                          textAlign: 'center',
-                          textDecoration: 'none',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '6px',
-                          boxShadow: '0 0 12px rgba(255, 68, 102, 0.2)'
-                        }}
-                      >
-                        <span>MINT NFT</span> <ArrowUpRight size={12} color="#ff4466" strokeWidth={2.5} />
-                      </Link>
-                    </div>
+                    <Link
+                      to="/vibeclub"
+                      style={{
+                        width: '100%',
+                        boxSizing: 'border-box',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        background: 'rgba(255, 68, 102, 0.12)',
+                        border: '1.5px solid rgba(255, 68, 102, 0.5)',
+                        borderRadius: '10px',
+                        padding: '11px 10px',
+                        textAlign: 'center',
+                        textDecoration: 'none',
+                        boxShadow: '0 0 14px rgba(255, 68, 102, 0.15)',
+                        transition: 'all 0.2s ease',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <span style={{ fontSize: '5.8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, fontWeight: 900 }}>
+                        JOIN VIBE CLUB BEFORE SNAPSHOT TO BECOME ELIGIBLE →
+                      </span>
+                    </Link>
                   )
                 )}
               </div>

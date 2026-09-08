@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw, Crown, ArrowUpRight } from 'lucide-react';
+import { RefreshCw, CheckCircle2, Gift, Clock, Coins } from 'lucide-react';
 
 function formatCompactBalance(val) {
   if (val === null || val === undefined) return '0 $VIBE';
@@ -14,6 +14,16 @@ function formatCompactBalance(val) {
   return `${num.toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`;
 }
 
+function getNftFontSize(name) {
+  if (!name) return '13px';
+  const len = name.length;
+  if (len <= 10) return '13.5px';
+  if (len <= 14) return '12px';
+  if (len <= 18) return '10.5px';
+  if (len <= 22) return '9px';
+  return '8px';
+}
+
 export function BaseAppProfileView(props) {
   const {
     address,
@@ -24,12 +34,24 @@ export function BaseAppProfileView(props) {
     loading,
     fetchBalances,
     claimedHistory,
-    isHolderEligibleLive
+    isHolderEligibleLive,
+    totalAvailableCount = 0,
+    totalAvailableTokens = 0,
+    totalExpiredCount = 0,
+    totalExpiredTokens = 0
   } = props;
 
+  const totalClaimedCount = (claimedHistory || []).length;
   const totalClaimedTokens = (claimedHistory || []).reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
-  const totalExpiredTokens = 0;
   const hasNft = Boolean(nftCount && nftCount > 0);
+  const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
+
+  const getLinkPath = (path) => {
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/app')) {
+      return `/app${path}`;
+    }
+    return path;
+  };
 
   return (
     <div style={{ width: '100%', boxSizing: 'border-box' }}>
@@ -78,12 +100,12 @@ export function BaseAppProfileView(props) {
         >
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
           <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-            VIBE VERSE IDENTITY &amp; STATUS
+            BASE DOG IDENTITY &amp; STATS
           </span>
         </div>
       </div>
 
-      {/* ── 2. USER PROFILE CARD ── */}
+      {/* ── 2. USER PROFILE CARD (FULL HEIGHT NFT IMAGE + CLEAN RIGHT INFO) ── */}
       {!address ? (
         <div
           style={{
@@ -144,225 +166,265 @@ export function BaseAppProfileView(props) {
         <div
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-            border: hasNft ? '1.5px solid #ffd700' : '1.5px solid rgba(0, 245, 255, 0.35)',
+            border: '1.5px solid rgba(0, 245, 255, 0.25)',
             borderRadius: '18px',
-            padding: '16px 14px',
+            overflow: 'hidden',
             marginBottom: '24px',
-            boxShadow: hasNft ? '0 8px 28px rgba(0, 0, 0, 0.7), 0 0 14px rgba(255, 215, 0, 0.25)' : '0 8px 24px rgba(0, 0, 0, 0.7)'
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'stretch',
+            minHeight: '110px'
           }}
         >
-          {/* Top Profile Section: Equal height 84px */}
-          <div style={{ display: 'flex', gap: '14px', alignItems: 'center', marginBottom: '16px' }}>
-            {/* Large 84px Avatar */}
-            <div
-              style={{
-                width: '84px',
-                height: '84px',
-                borderRadius: '16px',
-                border: hasNft ? '2.5px solid #ffd700' : '2px solid #64748b',
-                overflow: 'hidden',
-                background: '#020b1a',
-                flexShrink: 0,
-                boxShadow: hasNft ? '0 0 18px rgba(255, 215, 0, 0.45)' : '0 0 10px rgba(0, 0, 0, 0.6)'
-              }}
-            >
-              <img
-                src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/new-logo-vibe.png'}
-                alt="Profile Avatar"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  filter: hasNft ? 'none' : 'grayscale(1) brightness(0.6)'
-                }}
-              />
-            </div>
-
-            {/* Info Column */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                minHeight: '84px',
-                minWidth: 0,
-                flex: 1,
-                boxSizing: 'border-box',
-                padding: '1px 0'
-              }}
-            >
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <div
-                  style={{
-                    fontSize: '15px',
-                    color: '#ffffff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontWeight: 900,
-                    margin: 0,
-                    lineHeight: 1.2,
-                    letterSpacing: '0.2px',
-                    wordBreak: 'break-word'
-                  }}
-                >
-                  {hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog'}
-                </div>
-
-                {/* Member Status Pill */}
-                <div>
-                  {hasNft ? (
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88', flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                        Vibe Club Member
-                      </span>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255, 68, 102, 0.15)', border: '1px solid #ff4466', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
-                      <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 6px #ff4466', flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                        Not a Vibe Club Member
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Wallet Address + Refresh */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginTop: '4px' }}>
-                <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                  {address.slice(0, 6)}...{address.slice(-4)}
-                </span>
-                <button
-                  onClick={() => fetchBalances(true)}
-                  disabled={loading}
-                  title="Refresh Balances"
-                  style={{
-                    background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
-                    border: '1px solid rgba(0, 245, 255, 0.4)',
-                    color: '#00f5ff',
-                    borderRadius: '6px',
-                    padding: '4px 8px',
-                    fontSize: '6px',
-                    fontFamily: "'Press Start 2P', monospace",
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    boxShadow: '0 0 8px rgba(0, 245, 255, 0.2)',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <RefreshCw size={9} className={loading ? 'spin' : ''} />
-                  <span>{loading ? 'Updating...' : 'Refresh'}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* User Stats Grid (Claimed, Expired, Holding) */}
+          {/* Left Column: Full-Height NFT Image (occupies ~38-42% width) */}
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-              gap: '6px',
-              background: 'rgba(2, 11, 26, 0.85)',
-              border: '1px solid rgba(0, 245, 255, 0.2)',
-              borderRadius: '12px',
-              padding: '10px 8px'
+              width: '38%',
+              minWidth: '110px',
+              maxWidth: '150px',
+              background: '#020b1a',
+              flexShrink: 0,
+              position: 'relative',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRight: '1px solid rgba(0, 245, 255, 0.15)'
             }}
           >
-            {/* Stat 1: Claimed */}
-            <div style={{ textAlign: 'center', borderRight: '1px solid rgba(0, 245, 255, 0.15)', paddingRight: '4px' }}>
-              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                CLAIMED
-              </div>
-              <div style={{ fontSize: '7.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {totalClaimedTokens > 0 ? `${totalClaimedTokens.toLocaleString()}` : '0 $VIBE'}
-              </div>
+            <img
+              src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/new-logo-vibe.png'}
+              alt="Profile Avatar"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                display: 'block',
+                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.6)'
+              }}
+            />
+          </div>
+
+          {/* Right Column: Name, Status Pill, Address & Refresh */}
+          <div
+            style={{
+              flex: 1,
+              minWidth: 0,
+              padding: '14px 14px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '8px',
+              boxSizing: 'border-box'
+            }}
+          >
+            {/* NFT Name (Always Single Line with smart auto-scaling font) */}
+            <div
+              style={{
+                fontSize: getNftFontSize(nftDisplayName),
+                color: '#ffffff',
+                fontFamily: "'Press Start 2P', monospace",
+                fontWeight: 900,
+                margin: 0,
+                lineHeight: 1.25,
+                letterSpacing: '0.2px',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                width: '100%'
+              }}
+              title={nftDisplayName}
+            >
+              {nftDisplayName}
             </div>
 
-            {/* Stat 2: Expired */}
-            <div style={{ textAlign: 'center', borderRight: '1px solid rgba(0, 245, 255, 0.15)', paddingRight: '4px' }}>
-              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                EXPIRED
-              </div>
-              <div style={{ fontSize: '7.5px', color: totalExpiredTokens > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {totalExpiredTokens > 0 ? `${totalExpiredTokens.toLocaleString()}` : '0 $VIBE'}
-              </div>
+            {/* Member Status Pill */}
+            <div>
+              {hasNft ? (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88', flexShrink: 0 }} />
+                  <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    Vibe Club Member
+                  </span>
+                </div>
+              ) : (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(255, 68, 102, 0.15)', border: '1px solid #ff4466', borderRadius: '6px', padding: '3.5px 7px', width: 'fit-content' }}>
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 6px #ff4466', flexShrink: 0 }} />
+                  <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    Not a Member
+                  </span>
+                </div>
+              )}
             </div>
 
-            {/* Stat 3: Holding Balance */}
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                HOLDING
-              </div>
-              <div style={{ fontSize: '7.5px', color: isHolderEligibleLive ? '#00f5ff' : '#cbd5e1', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {formatCompactBalance(balance)}
-              </div>
+            {/* Address & Refresh */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {address.slice(0, 6)}...{address.slice(-4)}
+              </span>
+              <button
+                onClick={() => fetchBalances(true)}
+                disabled={loading}
+                title="Refresh Balances"
+                style={{
+                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
+                  border: '1px solid rgba(0, 245, 255, 0.4)',
+                  color: '#00f5ff',
+                  borderRadius: '6px',
+                  padding: '3.5px 7px',
+                  fontSize: '5.5px',
+                  fontFamily: "'Press Start 2P', monospace",
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '3px',
+                  boxShadow: '0 0 8px rgba(0, 245, 255, 0.2)',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <RefreshCw size={8} className={loading ? 'spin' : ''} />
+                <span>{loading ? 'Updating...' : 'Refresh'}</span>
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ── 3. NFT CLUB STATUS CARD ── */}
-      <div
-        style={{
-          background: 'rgba(4, 20, 48, 0.85)',
-          border: '1.5px solid rgba(0, 245, 255, 0.25)',
-          borderRadius: '16px',
-          padding: '16px 14px',
-          marginBottom: '20px'
-        }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Crown size={16} color="#ffd700" />
-            <span style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-              VIBE CLUB NFT
-            </span>
-          </div>
-          <span style={{ fontSize: '7px', color: hasNft ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-            {hasNft ? `${nftCount} OWNED` : '0 OWNED'}
-          </span>
+      {/* ── 3. REWARD STATISTICS ZONE ── */}
+      <div style={{ marginBottom: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
+          <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+            REWARD STATS
+          </h3>
         </div>
 
-        <p style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, margin: '0 0 14px 0' }}>
-          {hasNft
-            ? 'You are an official Vibe Club Member! You receive 20% secondary royalties distributed every 10 days.'
-            : 'Join the 333 Genesis Vibe Club to become eligible for automatic royalties and club perks.'}
-        </p>
-
-        {!hasNft && (
-          <Link
-            to="/vibeclub"
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          {/* Tile 1: Total Claimed */}
+          <div
             style={{
-              width: '100%',
-              padding: '10px 12px',
-              fontSize: '7.5px',
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: '1px solid rgba(0, 255, 136, 0.35)',
+              borderRadius: '14px',
+              padding: '12px 10px',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
               gap: '6px',
-              textDecoration: 'none',
-              background: 'rgba(0, 245, 255, 0.12)',
-              border: '1.5px solid #00f5ff',
-              color: '#00f5ff',
-              borderRadius: '8px',
-              fontFamily: "'Press Start 2P', monospace",
-              fontWeight: 900,
-              boxSizing: 'border-box'
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
             }}
           >
-            <span>MINT VIBE CLUB NFT</span>
-            <ArrowUpRight size={12} color="#00f5ff" />
-          </Link>
-        )}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                TOTAL CLAIMED
+              </span>
+              <CheckCircle2 size={11} color="#00ff88" />
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+                +{totalClaimedTokens > 0 ? totalClaimedTokens.toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 2: Available to Claim */}
+          <div
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalAvailableCount > 0 ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.25)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                AVAILABLE NOW
+              </span>
+              <Gift size={11} color="#00f5ff" />
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
+                +{totalAvailableTokens > 0 ? totalAvailableTokens.toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 3: Expired Claims */}
+          <div
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1px solid rgba(0, 245, 255, 0.2)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                EXPIRED CLAIMS
+              </span>
+              <Clock size={11} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} />
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+                {totalExpiredTokens > 0 ? `${totalExpiredTokens.toLocaleString('en-US')}` : '0'} $VIBE
+              </div>
+              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 4: Holding Balance */}
+          <div
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: '1px solid rgba(0, 245, 255, 0.25)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                WALLET HOLDING
+              </span>
+              <Coins size={11} color="#ffd700" />
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+                {formatCompactBalance(balance)}
+              </div>
+              <div style={{ fontSize: '5.5px', color: isHolderEligibleLive ? '#00ff88' : '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
+                {isHolderEligibleLive ? '5M+ ELIGIBLE' : 'NEED 5M+ FOR UNLOCKS'}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* ── 4. QUICK LINKS / ACTIONS ── */}
+      {/* ── 4. QUICK LINKS / REDIRECTS ── */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
         <Link
-          to="/hub"
+          to={getLinkPath('/hub')}
           style={{
             padding: '12px 10px',
             background: 'rgba(2, 11, 26, 0.8)',
@@ -378,12 +440,12 @@ export function BaseAppProfileView(props) {
             REWARDS HUB ↗
           </span>
           <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-            Track active unlocks &amp; royalties
+            TRACK ACTIVE REWARDS
           </span>
         </Link>
 
         <Link
-          to="/claim"
+          to={getLinkPath('/claim')}
           style={{
             padding: '12px 10px',
             background: 'rgba(2, 11, 26, 0.8)',
@@ -399,10 +461,11 @@ export function BaseAppProfileView(props) {
             CLAIM PORTAL ↗
           </span>
           <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-            Claim your unlocked tokens
+            CLAIM ACTIVE REWARDS
           </span>
         </Link>
       </div>
     </div>
   );
 }
+
