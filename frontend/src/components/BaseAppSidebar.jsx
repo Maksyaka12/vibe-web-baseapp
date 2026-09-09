@@ -264,7 +264,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                   style={{
                     fontSize: '7.5px',
                     fontWeight: 800,
-                    color: '#88aacc',
+                    color: '#00f5ff',
                     letterSpacing: '0.5px'
                   }}
                 >
@@ -272,7 +272,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                 </span>
                 <ChevronDown
                   size={12}
-                  color="#88aacc"
+                  color="#00f5ff"
                   style={{
                     transform: isAppMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                     transition: 'transform 0.2s ease'
@@ -366,7 +366,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                   style={{
                     fontSize: '7.5px',
                     fontWeight: 800,
-                    color: '#88aacc',
+                    color: '#00f5ff',
                     letterSpacing: '0.5px'
                   }}
                 >
@@ -374,7 +374,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                 </span>
                 <ChevronDown
                   size={12}
-                  color="#88aacc"
+                  color="#00f5ff"
                   style={{
                     transform: isDocsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                     transition: 'transform 0.2s ease'
@@ -455,7 +455,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                   style={{
                     fontSize: '7.5px',
                     fontWeight: 800,
-                    color: '#88aacc',
+                    color: '#00f5ff',
                     letterSpacing: '0.5px'
                   }}
                 >
@@ -463,7 +463,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                 </span>
                 <ChevronDown
                   size={12}
-                  color="#88aacc"
+                  color="#00f5ff"
                   style={{
                     transform: isDexOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                     transition: 'transform 0.2s ease'
@@ -540,7 +540,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                   style={{
                     fontSize: '7.5px',
                     fontWeight: 800,
-                    color: '#88aacc',
+                    color: '#00f5ff',
                     letterSpacing: '0.5px'
                   }}
                 >
@@ -548,7 +548,7 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                 </span>
                 <ChevronDown
                   size={12}
-                  color="#88aacc"
+                  color="#00f5ff"
                   style={{
                     transform: isSocialsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                     transition: 'transform 0.2s ease'
