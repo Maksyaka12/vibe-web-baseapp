@@ -100,7 +100,7 @@ export function BaseAppProfileView(props) {
         >
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
           <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-            BASE DOG IDENTITY &amp; STATS
+            BASE DOG IDENTITY &amp; STATISTICS
           </span>
         </div>
       </div>
@@ -362,7 +362,7 @@ export function BaseAppProfileView(props) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
           <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
-            REWARD STATS
+            REWARD STATISTICS
           </h3>
         </div>
 
