@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw, CheckCircle2, Gift, Clock, Coins } from 'lucide-react';
+import { RefreshCw, CheckCircle2, Gift, Clock, Coins, ArrowRight } from 'lucide-react';
 
 function formatCompactBalance(val) {
   if (val === null || val === undefined) return '0 $VIBE';
@@ -482,7 +482,7 @@ export function BaseAppProfileView(props) {
                 {formatCompactBalance(balance)}
               </div>
               <div style={{ fontSize: '5.5px', color: isHolderEligibleLive ? '#00ff88' : '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
-                {isHolderEligibleLive ? '5M+ ELIGIBLE' : 'NEED 5M+ FOR UNLOCKS'}
+                {isHolderEligibleLive ? '5M+ ELIGIBLE' : 'NEED 5M+ FOR HOLDER REWARDS'}
               </div>
             </div>
           </div>
@@ -490,48 +490,69 @@ export function BaseAppProfileView(props) {
       </div>
 
       {/* ── 4. QUICK LINKS / REDIRECTS ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-        <Link
-          to={getLinkPath('/hub')}
-          style={{
-            padding: '12px 10px',
-            background: 'rgba(2, 11, 26, 0.8)',
-            border: '1px solid rgba(0, 245, 255, 0.3)',
-            borderRadius: '10px',
-            textDecoration: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px'
-          }}
-        >
-          <span style={{ fontSize: '7.5px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-            REWARDS HUB ↗
-          </span>
-          <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-            TRACK ACTIVE REWARDS
-          </span>
-        </Link>
+      <div style={{ marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
+          <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+            TRACK. JOIN. EARN
+          </h3>
+        </div>
 
-        <Link
-          to={getLinkPath('/claim')}
-          style={{
-            padding: '12px 10px',
-            background: 'rgba(2, 11, 26, 0.8)',
-            border: '1px solid rgba(0, 255, 136, 0.3)',
-            borderRadius: '10px',
-            textDecoration: 'none',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px'
-          }}
-        >
-          <span style={{ fontSize: '7.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-            CLAIM PORTAL ↗
-          </span>
-          <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-            CLAIM ACTIVE REWARDS
-          </span>
-        </Link>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          <Link
+            to={getLinkPath('/hub')}
+            style={{
+              padding: '12px 10px',
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: '1px solid rgba(0, 245, 255, 0.35)',
+              borderRadius: '14px',
+              textDecoration: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '8px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
+              <span style={{ fontSize: '7px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
+                REWARDS HUB
+              </span>
+              <ArrowRight size={13} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+            </div>
+            <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              TRACK ACTIVE REWARDS
+            </span>
+          </Link>
+
+          <Link
+            to={getLinkPath('/claim')}
+            style={{
+              padding: '12px 10px',
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: '1px solid rgba(0, 255, 136, 0.35)',
+              borderRadius: '14px',
+              textDecoration: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '8px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
+              transition: 'all 0.15s ease'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
+              <span style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
+                CLAIM PORTAL
+              </span>
+              <ArrowRight size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+            </div>
+            <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              CLAIM ACTIVE REWARDS
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   );
