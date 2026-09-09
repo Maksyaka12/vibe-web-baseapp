@@ -1019,7 +1019,7 @@ export default function BaseAppRewardsView({
               </span>
             </div>
             <a
-              href={featuredStaking.link || O1_STAKING_VAULT}
+              href={O1_STAKING_VAULT}
               target="_blank"
               rel="noreferrer"
               style={{

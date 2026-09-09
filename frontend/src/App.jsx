@@ -17,8 +17,10 @@ import './index.css';
 
 const CA      = '0xb200000000000000000000df24ecb8bf51100a01';
 const O1      = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453';
-const O1_STAKING_VAULT = 'https://launch.o1.exchange/staking/vaults/0xafa3ce23e0043b651d98e5a89b55a80b71be2f4a945a745cd6e37316b5075663?chain=8453';
+const O1_STAKING_VAULT = 'https://launch.o1.exchange/staking/vaults?chain=8453&token=0xb200000000000000000000df24ecb8bf51100a01';
+const O1_STAKING_VAULT_EPOCH_1 = 'https://launch.o1.exchange/staking/vaults/0xafa3ce23e0043b651d98e5a89b55a80b71be2f4a945a745cd6e37316b5075663?chain=8453';
 const O1_STAKING_VAULT_EPOCH_2 = 'https://launch.o1.exchange/staking/vaults/0x5dcabfeb83e84ad87572c531dfa8de915e0b5d8c11e4ca39598a3c6b4fc1e446?chain=8453';
+const O1_STAKING_VAULT_EPOCH_3 = 'https://launch.o1.exchange/staking/vaults/0x5a0d6075197085da4e2b9a790f3be8c297d08effcfca677992489668ebcf8b0c?chain=8453';
 const DEX     = 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5';
 const DEX_EMB = 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5?embed=1&theme=dark&activeTab=chart';
 
@@ -1276,7 +1278,7 @@ const STAKING_EPOCHS = [
     endTime: '31 Aug, 15:00 UTC',
     startDateObj: new Date('2026-08-21T15:00:00Z'),
     endDateObj: new Date('2026-08-31T15:00:00Z'),
-    link: O1_STAKING_VAULT
+    link: O1_STAKING_VAULT_EPOCH_1
   },
   {
     epoch: 'Epoch 2',
@@ -1291,81 +1293,81 @@ const STAKING_EPOCHS = [
   {
     epoch: 'Epoch 3',
     duration: '10 Days',
-    poolAmount: 'TBA',
-    startTime: '10 Sep, 15:00 UTC',
-    endTime: '20 Sep, 15:00 UTC',
-    startDateObj: new Date('2026-09-10T15:00:00Z'),
-    endDateObj: new Date('2026-09-20T15:00:00Z'),
-    link: O1_STAKING_VAULT
+    poolAmount: '2,200,000',
+    startTime: '10 Sep, 16:00 UTC',
+    endTime: '20 Sep, 16:00 UTC',
+    startDateObj: new Date('2026-09-10T16:00:00Z'),
+    endDateObj: new Date('2026-09-20T16:00:00Z'),
+    link: O1_STAKING_VAULT_EPOCH_3
   },
   {
     epoch: 'Epoch 4',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '20 Sep, 15:00 UTC',
-    endTime: '30 Sep, 15:00 UTC',
-    startDateObj: new Date('2026-09-20T15:00:00Z'),
-    endDateObj: new Date('2026-09-30T15:00:00Z'),
+    startTime: '20 Sep, 16:00 UTC',
+    endTime: '30 Sep, 16:00 UTC',
+    startDateObj: new Date('2026-09-20T16:00:00Z'),
+    endDateObj: new Date('2026-09-30T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 5',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '30 Sep, 15:00 UTC',
-    endTime: '10 Oct, 15:00 UTC',
-    startDateObj: new Date('2026-09-30T15:00:00Z'),
-    endDateObj: new Date('2026-10-10T15:00:00Z'),
+    startTime: '30 Sep, 16:00 UTC',
+    endTime: '10 Oct, 16:00 UTC',
+    startDateObj: new Date('2026-09-30T16:00:00Z'),
+    endDateObj: new Date('2026-10-10T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 6',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '10 Oct, 15:00 UTC',
-    endTime: '20 Oct, 15:00 UTC',
-    startDateObj: new Date('2026-10-10T15:00:00Z'),
-    endDateObj: new Date('2026-10-20T15:00:00Z'),
+    startTime: '10 Oct, 16:00 UTC',
+    endTime: '20 Oct, 16:00 UTC',
+    startDateObj: new Date('2026-10-10T16:00:00Z'),
+    endDateObj: new Date('2026-10-20T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 7',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '20 Oct, 15:00 UTC',
-    endTime: '30 Oct, 15:00 UTC',
-    startDateObj: new Date('2026-10-20T15:00:00Z'),
-    endDateObj: new Date('2026-10-30T15:00:00Z'),
+    startTime: '20 Oct, 16:00 UTC',
+    endTime: '30 Oct, 16:00 UTC',
+    startDateObj: new Date('2026-10-20T16:00:00Z'),
+    endDateObj: new Date('2026-10-30T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 8',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '30 Oct, 15:00 UTC',
-    endTime: '09 Nov, 15:00 UTC',
-    startDateObj: new Date('2026-10-30T15:00:00Z'),
-    endDateObj: new Date('2026-11-09T15:00:00Z'),
+    startTime: '30 Oct, 16:00 UTC',
+    endTime: '09 Nov, 16:00 UTC',
+    startDateObj: new Date('2026-10-30T16:00:00Z'),
+    endDateObj: new Date('2026-11-09T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 9',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '09 Nov, 15:00 UTC',
-    endTime: '19 Nov, 15:00 UTC',
-    startDateObj: new Date('2026-11-09T15:00:00Z'),
-    endDateObj: new Date('2026-11-19T15:00:00Z'),
+    startTime: '09 Nov, 16:00 UTC',
+    endTime: '19 Nov, 16:00 UTC',
+    startDateObj: new Date('2026-11-09T16:00:00Z'),
+    endDateObj: new Date('2026-11-19T16:00:00Z'),
     link: O1_STAKING_VAULT
   },
   {
     epoch: 'Epoch 10',
     duration: '10 Days',
     poolAmount: 'TBA',
-    startTime: '19 Nov, 15:00 UTC',
-    endTime: '29 Nov, 15:00 UTC',
-    startDateObj: new Date('2026-11-19T15:00:00Z'),
-    endDateObj: new Date('2026-11-29T15:00:00Z'),
+    startTime: '19 Nov, 16:00 UTC',
+    endTime: '29 Nov, 16:00 UTC',
+    startDateObj: new Date('2026-11-19T16:00:00Z'),
+    endDateObj: new Date('2026-11-29T16:00:00Z'),
     link: O1_STAKING_VAULT
   }
 ];
