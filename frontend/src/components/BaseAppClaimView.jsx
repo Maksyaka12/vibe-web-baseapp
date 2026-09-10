@@ -730,7 +730,7 @@ export function BaseAppClaimView(props) {
                       >
                         <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
                         <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                          NOT ELIGIBLE! YOU DIDN'T HOLD 5M+ $VIBE AT SNAPSHOT
+                          Unfortunately, you are not eligible for this unlock distribution! You didn't hold 5M+ $VIBE at snapshot
                         </span>
                       </div>
                     )}
@@ -763,21 +763,21 @@ export function BaseAppClaimView(props) {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        background: 'rgba(255, 68, 102, 0.1)',
-                        border: '1px solid rgba(255, 68, 102, 0.4)',
+                        background: 'rgba(255, 153, 0, 0.12)',
+                        border: '1px solid rgba(255, 153, 0, 0.5)',
                         borderRadius: '10px',
                         padding: '8px 10px',
                         textDecoration: 'none',
-                        boxShadow: '0 0 12px rgba(255, 68, 102, 0.15)',
+                        boxShadow: '0 0 12px rgba(255, 153, 0, 0.2)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <XCircle size={13} color="#ff4466" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
+                      <AlertCircle size={13} color="#ff9900" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6px', color: '#ff9900', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
                         BUY $VIBE BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
-                      <ArrowRight size={11} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <ArrowRight size={11} color="#ff9900" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}
@@ -898,7 +898,7 @@ export function BaseAppClaimView(props) {
                       >
                         <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
                         <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                          NOT ELIGIBLE! YOU DIDN'T HOLD NFT AT SNAPSHOT
+                          Unfortunately, you are not eligible for this royalty payout! You didn't hold a Vibe Club NFT at snapshot
                         </span>
                       </div>
                     )}
@@ -931,21 +931,21 @@ export function BaseAppClaimView(props) {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '6px',
-                        background: 'rgba(255, 68, 102, 0.1)',
-                        border: '1px solid rgba(255, 68, 102, 0.4)',
+                        background: 'rgba(255, 153, 0, 0.12)',
+                        border: '1px solid rgba(255, 153, 0, 0.5)',
                         borderRadius: '10px',
                         padding: '8px 10px',
                         textDecoration: 'none',
-                        boxShadow: '0 0 12px rgba(255, 68, 102, 0.15)',
+                        boxShadow: '0 0 12px rgba(255, 153, 0, 0.2)',
                         transition: 'all 0.2s ease',
                         cursor: 'pointer'
                       }}
                     >
-                      <XCircle size={13} color="#ff4466" style={{ flexShrink: 0 }} />
-                      <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
+                      <AlertCircle size={13} color="#ff9900" style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: '6px', color: '#ff9900', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, fontWeight: 800, whiteSpace: 'nowrap' }}>
                         MINT NFT BEFORE SNAPSHOT TO BECOME ELIGIBLE
                       </span>
-                      <ArrowRight size={11} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <ArrowRight size={11} color="#ff9900" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     </Link>
                   )
                 )}

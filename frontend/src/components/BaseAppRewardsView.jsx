@@ -532,7 +532,7 @@ export default function BaseAppRewardsView({
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center' }}>
                     <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.4 }}>
-                      YOU ARE NOT ELIGIBLE! YOU DIDN'T HOLD 5M+ $VIBE AT SNAPSHOT
+                      Unfortunately, you are not eligible for this unlock distribution! You didn't hold 5M+ $VIBE at snapshot
                     </span>
                   </div>
                 )
@@ -827,7 +827,7 @@ export default function BaseAppRewardsView({
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center' }}>
                     <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.4 }}>
-                      YOU ARE NOT ELIGIBLE! YOU DID NOT HOLD A VIBE CLUB NFT AT SNAPSHOT
+                      Unfortunately, you are not eligible for this royalty payout! You didn't hold a Vibe Club NFT at snapshot
                     </span>
                   </div>
                 )
