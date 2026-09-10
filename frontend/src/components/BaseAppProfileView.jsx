@@ -44,11 +44,11 @@ export function BaseAppProfileView(props) {
     totalExpiredTokens = 0
   } = props;
 
-  const [stakingStats, setStakingStats] = useState({ totalEarned: 0, epochsParticipated: 0, loading: false });
+  const [stakingStats, setStakingStats] = useState({ participationByVault: [], loading: false });
 
   useEffect(() => {
     if (!address) {
-      setStakingStats({ totalEarned: 0, epochsParticipated: 0, loading: false });
+      setStakingStats({ participationByVault: [], loading: false });
       return;
     }
 
@@ -66,21 +66,18 @@ export function BaseAppProfileView(props) {
               });
               if (res.data && res.data.length >= 194) {
                 const activeStaked = BigInt('0x' + res.data.slice(2, 66));
-                const totalRewardsClaimed = BigInt('0x' + res.data.slice(66, 130));
+                const totalDeposited = BigInt('0x' + res.data.slice(66, 130));
                 const lotsCount = BigInt('0x' + res.data.slice(130, 194));
-                const participated = lotsCount > 0n || activeStaked > 0n || totalRewardsClaimed > 0n;
-                const earned = Number(formatUnits(totalRewardsClaimed, 18));
-                return { participated, earned };
+                const hasDeposit = (totalDeposited > 0n || activeStaked > 1n || lotsCount > 0n);
+                return { roundId: v.roundId, hasDeposit };
               }
             } catch (e) {}
-            return { participated: false, earned: 0 };
+            return { roundId: v.roundId, hasDeposit: false };
           })
         );
 
         if (isMounted) {
-          const totalEarned = results.reduce((acc, r) => acc + (r?.earned || 0), 0);
-          const epochsParticipated = results.filter(r => r?.participated).length;
-          setStakingStats({ totalEarned, epochsParticipated, loading: false });
+          setStakingStats({ participationByVault: results, loading: false });
         }
       } catch (err) {
         console.warn('Profile staking stats fetch error:', err);
@@ -91,10 +88,16 @@ export function BaseAppProfileView(props) {
     return () => { isMounted = false; };
   }, [address]);
 
-  const stakingClaimsFromHistory = (claimedHistory || []).filter(c => c && (c.type === 'staking' || c.id?.startsWith('staking-')));
-  const totalEarnedFromHistory = stakingClaimsFromHistory.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
-  const totalStakingEarned = Math.max(stakingStats.totalEarned, totalEarnedFromHistory);
-  const totalStakingEpochs = Math.max(stakingStats.epochsParticipated, stakingClaimsFromHistory.length);
+  // Exact Staking Rewards: sum of user's claimed rewards from Staking claims
+  const stakingClaims = (claimedHistory || []).filter(c => c && (c.type === 'staking' || c.id?.startsWith('staking-')));
+  const totalStakingEarned = stakingClaims.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
+
+  // Epochs participated: count of vaults where user either has on-chain stake or has a claim
+  const totalStakingEpochs = STAKING_VAULTS_INFO.filter(v => {
+    const hasClaim = stakingClaims.some(c => c && c.roundId === v.roundId);
+    const hasDeposit = stakingStats?.participationByVault?.some(p => p && p.roundId === v.roundId && p.hasDeposit);
+    return Boolean(hasClaim || hasDeposit);
+  }).length;
 
   // Portal Claimed (ONLY Holder Rewards & Vibe Club Royalties, Staking is counted separately in Tile 4)
   const portalClaims = (claimedHistory || []).filter(c => c && c.type !== 'staking' && !c.id?.startsWith('staking-'));

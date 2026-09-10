@@ -1032,15 +1032,41 @@ export function BaseAppClaimView(props) {
                         </button>
                       )}
 
-                      {/* BaseScan / o1 Vault Tx Link */}
+                      {/* o1 Vault Link (For Staking Claims) */}
+                      {isStaking && item?.link && (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            background: 'rgba(168, 85, 247, 0.15)',
+                            border: '1px solid rgba(168, 85, 247, 0.4)',
+                            color: '#c084fc',
+                            borderRadius: '8px',
+                            padding: '5px 8px',
+                            fontSize: '6px',
+                            fontFamily: "'Press Start 2P', monospace",
+                            fontWeight: 800,
+                            textDecoration: 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '3px'
+                          }}
+                        >
+                          <span>o1 Vault</span>
+                          <ArrowUpRight size={9} />
+                        </a>
+                      )}
+
+                      {/* BaseScan Tx Link */}
                       <a
-                        href={item?.link ? item.link : (item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`))}
+                        href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
                         target="_blank"
                         rel="noreferrer"
                         style={{
-                          background: isStaking ? 'rgba(168, 85, 247, 0.15)' : 'rgba(0, 245, 255, 0.1)',
-                          border: isStaking ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(0, 245, 255, 0.35)',
-                          color: isStaking ? '#c084fc' : '#00f5ff',
+                          background: 'rgba(0, 245, 255, 0.1)',
+                          border: '1px solid rgba(0, 245, 255, 0.35)',
+                          color: '#00f5ff',
                           borderRadius: '8px',
                           padding: '5px 8px',
                           fontSize: '6px',
@@ -1052,7 +1078,7 @@ export function BaseAppClaimView(props) {
                           gap: '3px'
                         }}
                       >
-                        <span>{isStaking ? 'o1 Vault' : 'BaseScan'}</span>
+                        <span>BaseScan</span>
                         <ArrowUpRight size={9} />
                       </a>
                     </div>

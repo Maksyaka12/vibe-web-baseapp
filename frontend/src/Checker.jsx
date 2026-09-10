@@ -63,17 +63,20 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
     const lowerUser = userAddress.toLowerCase();
     const DISTRIBUTOR_CA_LOWER = DISTRIBUTOR_CA.toLowerCase();
     const ROYALTY_CA_LOWER = ROYALTY_DISTRIBUTOR_CA.toLowerCase();
+    const STAKING_CA_LOWER = STAKING_CONTRACT.toLowerCase();
+    const CLAIM_TOPIC = '0xb63b787020ee0a48ed6ddf0667249b333cea03eb87043aa21cb0490467df040c';
 
     // Expected allocations for this user if available in proof data
     const expHolder1 = round1Data?.claims?.[lowerUser]?.amount;
     const expRoyalty1 = royalty1Data?.claims?.[lowerUser]?.amount;
     const expRoyalty2 = royalty2Data?.claims?.[lowerUser]?.amount;
 
+    const rpcClient = customClient || getPublicClient();
+
     // 1. Direct on-chain RPC getLogs for the most recent ~9,000 blocks (captures active round claims with 100% precision)
     try {
-      const client = customClient || getPublicClient();
-      const currentBlock = await client.getBlockNumber();
-      const logs = await client.getLogs({
+      const currentBlock = await rpcClient.getBlockNumber();
+      const logs = await rpcClient.getLogs({
         address: CA,
         event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
         args: { to: userAddress },
@@ -105,6 +108,28 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
                 timestamp: new Date().toISOString()
               };
             }
+          } else if (from === STAKING_CA_LOWER) {
+            try {
+              const r = await rpcClient.getTransactionReceipt({ hash: log.transactionHash });
+              const claimLog = r.logs.find(l => l.topics[0] === CLAIM_TOPIC);
+              if (claimLog) {
+                const vaultId = claimLog.topics[1]?.toLowerCase();
+                const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
+                const amountNum = Number(formatUnits(BigInt(claimLog.data), 18));
+                const key = `staking-${matchedVault.roundId}`;
+                map[key] = {
+                  id: key,
+                  type: 'staking',
+                  roundId: matchedVault.roundId,
+                  vaultId: matchedVault.id,
+                  title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
+                  amount: amountNum,
+                  txHash: log.transactionHash,
+                  timestamp: new Date().toISOString(),
+                  link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
+                };
+              }
+            } catch (e) {}
           }
         }
       }
@@ -154,6 +179,30 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
             }
             if (!map[royaltyKey] || (expectedAmt && Math.abs(valueNum - expectedAmt) < 1)) {
               map[royaltyKey] = { txHash, timestamp, amount: expectedAmt || valueNum };
+            }
+          } else if (from === STAKING_CA_LOWER) {
+            try {
+              const r = await rpcClient.getTransactionReceipt({ hash: txHash });
+              const claimLog = r.logs.find(l => l.topics[0] === CLAIM_TOPIC);
+              if (claimLog) {
+                const vaultId = claimLog.topics[1]?.toLowerCase();
+                const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
+                const amountNum = Number(formatUnits(BigInt(claimLog.data), 18));
+                const key = `staking-${matchedVault.roundId}`;
+                map[key] = {
+                  id: key,
+                  type: 'staking',
+                  roundId: matchedVault.roundId,
+                  vaultId: matchedVault.id,
+                  title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
+                  amount: amountNum,
+                  txHash,
+                  timestamp: timestamp || matchedVault.defaultTime,
+                  link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
+                };
+              }
+            } catch (stErr) {
+              console.warn('Error reading staking tx receipt:', stErr);
             }
           }
         }
@@ -414,30 +463,44 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       fetchUserClaimTransactions(address).then(txMap => {
         if (txMap && Object.keys(txMap).length > 0) {
           setClaimedHistory(prev => {
-            if (!Array.isArray(prev) || prev.length === 0) return prev;
-            let changed = false;
-            const updated = prev.map(item => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            let updated = [...prevList];
+            // 1. Update existing items
+            updated = updated.map(item => {
               const info = txMap[item.id];
               if (info) {
                 const isBadTx = !item.txHash || !item.txHash.startsWith('0x') || item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
                 const isBadAmt = !item.amount || item.amount > 500000;
-                if (isBadTx || isBadAmt || (info.txHash && info.txHash !== item.txHash)) {
-                  changed = true;
+                if (isBadTx || isBadAmt || (info.txHash && info.txHash !== item.txHash) || (info.amount && info.amount !== item.amount)) {
                   return {
                     ...item,
                     txHash: info.txHash || item.txHash,
                     timestamp: info.timestamp || item.timestamp,
-                    amount: (info.amount && info.amount <= 500000) ? info.amount : item.amount
+                    amount: (info.amount && info.amount <= 500000) ? info.amount : item.amount,
+                    link: info.link || item.link
                   };
                 }
               }
               return item;
             });
-            if (changed) {
-              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(updated));
-              return getSortedClaimedHistory(updated);
+            // 2. Add any new items from txMap (such as staking claims) not yet in list
+            for (const [k, info] of Object.entries(txMap)) {
+              if (!updated.some(item => item && item.id === k)) {
+                updated.push({
+                  id: k,
+                  type: info.type || (k.startsWith('staking') ? 'staking' : (k.startsWith('vibeclub') ? 'vibeclub' : 'holder')),
+                  roundId: info.roundId || 1,
+                  vaultId: info.vaultId,
+                  title: info.title || (k.startsWith('staking') ? `Staking Rewards · Epoch ${info.roundId || 1}` : (k.startsWith('vibeclub') ? `Vibe Club Royalties · Royalty ${info.roundId || 1}` : `Holder Rewards · Unlock 1`)),
+                  amount: info.amount,
+                  txHash: info.txHash,
+                  timestamp: info.timestamp,
+                  link: info.link
+                });
+              }
             }
-            return prev;
+            localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(updated));
+            return getSortedClaimedHistory(updated);
           });
         }
       }).catch(() => {});
@@ -585,55 +648,30 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   };
 
   // Lightweight sync of claimed transaction history for Staking Rewards
-  const syncStakingClaimHistory = async (client, userAddress) => {
+  const syncStakingClaimHistory = async (client, userAddress, txMap = {}) => {
     if (!userAddress) return;
     try {
-      const uParam = userAddress.toLowerCase().slice(2).padStart(64, '0');
-      const results = await Promise.all(
-        STAKING_VAULTS_INFO.map(async (v) => {
-          try {
-            const res = await client.call({
-              to: STAKING_CONTRACT,
-              data: '0xeb48471e' + v.id.slice(2) + uParam
-            });
-            if (res.data && res.data.length >= 194) {
-              const activeStaked = BigInt('0x' + res.data.slice(2, 66));
-              const totalRewardsClaimed = BigInt('0x' + res.data.slice(66, 130));
-              const lotsCount = BigInt('0x' + res.data.slice(130, 194));
-              const earnedAmt = Number(formatUnits(totalRewardsClaimed, 18));
-              const participated = lotsCount > 0n || activeStaked > 0n || totalRewardsClaimed > 0n;
-              return {
-                vault: v,
-                participated,
-                claimed: totalRewardsClaimed > 0n,
-                amount: earnedAmt
-              };
-            }
-          } catch (e) {}
-          return { vault: v, participated: false, claimed: false, amount: 0 };
-        })
-      );
+      const lowerUser = userAddress.toLowerCase();
+      let effectiveTxMap = txMap;
+      const hasStaking = Object.keys(effectiveTxMap).some(k => k.startsWith('staking-'));
+      if (!hasStaking) {
+        try {
+          const freshMap = await fetchUserClaimTransactions(userAddress, client);
+          if (freshMap) effectiveTxMap = { ...effectiveTxMap, ...freshMap };
+        } catch (e) {}
+      }
 
-      const newStakingItems = results
-        .filter(r => r.claimed && r.amount > 0)
-        .map(r => ({
-          id: `staking-${r.vault.roundId}`,
-          type: 'staking',
-          roundId: r.vault.roundId,
-          vaultId: r.vault.id,
-          title: `Staking Rewards · Epoch ${r.vault.roundId}`,
-          amount: r.amount,
-          txHash: null,
-          timestamp: r.vault.defaultTime,
-          link: `https://launch.o1.exchange/staking/vaults/${r.vault.id}?chain=8453`
-        }));
+      const stakingItems = Object.keys(effectiveTxMap)
+        .filter(k => k.startsWith('staking-'))
+        .map(k => effectiveTxMap[k])
+        .filter(Boolean);
 
-      if (newStakingItems.length > 0) {
+      if (stakingItems.length > 0) {
         setClaimedHistory(prev => {
           const prevList = Array.isArray(prev) ? prev : [];
           const nonStaking = prevList.filter(h => h && !h.id?.startsWith('staking-'));
-          const updated = getSortedClaimedHistory([...newStakingItems, ...nonStaking]);
-          localStorage.setItem(`vibe_claim_history_${userAddress.toLowerCase()}`, JSON.stringify(updated));
+          const updated = getSortedClaimedHistory([...stakingItems, ...nonStaking]);
+          localStorage.setItem(`vibe_claim_history_${lowerUser}`, JSON.stringify(updated));
           return updated;
         });
       }
@@ -740,7 +778,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       }
 
       // Sync Staking Claims
-      syncStakingClaimHistory(client, address);
+      syncStakingClaimHistory(client, address, txMap);
     } catch (e) {
       console.warn("Background balance fetch error:", e);
     } finally {
@@ -2843,15 +2881,45 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', width: '100%' }}>
                             {/* Action Pills */}
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
-                              {/* BaseScan / o1 Vault Tx Link */}
+                              {/* o1 Vault link (If staking claim) */}
+                              {item?.type === 'staking' && item?.link && (
+                                <a
+                                  href={item.link}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  style={{
+                                    background: '#faf5ff',
+                                    border: '1.5px solid #d8b4fe',
+                                    color: '#7e22ce',
+                                    padding: '5px 10px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.74rem',
+                                    fontWeight: 800,
+                                    textDecoration: 'none',
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    transition: 'all 0.15s ease',
+                                    boxShadow: '0 1px 3px rgba(168, 85, 247, 0.08)',
+                                    whiteSpace: 'nowrap'
+                                  }}
+                                  onMouseEnter={(e) => { e.currentTarget.style.background = '#f3e8ff'; e.currentTarget.style.borderColor = '#c084fc'; }}
+                                  onMouseLeave={(e) => { e.currentTarget.style.background = '#faf5ff'; e.currentTarget.style.borderColor = '#d8b4fe'; }}
+                                >
+                                  <span>o1 Vault</span>
+                                  <ArrowUpRight size={12} strokeWidth={2.5} />
+                                </a>
+                              )}
+
+                              {/* BaseScan Tx Link */}
                               <a
-                                href={item?.link ? item.link : (item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`))}
+                                href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
                                 target="_blank"
                                 rel="noreferrer"
                                 style={{
-                                  background: item?.type === 'staking' ? '#faf5ff' : '#f0fdf4',
-                                  border: item?.type === 'staking' ? '1.5px solid #d8b4fe' : '1.5px solid #86efac',
-                                  color: item?.type === 'staking' ? '#7e22ce' : '#15803d',
+                                  background: '#f0fdf4',
+                                  border: '1.5px solid #86efac',
+                                  color: '#15803d',
                                   padding: '5px 10px',
                                   borderRadius: '8px',
                                   fontSize: '0.74rem',
@@ -2861,13 +2929,13 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   alignItems: 'center',
                                   gap: '4px',
                                   transition: 'all 0.15s ease',
-                                  boxShadow: item?.type === 'staking' ? '0 1px 3px rgba(168, 85, 247, 0.08)' : '0 1px 3px rgba(16, 185, 129, 0.08)',
+                                  boxShadow: '0 1px 3px rgba(16, 185, 129, 0.08)',
                                   whiteSpace: 'nowrap'
                                 }}
-                                onMouseEnter={(e) => { e.currentTarget.style.background = item?.type === 'staking' ? '#f3e8ff' : '#dcfce7'; e.currentTarget.style.borderColor = item?.type === 'staking' ? '#c084fc' : '#4ade80'; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.background = item?.type === 'staking' ? '#faf5ff' : '#f0fdf4'; e.currentTarget.style.borderColor = item?.type === 'staking' ? '#d8b4fe' : '#86efac'; }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#4ade80'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = '#f0fdf4'; e.currentTarget.style.borderColor = '#86efac'; }}
                               >
-                                <span>{item?.type === 'staking' ? 'o1 Vault' : 'BaseScan'}</span>
+                                <span>BaseScan</span>
                                 <ArrowUpRight size={12} strokeWidth={2.5} />
                               </a>
 
