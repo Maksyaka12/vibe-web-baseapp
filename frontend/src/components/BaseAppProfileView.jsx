@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RefreshCw, CheckCircle2, Gift, Clock, Coins, ArrowRight } from 'lucide-react';
+import { formatUnits } from 'viem';
+import { getPublicClient } from '../config/rpc';
+import { STAKING_CONTRACT, STAKING_VAULTS_INFO } from '../Checker';
 
 function formatCompactBalance(val) {
   if (val === null || val === undefined) return '0 $VIBE';
@@ -40,6 +43,58 @@ export function BaseAppProfileView(props) {
     totalExpiredCount = 0,
     totalExpiredTokens = 0
   } = props;
+
+  const [stakingStats, setStakingStats] = useState({ totalEarned: 0, epochsParticipated: 0, loading: false });
+
+  useEffect(() => {
+    if (!address) {
+      setStakingStats({ totalEarned: 0, epochsParticipated: 0, loading: false });
+      return;
+    }
+
+    let isMounted = true;
+    const fetchStaking = async () => {
+      try {
+        const client = getPublicClient();
+        const uParam = address.toLowerCase().slice(2).padStart(64, '0');
+        const results = await Promise.all(
+          STAKING_VAULTS_INFO.map(async (v) => {
+            try {
+              const res = await client.call({
+                to: STAKING_CONTRACT,
+                data: '0xeb48471e' + v.id.slice(2) + uParam
+              });
+              if (res.data && res.data.length >= 194) {
+                const activeStaked = BigInt('0x' + res.data.slice(2, 66));
+                const totalRewardsClaimed = BigInt('0x' + res.data.slice(66, 130));
+                const lotsCount = BigInt('0x' + res.data.slice(130, 194));
+                const participated = lotsCount > 0n || activeStaked > 0n || totalRewardsClaimed > 0n;
+                const earned = Number(formatUnits(totalRewardsClaimed, 18));
+                return { participated, earned };
+              }
+            } catch (e) {}
+            return { participated: false, earned: 0 };
+          })
+        );
+
+        if (isMounted) {
+          const totalEarned = results.reduce((acc, r) => acc + (r?.earned || 0), 0);
+          const epochsParticipated = results.filter(r => r?.participated).length;
+          setStakingStats({ totalEarned, epochsParticipated, loading: false });
+        }
+      } catch (err) {
+        console.warn('Profile staking stats fetch error:', err);
+      }
+    };
+
+    fetchStaking();
+    return () => { isMounted = false; };
+  }, [address]);
+
+  const stakingClaimsFromHistory = (claimedHistory || []).filter(c => c && (c.type === 'staking' || c.id?.startsWith('staking-')));
+  const totalEarnedFromHistory = stakingClaimsFromHistory.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
+  const totalStakingEarned = Math.max(stakingStats.totalEarned, totalEarnedFromHistory);
+  const totalStakingEpochs = Math.max(stakingStats.epochsParticipated, stakingClaimsFromHistory.length);
 
   const totalClaimedCount = (claimedHistory || []).length;
   const totalClaimedTokens = (claimedHistory || []).reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
@@ -457,32 +512,32 @@ export function BaseAppProfileView(props) {
             </div>
           </div>
 
-          {/* Tile 4: Holding Balance */}
+          {/* Tile 4: Staking Rewards */}
           <div
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
-              border: '1px solid rgba(0, 245, 255, 0.25)',
+              border: totalStakingEarned > 0 ? '1.5px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.25)',
               borderRadius: '14px',
               padding: '12px 10px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '6px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
+              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(0, 255, 136, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                WALLET HOLDING
+              <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                STAKING REWARDS
               </span>
-              <Coins size={11} color="#ffd700" />
+              <Coins size={11} color="#00ff88" />
             </div>
             <div>
-              <div style={{ fontSize: '9px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
-                {formatCompactBalance(balance)}
+              <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+                +{totalStakingEarned > 0 ? totalStakingEarned.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '0'} $VIBE
               </div>
-              <div style={{ fontSize: '5.5px', color: isHolderEligibleLive ? '#00ff88' : '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
-                {isHolderEligibleLive ? '5M+ ELIGIBLE' : 'NEED 5M+ FOR HOLDER REWARDS'}
+              <div style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
               </div>
             </div>
           </div>

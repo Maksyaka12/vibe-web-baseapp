@@ -981,9 +981,10 @@ export function BaseAppClaimView(props) {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {claimedHistory.map((item, idx) => {
+              const isStaking = item?.type === 'staking' || item?.id?.startsWith('staking-') || item?.title?.toLowerCase().includes('staking');
               const isRoyalty = item?.type === 'vibeclub' || item?.id?.includes('vibeclub') || item?.title?.toLowerCase().includes('royalty');
-              const categoryLabel = isRoyalty ? 'VIBE CLUB' : 'HOLDER REWARDS';
-              const roundLabel = isRoyalty ? `ROYALTY ${item?.roundId || 1}` : `UNLOCK ${item?.roundId || 1}`;
+              const categoryLabel = isStaking ? 'STAKING' : isRoyalty ? 'VIBE CLUB' : 'HOLDER REWARDS';
+              const roundLabel = isStaking ? `EPOCH ${item?.roundId || 1}` : isRoyalty ? `ROYALTY ${item?.roundId || 1}` : `UNLOCK ${item?.roundId || 1}`;
 
               return (
                 <div
@@ -1001,9 +1002,9 @@ export function BaseAppClaimView(props) {
                 >
                   {/* LEFT SIDE: Title + Share & BaseScan */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {/* Category (White) • Round (Cyan) */}
+                    {/* Category (White) • Round (Cyan/Purple) */}
                     <div style={{ fontSize: '7.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      {categoryLabel} <span style={{ color: '#88aacc' }}>•</span> <span style={{ color: '#00f5ff' }}>{roundLabel}</span>
+                      {categoryLabel} <span style={{ color: '#88aacc' }}>•</span> <span style={{ color: isStaking ? '#a855f7' : '#00f5ff' }}>{roundLabel}</span>
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -1031,15 +1032,15 @@ export function BaseAppClaimView(props) {
                         </button>
                       )}
 
-                      {/* BaseScan Tx Link (Always shown for Royalty 1, Royalty 2, Holder 1 and all claims) */}
+                      {/* BaseScan / o1 Vault Tx Link */}
                       <a
-                        href={item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`)}
+                        href={item?.link ? item.link : (item?.txHash && item.txHash.startsWith('0x') ? `https://basescan.org/tx/${item.txHash}` : (address ? `https://basescan.org/token/${CA}?a=${address}` : `https://basescan.org/token/${CA}`))}
                         target="_blank"
                         rel="noreferrer"
                         style={{
-                          background: 'rgba(0, 245, 255, 0.1)',
-                          border: '1px solid rgba(0, 245, 255, 0.35)',
-                          color: '#00f5ff',
+                          background: isStaking ? 'rgba(168, 85, 247, 0.15)' : 'rgba(0, 245, 255, 0.1)',
+                          border: isStaking ? '1px solid rgba(168, 85, 247, 0.4)' : '1px solid rgba(0, 245, 255, 0.35)',
+                          color: isStaking ? '#c084fc' : '#00f5ff',
                           borderRadius: '8px',
                           padding: '5px 8px',
                           fontSize: '6px',
@@ -1051,7 +1052,7 @@ export function BaseAppClaimView(props) {
                           gap: '3px'
                         }}
                       >
-                        <span>BaseScan</span>
+                        <span>{isStaking ? 'o1 Vault' : 'BaseScan'}</span>
                         <ArrowUpRight size={9} />
                       </a>
                     </div>
