@@ -38,9 +38,9 @@ const DISTRIBUTOR_CA = '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089';
 export const ROYALTY_DISTRIBUTOR_CA = '0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1';
 export const STAKING_CONTRACT = '0x6f25a9e1e677616c1bF7ab54b470b0c82839Adb4';
 export const STAKING_VAULTS_INFO = [
-  { roundId: 1, id: '0xafa3ce23e0043b651d98e5a89b55a80b71be2f4a945a745cd6e37316b5075663', defaultTime: '2026-08-30T14:00:00.000Z' },
-  { roundId: 2, id: '0x5dcabfeb83e84ad87572c531dfa8de915e0b5d8c11e4ca39598a3c6b4fc1e446', defaultTime: '2026-09-09T14:00:00.000Z' },
-  { roundId: 3, id: '0x5a0d6075197085da4e2b9a790f3be8c297d08effcfca677992489668ebcf8b0c', defaultTime: '2026-09-19T14:00:00.000Z' }
+  { roundId: 1, id: '0xafa3ce23e0043b651d98e5a89b55a80b71be2f4a945a745cd6e37316b5075663', defaultTime: '2026-08-31T15:00:00.000Z' },
+  { roundId: 2, id: '0x5dcabfeb83e84ad87572c531dfa8de915e0b5d8c11e4ca39598a3c6b4fc1e446', defaultTime: '2026-09-10T16:00:00.000Z' },
+  { roundId: 3, id: '0x5a0d6075197085da4e2b9a790f3be8c297d08effcfca677992489668ebcf8b0c', defaultTime: '2026-09-20T15:00:00.000Z' }
 ];
 const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
 const O1 = 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453';
