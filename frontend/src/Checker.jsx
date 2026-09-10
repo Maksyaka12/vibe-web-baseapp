@@ -73,26 +73,55 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
 
     const rpcClient = customClient || getPublicClient();
 
-    // 1. Direct on-chain RPC getLogs for the most recent ~9,000 blocks (captures active round claims with 100% precision)
+    // 1. Direct on-chain RPC getLogs for staking claim events & transfers (most recent ~1,950 blocks)
     try {
       const currentBlock = await rpcClient.getBlockNumber();
-      const logs = await rpcClient.getLogs({
-        address: CA,
-        event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
-        args: { to: userAddress },
-        fromBlock: currentBlock > 9000n ? (currentBlock - 9000n) : 0n,
+      const fromBlk = currentBlock > 1950n ? (currentBlock - 1950n) : 0n;
+
+      // Direct staking claim event query
+      const stakingLogs = await rpcClient.getLogs({
+        address: STAKING_CONTRACT,
+        event: parseAbiItem('event EpochRewardClaimed(bytes32 indexed vaultId, uint64 indexed epochId, address indexed user, uint256 amount)'),
+        args: { user: userAddress },
+        fromBlock: fromBlk,
         toBlock: currentBlock
       });
 
-      if (logs && logs.length > 0) {
-        for (const log of logs) {
-          const from = log.args.from?.toLowerCase();
-          const valNum = Number(formatUnits(log.args.value || 0n, 18));
-          // Strictly ignore large emergency admin withdrawals (e.g. > 500,000 $VIBE)
-          if (valNum > 500000) continue;
+      if (stakingLogs && stakingLogs.length > 0) {
+        for (const log of stakingLogs) {
+          const vaultId = log.args.vaultId?.toLowerCase();
+          const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
+          const amountNum = Math.round(Number(formatUnits(log.args.amount || 0n, 18)));
+          const key = `staking-${matchedVault.roundId}`;
+          map[key] = {
+            id: key,
+            type: 'staking',
+            roundId: matchedVault.roundId,
+            vaultId: matchedVault.id,
+            title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
+            amount: amountNum,
+            txHash: log.transactionHash,
+            timestamp: new Date().toISOString(),
+            link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
+          };
+        }
+      }
 
-          if (from === ROYALTY_CA_LOWER) {
-            // For Royalty 2 (active around Sep 7):
+      // Recent Transfer logs for royalty / holder contracts
+      const transferLogs = await rpcClient.getLogs({
+        address: CA,
+        event: parseAbiItem('event Transfer(address indexed from, address indexed to, uint256 value)'),
+        args: { to: userAddress },
+        fromBlock: fromBlk,
+        toBlock: currentBlock
+      });
+
+      if (transferLogs && transferLogs.length > 0) {
+        for (const log of transferLogs) {
+          const from = log.args.from?.toLowerCase();
+          const valNum = Math.round(Number(formatUnits(log.args.value || 0n, 18)));
+
+          if (from === ROYALTY_CA_LOWER && log.transactionHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') {
             if (!map['vibeclub-2'] || (expRoyalty2 && Math.abs(valNum - expRoyalty2) < 1)) {
               map['vibeclub-2'] = {
                 txHash: log.transactionHash,
@@ -108,28 +137,6 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
                 timestamp: new Date().toISOString()
               };
             }
-          } else if (from === STAKING_CA_LOWER) {
-            try {
-              const r = await rpcClient.getTransactionReceipt({ hash: log.transactionHash });
-              const claimLog = r.logs.find(l => l.topics[0] === CLAIM_TOPIC);
-              if (claimLog) {
-                const vaultId = claimLog.topics[1]?.toLowerCase();
-                const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
-                const amountNum = Math.round(Number(formatUnits(BigInt(claimLog.data), 18)));
-                const key = `staking-${matchedVault.roundId}`;
-                map[key] = {
-                  id: key,
-                  type: 'staking',
-                  roundId: matchedVault.roundId,
-                  vaultId: matchedVault.id,
-                  title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
-                  amount: amountNum,
-                  txHash: log.transactionHash,
-                  timestamp: new Date().toISOString(),
-                  link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
-                };
-              }
-            } catch (e) {}
           }
         }
       }
@@ -151,10 +158,10 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
           const from = item?.from?.hash?.toLowerCase();
           const txHash = item?.transaction_hash;
           const timestamp = item?.timestamp;
-          const valueNum = Number(BigInt(item?.total?.value || 0) / 10n**18n);
+          const valueNum = Math.round(Number(BigInt(item?.total?.value || 0) / 10n**18n));
 
-          // Strictly ignore large emergency admin withdrawals
-          if (valueNum > 500000) continue;
+          // Ignore specific admin withdrawal tx
+          if (txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') continue;
 
           if (from === DISTRIBUTOR_CA_LOWER) {
             const isUnlock1 = !timestamp || new Date(timestamp).getTime() < new Date('2026-09-20').getTime();
@@ -189,17 +196,19 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
                 const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
                 const amountNum = Math.round(Number(formatUnits(BigInt(claimLog.data), 18)));
                 const key = `staking-${matchedVault.roundId}`;
-                map[key] = {
-                  id: key,
-                  type: 'staking',
-                  roundId: matchedVault.roundId,
-                  vaultId: matchedVault.id,
-                  title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
-                  amount: amountNum,
-                  txHash,
-                  timestamp: timestamp || matchedVault.defaultTime,
-                  link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
-                };
+                if (!map[key]) {
+                  map[key] = {
+                    id: key,
+                    type: 'staking',
+                    roundId: matchedVault.roundId,
+                    vaultId: matchedVault.id,
+                    title: `Staking Rewards · Epoch ${matchedVault.roundId}`,
+                    amount: amountNum,
+                    txHash,
+                    timestamp: timestamp || matchedVault.defaultTime,
+                    link: `https://launch.o1.exchange/staking/vaults/${matchedVault.id}?chain=8453`
+                  };
+                }
               }
             } catch (stErr) {
               console.warn('Error reading staking tx receipt:', stErr);
@@ -470,13 +479,13 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               const info = txMap[item.id];
               if (info) {
                 const isBadTx = !item.txHash || !item.txHash.startsWith('0x') || item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
-                const isBadAmt = !item.amount || item.amount > 500000;
+                const isBadAmt = !item.amount || (!item.id?.startsWith('staking-') && item.amount > 500000);
                 if (isBadTx || isBadAmt || (info.txHash && info.txHash !== item.txHash) || (info.amount && info.amount !== item.amount)) {
                   return {
                     ...item,
                     txHash: info.txHash || item.txHash,
                     timestamp: info.timestamp || item.timestamp,
-                    amount: (info.amount && info.amount <= 500000) ? info.amount : item.amount,
+                    amount: info.amount || item.amount,
                     link: info.link || item.link
                   };
                 }
@@ -652,14 +661,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
     if (!userAddress) return;
     try {
       const lowerUser = userAddress.toLowerCase();
-      let effectiveTxMap = txMap;
-      const hasStaking = Object.keys(effectiveTxMap).some(k => k.startsWith('staking-'));
-      if (!hasStaking) {
-        try {
-          const freshMap = await fetchUserClaimTransactions(userAddress, client);
-          if (freshMap) effectiveTxMap = { ...effectiveTxMap, ...freshMap };
-        } catch (e) {}
-      }
+      let effectiveTxMap = { ...txMap };
+      try {
+        const freshMap = await fetchUserClaimTransactions(userAddress, client);
+        if (freshMap) effectiveTxMap = { ...effectiveTxMap, ...freshMap };
+      } catch (e) {}
 
       const stakingItems = Object.keys(effectiveTxMap)
         .filter(k => k.startsWith('staking-'))
