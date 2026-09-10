@@ -160,7 +160,7 @@ export function BaseAppProfileView(props) {
         >
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
           <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-            BASE DOG IDENTITY &amp; STATISTICS
+            BASE DOG IDENTITY &amp; DASHBOARD
           </span>
         </div>
       </div>
@@ -417,17 +417,17 @@ export function BaseAppProfileView(props) {
         </div>
       )}
 
-      {/* ── 3. REWARD STATISTICS ZONE ── */}
+      {/* ── 3. REWARD DASHBOARD ZONE ── */}
       <div style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
           <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
-            REWARD STATISTICS
+            REWARD DASHBOARD
           </h3>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          {/* Tile 1: Total Claimed */}
+          {/* Tile 1: Total Claimed (Green) */}
           <div
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
@@ -449,7 +449,7 @@ export function BaseAppProfileView(props) {
             </div>
             <div>
               <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
-                +{totalClaimedTokens > 0 ? totalClaimedTokens.toLocaleString('en-US') : '0'} $VIBE
+                +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
               <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
@@ -457,7 +457,37 @@ export function BaseAppProfileView(props) {
             </div>
           </div>
 
-          {/* Tile 2: Available to Claim */}
+          {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
+          <div
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1px solid rgba(168, 85, 247, 0.35)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                STAKING REWARDS
+              </span>
+              <Coins size={11} color="#c084fc" />
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+                +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 3: Available to Claim (Cyan) */}
           <div
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
@@ -479,7 +509,7 @@ export function BaseAppProfileView(props) {
             </div>
             <div>
               <div style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
-                +{totalAvailableTokens > 0 ? totalAvailableTokens.toLocaleString('en-US') : '0'} $VIBE
+                +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
               <div style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
@@ -487,7 +517,7 @@ export function BaseAppProfileView(props) {
             </div>
           </div>
 
-          {/* Tile 3: Expired Claims */}
+          {/* Tile 4: Expired Claims (Red/Muted) */}
           <div
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
@@ -509,40 +539,10 @@ export function BaseAppProfileView(props) {
             </div>
             <div>
               <div style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
-                {totalExpiredTokens > 0 ? `${totalExpiredTokens.toLocaleString('en-US')}` : '0'} $VIBE
+                {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
               </div>
               <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 4: Staking Rewards */}
-          <div
-            style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalStakingEarned > 0 ? '1.5px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(0, 255, 136, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                STAKING REWARDS
-              </span>
-              <Coins size={11} color="#00ff88" />
-            </div>
-            <div>
-              <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
-                +{totalStakingEarned > 0 ? totalStakingEarned.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '0'} $VIBE
-              </div>
-              <div style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
               </div>
             </div>
           </div>

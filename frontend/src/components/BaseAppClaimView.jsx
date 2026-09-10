@@ -1088,7 +1088,7 @@ export function BaseAppClaimView(props) {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
                     {/* Claimed Amount (Green) */}
                     <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px' }}>
-                      +{Number(item.amount || 0).toLocaleString()} $VIBE
+                      +{Math.round(Number(item.amount || 0)).toLocaleString('en-US')} $VIBE
                     </div>
 
                     {/* Claim Date */}

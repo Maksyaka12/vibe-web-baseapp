@@ -115,7 +115,7 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
               if (claimLog) {
                 const vaultId = claimLog.topics[1]?.toLowerCase();
                 const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
-                const amountNum = Number(formatUnits(BigInt(claimLog.data), 18));
+                const amountNum = Math.round(Number(formatUnits(BigInt(claimLog.data), 18)));
                 const key = `staking-${matchedVault.roundId}`;
                 map[key] = {
                   id: key,
@@ -187,7 +187,7 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
               if (claimLog) {
                 const vaultId = claimLog.topics[1]?.toLowerCase();
                 const matchedVault = STAKING_VAULTS_INFO.find(v => v.id.toLowerCase() === vaultId) || STAKING_VAULTS_INFO[0];
-                const amountNum = Number(formatUnits(BigInt(claimLog.data), 18));
+                const amountNum = Math.round(Number(formatUnits(BigInt(claimLog.data), 18)));
                 const key = `staking-${matchedVault.roundId}`;
                 map[key] = {
                   id: key,
@@ -450,9 +450,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               }
               if (item.id === 'holder-1') {
                 const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
-                return { ...item, amount: correctAmt };
+                return { ...item, amount: Math.round(Number(correctAmt)) };
               }
-              return item;
+              return { ...item, amount: Math.round(Number(item.amount || 0)) };
             });
             setClaimedHistory(getSortedClaimedHistory(sanitized));
           }
@@ -2978,7 +2978,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                             {/* Amount */}
                             <div style={{ fontSize: '1.02rem', fontWeight: 900, color: '#10b981', textAlign: 'right', whiteSpace: 'nowrap' }}>
-                              +{typeof item?.amount === 'number' ? item.amount.toLocaleString('en-US') : (item?.amount || '0')}{' '}
+                              +{Math.round(Number(item?.amount || 0)).toLocaleString('en-US')}{' '}
                               <span style={{ fontSize: '0.78rem', color: 'var(--blue)', fontWeight: 800 }}>$VIBE</span>
                             </div>
                           </div>
