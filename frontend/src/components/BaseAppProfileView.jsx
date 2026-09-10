@@ -96,8 +96,10 @@ export function BaseAppProfileView(props) {
   const totalStakingEarned = Math.max(stakingStats.totalEarned, totalEarnedFromHistory);
   const totalStakingEpochs = Math.max(stakingStats.epochsParticipated, stakingClaimsFromHistory.length);
 
-  const totalClaimedCount = (claimedHistory || []).length;
-  const totalClaimedTokens = (claimedHistory || []).reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
+  // Portal Claimed (ONLY Holder Rewards & Vibe Club Royalties, Staking is counted separately in Tile 4)
+  const portalClaims = (claimedHistory || []).filter(c => c && c.type !== 'staking' && !c.id?.startsWith('staking-'));
+  const totalClaimedCount = portalClaims.length;
+  const totalClaimedTokens = portalClaims.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
   const hasNft = Boolean(nftCount && nftCount > 0);
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
