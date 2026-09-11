@@ -332,3 +332,51 @@
   color: #00f5ff !important;
   stroke: #00f5ff !important;
 }
+
+/* ── 8. DESKTOP & RESPONSIVE LAYOUT HELPERS ── */
+@media (min-width: 1024px) {
+  .base-app-bottom-nav {
+    display: none !important;
+  }
+  .mobile-hamburger-btn,
+  .mobile-brand-pill {
+    display: none !important;
+  }
+  .desktop-header-title {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .desktop-header-title {
+    display: none !important;
+  }
+  .mobile-hamburger-btn,
+  .mobile-brand-pill {
+    display: flex !important;
+  }
+}
+
+/* Custom Scrollbar inside Sidebar & Theme */
+.base-app-sidebar::-webkit-scrollbar,
+.base-app-pixel-theme::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.base-app-sidebar::-webkit-scrollbar-track,
+.base-app-pixel-theme::-webkit-scrollbar-track {
+  background: rgba(2, 11, 26, 0.6);
+}
+
+.base-app-sidebar::-webkit-scrollbar-thumb,
+.base-app-pixel-theme::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 255, 0.25);
+  border-radius: 4px;
+}
+
+.base-app-sidebar::-webkit-scrollbar-thumb:hover,
+.base-app-pixel-theme::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 255, 0.5);
+}
+

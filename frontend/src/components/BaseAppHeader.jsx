@@ -4,7 +4,18 @@ import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAccount } from 'wagmi';
 import { useVibeBalances } from '../hooks/useVibeBalances';
 
-export function BaseAppHeader({ onOpenSidebar, activeTab }) {
+const TAB_TITLES = {
+  home: 'HOME · OVERVIEW',
+  hub: 'REWARDS HUB',
+  buy: 'SWAP $VIBE',
+  vibeclub: 'VIBE CLUB NFT',
+  claim: 'CLAIM PORTAL',
+  profile: 'DASHBOARD',
+  tokenomics: 'TOKENOMICS',
+  contracts: 'CONTRACTS & ADDRESSES'
+};
+
+export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
   const { login, authenticated, user } = usePrivy();
   const { wallets } = useWallets();
   const { address: wagmiAddress, isConnected: isWagmiConnected } = useAccount();
@@ -14,8 +25,11 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
 
   const { balance, nftCount, formattedBalance } = useVibeBalances(activeAddress);
 
+  const pageTitle = TAB_TITLES[activeTab] || '$VIBE';
+
   return (
     <header
+      className="base-app-header"
       style={{
         height: '66px',
         background: 'rgba(2, 11, 26, 0.92)',
@@ -23,7 +37,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 16px',
+        padding: '0 20px',
         position: 'sticky',
         top: 0,
         zIndex: 50,
@@ -31,14 +45,17 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
         fontFamily: "'Press Start 2P', monospace",
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        boxSizing: 'border-box'
       }}
     >
-      {/* Left side: Hamburger + Logo + $VIBE */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      {/* Left side: Hamburger + Logo on Mobile, OR Page Title on Desktop */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Mobile Hamburger Menu Button (Hidden on Desktop via CSS / isDesktop) */}
         <button
           onClick={onOpenSidebar}
           aria-label="Open Navigation Menu"
+          className="mobile-hamburger-btn"
           style={{
             background: 'rgba(0, 245, 255, 0.08)',
             border: '1.5px solid rgba(0, 245, 255, 0.3)',
@@ -46,7 +63,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
             color: '#00f5ff',
             cursor: 'pointer',
             padding: '7px',
-            display: 'flex',
+            display: isDesktop ? 'none' : 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             outline: 'none',
@@ -56,7 +73,16 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
           <Menu size={18} color="#00f5ff" strokeWidth={2.5} />
         </button>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', userSelect: 'none' }}>
+        {/* Mobile Logo + $VIBE */}
+        <div
+          className="mobile-brand-pill"
+          style={{
+            display: isDesktop ? 'none' : 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            userSelect: 'none'
+          }}
+        >
           <img
             src="/new-logo-vibe.png"
             alt="VIBE"
@@ -74,11 +100,44 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
               fontSize: '11px',
               fontWeight: 900,
               color: '#00f5ff',
-              letterSpacing: '0.5px',
-              textShadow: 'none'
+              letterSpacing: '0.5px'
             }}
           >
             $VIBE
+          </span>
+        </div>
+
+        {/* Desktop Active View Title / Breadcrumb */}
+        <div
+          className="desktop-header-title"
+          style={{
+            display: isDesktop ? 'flex' : 'none',
+            alignItems: 'center',
+            gap: '10px'
+          }}
+        >
+          <span
+            style={{
+              fontSize: '11px',
+              fontWeight: 900,
+              color: '#ffffff',
+              letterSpacing: '0.6px'
+            }}
+          >
+            {pageTitle}
+          </span>
+          <span
+            style={{
+              fontSize: '6.5px',
+              color: '#00f5ff',
+              background: 'rgba(0, 245, 255, 0.1)',
+              border: '1px solid rgba(0, 245, 255, 0.3)',
+              padding: '3px 8px',
+              borderRadius: '99px',
+              letterSpacing: '0.4px'
+            }}
+          >
+            BASE MAINNET
           </span>
         </div>
       </div>
@@ -193,3 +252,4 @@ export function BaseAppHeader({ onOpenSidebar, activeTab }) {
     </header>
   );
 }
+

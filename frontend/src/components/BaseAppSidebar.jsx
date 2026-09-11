@@ -13,7 +13,8 @@ import {
   TrendingUp,
   FileCode2,
   ChevronDown,
-  ArrowUpRight
+  ArrowUpRight,
+  Home
 } from 'lucide-react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAccount, useDisconnect } from 'wagmi';
@@ -23,16 +24,19 @@ const shortAddress = (a) => (a ? a.slice(0, 6) + '...' + a.slice(-4) : '');
 const DEX_ITEMS = [
   {
     name: 'O1 Exchange',
+    shortName: 'O1',
     url: 'https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453',
     logo: '/o1-logo.png'
   },
   {
     name: 'Dexscreener',
+    shortName: 'DEX',
     url: 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5',
     logo: '/dexscreener-logo.jpg'
   },
   {
     name: 'GeckoTerminal',
+    shortName: 'GECKO',
     url: 'https://www.geckoterminal.com/uk/base/pools/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5',
     logo: '/geckoterminal-logo.jpg'
   }
@@ -51,30 +55,50 @@ const XIcon = () => (
   </svg>
 );
 
+// Sidebar Toggle Icon matching Happy Hour design (Panel toggle)
+const SidebarToggleIcon = ({ isCollapsed }) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="3" ry="3" />
+    <line x1="9" y1="3" x2="9" y2="21" />
+  </svg>
+);
+
 const SOCIAL_ITEMS = [
   {
     name: 'Telegram Channel',
+    shortName: 'TG Channel',
     url: 'https://t.me/vibe_b20',
     icon: <TelegramIcon />
   },
   {
     name: 'Telegram Chat',
+    shortName: 'TG Chat',
     url: 'https://t.me/vibe_b20_chat',
     icon: <TelegramIcon />
   },
   {
     name: 'Follow on X',
+    shortName: 'X',
     url: 'https://x.com/vibeb20',
     icon: <XIcon />
   },
   {
     name: 'Founder / Developer',
+    shortName: 'Founder',
     url: 'https://x.com/mksvibe',
     icon: <XIcon />
   }
 ];
 
-export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
+export function BaseAppSidebar({
+  isOpen,
+  onClose,
+  activeTab,
+  onSelectTab,
+  isCollapsed = false,
+  onToggleCollapse,
+  isDesktop = false
+}) {
   const { login, logout, authenticated, user } = usePrivy();
   const { wallets } = useWallets();
   const { address: wagmiAddress, isConnected: isWagmiConnected } = useAccount();
@@ -100,16 +124,22 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
   const handleDisconnect = () => {
     disconnect?.();
     logout?.();
-    onClose();
+    if (!isDesktop) onClose();
   };
 
-  if (!isOpen) return null;
+  // If mobile and not open, don't render
+  if (!isDesktop && !isOpen) return null;
 
   const appMenuItems = [
     {
-      id: 'profile',
-      name: 'Profile',
-      icon: <User size={13} strokeWidth={2.5} />
+      id: 'home',
+      name: 'Home',
+      icon: <Home size={13} strokeWidth={2.5} />
+    },
+    {
+      id: 'hub',
+      name: 'Rewards Hub',
+      icon: <Gift size={13} strokeWidth={2.5} />
     },
     {
       id: 'buy',
@@ -123,14 +153,14 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
       isGold: true
     },
     {
-      id: 'hub',
-      name: 'Rewards Hub',
-      icon: <Gift size={13} strokeWidth={2.5} />
-    },
-    {
       id: 'claim',
       name: 'Claim Portal',
       icon: <Coins size={13} strokeWidth={2.5} />
+    },
+    {
+      id: 'profile',
+      name: 'Dashboard',
+      icon: <User size={13} strokeWidth={2.5} />
     }
   ];
 
@@ -147,157 +177,245 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
     }
   ];
 
+  const sidebarWidth = isDesktop ? (isCollapsed ? '72px' : '250px') : '280px';
+
   return (
     <>
-      {/* Backdrop */}
-      <div
-        onClick={onClose}
-        style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          zIndex: 999998,
-          animation: 'fadeIn 0.2s ease-out'
-        }}
-      />
+      {/* Mobile Backdrop */}
+      {!isDesktop && isOpen && (
+        <div
+          onClick={onClose}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.8)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            zIndex: 999998,
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        />
+      )}
 
-      {/* Sidebar Drawer */}
+      {/* Sidebar Container */}
       <aside
+        className={`base-app-sidebar ${isDesktop ? (isCollapsed ? 'collapsed' : 'expanded') : 'mobile-drawer'}`}
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
           bottom: 0,
-          width: '280px',
-          maxWidth: '85vw',
+          width: sidebarWidth,
+          maxWidth: isDesktop ? 'none' : '85vw',
           height: '100vh',
           background: '#020b1a',
-          borderRight: '1.5px solid rgba(0, 245, 255, 0.25)',
-          zIndex: 999999,
+          borderRight: '1.5px solid rgba(0, 245, 255, 0.22)',
+          zIndex: isDesktop ? 60 : 999999,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          padding: '16px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px',
+          padding: isCollapsed
+            ? '16px 8px calc(20px + env(safe-area-inset-bottom, 0px)) 8px'
+            : '16px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px',
           boxSizing: 'border-box',
           fontFamily: "'Press Start 2P', monospace",
-          boxShadow: '10px 0 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 245, 255, 0.1)',
-          animation: 'slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+          boxShadow: isDesktop
+            ? '4px 0 24px rgba(0, 0, 0, 0.6)'
+            : '10px 0 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 245, 255, 0.1)',
+          animation: isDesktop ? 'none' : 'slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: isDesktop ? 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s ease' : 'none',
           textTransform: 'uppercase',
-          overflowY: 'auto'
+          overflowY: 'auto',
+          overflowX: 'hidden'
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {/* Header with Logo + $VIBE + Close button */}
+          
+          {/* Header with Logo + $VIBE + Toggle / Close button */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
+              justifyContent: isCollapsed ? 'center' : 'space-between',
               paddingBottom: '14px',
-              borderBottom: '1px solid rgba(0, 245, 255, 0.15)'
+              borderBottom: '1px solid rgba(0, 245, 255, 0.15)',
+              minHeight: '36px'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px' }}>
-              <img
-                src="/new-logo-vibe.png"
-                alt="VIBE"
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '8px',
-                  objectFit: 'cover',
-                  border: '1.5px solid #00f5ff',
-                  boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)'
-                }}
-              />
-              <span
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 900,
-                  color: '#00f5ff',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                $VIBE
-              </span>
-            </div>
+            {isCollapsed ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <img
+                  src="/new-logo-vibe.png"
+                  alt="VIBE"
+                  title="$VIBE"
+                  onClick={() => onSelectTab('home')}
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '8px',
+                    objectFit: 'cover',
+                    border: '1.5px solid #00f5ff',
+                    boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)',
+                    cursor: 'pointer'
+                  }}
+                />
+                {onToggleCollapse && (
+                  <button
+                    onClick={onToggleCollapse}
+                    title="Expand Sidebar"
+                    style={{
+                      background: 'rgba(0, 245, 255, 0.08)',
+                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      borderRadius: '6px',
+                      color: '#00f5ff',
+                      cursor: 'pointer',
+                      padding: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <SidebarToggleIcon isCollapsed={true} />
+                  </button>
+                )}
+              </div>
+            ) : (
+              <>
+                <div
+                  onClick={() => {
+                    onSelectTab('home');
+                    if (!isDesktop) onClose();
+                  }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '9px', cursor: 'pointer' }}
+                >
+                  <img
+                    src="/new-logo-vibe.png"
+                    alt="VIBE"
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '8px',
+                      objectFit: 'cover',
+                      border: '1.5px solid #00f5ff',
+                      boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)'
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: '11px',
+                      fontWeight: 900,
+                      color: '#00f5ff',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    $VIBE
+                  </span>
+                </div>
 
-            <button
-              onClick={onClose}
-              aria-label="Close Menu"
-              style={{
-                background: 'rgba(0, 245, 255, 0.08)',
-                border: '1px solid rgba(0, 245, 255, 0.25)',
-                borderRadius: '8px',
-                color: '#00f5ff',
-                cursor: 'pointer',
-                padding: '5px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                outline: 'none'
-              }}
-            >
-              <X size={15} color="#00f5ff" />
-            </button>
+                {/* Right button in Header: Collapse button on desktop OR Close button on mobile */}
+                {isDesktop ? (
+                  <button
+                    onClick={onToggleCollapse}
+                    title="Collapse Sidebar"
+                    aria-label="Toggle Sidebar"
+                    style={{
+                      background: 'rgba(0, 245, 255, 0.08)',
+                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      borderRadius: '8px',
+                      color: '#00f5ff',
+                      cursor: 'pointer',
+                      padding: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      outline: 'none',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    <SidebarToggleIcon isCollapsed={false} />
+                  </button>
+                ) : (
+                  <button
+                    onClick={onClose}
+                    aria-label="Close Menu"
+                    style={{
+                      background: 'rgba(0, 245, 255, 0.08)',
+                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      borderRadius: '8px',
+                      color: '#00f5ff',
+                      cursor: 'pointer',
+                      padding: '5px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      outline: 'none'
+                    }}
+                  >
+                    <X size={15} color="#00f5ff" />
+                  </button>
+                )}
+              </>
+            )}
           </div>
 
           {/* Navigation Accordion Sections */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isCollapsed ? '10px' : '14px' }}>
             
             {/* ── SECTION 1: APP MENU ── */}
             <div>
-              <div
-                onClick={() => setIsAppMenuOpen(!isAppMenuOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '4px 6px 6px 6px',
-                  cursor: 'pointer',
-                  userSelect: 'none'
-                }}
-              >
-                <span
+              {!isCollapsed && (
+                <div
+                  onClick={() => setIsAppMenuOpen(!isAppMenuOpen)}
                   style={{
-                    fontSize: '7.5px',
-                    fontWeight: 800,
-                    color: '#00f5ff',
-                    letterSpacing: '0.5px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '4px 6px 6px 6px',
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   }}
                 >
-                  APP MENU
-                </span>
-                <ChevronDown
-                  size={12}
-                  color="#00f5ff"
-                  style={{
-                    transform: isAppMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    transition: 'transform 0.2s ease'
-                  }}
-                />
-              </div>
+                  <span
+                    style={{
+                      fontSize: '7.5px',
+                      fontWeight: 800,
+                      color: '#00f5ff',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    APP MENU
+                  </span>
+                  <ChevronDown
+                    size={12}
+                    color="#00f5ff"
+                    style={{
+                      transform: isAppMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                      transition: 'transform 0.2s ease'
+                    }}
+                  />
+                </div>
+              )}
 
-              {isAppMenuOpen && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '4px' }}>
+              {(isCollapsed || isAppMenuOpen) && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {appMenuItems.map((item) => {
                     const isActive = activeTab === item.id;
                     const isGold = item.isGold;
                     return (
                       <button
                         key={item.id}
+                        title={item.name}
                         onClick={() => {
                           onSelectTab(item.id);
-                          onClose();
+                          if (!isDesktop) onClose();
                         }}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
+                          justifyContent: isCollapsed ? 'center' : 'flex-start',
                           gap: '8px',
                           width: '100%',
-                          padding: '7px 9px',
+                          padding: isCollapsed ? '8px 0' : '7px 9px',
                           borderRadius: '8px',
                           border: isActive
                             ? (isGold ? '1.5px solid #ffd700' : '1.5px solid #00f5ff')
@@ -339,9 +457,11 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                         >
                           {item.icon}
                         </div>
-                        <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {item.name}
-                        </span>
+                        {!isCollapsed && (
+                          <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {item.name}
+                          </span>
+                        )}
                       </button>
                     );
                   })}
@@ -351,54 +471,58 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
 
             {/* ── SECTION 2: $VIBE DOCS ── */}
             <div>
-              <div
-                onClick={() => setIsDocsOpen(!isDocsOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '4px 6px 6px 6px',
-                  cursor: 'pointer',
-                  userSelect: 'none'
-                }}
-              >
-                <span
+              {!isCollapsed && (
+                <div
+                  onClick={() => setIsDocsOpen(!isDocsOpen)}
                   style={{
-                    fontSize: '7.5px',
-                    fontWeight: 800,
-                    color: '#00f5ff',
-                    letterSpacing: '0.5px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '4px 6px 6px 6px',
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   }}
                 >
-                  $VIBE DOCS
-                </span>
-                <ChevronDown
-                  size={12}
-                  color="#00f5ff"
-                  style={{
-                    transform: isDocsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    transition: 'transform 0.2s ease'
-                  }}
-                />
-              </div>
+                  <span
+                    style={{
+                      fontSize: '7.5px',
+                      fontWeight: 800,
+                      color: '#00f5ff',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    $VIBE DOCS
+                  </span>
+                  <ChevronDown
+                    size={12}
+                    color="#00f5ff"
+                    style={{
+                      transform: isDocsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                      transition: 'transform 0.2s ease'
+                    }}
+                  />
+                </div>
+              )}
 
-              {isDocsOpen && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '4px' }}>
+              {(isCollapsed || isDocsOpen) && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {docsItems.map((item) => {
                     const isActive = activeTab === item.id;
                     return (
                       <button
                         key={item.id}
+                        title={item.name}
                         onClick={() => {
                           onSelectTab(item.id);
-                          onClose();
+                          if (!isDesktop) onClose();
                         }}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
+                          justifyContent: isCollapsed ? 'center' : 'flex-start',
                           gap: '8px',
                           width: '100%',
-                          padding: '7px 9px',
+                          padding: isCollapsed ? '8px 0' : '7px 9px',
                           borderRadius: '8px',
                           border: isActive ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.08)',
                           background: isActive ? 'rgba(0, 245, 255, 0.12)' : 'rgba(4, 14, 36, 0.6)',
@@ -428,9 +552,11 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                         >
                           {item.icon}
                         </div>
-                        <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {item.name}
-                        </span>
+                        {!isCollapsed && (
+                          <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {item.name}
+                          </span>
+                        )}
                       </button>
                     );
                   })}
@@ -440,52 +566,55 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
 
             {/* ── SECTION 3: DEX ── */}
             <div>
-              <div
-                onClick={() => setIsDexOpen(!isDexOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '4px 6px 6px 6px',
-                  cursor: 'pointer',
-                  userSelect: 'none'
-                }}
-              >
-                <span
+              {!isCollapsed && (
+                <div
+                  onClick={() => setIsDexOpen(!isDexOpen)}
                   style={{
-                    fontSize: '7.5px',
-                    fontWeight: 800,
-                    color: '#00f5ff',
-                    letterSpacing: '0.5px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '4px 6px 6px 6px',
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   }}
                 >
-                  DEX
-                </span>
-                <ChevronDown
-                  size={12}
-                  color="#00f5ff"
-                  style={{
-                    transform: isDexOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    transition: 'transform 0.2s ease'
-                  }}
-                />
-              </div>
+                  <span
+                    style={{
+                      fontSize: '7.5px',
+                      fontWeight: 800,
+                      color: '#00f5ff',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    DEX
+                  </span>
+                  <ChevronDown
+                    size={12}
+                    color="#00f5ff"
+                    style={{
+                      transform: isDexOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                      transition: 'transform 0.2s ease'
+                    }}
+                  />
+                </div>
+              )}
 
-              {isDexOpen && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '4px' }}>
+              {(isCollapsed || isDexOpen) && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {DEX_ITEMS.map((item) => (
                     <a
                       key={item.name}
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      title={item.name}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justifyContent: isCollapsed ? 'center' : 'space-between',
                         gap: '8px',
                         width: '100%',
-                        padding: '7px 9px',
+                        padding: isCollapsed ? '8px 0' : '7px 9px',
                         borderRadius: '8px',
                         border: '1px solid rgba(0, 245, 255, 0.08)',
                         background: 'rgba(4, 14, 36, 0.6)',
@@ -505,18 +634,22 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                           src={item.logo}
                           alt={item.name}
                           style={{
-                            width: '13px',
-                            height: '13px',
+                            width: '14px',
+                            height: '14px',
                             borderRadius: '3px',
                             objectFit: 'cover',
                             flexShrink: 0
                           }}
                         />
-                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {item.name}
-                        </span>
+                        {!isCollapsed && (
+                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {item.name}
+                          </span>
+                        )}
                       </div>
-                      <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      {!isCollapsed && (
+                        <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      )}
                     </a>
                   ))}
                 </div>
@@ -525,52 +658,55 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
 
             {/* ── SECTION 4: SOCIALS ── */}
             <div>
-              <div
-                onClick={() => setIsSocialsOpen(!isSocialsOpen)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '4px 6px 6px 6px',
-                  cursor: 'pointer',
-                  userSelect: 'none'
-                }}
-              >
-                <span
+              {!isCollapsed && (
+                <div
+                  onClick={() => setIsSocialsOpen(!isSocialsOpen)}
                   style={{
-                    fontSize: '7.5px',
-                    fontWeight: 800,
-                    color: '#00f5ff',
-                    letterSpacing: '0.5px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '4px 6px 6px 6px',
+                    cursor: 'pointer',
+                    userSelect: 'none'
                   }}
                 >
-                  SOCIALS
-                </span>
-                <ChevronDown
-                  size={12}
-                  color="#00f5ff"
-                  style={{
-                    transform: isSocialsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    transition: 'transform 0.2s ease'
-                  }}
-                />
-              </div>
+                  <span
+                    style={{
+                      fontSize: '7.5px',
+                      fontWeight: 800,
+                      color: '#00f5ff',
+                      letterSpacing: '0.5px'
+                    }}
+                  >
+                    SOCIALS
+                  </span>
+                  <ChevronDown
+                    size={12}
+                    color="#00f5ff"
+                    style={{
+                      transform: isSocialsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+                      transition: 'transform 0.2s ease'
+                    }}
+                  />
+                </div>
+              )}
 
-              {isSocialsOpen && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: '4px' }}>
+              {(isCollapsed || isSocialsOpen) && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {SOCIAL_ITEMS.map((item) => (
                     <a
                       key={item.name}
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      title={item.name}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justifyContent: isCollapsed ? 'center' : 'space-between',
                         gap: '8px',
                         width: '100%',
-                        padding: '7px 9px',
+                        padding: isCollapsed ? '8px 0' : '7px 9px',
                         borderRadius: '8px',
                         border: '1px solid rgba(0, 245, 255, 0.08)',
                         background: 'rgba(4, 14, 36, 0.6)',
@@ -589,11 +725,15 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
                         <div style={{ color: '#00f5ff', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                           {item.icon}
                         </div>
-                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                          {item.name}
-                        </span>
+                        {!isCollapsed && (
+                          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {item.name}
+                          </span>
+                        )}
                       </div>
-                      <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      {!isCollapsed && (
+                        <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      )}
                     </a>
                   ))}
                 </div>
@@ -606,76 +746,142 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
         {/* Footer: Wallet status */}
         <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(0, 245, 255, 0.15)', marginTop: '16px' }}>
           {hasWallet ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <div
-                style={{
-                  background: 'rgba(4, 14, 36, 0.9)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.25)',
-                  borderRadius: '8px',
-                  padding: '8px 10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <img
-                    src="/new-logo-vibe.png"
-                    alt="avatar"
-                    style={{ width: '18px', height: '18px', borderRadius: '4px' }}
-                  />
-                  <span style={{ fontSize: '7px', fontWeight: 900, color: '#00ff88' }}>
-                    {shortAddress(activeAddress)}
-                  </span>
+            isCollapsed ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                <button
+                  onClick={handleCopy}
+                  title={`Active Wallet: ${activeAddress} (Click to Copy)`}
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '8px',
+                    background: 'rgba(4, 14, 36, 0.9)',
+                    border: '1.5px solid rgba(0, 255, 136, 0.4)',
+                    color: copied ? '#00ff88' : '#00f5ff',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 0 10px rgba(0, 255, 136, 0.2)'
+                  }}
+                >
+                  {copied ? <Check size={14} color="#00ff88" /> : <Wallet size={14} color="#00ff88" />}
+                </button>
+                <button
+                  onClick={handleDisconnect}
+                  title="Disconnect Wallet"
+                  style={{
+                    width: '36px',
+                    height: '28px',
+                    borderRadius: '6px',
+                    background: 'rgba(255, 68, 102, 0.15)',
+                    border: '1px solid rgba(255, 68, 102, 0.4)',
+                    color: '#ff4466',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <LogOut size={12} />
+                </button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <div
+                  style={{
+                    background: 'rgba(4, 14, 36, 0.9)',
+                    border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                    borderRadius: '8px',
+                    padding: '8px 10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <img
+                      src="/new-logo-vibe.png"
+                      alt="avatar"
+                      style={{ width: '18px', height: '18px', borderRadius: '4px' }}
+                    />
+                    <span style={{ fontSize: '7px', fontWeight: 900, color: '#00ff88' }}>
+                      {shortAddress(activeAddress)}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={handleCopy}
+                    title="Copy address"
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      color: copied ? '#00ff88' : '#00f5ff',
+                      cursor: 'pointer',
+                      padding: '3px',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {copied ? <Check size={13} /> : <Copy size={13} />}
+                  </button>
                 </div>
 
                 <button
-                  onClick={handleCopy}
-                  title="Copy address"
+                  onClick={handleDisconnect}
                   style={{
-                    background: 'transparent',
-                    border: 'none',
-                    color: copied ? '#00ff88' : '#00f5ff',
+                    width: '100%',
+                    background: 'rgba(255, 68, 102, 0.12)',
+                    border: '1.5px solid rgba(255, 68, 102, 0.35)',
+                    color: '#ff4466',
+                    borderRadius: '8px',
+                    padding: '9px 10px',
+                    fontSize: '7px',
+                    fontWeight: 900,
                     cursor: 'pointer',
-                    padding: '3px',
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s ease',
+                    fontFamily: "'Press Start 2P', monospace",
+                    textTransform: 'uppercase'
                   }}
                 >
-                  {copied ? <Check size={13} /> : <Copy size={13} />}
+                  <LogOut size={11} />
+                  <span>DISCONNECT</span>
                 </button>
               </div>
-
-              <button
-                onClick={handleDisconnect}
-                style={{
-                  width: '100%',
-                  background: 'rgba(255, 68, 102, 0.12)',
-                  border: '1.5px solid rgba(255, 68, 102, 0.35)',
-                  color: '#ff4466',
-                  borderRadius: '8px',
-                  padding: '9px 10px',
-                  fontSize: '7px',
-                  fontWeight: 900,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '6px',
-                  transition: 'all 0.15s ease',
-                  fontFamily: "'Press Start 2P', monospace",
-                  textTransform: 'uppercase'
-                }}
-              >
-                <LogOut size={11} />
-                <span>DISCONNECT</span>
-              </button>
-            </div>
+            )
+          ) : isCollapsed ? (
+            <button
+              onClick={() => {
+                login();
+                if (!isDesktop) onClose();
+              }}
+              title="Connect Wallet"
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
+                color: '#FFFFFF',
+                border: '1.5px solid #ffffff',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)',
+                margin: '0 auto'
+              }}
+            >
+              <Wallet size={14} strokeWidth={2.5} />
+            </button>
           ) : (
             <button
               onClick={() => {
                 login();
-                onClose();
+                if (!isDesktop) onClose();
               }}
               style={{
                 width: '100%',
@@ -705,3 +911,4 @@ export function BaseAppSidebar({ isOpen, onClose, activeTab, onSelectTab }) {
     </>
   );
 }
+
