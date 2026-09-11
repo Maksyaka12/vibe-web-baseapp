@@ -132,9 +132,9 @@ export function BaseAppSidebar({
 
   const appMenuItems = [
     {
-      id: 'hub',
-      name: 'Rewards Hub',
-      icon: <Gift size={isDesktop ? 15 : 13} strokeWidth={2.5} />
+      id: 'profile',
+      name: 'Profile',
+      icon: <User size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     },
     {
       id: 'buy',
@@ -148,14 +148,14 @@ export function BaseAppSidebar({
       isGold: true
     },
     {
+      id: 'hub',
+      name: 'Rewards Hub',
+      icon: <Gift size={isDesktop ? 15 : 13} strokeWidth={2.5} />
+    },
+    {
       id: 'claim',
       name: 'Claim Portal',
       icon: <Coins size={isDesktop ? 15 : 13} strokeWidth={2.5} />
-    },
-    {
-      id: 'profile',
-      name: 'Dashboard',
-      icon: <User size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     }
   ];
 
@@ -172,7 +172,7 @@ export function BaseAppSidebar({
     }
   ];
 
-  const sidebarWidth = isDesktop ? (isCollapsed ? '72px' : '260px') : '280px';
+  const sidebarWidth = isDesktop ? (isCollapsed ? '72px' : '290px') : '280px';
 
   return (
     <>

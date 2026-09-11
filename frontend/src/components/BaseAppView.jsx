@@ -149,7 +149,7 @@ export function BaseAppView({ RewardsComponent }) {
   };
 
   // Compute desktop margin-left based on sidebar state
-  const desktopMarginLeft = isDesktop ? (isSidebarCollapsed ? '72px' : '250px') : '0px';
+  const desktopMarginLeft = isDesktop ? (isSidebarCollapsed ? '72px' : '290px') : '0px';
 
   return (
     <BaseAppErrorBoundary>

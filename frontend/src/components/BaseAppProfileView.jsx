@@ -117,6 +117,7 @@ export function BaseAppProfileView(props) {
     <div style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* ── 1. MODERN PROFILE HERO HEADER ── */}
       <div
+        className="rewards-hero-header"
         style={{
           width: '100%',
           display: 'flex',
@@ -129,6 +130,7 @@ export function BaseAppProfileView(props) {
         }}
       >
         <h2
+          className="rewards-hero-title"
           style={{
             fontSize: '18px',
             margin: '0 0 12px 0',
@@ -145,6 +147,7 @@ export function BaseAppProfileView(props) {
 
         {/* Subtitle Status Pill */}
         <div
+          className="rewards-hero-pill"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -159,7 +162,7 @@ export function BaseAppProfileView(props) {
           }}
         >
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-          <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
             BASE DOG IDENTITY &amp; DASHBOARD
           </span>
         </div>

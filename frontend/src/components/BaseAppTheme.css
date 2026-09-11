@@ -354,15 +354,227 @@
 
   /* Main Section Headings on Desktop */
   .base-app-pixel-theme .sec-head h2 {
-    font-size: 18px !important;
+    font-size: 20px !important;
     letter-spacing: 0.8px !important;
     margin-bottom: 12px !important;
   }
 
   .base-app-pixel-theme .sec-sub {
-    font-size: 9.5px !important;
+    font-size: 10px !important;
     line-height: 1.7 !important;
     letter-spacing: 0.4px !important;
+  }
+
+  /* ── Desktop Rewards Hub Category Switcher ── */
+  .base-app-pixel-theme .rewards-cat-grid {
+    gap: 12px !important;
+    padding: 10px !important;
+    border-radius: 18px !important;
+    margin-bottom: 28px !important;
+  }
+  .base-app-pixel-theme .rewards-cat-btn {
+    min-height: 96px !important;
+    padding: 14px 8px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+  }
+  .base-app-pixel-theme .rewards-cat-icon {
+    font-size: 20px !important;
+  }
+  .base-app-pixel-theme .rewards-cat-label {
+    font-size: 10.5px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .rewards-cat-count {
+    font-size: 8px !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* ── Desktop Hero & Header ── */
+  .base-app-pixel-theme .rewards-hero-header {
+    margin-bottom: 26px !important;
+    padding: 16px 12px 12px 12px !important;
+  }
+  .base-app-pixel-theme .rewards-hero-title {
+    font-size: 24px !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 14px !important;
+  }
+  .base-app-pixel-theme .rewards-hero-pill {
+    padding: 9px 22px !important;
+  }
+  .base-app-pixel-theme .rewards-hero-pill-text {
+    font-size: 9px !important;
+    letter-spacing: 0.6px !important;
+  }
+
+  /* ── Desktop Rule Strip ── */
+  .base-app-pixel-theme .rewards-rule-strip {
+    padding: 14px 18px !important;
+    border-radius: 14px !important;
+    margin-bottom: 22px !important;
+  }
+  .base-app-pixel-theme .rewards-rule-text {
+    font-size: 9.5px !important;
+    line-height: 1.6 !important;
+  }
+  .base-app-pixel-theme .rewards-rule-btn {
+    font-size: 9px !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+  }
+
+  /* ── Desktop Featured Active Spotlight Card ── */
+  .base-app-pixel-theme .rewards-featured-card {
+    padding: 24px 22px !important;
+    border-radius: 20px !important;
+    margin-bottom: 28px !important;
+  }
+  .base-app-pixel-theme .rewards-featured-title {
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .rewards-featured-status {
+    font-size: 9px !important;
+    margin-top: 4px !important;
+  }
+  .base-app-pixel-theme .rewards-countdown-pill {
+    font-size: 9px !important;
+    padding: 6px 12px !important;
+    border-radius: 10px !important;
+    gap: 6px !important;
+  }
+  .base-app-pixel-theme .rewards-pool-box {
+    padding: 16px 18px !important;
+    border-radius: 14px !important;
+    margin-bottom: 16px !important;
+  }
+  .base-app-pixel-theme .rewards-pool-label {
+    font-size: 9px !important;
+    margin-bottom: 6px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .rewards-pool-value {
+    font-size: 18px !important;
+    letter-spacing: 0.6px !important;
+  }
+  .base-app-pixel-theme .rewards-pool-unit {
+    font-size: 11px !important;
+  }
+  .base-app-pixel-theme .rewards-info-grid {
+    gap: 12px !important;
+    margin-bottom: 18px !important;
+  }
+  .base-app-pixel-theme .rewards-info-box {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .rewards-info-label {
+    font-size: 8.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .base-app-pixel-theme .rewards-info-value {
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+  }
+  .base-app-pixel-theme .rewards-claim-btn {
+    font-size: 11.5px !important;
+    padding: 15px 20px !important;
+    border-radius: 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .rewards-eligibility-msg {
+    font-size: 9px !important;
+    margin-top: 14px !important;
+    gap: 8px !important;
+  }
+  .base-app-pixel-theme .rewards-eligibility-msg span {
+    font-size: 9px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ── Desktop Schedule & Timelines ── */
+  .base-app-pixel-theme .rewards-schedule-card {
+    padding: 22px 20px !important;
+    border-radius: 18px !important;
+    margin-bottom: 28px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-head {
+    margin-bottom: 16px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-title {
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-count {
+    font-size: 9px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-row {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-name {
+    font-size: 10.5px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-date {
+    font-size: 9px !important;
+    margin-top: 5px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-amount {
+    font-size: 11px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-locked {
+    font-size: 8.5px !important;
+    margin-top: 3px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-tooltip {
+    font-size: 8.5px !important;
+    padding: 10px 14px !important;
+    border-radius: 10px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-tooltip div {
+    font-size: 8.5px !important;
+    line-height: 1.6 !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-notice {
+    padding: 16px 18px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .rewards-schedule-notice span {
+    font-size: 9px !important;
+  }
+  .base-app-pixel-theme .rewards-action-sm-btn {
+    font-size: 9px !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+  }
+
+  /* ── Desktop FAQ ── */
+  .base-app-pixel-theme .rewards-faq-container {
+    margin-top: 28px !important;
+    margin-bottom: 50px !important;
+  }
+  .base-app-pixel-theme .rewards-faq-title {
+    font-size: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .base-app-pixel-theme .rewards-faq-card {
+    border-radius: 14px !important;
+  }
+  .base-app-pixel-theme .rewards-faq-btn {
+    padding: 16px 18px !important;
+    font-size: 10px !important;
+  }
+  .base-app-pixel-theme .rewards-faq-btn span {
+    font-size: 10px !important;
+  }
+  .base-app-pixel-theme .rewards-faq-ans {
+    padding: 0 18px 16px 18px !important;
+    font-size: 9px !important;
+    line-height: 1.7 !important;
   }
 
   /* Category & Reward Card Headings */
@@ -386,7 +598,7 @@
   .base-app-pixel-theme #rewards div[style*="font-size: 1.38rem"],
   .base-app-pixel-theme #rewards div[style*="font-size: 1.35rem"],
   .base-app-pixel-theme .checker-reward-card div[style*="font-size: 1.35rem"] {
-    font-size: 13px !important;
+    font-size: 14px !important;
     letter-spacing: 0.5px !important;
   }
 
@@ -403,24 +615,14 @@
     letter-spacing: 0.3px !important;
   }
 
-  /* 3-Point Staking/Holder Detail Cards on Desktop */
-  .base-app-pixel-theme #rewards div[style*="linear-gradient(135deg, rgba(190, 241, 255"] strong {
-    font-size: 9.5px !important;
-  }
-
-  .base-app-pixel-theme #rewards div[style*="linear-gradient(135deg, rgba(190, 241, 255"] p {
-    font-size: 8px !important;
-    line-height: 1.6 !important;
-  }
-
   /* Action Buttons on Desktop */
   .base-app-pixel-theme button.btn-fill,
   .base-app-pixel-theme a.btn-fill,
   .base-app-pixel-theme #rewards a[style*="background: var(--blue)"],
   .base-app-pixel-theme #rewards a[style*="background: rgb(0, 0, 255)"],
   .base-app-pixel-theme #rewards button[style*="background: var(--blue)"] {
-    font-size: 9.5px !important;
-    padding: 12px 18px !important;
+    font-size: 10px !important;
+    padding: 13px 20px !important;
     letter-spacing: 0.5px !important;
   }
 
@@ -431,18 +633,6 @@
     font-size: 8.5px !important;
     padding: 6px 12px !important;
     letter-spacing: 0.4px !important;
-  }
-
-  /* FAQ Items on Desktop */
-  .base-app-pixel-theme .rewards-faq-item span {
-    font-size: 9.5px !important;
-    line-height: 1.6 !important;
-  }
-
-  .base-app-pixel-theme .rewards-faq-item div,
-  .base-app-pixel-theme #rewards div[style*="border-radius: 18px"] p {
-    font-size: 8px !important;
-    line-height: 1.7 !important;
   }
 }
 
