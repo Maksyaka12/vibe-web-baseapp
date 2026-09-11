@@ -10,6 +10,7 @@ import { base } from 'viem/chains';
 import { publicClient } from './config/rpc';
 import Checker from './Checker';
 import { BaseAppView } from './components/BaseAppView';
+import DarkPixelLandingPage from './components/DarkPixelLandingPage';
 import NftClubPage from './pages/NftClubPage';
 import ContractsPage from './pages/ContractsPage';
 import BaseAppRewardsView from './components/BaseAppRewardsView';
@@ -3632,9 +3633,13 @@ function DomainRouter() {
       <Route path="/app" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/app/*" element={<BaseAppView RewardsComponent={Rewards} />} />
 
-      {/* ── Main Routing (Unified Dark Pixel App View) ── */}
-      <Route path="/" element={<BaseAppView RewardsComponent={Rewards} />} />
-      <Route path="/home" element={<BaseAppView RewardsComponent={Rewards} />} />
+      {/* ── Welcome Landing Page (Full-width standalone) ── */}
+      <Route path="/" element={<DarkPixelLandingPage />} />
+      <Route path="/home" element={<Navigate to="/" replace />} />
+
+      {/* ── Main App Routes (Unified BaseAppView with Collapsible Sidebar) ── */}
+      <Route path="/app" element={<BaseAppView RewardsComponent={Rewards} />} />
+      <Route path="/app/*" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/tokenomics" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/hub" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/rewards" element={<BaseAppView RewardsComponent={Rewards} />} />

@@ -164,6 +164,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
   // ═════════════════════════════════════════════════════════════════════
   // ── BASE APP RETRO PIXEL RENDERING ──
   // ═════════════════════════════════════════════════════════════════════
+  // ═════════════════════════════════════════════════════════════════════
+  // ── BASE APP RETRO PIXEL RENDERING (RESPONSIVE MOBILE & DESKTOP) ──
+  // ═════════════════════════════════════════════════════════════════════
   if (isBaseAppMode) {
     const cardStyle = {
       background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
@@ -182,21 +185,21 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
       background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
       border: '1.5px solid rgba(0, 245, 255, 0.25)',
       borderRadius: '14px',
-      padding: '12px 10px',
+      padding: '14px 12px',
       textAlign: 'center',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '5px',
+      gap: '6px',
       boxSizing: 'border-box'
     };
 
     const listRowStyle = {
       display: 'flex',
       alignItems: 'flex-start',
-      gap: '10px',
-      padding: '10px 10px',
+      gap: '12px',
+      padding: '12px 12px',
       background: 'rgba(2, 11, 26, 0.7)',
       border: '1px solid rgba(0, 245, 255, 0.12)',
       borderRadius: '10px',
@@ -204,9 +207,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
     };
 
     const iconBoxStyle = (bgColor, borderColor) => ({
-      width: '26px',
-      height: '26px',
-      borderRadius: '6px',
+      width: '28px',
+      height: '28px',
+      borderRadius: '7px',
       background: bgColor || 'rgba(0, 245, 255, 0.08)',
       border: borderColor ? `1px solid ${borderColor}` : '1px solid rgba(0, 245, 255, 0.2)',
       display: 'flex',
@@ -216,11 +219,11 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
     });
 
     return (
-      <section style={{ padding: '16px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+      <section className="tokenomics-baseapp-container" style={{ padding: '16px 12px 60px 12px', maxWidth: '1040px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
         
         {/* ── BLOCK 1: TOKENOMICS INFO ── */}
-        <div style={{ textAlign: 'center', marginBottom: '22px' }}>
-          <h2 style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+          <h2 className="tokenomics-main-title" style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             $VIBE <span style={{ color: '#00f5ff' }}>TOKENOMICS</span>
           </h2>
           <div
@@ -228,35 +231,35 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '6px',
+              gap: '8px',
               background: 'rgba(0, 245, 255, 0.08)',
               border: '1.5px solid rgba(0, 245, 255, 0.35)',
               borderRadius: '99px',
-              padding: '6px 12px',
+              padding: '7px 16px',
               maxWidth: '100%',
               boxSizing: 'border-box'
             }}
           >
-            <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span style={{ fontSize: '5.8px', color: '#00f5ff', letterSpacing: '0.2px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4, whiteSpace: 'nowrap' }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
+            <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.4px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
               FAIR LAUNCH. NO TEAM ALLOCATIONS. NO INSIDER BUYS.
             </span>
           </div>
         </div>
 
-        {/* 4 Stat Tiles */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '32px' }}>
+        {/* 4 Stat Tiles (1 row of 4 on Desktop, 2x2 on Mobile) */}
+        <div className="tokenomics-top-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px', marginBottom: '36px' }}>
           {/* Total Supply */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Total Supply
             </span>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               {totalSupplyStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
-                <Flame size={10} color="#ff4d4d" strokeWidth={2.5} />
+                <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
             )}
@@ -264,15 +267,15 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
           {/* Circulating */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Circulating
             </span>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               {circulatingStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
-                <Flame size={10} color="#ff4d4d" strokeWidth={2.5} />
+                <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
             )}
@@ -280,228 +283,394 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
           {/* Vesting */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Vesting Rewards
             </span>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               100M
             </span>
-            <span style={{ display: 'inline-block', fontSize: '6.5px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
               10% MONTHLY
             </span>
           </div>
 
           {/* Monthly Unlock */}
           <div style={tileStyle}>
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Monthly Unlock
             </span>
-            <span style={{ fontSize: '13px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               10M
             </span>
-            <span style={{ display: 'inline-block', fontSize: '6.5px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 6px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
               TO HOLDERS
             </span>
           </div>
         </div>
 
         {/* ── BLOCK 2: REVENUE ECONOMY ── */}
-        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+        <div style={{ marginBottom: '20px', marginTop: '10px' }}>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REVENUE <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
+          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Creator Revenue is going towards buybacks and actions aimed at strengthening the token economy.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '36px' }}>
-          {/* 2 Stats: Total Buyback & Total Burned */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
+          {/* 2 Stats + 2 Info Rows */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px' }}>
             <div style={tileStyle}>
-              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Buyback
               </span>
-              <span style={{ fontSize: '12px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
               </span>
             </div>
 
             <div style={tileStyle}>
-              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Burned
               </span>
-              <span style={{ fontSize: '12px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
               </span>
             </div>
-          </div>
 
-          {/* Current Community Pool Banner */}
-          <div
-            style={{
-              background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-              border: '1.5px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '14px',
-              padding: '12px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '10px'
-            }}
-          >
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
-              Current community pool:
-            </span>
-            <span style={{ fontSize: '12px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
-              {loading ? <Loader2 size={16} className="spin"/> : communityRewards}
-            </span>
-          </div>
-
-          {/* Buyback Address Card: Clean text + Basescan button */}
-          <div
-            style={{
-              background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-              border: '1.5px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '14px',
-              padding: '12px 14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '10px'
-            }}
-          >
-            <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.4 }}>
-              Buyback, Burn & Rewards Address
-            </span>
-            <a
-              href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Current Community Pool Banner */}
+            <div
               style={{
-                display: 'inline-flex',
+                background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
+                border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                borderRadius: '14px',
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 gap: '6px',
-                background: 'rgba(0, 82, 255, 0.2)',
-                border: '1.5px solid #0052ff',
-                color: '#ffffff',
-                padding: '7px 12px',
-                borderRadius: '8px',
-                fontSize: '6.5px',
-                fontWeight: 900,
-                fontFamily: "'Press Start 2P', monospace",
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                flexShrink: 0
+                textAlign: 'center'
               }}
             >
-              <span>BASESCAN</span>
-              <ArrowUpRight size={11} strokeWidth={2.5} />
-            </a>
+              <span style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
+                Current community pool:
+              </span>
+              <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                {loading ? <Loader2 size={16} className="spin"/> : communityRewards}
+              </span>
+            </div>
+
+            {/* Buyback Address Card */}
+            <div
+              style={{
+                background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
+                border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                borderRadius: '14px',
+                padding: '14px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                textAlign: 'center'
+              }}
+            >
+              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+                Buyback &amp; Rewards Address
+              </span>
+              <a
+                href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  background: 'rgba(0, 82, 255, 0.2)',
+                  border: '1.5px solid #0052ff',
+                  color: '#ffffff',
+                  padding: '7px 12px',
+                  borderRadius: '8px',
+                  fontSize: '7px',
+                  fontWeight: 900,
+                  fontFamily: "'Press Start 2P', monospace",
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                <span>BASESCAN</span>
+                <ArrowUpRight size={12} strokeWidth={2.5} />
+              </a>
+            </div>
           </div>
 
-          {/* Buyback Donut Chart Card */}
+          {/* Buyback Program Card (Side-by-side on Desktop: Left text & bullets, Right SVG Donut Chart) */}
           <div style={cardStyle}>
-            <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
-                BUYBACK PROGRAM
-              </h3>
-              <p style={{ fontSize: '6.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                Strategic utilization of revenue generated.
-              </p>
-            </div>
+            <div className="tokenomics-buyback-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'center' }}>
+              {/* Left Column: Descriptions & Badges */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <h3 style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                    BUYBACK PROGRAM
+                  </h3>
+                  <p style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6 }}>
+                    Strategic utilization of revenue generated to strengthen $VIBE ecosystem on Base.
+                  </p>
+                </div>
 
-            {/* SVG Donut Chart with Callout Branches */}
-            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
-              <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
-                <defs>
-                  <linearGradient id="bpBurnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#ff5f5f" />
-                    <stop offset="100%" stopColor="#ef4444" />
-                  </linearGradient>
-                  <linearGradient id="bpBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#00f5ff" />
-                    <stop offset="100%" stopColor="#0052ff" />
-                  </linearGradient>
-                  <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
-                  </filter>
-                  <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
-                  </filter>
-                </defs>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <div style={listRowStyle}>
+                    <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+                      <Flame color="#ef4444" size={15} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                        30% Burn Allocation
+                      </div>
+                      <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                        Tokens purchased from the open market are permanently sent to dead address
+                      </div>
+                    </div>
+                  </div>
 
-                <g transform="translate(210, 125)">
-                  {/* Track */}
-                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                  <div style={listRowStyle}>
+                    <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                      <Users color="#00f5ff" size={15} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                        70% Community Vault
+                      </div>
+                      <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                        Distributed back to active holders, stakers, NFT members &amp; app rewards
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                  {/* Community 70% */}
-                  <circle
-                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
-                    transform="rotate(-90)" filter="url(#bpBlueGlow)"
-                  />
-
-                  {/* Burn 30% */}
-                  <circle
-                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
-                    transform="rotate(-90)" filter="url(#bpRedGlow)"
-                  />
-
-                  {/* Left Callout: Burn 30% */}
-                  <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
-                  <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
-
-                  {/* Right Callout: Community 70% */}
-                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
-                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
-
-                  {/* Center Text */}
-                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
-                </g>
-              </svg>
-            </div>
-
-            {/* Badges */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '5px 10px', borderRadius: '8px', fontSize: '6.5px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
-                <Flame size={12} /> BURN 30%
+                {/* Badges */}
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+                    <Flame size={12} /> BURN 30%
+                  </div>
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                    <Users size={12} /> COMMUNITY 70%
+                  </div>
+                </div>
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1px solid rgba(0, 245, 255, 0.3)', padding: '5px 10px', borderRadius: '8px', fontSize: '6.5px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
-                <Users size={12} /> COMMUNITY 70%
+
+              {/* Right Column: SVG Donut Chart */}
+              <div style={{ width: '100%', maxWidth: '380px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
+                  <defs>
+                    <linearGradient id="bpBurnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#ff5f5f" />
+                      <stop offset="100%" stopColor="#ef4444" />
+                    </linearGradient>
+                    <linearGradient id="bpBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#00f5ff" />
+                      <stop offset="100%" stopColor="#0052ff" />
+                    </linearGradient>
+                    <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
+                    </filter>
+                    <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                    </filter>
+                  </defs>
+
+                  <g transform="translate(210, 125)">
+                    {/* Track */}
+                    <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+
+                    {/* Community 70% */}
+                    <circle
+                      cx="0" cy="0" r="68" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
+                      strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
+                      transform="rotate(-90)" filter="url(#bpBlueGlow)"
+                    />
+
+                    {/* Burn 30% */}
+                    <circle
+                      cx="0" cy="0" r="68" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
+                      strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
+                      transform="rotate(-90)" filter="url(#bpRedGlow)"
+                    />
+
+                    {/* Left Callout: Burn 30% */}
+                    <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
+                    <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
+                    <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
+
+                    {/* Right Callout: Community 70% */}
+                    <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
+                    <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
+                    <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
+
+                    {/* Center Text */}
+                    <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
+                    <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
+                  </g>
+                </svg>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ── BLOCK 3: REWARDS ECONOMY ── */}
-        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+        {/* ── BLOCK 3: REWARDS ECONOMY (70% Community Allocation) ── */}
+        <div style={{ marginBottom: '20px', marginTop: '10px' }}>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REWARDS <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
+          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Constitutes the 70% reserved for the community in the Buyback Program.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '36px' }}>
-          {/* 1. FIRST: Donut Chart Card (Community Distribution) */}
+        {/* 2-Column Responsive Layout for Rewards Economy on Desktop */}
+        <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
+          
+          {/* Left Column: Distribution Breakdown */}
+          <div style={cardStyle}>
+            <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              DISTRIBUTION BREAKDOWN
+            </h3>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {/* 10-Day Rolling Epochs (Cyan) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <Clock color="#00f5ff" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    10-Day Rolling Epochs
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Reward distribution across all pools happens every 10 days
+                  </div>
+                </div>
+              </div>
+
+              {/* Epoch Allocation Size (Cyan) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <Calculator color="#00f5ff" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Epoch Allocation Size
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Equals designated % of Community Rewards Pool
+                  </div>
+                </div>
+              </div>
+
+              {/* VibeVerse App (Blue) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(59, 130, 246, 0.15)', 'rgba(59, 130, 246, 0.3)')}>
+                  <Gamepad2 color="#3b82f6" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    VibeVerse App (30%)
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Rewards pool inside the upcoming Vibe Verse App
+                  </div>
+                </div>
+              </div>
+
+              {/* $VIBE Staking (Purple) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
+                  <Coins color="#a855f7" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    $VIBE Staking (15%)
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Yield for locking $VIBE in verified staking pool on o1
+                  </div>
+                </div>
+              </div>
+
+              {/* Vibe Club NFTs (Orange/Amber) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(245, 158, 11, 0.15)', 'rgba(245, 158, 11, 0.3)')}>
+                  <Crown color="#f59e0b" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Vibe Club NFTs (15%)
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Direct royalties for holders of the 333 Vibe Club NFTs
+                  </div>
+                </div>
+              </div>
+
+              {/* Reserve (Green) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
+                  <ShieldCheck color="#10b981" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Reserve (40%)
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Buffer for continuous reward refills and marketing
+                  </div>
+                </div>
+              </div>
+
+              {/* Hub Link CTA */}
+              <Link
+                to={hubLink}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '13px 16px',
+                  borderRadius: '10px',
+                  background: '#0052ff',
+                  border: '1.5px solid #0052ff',
+                  textDecoration: 'none',
+                  marginTop: '6px',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Gift color="#ffffff" size={13} />
+                  </div>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                    EXPLORE REWARDS HUB
+                  </span>
+                </div>
+                <ArrowRight size={15} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Right Column: Donut Chart Card (Community Distribution) */}
           <div style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 COMMUNITY ALLOCATION
               </h3>
-              <p style={{ fontSize: '6.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Allocation of the 70% Revenue Share.
               </p>
             </div>
 
             {/* SVG Donut with Callout Branches */}
-            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
+            <div style={{ width: '100%', maxWidth: '380px', margin: 'auto' }}>
               <svg viewBox="0 0 420 260" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="commBlueGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -587,173 +756,160 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             </div>
 
             {/* Badges */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '6px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '4px 8px', borderRadius: '6px', fontSize: '6px', fontWeight: 900, color: '#3b82f6', fontFamily: "'Press Start 2P', monospace" }}>
-                <Gamepad2 size={10} /> VIBEVERSE 30%
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#3b82f6', fontFamily: "'Press Start 2P', monospace" }}>
+                <Gamepad2 size={11} /> VIBEVERSE 30%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '4px 8px', borderRadius: '6px', fontSize: '6px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
-                <Coins size={10} /> STAKING 15%
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
+                <Coins size={11} /> STAKING 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '4px 8px', borderRadius: '6px', fontSize: '6px', fontWeight: 900, color: '#f59e0b', fontFamily: "'Press Start 2P', monospace" }}>
-                <Crown size={10} /> NFT CLUB 15%
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#f59e0b', fontFamily: "'Press Start 2P', monospace" }}>
+                <Crown size={11} /> NFT CLUB 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '4px 8px', borderRadius: '6px', fontSize: '6px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
-                <ShieldCheck size={10} /> RESERVE 40%
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
+                <ShieldCheck size={11} /> RESERVE 40%
               </div>
             </div>
           </div>
+        </div>
 
-          {/* 2. SECOND: Breakdown Card */}
+        {/* ── BLOCK 4: VIBE CLUB ECONOMY (Official NFT Collection) ── */}
+        <div style={{ marginBottom: '20px', marginTop: '10px' }}>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+            VIBE CLUB <span style={{ color: '#ffd700' }}>ECONOMY</span>
+          </h2>
+          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+            Official $VIBE NFT collection fully integrated into B20 economy.
+          </p>
+        </div>
+
+        {/* 2-Column Responsive Layout for Vibe Club Economy on Desktop */}
+        <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
+          
+          {/* Left Column: Vibe Club Breakdown */}
           <div style={cardStyle}>
-            <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 4px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
-              DISTRIBUTION BREAKDOWN
+            <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
+              VIBE CLUB BREAKDOWN
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {/* 10-Day Rolling Epochs (Cyan) */}
+              {/* Deflationary Mint Burn (Red) */}
+              <div style={listRowStyle}>
+                <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+                  <Flame color="#ef4444" size={15} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Deflationary Mint Burn
+                  </div>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Every mint triggers an instant burn, reducing total $VIBE supply
+                  </div>
+                </div>
+              </div>
+
+              {/* NFTs Utility (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Clock color="#00f5ff" size={14} />
+                  <Crown color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    10-Day Rolling Epochs
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    NFTs Utility
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Reward distribution across all pools happens every 10 days
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Holders receive regular royalty payouts distributed every 10 days
                   </div>
                 </div>
               </div>
 
-              {/* Epoch Allocation Size (Cyan) */}
+              {/* Mint Process (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calculator color="#00f5ff" size={14} />
+                  <Coins color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Epoch Allocation Size
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Mint Process
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Equals designated % of Community Rewards Pool
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Minting is available with both ETH and native $VIBE tokens
                   </div>
                 </div>
               </div>
 
-              {/* VibeVerse App (Blue) */}
+              {/* Limited 333 Supply (Cyan) */}
               <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(59, 130, 246, 0.15)', 'rgba(59, 130, 246, 0.3)')}>
-                  <Gamepad2 color="#3b82f6" size={14} />
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <ShieldCheck color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    VibeVerse App (30%)
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Limited 333 Supply
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Rewards pool inside the upcoming Vibe Verse App
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Strictly capped 333 NFTs with lifetime community benefits
                   </div>
                 </div>
               </div>
 
-              {/* $VIBE Staking (Purple) */}
+              {/* Equal Holder Rewards (Cyan) */}
               <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
-                  <Coins color="#a855f7" size={14} />
+                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <Users color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    $VIBE Staking (15%)
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                    Equal Holder Rewards
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Yield for locking $VIBE in verified staking pool on o1
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    All 333 NFTs receive identical royalty rewards
                   </div>
                 </div>
               </div>
 
-              {/* Vibe Club NFTs (Orange/Amber) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(245, 158, 11, 0.15)', 'rgba(245, 158, 11, 0.3)')}>
-                  <Crown color="#f59e0b" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Vibe Club NFTs (15%)
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Direct royalties for holders of the 333 Vibe Club NFTs
-                  </div>
-                </div>
-              </div>
-
-              {/* Reserve (Green) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
-                  <ShieldCheck color="#10b981" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Reserve (40%)
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Buffer for continuous reward refills and marketing
-                  </div>
-                </div>
-              </div>
-
-              {/* Hub Link CTA - Pure Solid Blue #0052ff */}
+              {/* Join Vibe Club CTA */}
               <Link
-                to={hubLink}
+                to={vibeClubLink}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '12px 14px',
+                  padding: '13px 16px',
                   borderRadius: '10px',
-                  background: '#0052ff',
-                  border: '1.5px solid #0052ff',
+                  background: '#f59e0b',
+                  border: '1.5px solid #f59e0b',
                   textDecoration: 'none',
                   marginTop: '6px',
                   boxSizing: 'border-box'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Gift color="#ffffff" size={12} />
+                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Crown color="#020b1a" size={14} strokeWidth={2.5} />
                   </div>
-                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
-                    EXPLORE REWARDS HUB
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                    JOIN VIBE CLUB
                   </span>
                 </div>
-                <ArrowRight size={14} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* ── BLOCK 4: VIBE CLUB ECONOMY ── */}
-        <div style={{ marginBottom: '18px', marginTop: '10px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            VIBE CLUB <span style={{ color: '#ffd700' }}>ECONOMY</span>
-          </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
-            Official $VIBE NFT collection fully integrated into B20 economy.
-          </p>
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '36px' }}>
-          {/* 1. FIRST: Donut Chart Card (Mint Revenue) */}
+          {/* Right Column: Donut Chart Card (Mint Revenue) */}
           <div style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 MINT REVENUE ALLOCATION
               </h3>
-              <p style={{ fontSize: '6.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Utilization of revenue collected from NFT mint.
               </p>
             </div>
 
             {/* SVG Donut with Callout Branches */}
-            <div style={{ width: '100%', maxWidth: '380px', margin: '10px auto 4px auto' }}>
+            <div style={{ width: '100%', maxWidth: '380px', margin: 'auto' }}>
               <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="nftBurnGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -806,142 +962,33 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             </div>
 
             {/* Badges */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', padding: '5px 10px', borderRadius: '8px', fontSize: '6.5px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
                 <Flame size={12} /> BURN 80%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1px solid rgba(0, 245, 255, 0.3)', padding: '5px 10px', borderRadius: '8px', fontSize: '6.5px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                 <Users size={12} /> COMMUNITY 20%
               </div>
-            </div>
-          </div>
-
-          {/* 2. SECOND: Breakdown Card */}
-          <div style={cardStyle}>
-            <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 4px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
-              VIBE CLUB BREAKDOWN
-            </h3>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {/* Deflationary Mint Burn (Red) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
-                  <Flame color="#ef4444" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Deflationary Mint Burn
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Every mint triggers an instant burn, reducing total $VIBE supply
-                  </div>
-                </div>
-              </div>
-
-              {/* NFTs Utility (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Crown color="#00f5ff" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    NFTs Utility
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Holders receive regular royalty payouts distributed every 10 days
-                  </div>
-                </div>
-              </div>
-
-              {/* Mint Process (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Coins color="#00f5ff" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Mint Process
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Minting is available with both ETH and native $VIBE tokens
-                  </div>
-                </div>
-              </div>
-
-              {/* Limited 333 Supply (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <ShieldCheck color="#00f5ff" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Limited 333 Supply
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Strictly capped 333 NFTs with lifetime community benefits
-                  </div>
-                </div>
-              </div>
-
-              {/* Equal Holder Rewards (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Users color="#00f5ff" size={14} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Equal Holder Rewards
-                  </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    All 333 NFTs receive identical royalty rewards
-                  </div>
-                </div>
-              </div>
-
-              {/* Join Vibe Club CTA - Pure Solid NFT Club Amber #f59e0b */}
-              <Link
-                to="/app/vibeclub"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  background: '#f59e0b',
-                  border: '1.5px solid #f59e0b',
-                  textDecoration: 'none',
-                  marginTop: '6px',
-                  boxSizing: 'border-box'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Crown color="#020b1a" size={12} strokeWidth={2.5} />
-                  </div>
-                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
-                    JOIN VIBE CLUB
-                  </span>
-                </div>
-                <ArrowRight size={14} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              </Link>
             </div>
           </div>
         </div>
 
         {/* ── BLOCK 5: VESTING DETAILS ── */}
-        <div id="vesting-details" style={{ marginBottom: '18px', marginTop: '10px', scrollMarginTop: '80px' }}>
-          <h2 style={{ fontSize: '15px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+        <div id="vesting-details" style={{ marginBottom: '20px', marginTop: '10px', scrollMarginTop: '80px' }}>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             VESTING <span style={{ color: '#00f5ff' }}>DETAILS</span>
           </h2>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'left' }}>
+          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             100M tokens vested. Every month 10M unlocks and get distributed among holders.
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
-          {/* Holder Rewards Card */}
+        {/* 2-Column Responsive Layout for Vesting Details on Desktop */}
+        <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '20px', alignItems: 'stretch' }}>
+          
+          {/* Left Column: Holder Rewards Card */}
           <div style={cardStyle}>
-            <h3 style={{ fontSize: '8.5px', fontWeight: 900, margin: '0 0 4px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+            <h3 style={{ fontSize: '9.5px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
               HOLDER REWARDS · 100M $VIBE
             </h3>
 
@@ -952,10 +999,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <img src="/vibe-logo.png" alt="Vibe" style={{ width: '18px', height: '18px', borderRadius: '4px', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     $VIBE Holders
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Hold 5M+ $VIBE to qualify
                   </div>
                 </div>
@@ -964,13 +1011,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Allocation Size (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <TrendingUp color="#00f5ff" size={14} />
+                  <TrendingUp color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Allocation Size
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     The more you hold, the larger your allocation
                   </div>
                 </div>
@@ -979,14 +1026,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Max Allocation Cap (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <ShieldCheck color="#00f5ff" size={14} />
+                  <ShieldCheck color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Max Allocation Cap
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Set to prevent whale dominance & ensure fair distribution
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                    Set to prevent whale dominance &amp; ensure fair distribution
                   </div>
                 </div>
               </div>
@@ -994,13 +1041,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Allocation Calculation (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calculator color="#00f5ff" size={14} />
+                  <Calculator color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Allocation Calculation
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Proportionally calculated based on holding balance
                   </div>
                 </div>
@@ -1009,13 +1056,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Snapshot Schedule (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Clock color="#00f5ff" size={14} />
+                  <Clock color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Snapshot Schedule
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Balance snapshot at 00:00 UTC on the day of unlock
                   </div>
                 </div>
@@ -1024,13 +1071,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Claim Window (Cyan) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calendar color="#00f5ff" size={14} />
+                  <Calendar color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Claim Window
                   </div>
-                  <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Stays open for 30 days until the next unlock
                   </div>
                 </div>
@@ -1039,26 +1086,26 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Unclaimed Tokens (Red) */}
               <div style={listRowStyle}>
                 <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
-                  <Flame color="#ef4444" size={14} />
+                  <Flame color="#ef4444" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '7.5px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Unclaimed Tokens
                   </div>
-                  <div style={{ fontSize: '6px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div style={{ fontSize: '6.5px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Permanently burned
                   </div>
                 </div>
               </div>
 
-              {/* Claim Eligibility CTA - Pure Solid Blue #0052ff */}
+              {/* Claim Eligibility CTA */}
               <Link
                 to={claimLink}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '12px 14px',
+                  padding: '13px 16px',
                   borderRadius: '10px',
                   background: '#0052ff',
                   border: '1.5px solid #0052ff',
@@ -1068,30 +1115,30 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '22px', height: '22px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Check color="#ffffff" size={14} strokeWidth={3} />
+                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Check color="#ffffff" size={15} strokeWidth={3} />
                   </div>
-                  <span style={{ fontSize: '7.5px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                     CHECK YOUR ELIGIBILITY
                   </span>
                 </div>
-                <ArrowRight size={14} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
 
-          {/* Unlock Schedule Card */}
+          {/* Right Column: Unlock Schedule Card */}
           <div style={cardStyle}>
             <div>
-              <h3 style={{ fontSize: '9px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 UNLOCK SCHEDULE
               </h3>
-              <p style={{ fontSize: '6.5px', color: '#88aacc', margin: '0 0 12px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p style={{ fontSize: '7px', color: '#88aacc', margin: '0 0 14px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Aug 2026 → May 2027
               </p>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {UNLOCKS.map((u, i) => {
                 const isUnlocked = new Date(u.iso || u.d) <= new Date();
                 return (
@@ -1101,26 +1148,26 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '8px 10px',
+                      padding: '10px 12px',
                       background: 'rgba(2, 11, 26, 0.7)',
                       border: '1px solid rgba(0, 245, 255, 0.12)',
                       borderRadius: '8px',
                       gap: '8px'
                     }}
                   >
-                    <span style={{ fontSize: '6.5px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span style={{ fontSize: '7px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
                       {u.d}
                     </span>
-                    <span style={{ fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span style={{ fontSize: '8px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                       {u.a}
                     </span>
                     <span
                       style={{
-                        fontSize: '6px',
+                        fontSize: '6.5px',
                         fontWeight: 900,
                         fontFamily: "'Press Start 2P', monospace",
                         textTransform: 'uppercase',
-                        padding: '3px 6px',
+                        padding: '4px 8px',
                         borderRadius: '4px',
                         background: isUnlocked ? 'rgba(0, 255, 136, 0.15)' : 'rgba(136, 170, 204, 0.1)',
                         border: isUnlocked ? '1px solid rgba(0, 255, 136, 0.3)' : '1px solid rgba(136, 170, 204, 0.2)',

@@ -132,35 +132,30 @@ export function BaseAppSidebar({
 
   const appMenuItems = [
     {
-      id: 'home',
-      name: 'Home',
-      icon: <Home size={13} strokeWidth={2.5} />
-    },
-    {
       id: 'hub',
       name: 'Rewards Hub',
-      icon: <Gift size={13} strokeWidth={2.5} />
+      icon: <Gift size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     },
     {
       id: 'buy',
       name: 'Swap',
-      icon: <ArrowLeftRight size={13} strokeWidth={2.5} />
+      icon: <ArrowLeftRight size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     },
     {
       id: 'vibeclub',
       name: 'Vibe Club NFT',
-      icon: <Crown size={13} strokeWidth={2.5} />,
+      icon: <Crown size={isDesktop ? 15 : 13} strokeWidth={2.5} />,
       isGold: true
     },
     {
       id: 'claim',
       name: 'Claim Portal',
-      icon: <Coins size={13} strokeWidth={2.5} />
+      icon: <Coins size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     },
     {
       id: 'profile',
       name: 'Dashboard',
-      icon: <User size={13} strokeWidth={2.5} />
+      icon: <User size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     }
   ];
 
@@ -168,16 +163,16 @@ export function BaseAppSidebar({
     {
       id: 'tokenomics',
       name: 'Tokenomics',
-      icon: <TrendingUp size={13} strokeWidth={2.5} />
+      icon: <TrendingUp size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     },
     {
       id: 'contracts',
       name: 'Contract & Addresses',
-      icon: <FileCode2 size={13} strokeWidth={2.5} />
+      icon: <FileCode2 size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     }
   ];
 
-  const sidebarWidth = isDesktop ? (isCollapsed ? '72px' : '250px') : '280px';
+  const sidebarWidth = isDesktop ? (isCollapsed ? '72px' : '260px') : '280px';
 
   return (
     <>
@@ -216,7 +211,9 @@ export function BaseAppSidebar({
           justifyContent: 'space-between',
           padding: isCollapsed
             ? '16px 8px calc(20px + env(safe-area-inset-bottom, 0px)) 8px'
-            : '16px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px',
+            : isDesktop
+              ? '18px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px'
+              : '16px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px',
           boxSizing: 'border-box',
           fontFamily: "'Press Start 2P', monospace",
           boxShadow: isDesktop
@@ -229,7 +226,7 @@ export function BaseAppSidebar({
           overflowX: 'hidden'
         }}
       >
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: isDesktop ? '18px' : '16px' }}>
           
           {/* Header with Logo + $VIBE + Toggle / Close button */}
           <div
@@ -237,9 +234,9 @@ export function BaseAppSidebar({
               display: 'flex',
               alignItems: 'center',
               justifyContent: isCollapsed ? 'center' : 'space-between',
-              paddingBottom: '14px',
-              borderBottom: '1px solid rgba(0, 245, 255, 0.15)',
-              minHeight: '36px'
+              paddingBottom: isDesktop ? '16px' : '14px',
+              borderBottom: '1.5px solid rgba(0, 245, 255, 0.18)',
+              minHeight: '40px'
             }}
           >
             {isCollapsed ? (
@@ -248,10 +245,10 @@ export function BaseAppSidebar({
                   src="/new-logo-vibe.png"
                   alt="VIBE"
                   title="$VIBE"
-                  onClick={() => onSelectTab('home')}
+                  onClick={() => onSelectTab('hub')}
                   style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '8px',
                     objectFit: 'cover',
                     border: '1.5px solid #00f5ff',
@@ -269,7 +266,7 @@ export function BaseAppSidebar({
                       borderRadius: '6px',
                       color: '#00f5ff',
                       cursor: 'pointer',
-                      padding: '4px',
+                      padding: '5px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center'
@@ -283,29 +280,29 @@ export function BaseAppSidebar({
               <>
                 <div
                   onClick={() => {
-                    onSelectTab('home');
+                    onSelectTab('hub');
                     if (!isDesktop) onClose();
                   }}
-                  style={{ display: 'flex', alignItems: 'center', gap: '9px', cursor: 'pointer' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }}
                 >
                   <img
                     src="/new-logo-vibe.png"
                     alt="VIBE"
                     style={{
-                      width: '28px',
-                      height: '28px',
+                      width: isDesktop ? '32px' : '28px',
+                      height: isDesktop ? '32px' : '28px',
                       borderRadius: '8px',
                       objectFit: 'cover',
                       border: '1.5px solid #00f5ff',
-                      boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)'
+                      boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)'
                     }}
                   />
                   <span
                     style={{
-                      fontSize: '11px',
+                      fontSize: isDesktop ? '13px' : '11px',
                       fontWeight: 900,
                       color: '#00f5ff',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.6px'
                     }}
                   >
                     $VIBE
@@ -320,11 +317,11 @@ export function BaseAppSidebar({
                     aria-label="Toggle Sidebar"
                     style={{
                       background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      border: '1.5px solid rgba(0, 245, 255, 0.3)',
                       borderRadius: '8px',
                       color: '#00f5ff',
                       cursor: 'pointer',
-                      padding: '5px',
+                      padding: '6px',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -359,7 +356,7 @@ export function BaseAppSidebar({
           </div>
 
           {/* Navigation Accordion Sections */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: isCollapsed ? '10px' : '14px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: isCollapsed ? '10px' : (isDesktop ? '16px' : '14px') }}>
             
             {/* ── SECTION 1: APP MENU ── */}
             <div>
@@ -377,16 +374,16 @@ export function BaseAppSidebar({
                 >
                   <span
                     style={{
-                      fontSize: '7.5px',
+                      fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
                       color: '#00f5ff',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.6px'
                     }}
                   >
                     APP MENU
                   </span>
                   <ChevronDown
-                    size={12}
+                    size={isDesktop ? 13 : 12}
                     color="#00f5ff"
                     style={{
                       transform: isAppMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
@@ -397,7 +394,7 @@ export function BaseAppSidebar({
               )}
 
               {(isCollapsed || isAppMenuOpen) && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: isDesktop ? '6px' : '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {appMenuItems.map((item) => {
                     const isActive = activeTab === item.id;
                     const isGold = item.isGold;
@@ -413,10 +410,10 @@ export function BaseAppSidebar({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: isCollapsed ? 'center' : 'flex-start',
-                          gap: '8px',
+                          gap: isDesktop ? '10px' : '8px',
                           width: '100%',
-                          padding: isCollapsed ? '8px 0' : '7px 9px',
-                          borderRadius: '8px',
+                          padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
+                          borderRadius: '10px',
                           border: isActive
                             ? (isGold ? '1.5px solid #ffd700' : '1.5px solid #00f5ff')
                             : '1px solid rgba(0, 245, 255, 0.08)',
@@ -426,13 +423,13 @@ export function BaseAppSidebar({
                           color: isActive
                             ? (isGold ? '#ffd700' : '#00f5ff')
                             : (isGold ? '#e2c542' : '#cbd5e1'),
-                          fontSize: '7px',
+                          fontSize: isDesktop ? '8.5px' : '7px',
                           fontWeight: 800,
                           cursor: 'pointer',
                           textAlign: 'left',
                           transition: 'all 0.15s ease',
                           boxShadow: isActive
-                            ? (isGold ? '0 0 10px rgba(255, 215, 0, 0.25)' : '0 0 10px rgba(0, 245, 255, 0.2)')
+                            ? (isGold ? '0 0 12px rgba(255, 215, 0, 0.3)' : '0 0 12px rgba(0, 245, 255, 0.25)')
                             : 'none',
                           fontFamily: "'Press Start 2P', monospace",
                           textTransform: 'uppercase'
@@ -440,8 +437,8 @@ export function BaseAppSidebar({
                       >
                         <div
                           style={{
-                            width: '22px',
-                            height: '22px',
+                            width: isDesktop ? '26px' : '22px',
+                            height: isDesktop ? '26px' : '22px',
                             borderRadius: '6px',
                             background: isActive
                               ? (isGold ? 'rgba(255, 215, 0, 0.25)' : '#0052ff')
@@ -485,16 +482,16 @@ export function BaseAppSidebar({
                 >
                   <span
                     style={{
-                      fontSize: '7.5px',
+                      fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
                       color: '#00f5ff',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.6px'
                     }}
                   >
                     $VIBE DOCS
                   </span>
                   <ChevronDown
-                    size={12}
+                    size={isDesktop ? 13 : 12}
                     color="#00f5ff"
                     style={{
                       transform: isDocsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
@@ -505,7 +502,7 @@ export function BaseAppSidebar({
               )}
 
               {(isCollapsed || isDocsOpen) && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: isDesktop ? '6px' : '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {docsItems.map((item) => {
                     const isActive = activeTab === item.id;
                     return (
@@ -520,27 +517,27 @@ export function BaseAppSidebar({
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: isCollapsed ? 'center' : 'flex-start',
-                          gap: '8px',
+                          gap: isDesktop ? '10px' : '8px',
                           width: '100%',
-                          padding: isCollapsed ? '8px 0' : '7px 9px',
-                          borderRadius: '8px',
+                          padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
+                          borderRadius: '10px',
                           border: isActive ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.08)',
                           background: isActive ? 'rgba(0, 245, 255, 0.12)' : 'rgba(4, 14, 36, 0.6)',
                           color: isActive ? '#00f5ff' : '#cbd5e1',
-                          fontSize: '7px',
+                          fontSize: isDesktop ? '8.5px' : '7px',
                           fontWeight: 800,
                           cursor: 'pointer',
                           textAlign: 'left',
                           transition: 'all 0.15s ease',
-                          boxShadow: isActive ? '0 0 10px rgba(0, 245, 255, 0.2)' : 'none',
+                          boxShadow: isActive ? '0 0 12px rgba(0, 245, 255, 0.25)' : 'none',
                           fontFamily: "'Press Start 2P', monospace",
                           textTransform: 'uppercase'
                         }}
                       >
                         <div
                           style={{
-                            width: '22px',
-                            height: '22px',
+                            width: isDesktop ? '26px' : '22px',
+                            height: isDesktop ? '26px' : '22px',
                             borderRadius: '6px',
                             background: isActive ? '#0052ff' : 'rgba(0, 245, 255, 0.08)',
                             display: 'flex',
@@ -580,16 +577,16 @@ export function BaseAppSidebar({
                 >
                   <span
                     style={{
-                      fontSize: '7.5px',
+                      fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
                       color: '#00f5ff',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.6px'
                     }}
                   >
                     DEX
                   </span>
                   <ChevronDown
-                    size={12}
+                    size={isDesktop ? 13 : 12}
                     color="#00f5ff"
                     style={{
                       transform: isDexOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
@@ -600,7 +597,7 @@ export function BaseAppSidebar({
               )}
 
               {(isCollapsed || isDexOpen) && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: isDesktop ? '6px' : '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {DEX_ITEMS.map((item) => (
                     <a
                       key={item.name}
@@ -614,12 +611,12 @@ export function BaseAppSidebar({
                         justifyContent: isCollapsed ? 'center' : 'space-between',
                         gap: '8px',
                         width: '100%',
-                        padding: isCollapsed ? '8px 0' : '7px 9px',
-                        borderRadius: '8px',
+                        padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
+                        borderRadius: '10px',
                         border: '1px solid rgba(0, 245, 255, 0.08)',
                         background: 'rgba(4, 14, 36, 0.6)',
                         color: '#cbd5e1',
-                        fontSize: '7px',
+                        fontSize: isDesktop ? '8px' : '7px',
                         fontWeight: 800,
                         cursor: 'pointer',
                         textDecoration: 'none',
@@ -629,14 +626,14 @@ export function BaseAppSidebar({
                         textTransform: 'uppercase'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '9px' : '7px', overflow: 'hidden' }}>
                         <img
                           src={item.logo}
                           alt={item.name}
                           style={{
-                            width: '14px',
-                            height: '14px',
-                            borderRadius: '3px',
+                            width: isDesktop ? '16px' : '14px',
+                            height: isDesktop ? '16px' : '14px',
+                            borderRadius: '4px',
                             objectFit: 'cover',
                             flexShrink: 0
                           }}
@@ -648,7 +645,7 @@ export function BaseAppSidebar({
                         )}
                       </div>
                       {!isCollapsed && (
-                        <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <ArrowUpRight size={12} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       )}
                     </a>
                   ))}
@@ -672,16 +669,16 @@ export function BaseAppSidebar({
                 >
                   <span
                     style={{
-                      fontSize: '7.5px',
+                      fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
                       color: '#00f5ff',
-                      letterSpacing: '0.5px'
+                      letterSpacing: '0.6px'
                     }}
                   >
                     SOCIALS
                   </span>
                   <ChevronDown
-                    size={12}
+                    size={isDesktop ? 13 : 12}
                     color="#00f5ff"
                     style={{
                       transform: isSocialsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
@@ -692,7 +689,7 @@ export function BaseAppSidebar({
               )}
 
               {(isCollapsed || isSocialsOpen) && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', marginTop: isCollapsed ? '0' : '4px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: isDesktop ? '6px' : '5px', marginTop: isCollapsed ? '0' : '4px' }}>
                   {SOCIAL_ITEMS.map((item) => (
                     <a
                       key={item.name}
@@ -706,12 +703,12 @@ export function BaseAppSidebar({
                         justifyContent: isCollapsed ? 'center' : 'space-between',
                         gap: '8px',
                         width: '100%',
-                        padding: isCollapsed ? '8px 0' : '7px 9px',
-                        borderRadius: '8px',
+                        padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
+                        borderRadius: '10px',
                         border: '1px solid rgba(0, 245, 255, 0.08)',
                         background: 'rgba(4, 14, 36, 0.6)',
                         color: '#cbd5e1',
-                        fontSize: '7px',
+                        fontSize: isDesktop ? '8px' : '7px',
                         fontWeight: 800,
                         cursor: 'pointer',
                         textDecoration: 'none',
@@ -721,7 +718,7 @@ export function BaseAppSidebar({
                         textTransform: 'uppercase'
                       }}
                     >
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '9px' : '7px', overflow: 'hidden' }}>
                         <div style={{ color: '#00f5ff', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                           {item.icon}
                         </div>
@@ -732,7 +729,7 @@ export function BaseAppSidebar({
                         )}
                       </div>
                       {!isCollapsed && (
-                        <ArrowUpRight size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <ArrowUpRight size={12} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       )}
                     </a>
                   ))}
@@ -744,7 +741,7 @@ export function BaseAppSidebar({
         </div>
 
         {/* Footer: Wallet status */}
-        <div style={{ paddingTop: '14px', borderTop: '1px solid rgba(0, 245, 255, 0.15)', marginTop: '16px' }}>
+        <div style={{ paddingTop: '16px', borderTop: '1.5px solid rgba(0, 245, 255, 0.18)', marginTop: '16px' }}>
           {hasWallet ? (
             isCollapsed ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
@@ -752,8 +749,8 @@ export function BaseAppSidebar({
                   onClick={handleCopy}
                   title={`Active Wallet: ${activeAddress} (Click to Copy)`}
                   style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '38px',
+                    height: '38px',
                     borderRadius: '8px',
                     background: 'rgba(4, 14, 36, 0.9)',
                     border: '1.5px solid rgba(0, 255, 136, 0.4)',
@@ -765,13 +762,13 @@ export function BaseAppSidebar({
                     boxShadow: '0 0 10px rgba(0, 255, 136, 0.2)'
                   }}
                 >
-                  {copied ? <Check size={14} color="#00ff88" /> : <Wallet size={14} color="#00ff88" />}
+                  {copied ? <Check size={15} color="#00ff88" /> : <Wallet size={15} color="#00ff88" />}
                 </button>
                 <button
                   onClick={handleDisconnect}
                   title="Disconnect Wallet"
                   style={{
-                    width: '36px',
+                    width: '38px',
                     height: '28px',
                     borderRadius: '6px',
                     background: 'rgba(255, 68, 102, 0.15)',
@@ -783,7 +780,7 @@ export function BaseAppSidebar({
                     justifyContent: 'center'
                   }}
                 >
-                  <LogOut size={12} />
+                  <LogOut size={13} />
                 </button>
               </div>
             ) : (
@@ -792,20 +789,20 @@ export function BaseAppSidebar({
                   style={{
                     background: 'rgba(4, 14, 36, 0.9)',
                     border: '1.5px solid rgba(0, 245, 255, 0.25)',
-                    borderRadius: '8px',
-                    padding: '8px 10px',
+                    borderRadius: '10px',
+                    padding: isDesktop ? '10px 12px' : '8px 10px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between'
                   }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <img
                       src="/new-logo-vibe.png"
                       alt="avatar"
-                      style={{ width: '18px', height: '18px', borderRadius: '4px' }}
+                      style={{ width: isDesktop ? '20px' : '18px', height: isDesktop ? '20px' : '18px', borderRadius: '4px' }}
                     />
-                    <span style={{ fontSize: '7px', fontWeight: 900, color: '#00ff88' }}>
+                    <span style={{ fontSize: isDesktop ? '8.5px' : '7px', fontWeight: 900, color: '#00ff88' }}>
                       {shortAddress(activeAddress)}
                     </span>
                   </div>
@@ -823,7 +820,7 @@ export function BaseAppSidebar({
                       alignItems: 'center'
                     }}
                   >
-                    {copied ? <Check size={13} /> : <Copy size={13} />}
+                    {copied ? <Check size={14} /> : <Copy size={14} />}
                   </button>
                 </div>
 
@@ -834,9 +831,9 @@ export function BaseAppSidebar({
                     background: 'rgba(255, 68, 102, 0.12)',
                     border: '1.5px solid rgba(255, 68, 102, 0.35)',
                     color: '#ff4466',
-                    borderRadius: '8px',
-                    padding: '9px 10px',
-                    fontSize: '7px',
+                    borderRadius: '10px',
+                    padding: isDesktop ? '11px 12px' : '9px 10px',
+                    fontSize: isDesktop ? '8px' : '7px',
                     fontWeight: 900,
                     cursor: 'pointer',
                     display: 'flex',
@@ -848,7 +845,7 @@ export function BaseAppSidebar({
                     textTransform: 'uppercase'
                   }}
                 >
-                  <LogOut size={11} />
+                  <LogOut size={12} />
                   <span>DISCONNECT</span>
                 </button>
               </div>
@@ -861,8 +858,8 @@ export function BaseAppSidebar({
               }}
               title="Connect Wallet"
               style={{
-                width: '36px',
-                height: '36px',
+                width: '38px',
+                height: '38px',
                 borderRadius: '8px',
                 background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
                 color: '#FFFFFF',
@@ -875,7 +872,7 @@ export function BaseAppSidebar({
                 margin: '0 auto'
               }}
             >
-              <Wallet size={14} strokeWidth={2.5} />
+              <Wallet size={15} strokeWidth={2.5} />
             </button>
           ) : (
             <button
@@ -888,21 +885,21 @@ export function BaseAppSidebar({
                 background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
                 color: '#FFFFFF',
                 border: '1.5px solid #ffffff',
-                borderRadius: '8px',
-                padding: '10px 12px',
-                fontSize: '7.5px',
+                borderRadius: '10px',
+                padding: isDesktop ? '12px 14px' : '10px 12px',
+                fontSize: isDesktop ? '8.5px' : '7.5px',
                 fontWeight: 900,
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '7px',
-                boxShadow: '0 0 14px rgba(0, 245, 255, 0.4)',
+                gap: '8px',
+                boxShadow: '0 0 16px rgba(0, 245, 255, 0.4)',
                 fontFamily: "'Press Start 2P', monospace",
                 textTransform: 'uppercase'
               }}
             >
-              <Wallet size={13} strokeWidth={2.5} />
+              <Wallet size={14} strokeWidth={2.5} />
               <span>CONNECT WALLET</span>
             </button>
           )}
@@ -911,4 +908,5 @@ export function BaseAppSidebar({
     </>
   );
 }
+
 

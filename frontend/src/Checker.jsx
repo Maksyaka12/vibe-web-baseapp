@@ -1317,7 +1317,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   if (isBaseAppMode) {
     return (
       <section id={isProfileMode ? "profile-section" : "claim-portal"} style={{ padding: '24px 0 60px 0', background: 'transparent' }}>
-        <div className="wrap" style={{ maxWidth: '720px', padding: '0 12px' }}>
+        <div className="wrap" style={{ maxWidth: '1000px', padding: '0 14px' }}>
           {isProfileMode ? (
             <BaseAppProfileView
               address={address}

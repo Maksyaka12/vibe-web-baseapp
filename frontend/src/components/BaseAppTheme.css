@@ -345,6 +345,105 @@
   .desktop-header-title {
     display: flex !important;
   }
+
+  /* Desktop Container Width & Padding */
+  .base-app-pixel-theme .wrap {
+    max-width: 1040px !important;
+    padding: 0 20px !important;
+  }
+
+  /* Main Section Headings on Desktop */
+  .base-app-pixel-theme .sec-head h2 {
+    font-size: 18px !important;
+    letter-spacing: 0.8px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .base-app-pixel-theme .sec-sub {
+    font-size: 9.5px !important;
+    line-height: 1.7 !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* Category & Reward Card Headings */
+  .base-app-pixel-theme #rewards h3,
+  .base-app-pixel-theme .checker-reward-card h3 {
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .base-app-pixel-theme #rewards h4,
+  .base-app-pixel-theme span[style*="font-size: 1.25rem"],
+  .base-app-pixel-theme span[style*="font-size: 1.20rem"],
+  .base-app-pixel-theme span[style*="font-size: 1.15rem"],
+  .base-app-pixel-theme .checker-reward-card h4 {
+    font-size: 11px !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* Rewards Pool Box Values (Desktop) */
+  .base-app-pixel-theme #rewards div[style*="font-size: 1.42rem"],
+  .base-app-pixel-theme #rewards div[style*="font-size: 1.38rem"],
+  .base-app-pixel-theme #rewards div[style*="font-size: 1.35rem"],
+  .base-app-pixel-theme .checker-reward-card div[style*="font-size: 1.35rem"] {
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Info Plashka Labels & Values */
+  .base-app-pixel-theme #rewards div[style*="border-radius: 10px"] span,
+  .base-app-pixel-theme .checker-reward-card div[style*="border-radius: 10px"] span {
+    font-size: 8.5px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  .base-app-pixel-theme #rewards div[style*="border-radius: 10px"] strong,
+  .base-app-pixel-theme .checker-reward-card div[style*="border-radius: 10px"] strong {
+    font-size: 9.5px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  /* 3-Point Staking/Holder Detail Cards on Desktop */
+  .base-app-pixel-theme #rewards div[style*="linear-gradient(135deg, rgba(190, 241, 255"] strong {
+    font-size: 9.5px !important;
+  }
+
+  .base-app-pixel-theme #rewards div[style*="linear-gradient(135deg, rgba(190, 241, 255"] p {
+    font-size: 8px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Action Buttons on Desktop */
+  .base-app-pixel-theme button.btn-fill,
+  .base-app-pixel-theme a.btn-fill,
+  .base-app-pixel-theme #rewards a[style*="background: var(--blue)"],
+  .base-app-pixel-theme #rewards a[style*="background: rgb(0, 0, 255)"],
+  .base-app-pixel-theme #rewards button[style*="background: var(--blue)"] {
+    font-size: 9.5px !important;
+    padding: 12px 18px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Status Badges on Desktop */
+  .base-app-pixel-theme span[style*="border-radius: 99px"],
+  .base-app-pixel-theme span[style*="border-radius: 8px"],
+  .base-app-pixel-theme div[style*="border-radius: 99px"] {
+    font-size: 8.5px !important;
+    padding: 6px 12px !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* FAQ Items on Desktop */
+  .base-app-pixel-theme .rewards-faq-item span {
+    font-size: 9.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .base-app-pixel-theme .rewards-faq-item div,
+  .base-app-pixel-theme #rewards div[style*="border-radius: 18px"] p {
+    font-size: 8px !important;
+    line-height: 1.7 !important;
+  }
 }
 
 @media (max-width: 1023px) {
@@ -379,4 +478,5 @@
 .base-app-pixel-theme::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 245, 255, 0.5);
 }
+
 

@@ -111,7 +111,6 @@ export function BaseAppView({ RewardsComponent }) {
     if (path.includes('tokenomics')) return 'tokenomics';
     if (path.includes('contracts') || path.includes('adresses') || path.includes('addresses') || path.includes('docs')) return 'contracts';
     if (path.includes('hub') || path.includes('rewards') || path.includes('events')) return 'hub';
-    if (path === '/' || path === '/app' || path === '/app/' || path === '/home' || path === '/app/home') return 'home';
     return 'hub';
   };
 
@@ -130,7 +129,7 @@ export function BaseAppView({ RewardsComponent }) {
     const prefix = isAppPrefix ? '/app' : '';
 
     if (tabId === 'home') {
-      navigate(prefix ? '/app' : '/', { replace: false });
+      navigate('/', { replace: false });
     } else if (tabId === 'buy') {
       navigate(prefix ? '/app/buy' : '/buy', { replace: false });
     } else if (tabId === 'claim') {
