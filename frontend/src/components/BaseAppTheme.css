@@ -379,14 +379,15 @@
     gap: 8px !important;
   }
   .base-app-pixel-theme .rewards-cat-btn.active {
-    background: linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%) !important;
-    color: #020b1a !important;
-    border: 1.5px solid #ffffff !important;
-    box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+    background: rgba(0, 245, 255, 0.12) !important;
+    border: 2px solid #00f5ff !important;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), inset 0 0 14px rgba(0, 245, 255, 0.12) !important;
   }
-  .base-app-pixel-theme .rewards-cat-btn.active .rewards-cat-label,
+  .base-app-pixel-theme .rewards-cat-btn.active .rewards-cat-label {
+    color: #00f5ff !important;
+  }
   .base-app-pixel-theme .rewards-cat-btn.active .rewards-cat-count {
-    color: #020b1a !important;
+    color: #00ff88 !important;
   }
   .base-app-pixel-theme .rewards-cat-icon {
     font-size: 20px !important;
@@ -423,10 +424,20 @@
     padding: 14px 18px !important;
     border-radius: 14px !important;
     margin-bottom: 22px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .base-app-pixel-theme .rewards-rule-strip > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+  .base-app-pixel-theme .rewards-rule-strip svg {
+    flex-shrink: 0 !important;
   }
   .base-app-pixel-theme .rewards-rule-text {
     font-size: 9.5px !important;
-    line-height: 1.6 !important;
+    line-height: 1.5 !important;
   }
   .base-app-pixel-theme .rewards-rule-btn {
     font-size: 9px !important;
@@ -809,13 +820,24 @@
   .base-app-pixel-theme .profile-badge-pill span {
     font-size: 9px !important;
   }
-  .base-app-pixel-theme .profile-dashboard-zone {
-    margin-bottom: 30px !important;
+  .base-app-pixel-theme .profile-section-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+  .base-app-pixel-theme .profile-section-dot {
+    width: 9px !important;
+    height: 9px !important;
+    align-self: center !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
   }
   .base-app-pixel-theme .profile-section-title {
     font-size: 13px !important;
     letter-spacing: 0.6px !important;
-    margin-bottom: 14px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
   }
   .base-app-pixel-theme .profile-stat-grid {
     gap: 16px !important;
@@ -1183,6 +1205,29 @@
     font-size: 8.5px !important;
     padding: 6px 12px !important;
     letter-spacing: 0.4px !important;
+  /* Header Desktop Polish */
+  .base-app-header {
+    padding: 0 24px !important;
+    height: 68px !important;
+  }
+  .base-app-header .desktop-header-title span {
+    font-size: 12px !important;
+    letter-spacing: 0.6px !important;
+  }
+  .base-app-header .header-balance-pill {
+    padding: 7px 10px !important;
+    border-radius: 9px !important;
+  }
+  .base-app-header .header-balance-pill span {
+    font-size: 8px !important;
+  }
+  .base-app-header .header-balance-pill img {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  .base-app-header .header-connect-btn {
+    padding: 8px 14px !important;
+    font-size: 8px !important;
   }
 }
 
@@ -1193,6 +1238,42 @@
   .mobile-hamburger-btn,
   .mobile-brand-pill {
     display: flex !important;
+  }
+  .base-app-header {
+    padding: 0 10px !important;
+    height: 60px !important;
+  }
+  .mobile-hamburger-btn {
+    padding: 5px !important;
+  }
+  .mobile-brand-pill img {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .mobile-brand-pill span {
+    font-size: 8.5px !important;
+    letter-spacing: 0.2px !important;
+    white-space: nowrap !important;
+  }
+  .base-app-header-right {
+    gap: 4px !important;
+  }
+  .header-balance-pill {
+    padding: 4px 6px !important;
+    gap: 3px !important;
+  }
+  .header-balance-pill span {
+    font-size: 6.5px !important;
+    white-space: nowrap !important;
+  }
+  .header-balance-pill img {
+    width: 11px !important;
+    height: 11px !important;
+  }
+  .header-connect-btn {
+    padding: 6px 9px !important;
+    font-size: 6.5px !important;
+    white-space: nowrap !important;
   }
 }
 

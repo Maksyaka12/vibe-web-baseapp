@@ -37,7 +37,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 20px',
+        padding: '0 12px',
         position: 'sticky',
         top: 0,
         zIndex: 50,
@@ -46,11 +46,12 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
         backdropFilter: 'blur(12px)',
         WebkitBackdropFilter: 'blur(12px)',
         textTransform: 'uppercase',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        flexWrap: 'nowrap'
       }}
     >
       {/* Left side: Hamburger + Logo on Mobile, OR Page Title on Desktop */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div className="base-app-header-left" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, minWidth: 0 }}>
         {/* Mobile Hamburger Menu Button (Hidden on Desktop via CSS / isDesktop) */}
         <button
           onClick={onOpenSidebar}
@@ -59,18 +60,19 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
           style={{
             background: 'rgba(0, 245, 255, 0.08)',
             border: '1.5px solid rgba(0, 245, 255, 0.3)',
-            borderRadius: '10px',
+            borderRadius: '8px',
             color: '#00f5ff',
             cursor: 'pointer',
-            padding: '7px',
+            padding: '6px',
             display: isDesktop ? 'none' : 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             outline: 'none',
+            flexShrink: 0,
             transition: 'all 0.15s ease'
           }}
         >
-          <Menu size={18} color="#00f5ff" strokeWidth={2.5} />
+          <Menu size={17} color="#00f5ff" strokeWidth={2.5} />
         </button>
 
         {/* Mobile Logo + $VIBE HUB */}
@@ -79,28 +81,31 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
           style={{
             display: isDesktop ? 'none' : 'flex',
             alignItems: 'center',
-            gap: '8px',
-            userSelect: 'none'
+            gap: '6px',
+            userSelect: 'none',
+            flexShrink: 0
           }}
         >
           <img
             src="/new-logo-vibe.png"
             alt="VIBE"
             style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '8px',
+              width: '24px',
+              height: '24px',
+              borderRadius: '6px',
               objectFit: 'cover',
               border: '1.5px solid #00f5ff',
-              boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)'
+              boxShadow: '0 0 8px rgba(0, 245, 255, 0.4)',
+              flexShrink: 0
             }}
           />
           <span
             style={{
-              fontSize: '11px',
+              fontSize: '9px',
               fontWeight: 900,
               color: '#00f5ff',
-              letterSpacing: '0.5px'
+              letterSpacing: '0.3px',
+              whiteSpace: 'nowrap'
             }}
           >
             $VIBE HUB
@@ -121,7 +126,8 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               fontSize: '11px',
               fontWeight: 900,
               color: '#ffffff',
-              letterSpacing: '0.6px'
+              letterSpacing: '0.6px',
+              whiteSpace: 'nowrap'
             }}
           >
             {pageTitle}
@@ -130,31 +136,34 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
       </div>
 
       {/* Right side: Balances or Connect Wallet */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className="base-app-header-right" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
         {hasWallet ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             {/* NFT Balance Pill */}
             <div
+              className="header-balance-pill header-nft-pill"
               title="Vibe Club NFT Balance"
               style={{
                 background: 'rgba(4, 14, 36, 0.9)',
                 border: '1.5px solid rgba(0, 245, 255, 0.3)',
                 boxShadow: '0 0 8px rgba(0, 245, 255, 0.15)',
-                borderRadius: '10px',
-                padding: '6px 8px',
+                borderRadius: '8px',
+                padding: '5px 7px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-                userSelect: 'none'
+                gap: '4px',
+                userSelect: 'none',
+                flexShrink: 0
               }}
             >
               <span
                 style={{
-                  fontSize: '7.5px',
+                  fontSize: '7px',
                   fontWeight: 900,
                   color: '#00f5ff',
-                  letterSpacing: '0.3px',
-                  fontVariantNumeric: 'tabular-nums'
+                  letterSpacing: '0.2px',
+                  fontVariantNumeric: 'tabular-nums',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {nftCount} NFT
@@ -163,37 +172,41 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 src="/new-logo-vibe.png"
                 alt="NFT"
                 style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '4px',
-                  objectFit: 'cover'
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '3px',
+                  objectFit: 'cover',
+                  flexShrink: 0
                 }}
               />
             </div>
 
             {/* $VIBE Token Balance Pill */}
             <div
+              className="header-balance-pill header-token-pill"
               title="$VIBE Token Balance"
               style={{
                 background: 'rgba(4, 14, 36, 0.9)',
                 border: '1.5px solid rgba(0, 255, 136, 0.35)',
                 boxShadow: '0 0 8px rgba(0, 255, 136, 0.15)',
-                borderRadius: '10px',
-                padding: '6px 8px',
+                borderRadius: '8px',
+                padding: '5px 7px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
-                userSelect: 'none'
+                gap: '4px',
+                userSelect: 'none',
+                flexShrink: 0
               }}
             >
               <span
                 style={{
-                  fontSize: '7.5px',
+                  fontSize: '7px',
                   fontWeight: 900,
                   color: '#00ff88',
-                  letterSpacing: '0.3px',
+                  letterSpacing: '0.2px',
                   fontVariantNumeric: 'tabular-nums',
-                  textShadow: '0 0 8px rgba(0, 255, 136, 0.4)'
+                  textShadow: '0 0 8px rgba(0, 255, 136, 0.4)',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {formattedBalance}
@@ -202,10 +215,11 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 src="/new-logo-vibe.png"
                 alt="$VIBE"
                 style={{
-                  width: '14px',
-                  height: '14px',
-                  borderRadius: '4px',
-                  objectFit: 'cover'
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '3px',
+                  objectFit: 'cover',
+                  flexShrink: 0
                 }}
               />
             </div>
@@ -213,25 +227,28 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
         ) : (
           <button
             onClick={login}
+            className="header-connect-btn"
             style={{
-              background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
-              color: '#FFFFFF',
-              border: '1.5px solid #ffffff',
-              borderRadius: '10px',
-              padding: '8px 12px',
-              fontSize: '7.5px',
+              background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+              color: '#020b1a',
+              border: '1.5px solid #00f5ff',
+              borderRadius: '8px',
+              padding: '6px 10px',
+              fontSize: '7px',
               fontWeight: 900,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px',
-              boxShadow: '0 0 14px rgba(0, 245, 255, 0.4)',
+              gap: '5px',
+              boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)',
               transition: 'all 0.2s ease',
               outline: 'none',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
-            <Wallet size={12} strokeWidth={2.5} />
+            <Wallet size={11} color="#020b1a" strokeWidth={2.5} />
             <span>CONNECT</span>
           </button>
         )}

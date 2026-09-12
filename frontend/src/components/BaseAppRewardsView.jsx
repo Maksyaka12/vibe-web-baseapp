@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
-import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check } from 'lucide-react';
+import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check, Lightbulb } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
@@ -352,12 +352,12 @@ export default function BaseAppRewardsView({
               }}
               style={{
                 background: isActive
-                  ? 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)'
+                  ? 'rgba(0, 245, 255, 0.12)'
                   : 'rgba(255, 255, 255, 0.02)',
-                color: isActive ? '#020b1a' : '#88aacc',
+                color: isActive ? '#00f5ff' : '#88aacc',
                 border: isActive
-                  ? '1.5px solid #ffffff'
-                  : '1.5px solid rgba(0, 245, 255, 0.45)',
+                  ? '2px solid #00f5ff'
+                  : '1.5px solid rgba(0, 245, 255, 0.25)',
                 borderRadius: '12px',
                 padding: '10px 2px',
                 minHeight: '74px',
@@ -371,28 +371,28 @@ export default function BaseAppRewardsView({
                 justifyContent: 'center',
                 gap: '5px',
                 boxShadow: isActive
-                  ? '0 0 20px rgba(0, 245, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.6)'
+                  ? '0 0 20px rgba(0, 245, 255, 0.45), inset 0 0 14px rgba(0, 245, 255, 0.12)'
                   : 'none',
                 transition: 'all 0.18s ease',
                 position: 'relative',
                 overflow: 'hidden'
               }}
             >
-              <span className="rewards-cat-icon" style={{ fontSize: '13px', filter: isActive ? 'drop-shadow(0 2px 6px rgba(0,0,0,0.5))' : 'grayscale(0.2)' }}>
+              <span className="rewards-cat-icon" style={{ fontSize: '13px', filter: isActive ? 'drop-shadow(0 0 8px rgba(0, 245, 255, 0.6))' : 'grayscale(0.2)' }}>
                 {tab.icon}
               </span>
-              <span className="rewards-cat-label" style={{ whiteSpace: 'nowrap', color: isActive ? '#020b1a' : '#e2e8f0', fontWeight: 900 }}>
+              <span className="rewards-cat-label" style={{ whiteSpace: 'nowrap', color: isActive ? '#00f5ff' : '#cbd5e1', fontWeight: 900 }}>
                 {tab.label}
               </span>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: isActive ? '#020b1a' : '#00ff88', boxShadow: isActive ? 'none' : '0 0 5px #00ff88', flexShrink: 0 }} />
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
                 <span
                   className="rewards-cat-count"
                   style={{
                     fontSize: '5px',
-                    color: isActive ? '#020b1a' : '#00ff88',
+                    color: '#00ff88',
                     letterSpacing: '0.2px',
-                    fontWeight: 900,
+                    fontWeight: 800,
                     whiteSpace: 'nowrap'
                   }}
                 >
@@ -422,9 +422,9 @@ export default function BaseAppRewardsView({
               gap: '8px'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-              <span style={{ fontSize: '13px', flexShrink: 0 }}>💡</span>
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.5, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                 Hold 5M+ $VIBE at snapshot time to share the prize pool.
               </span>
             </div>
@@ -671,9 +671,9 @@ export default function BaseAppRewardsView({
               gap: '8px'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-              <span style={{ fontSize: '13px', flexShrink: 0 }}>💡</span>
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.5, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                 Hold Vibe Club NFT at snapshot time to share royalty pool.
               </span>
             </div>
@@ -1035,9 +1035,9 @@ export default function BaseAppRewardsView({
               gap: '8px'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-              <span style={{ fontSize: '13px', flexShrink: 0 }}>💡</span>
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.5, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                 Stake $VIBE in active vault on o1 exchange to earn passive yield.
               </span>
             </div>

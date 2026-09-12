@@ -377,7 +377,6 @@ export function BaseAppProfileView(props) {
                     boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
                   }}
                 >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 5px #ff4466', flexShrink: 0 }} />
                   <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
                     JOIN VIBE CLUB · MINT NFT ↗
                   </span>
@@ -421,7 +420,6 @@ export function BaseAppProfileView(props) {
                     boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
                   }}
                 >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#ff4466', boxShadow: '0 0 5px #ff4466', flexShrink: 0 }} />
                   <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
                     BUY 5M+ $VIBE ↗
                   </span>
@@ -434,9 +432,9 @@ export function BaseAppProfileView(props) {
 
       {/* ── 3. REWARD DASHBOARD ZONE ── */}
       <div className="profile-dashboard-zone" style={{ marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
             REWARD DASHBOARD
           </h3>
         </div>
@@ -570,9 +568,9 @@ export function BaseAppProfileView(props) {
 
       {/* ── 4. QUICK LINKS / REDIRECTS ── */}
       <div className="profile-quicklinks-zone" style={{ marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
             TRACK. JOIN. EARN
           </h3>
         </div>
