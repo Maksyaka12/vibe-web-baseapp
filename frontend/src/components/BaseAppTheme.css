@@ -709,11 +709,20 @@ html, body {
   }
   .base-app-pixel-theme .vv-defi-flip-wrap {
     margin: -2px 0 10px 0 !important;
+    display: flex !important;
+    justify-content: center !important;
   }
   .base-app-pixel-theme .vv-defi-flip-btn {
     width: 44px !important;
     height: 44px !important;
-    font-size: 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  .base-app-pixel-theme .vv-defi-flip-btn svg {
+    width: 22px !important;
+    height: 22px !important;
   }
   .base-app-pixel-theme .vv-defi-receive-val {
     font-size: 22px !important;

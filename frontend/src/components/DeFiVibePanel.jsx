@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { ArrowUpDown } from 'lucide-react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { parseUnits, formatUnits, encodeFunctionData } from 'viem';
 import { publicClient } from '../config/rpc';
@@ -555,28 +556,29 @@ export default function DeFiVibePanel({ player }) {
         </div>
       </div>
 
-      {/* FLIP DIRECTION BUTTON ↕ */}
-      <div className="vv-defi-flip-wrap" style={{ textAlign: 'center', margin: '-4px 0 6px 0' }}>
+      {/* FLIP DIRECTION BUTTON ↕ (Two crisp arrows side-by-side: UP & DOWN) */}
+      <div className="vv-defi-flip-wrap" style={{ textAlign: 'center', margin: '-4px 0 6px 0', display: 'flex', justifyContent: 'center' }}>
         <button
           className="vv-defi-flip-btn"
           onClick={handleToggleMode}
           title="Switch Swap Direction"
           style={{
-            fontFamily: 'var(--vv-pixel)',
-            fontSize: '12px',
             background: 'rgba(4, 20, 48, 0.95)',
             border: '1.5px solid #00f5ff',
-            color: '#ffd700',
-            width: '32px',
-            height: '32px',
+            width: '38px',
+            height: '38px',
             borderRadius: '50%',
             cursor: 'pointer',
-            boxShadow: '0 0 12px rgba(0, 245, 255, 0.4)',
-            transition: 'transform 0.2s ease',
-            lineHeight: 1
+            boxShadow: '0 0 14px rgba(0, 245, 255, 0.45)',
+            transition: 'all 0.2s ease',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 0,
+            outline: 'none'
           }}
         >
-          ↕
+          <ArrowUpDown size={18} color="#00f5ff" strokeWidth={2.6} />
         </button>
       </div>
 
