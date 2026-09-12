@@ -210,16 +210,16 @@ export function BaseAppProfileView(props) {
             onClick={login}
             className="profile-connect-btn"
             style={{
-              background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
-              border: '2px solid #ffffff',
-              color: '#ffffff',
+              background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+              border: '1.5px solid #00f5ff',
+              color: '#020b1a',
               fontFamily: "'Press Start 2P', monospace",
               fontSize: '8.5px',
               fontWeight: 900,
               padding: '12px 24px',
               borderRadius: '12px',
               cursor: 'pointer',
-              boxShadow: '0 0 18px rgba(0, 245, 255, 0.5)',
+              boxShadow: '0 0 18px rgba(0, 245, 255, 0.45)',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px'

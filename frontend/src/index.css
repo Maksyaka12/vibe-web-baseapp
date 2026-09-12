@@ -5,7 +5,16 @@
    ============================================ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  background-color: #020b1a;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
 button, input, select, textarea { font-family: var(--font); }
 
 /* PAW CURSOR */
@@ -17,20 +26,20 @@ a, button {
 }
 
 :root {
-  /* Light mode */
-  --bg:      #BEF1FF;
-  --bg2:     #AEE1EF;
-  --bg3:     #9ED1DF;
-  --surface: #ffffff;
-  --blue:    #0000FF;
-  --blue-h:  #0000cc;
-  --blue-d:  rgba(0,0,255,0.08);
-  --blue-b:  rgba(0,0,255,0.15);
-  --ink:     #111111;
-  --ink2:    #333333;
-  --muted:   #888888;
-  --border:  rgba(0,0,0,0.08);
-  --borderf: rgba(0,0,255,0.2);
+  /* Dark pixel default */
+  --bg:      #020b1a;
+  --bg2:     #041430;
+  --bg3:     #061a3c;
+  --surface: rgba(4, 20, 48, 0.88);
+  --blue:    #00f5ff;
+  --blue-h:  #38bdf8;
+  --blue-d:  rgba(0, 245, 255, 0.08);
+  --blue-b:  rgba(0, 245, 255, 0.15);
+  --ink:     #ffffff;
+  --ink2:    #cbd5e1;
+  --muted:   #88aacc;
+  --border:  rgba(0, 245, 255, 0.25);
+  --borderf: rgba(0, 245, 255, 0.45);
   --font:    'Inter', sans-serif;
   --max-w:   1400px;
   --pad:     60px;
@@ -38,10 +47,22 @@ a, button {
 
 body {
   font-family: var(--font);
-  background: var(--bg);
-  color: var(--ink);
+  background: #020b1a;
+  color: #ffffff;
   line-height: 1.6;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  background: #020b1a;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* ── NAV ── */

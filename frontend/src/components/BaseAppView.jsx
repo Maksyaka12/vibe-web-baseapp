@@ -153,7 +153,7 @@ export function BaseAppView({ RewardsComponent }) {
 
   return (
     <BaseAppErrorBoundary>
-      <div className="base-app-pixel-theme" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div className="base-app-pixel-theme" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: '100vw', margin: 0, padding: 0 }}>
         
         {/* Desktop Persistent Left Sidebar */}
         {isDesktop && (
@@ -181,13 +181,16 @@ export function BaseAppView({ RewardsComponent }) {
 
         {/* Main Application Container (Adapts margin-left on Desktop) */}
         <div
+          className="base-app-main-content-wrap"
           style={{
             marginLeft: desktopMarginLeft,
             transition: 'margin-left 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            width: isDesktop ? `calc(100% - ${desktopMarginLeft})` : '100%'
+            width: isDesktop ? `calc(100% - ${desktopMarginLeft})` : '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box'
           }}
         >
           {/* Top Header */}

@@ -861,18 +861,18 @@ export function BaseAppSidebar({
                 width: '38px',
                 height: '38px',
                 borderRadius: '8px',
-                background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
-                color: '#FFFFFF',
-                border: '1.5px solid #ffffff',
+                background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                color: '#020b1a',
+                border: '1.5px solid #00f5ff',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)',
+                boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)',
                 margin: '0 auto'
               }}
             >
-              <Wallet size={15} strokeWidth={2.5} />
+              <Wallet size={15} color="#020b1a" strokeWidth={2.5} />
             </button>
           ) : (
             <button
@@ -882,9 +882,9 @@ export function BaseAppSidebar({
               }}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
-                color: '#FFFFFF',
-                border: '1.5px solid #ffffff',
+                background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                color: '#020b1a',
+                border: '1.5px solid #00f5ff',
                 borderRadius: '10px',
                 padding: isDesktop ? '12px 14px' : '10px 12px',
                 fontSize: isDesktop ? '8.5px' : '7.5px',
@@ -894,12 +894,12 @@ export function BaseAppSidebar({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: '0 0 16px rgba(0, 245, 255, 0.4)',
+                boxShadow: '0 0 16px rgba(0, 245, 255, 0.45)',
                 fontFamily: "'Press Start 2P', monospace",
                 textTransform: 'uppercase'
               }}
             >
-              <Wallet size={14} strokeWidth={2.5} />
+              <Wallet size={14} color="#020b1a" strokeWidth={2.5} />
               <span>CONNECT WALLET</span>
             </button>
           )}
