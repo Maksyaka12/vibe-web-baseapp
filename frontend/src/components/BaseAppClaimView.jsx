@@ -334,13 +334,14 @@ export function BaseAppClaimView(props) {
       <div style={{ marginBottom: '28px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: totalAvailableCount > 0 ? '#00ff88' : '#64748b', boxShadow: totalAvailableCount > 0 ? '0 0 8px #00ff88' : 'none' }} />
-          <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+          <h3 className="claim-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
             AVAILABLE TO CLAIM ({totalAvailableCount})
           </h3>
         </div>
 
         {totalAvailableCount === 0 ? (
           <div
+            className="claim-empty-box"
             style={{
               background: 'rgba(4, 20, 48, 0.85)',
               border: '1.5px solid rgba(0, 245, 255, 0.2)',
@@ -365,6 +366,7 @@ export function BaseAppClaimView(props) {
             {/* Holder Unlock 1 Claim Card */}
             {isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive) && (
               <div
+                className="claim-card"
                 style={{
                   background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
                   border: '1.5px solid #00ff88',
@@ -374,10 +376,11 @@ export function BaseAppClaimView(props) {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <div style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <div className="claim-card-title" style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 1').toUpperCase()}</span>
                   </div>
                   <span
+                    className="claim-card-status"
                     style={{
                       fontSize: '6px',
                       color: '#00ff88',
@@ -399,6 +402,7 @@ export function BaseAppClaimView(props) {
                 </div>
 
                 <div
+                  className="claim-box"
                   style={{
                     background: 'rgba(2, 11, 26, 0.8)',
                     border: '1px solid rgba(0, 245, 255, 0.25)',
@@ -407,15 +411,16 @@ export function BaseAppClaimView(props) {
                     marginBottom: '12px'
                   }}
                 >
-                  <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+                  <div className="claim-box-label" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
                     YOU'RE ELIGIBLE FOR CLAIM
                   </div>
-                  <div style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
+                  <div className="claim-box-amount" style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
                     +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
                   </div>
                 </div>
 
                 <button
+                  className="claim-action-btn"
                   onClick={() => handleClaim('holder', 1, holderRewardAmount || 500000)}
                   disabled={claimStatus['holder-1'] === 'claiming'}
                   style={{
@@ -485,6 +490,7 @@ export function BaseAppClaimView(props) {
             {/* Vibe Club Royalty Active Claim Card */}
             {((activeRoyaltyAvailable !== undefined ? activeRoyaltyAvailable : isVibeClubRoyalty1Available) && isVibeClubEligible) && (
               <div
+                className="claim-card"
                 style={{
                   background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
                   border: '1.5px solid #00ff88',
@@ -494,10 +500,11 @@ export function BaseAppClaimView(props) {
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <div style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <div className="claim-card-title" style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 2}`).toUpperCase()}</span>
                   </div>
                   <span
+                    className="claim-card-status"
                     style={{
                       fontSize: '6px',
                       color: '#00ff88',
@@ -519,6 +526,7 @@ export function BaseAppClaimView(props) {
                 </div>
 
                 <div
+                  className="claim-box"
                   style={{
                     background: 'rgba(2, 11, 26, 0.8)',
                     border: '1px solid rgba(0, 245, 255, 0.25)',
@@ -527,15 +535,16 @@ export function BaseAppClaimView(props) {
                     marginBottom: '12px'
                   }}
                 >
-                  <div style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+                  <div className="claim-box-label" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
                     YOU'RE ELIGIBLE FOR CLAIM
                   </div>
-                  <div style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
+                  <div className="claim-box-amount" style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
                     +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
                   </div>
                 </div>
 
                 <button
+                  className="claim-action-btn"
                   onClick={async () => {
                     const ep = activeRoyaltyEpochId || 2;
                     const amt = vibeClubRewardAmount || (ep === 2 ? 17117 : 22935);

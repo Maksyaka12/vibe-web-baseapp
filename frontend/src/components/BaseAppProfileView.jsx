@@ -171,6 +171,7 @@ export function BaseAppProfileView(props) {
       {/* ── 2. USER PROFILE CARD (FULL HEIGHT NFT IMAGE + CLEAN RIGHT INFO) ── */}
       {!address ? (
         <div
+          className="profile-user-card"
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
             border: '1.5px solid rgba(0, 245, 255, 0.3)',
@@ -182,6 +183,7 @@ export function BaseAppProfileView(props) {
           }}
         >
           <div
+            className="profile-avatar-box"
             style={{
               width: '84px',
               height: '84px',
@@ -198,14 +200,15 @@ export function BaseAppProfileView(props) {
           >
             <img src="/new-logo-vibe.png" alt="Vibe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          <div style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', fontWeight: 900 }}>
+          <div className="profile-connect-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', fontWeight: 900 }}>
             CONNECT YOUR WALLET
           </div>
-          <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 0 18px 0' }}>
+          <p className="profile-connect-desc" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 0 18px 0' }}>
             Connect to view your identity, holding balances and Vibe Club status.
           </p>
           <button
             onClick={login}
+            className="profile-connect-btn"
             style={{
               background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
               border: '2px solid #ffffff',
@@ -227,6 +230,7 @@ export function BaseAppProfileView(props) {
         </div>
       ) : (
         <div
+          className="profile-user-card"
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
             border: '1.5px solid rgba(0, 245, 255, 0.25)',
@@ -241,6 +245,7 @@ export function BaseAppProfileView(props) {
         >
           {/* Left Column: Full-Height NFT Image (occupies ~38-42% width) */}
           <div
+            className="profile-avatar-col"
             style={{
               width: '38%',
               minWidth: '110px',
@@ -269,6 +274,7 @@ export function BaseAppProfileView(props) {
 
           {/* Right Column: Address/Refresh top, Name middle, Dual Badges bottom */}
           <div
+            className="profile-details-col"
             style={{
               flex: 1,
               minWidth: 0,
@@ -281,11 +287,12 @@ export function BaseAppProfileView(props) {
             }}
           >
             {/* Top Row: Address & Refresh */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '6px' }}>
-              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+            <div className="profile-address-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '6px' }}>
+              <span className="profile-address-txt" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {address.slice(0, 6)}...{address.slice(-4)}
               </span>
               <button
+                className="profile-refresh-btn"
                 onClick={() => fetchBalances(true)}
                 disabled={loading}
                 title="Refresh Balances"
@@ -312,6 +319,7 @@ export function BaseAppProfileView(props) {
 
             {/* Middle: NFT Name (Always Single Line with smart auto-scaling font) */}
             <div
+              className="profile-nft-title"
               style={{
                 fontSize: getNftFontSize(nftDisplayName),
                 color: '#ffffff',
@@ -331,10 +339,11 @@ export function BaseAppProfileView(props) {
             </div>
 
             {/* Bottom Badges: Vibe Club Status + 5M+ Holder Status */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+            <div className="profile-badge-row" style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
               {/* Badge 1: Vibe Club Status */}
               {hasNft ? (
                 <div
+                  className="profile-badge-pill"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -354,6 +363,7 @@ export function BaseAppProfileView(props) {
               ) : (
                 <Link
                   to={getLinkPath('/vibeclub')}
+                  className="profile-badge-pill"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -377,6 +387,7 @@ export function BaseAppProfileView(props) {
               {/* Badge 2: 5M+ Holder Status */}
               {isHolderEligibleLive ? (
                 <div
+                  className="profile-badge-pill"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -396,6 +407,7 @@ export function BaseAppProfileView(props) {
               ) : (
                 <Link
                   to={getLinkPath('/buy')}
+                  className="profile-badge-pill"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -421,17 +433,18 @@ export function BaseAppProfileView(props) {
       )}
 
       {/* ── 3. REWARD DASHBOARD ZONE ── */}
-      <div style={{ marginBottom: '24px' }}>
+      <div className="profile-dashboard-zone" style={{ marginBottom: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-          <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
             REWARD DASHBOARD
           </h3>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+        <div className="profile-stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           {/* Tile 1: Total Claimed (Green) */}
           <div
+            className="profile-stat-card"
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
               border: '1px solid rgba(0, 255, 136, 0.35)',
@@ -445,16 +458,16 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 TOTAL CLAIMED
               </span>
               <CheckCircle2 size={11} color="#00ff88" />
             </div>
             <div>
-              <div style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
                 +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
               </div>
             </div>
@@ -462,6 +475,7 @@ export function BaseAppProfileView(props) {
 
           {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
           <div
+            className="profile-stat-card"
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
               border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1px solid rgba(168, 85, 247, 0.35)',
@@ -475,16 +489,16 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 STAKING REWARDS
               </span>
               <Coins size={11} color="#c084fc" />
             </div>
             <div>
-              <div style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
                 +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
               </div>
             </div>
@@ -492,6 +506,7 @@ export function BaseAppProfileView(props) {
 
           {/* Tile 3: Available to Claim (Cyan) */}
           <div
+            className="profile-stat-card"
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
               border: totalAvailableCount > 0 ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.25)',
@@ -505,16 +520,16 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 AVAILABLE NOW
               </span>
               <Gift size={11} color="#00f5ff" />
             </div>
             <div>
-              <div style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
                 +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
               </div>
             </div>
@@ -522,6 +537,7 @@ export function BaseAppProfileView(props) {
 
           {/* Tile 4: Expired Claims (Red/Muted) */}
           <div
+            className="profile-stat-card"
             style={{
               background: 'rgba(4, 20, 48, 0.9)',
               border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1px solid rgba(0, 245, 255, 0.2)',
@@ -535,16 +551,16 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 EXPIRED CLAIMS
               </span>
               <Clock size={11} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} />
             </div>
             <div>
-              <div style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
                 {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
               </div>
-              <div style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                 {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
               </div>
             </div>
@@ -553,17 +569,18 @@ export function BaseAppProfileView(props) {
       </div>
 
       {/* ── 4. QUICK LINKS / REDIRECTS ── */}
-      <div style={{ marginBottom: '16px' }}>
+      <div className="profile-quicklinks-zone" style={{ marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-          <h3 style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
             TRACK. JOIN. EARN
           </h3>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+        <div className="profile-quicklinks-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
           <Link
             to={getLinkPath('/hub')}
+            className="profile-quicklink-card"
             style={{
               padding: '12px 10px',
               background: 'rgba(4, 20, 48, 0.9)',
@@ -579,18 +596,19 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
-              <span style={{ fontSize: '7px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
+              <span className="profile-quicklink-title" style={{ fontSize: '7px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
                 REWARDS HUB
               </span>
               <ArrowRight size={13} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
             </div>
-            <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+            <span className="profile-quicklink-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
               TRACK ACTIVE REWARDS
             </span>
           </Link>
 
           <Link
             to={getLinkPath('/claim')}
+            className="profile-quicklink-card"
             style={{
               padding: '12px 10px',
               background: 'rgba(4, 20, 48, 0.9)',
@@ -606,12 +624,12 @@ export function BaseAppProfileView(props) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
-              <span style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
+              <span className="profile-quicklink-title" style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
                 CLAIM PORTAL
               </span>
               <ArrowRight size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
             </div>
-            <span style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+            <span className="profile-quicklink-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
               CLAIM ACTIVE REWARDS
             </span>
           </Link>

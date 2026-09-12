@@ -49,6 +49,7 @@ function DocContractCard({ item, isBaseAppMode }) {
   if (isBaseAppMode) {
     return (
       <div
+        className="contracts-card"
         style={{
           background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
           border: '1.5px solid rgba(0, 245, 255, 0.25)',
@@ -60,11 +61,12 @@ function DocContractCard({ item, isBaseAppMode }) {
           gap: '12px'
         }}
       >
-        <div style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+        <div className="contracts-card-title" style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
           {item.title}
         </div>
 
         <div
+          className="contracts-card-addr-box"
           style={{
             background: 'rgba(2, 11, 26, 0.85)',
             border: '1px solid rgba(0, 245, 255, 0.18)',
@@ -80,9 +82,10 @@ function DocContractCard({ item, isBaseAppMode }) {
           {item.address}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+        <div className="contracts-btn-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           <button
             type="button"
+            className="contracts-copy-btn"
             onClick={handleCopy}
             style={{
               display: 'flex',
@@ -109,6 +112,7 @@ function DocContractCard({ item, isBaseAppMode }) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
+            className="contracts-scan-btn"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -174,9 +178,10 @@ function DocContractCard({ item, isBaseAppMode }) {
 export default function ContractsPage({ isBaseAppMode = false }) {
   if (isBaseAppMode) {
     return (
-      <div style={{ padding: '16px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+      <div className="contracts-view-container" style={{ padding: '16px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
         {/* Contracts Hero Header */}
         <div
+          className="rewards-hero-header"
           style={{
             width: '100%',
             display: 'flex',
@@ -189,6 +194,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
           }}
         >
           <h2
+            className="rewards-hero-title"
             style={{
               fontSize: '18px',
               margin: '0 0 12px 0',
@@ -204,6 +210,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
           </h2>
 
           <div
+            className="rewards-hero-pill"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -219,12 +226,12 @@ export default function ContractsPage({ isBaseAppMode = false }) {
             }}
           >
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
               VERIFIED CONTRACTS · TRANSPARENCY ZONE
             </span>
           </div>
 
-          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: 0 }}>
+          <p className="contracts-hero-subtext" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: 0 }}>
             Official smart contracts and verified addresses for $VIBE ecosystem on Base.
           </p>
         </div>

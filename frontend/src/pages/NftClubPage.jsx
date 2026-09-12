@@ -17,7 +17,7 @@ const WalletSvgIcon = ({ size = 14 }) => (
 // NFT Deck strictly from #5 to #35 (31 NFTs)
 const NFT_DECK = Array.from({ length: 31 }, (_, i) => i + 5);
 
-export default function NftClubPage() {
+export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
   const { login, logout, authenticated, user } = usePrivy();
   const walletAddress = user?.wallet?.address;
   const balances = useUserBalances(walletAddress);
@@ -238,9 +238,9 @@ export default function NftClubPage() {
   if (showLockScreen) {
     return (
       <div style={{
-        minHeight: '100vh',
-        width: '100vw',
-        background: 'radial-gradient(circle at 50% 30%, #041430 0%, #020b1a 70%, #000511 100%)',
+        minHeight: isEmbeddedInBaseApp ? 'calc(100vh - 120px)' : '100vh',
+        width: '100%',
+        background: isEmbeddedInBaseApp ? 'transparent' : 'radial-gradient(circle at 50% 30%, #041430 0%, #020b1a 70%, #000511 100%)',
         color: '#fff',
         fontFamily: 'var(--vv-pixel)',
         display: 'flex',
@@ -470,14 +470,14 @@ export default function NftClubPage() {
 
   return (
     <div style={{
-      minHeight: '100vh',
-      background: 'radial-gradient(circle at 50% 10%, #041430 0%, #020b1a 70%, #000511 100%)',
+      minHeight: isEmbeddedInBaseApp ? 'auto' : '100vh',
+      background: isEmbeddedInBaseApp ? 'transparent' : 'radial-gradient(circle at 50% 10%, #041430 0%, #020b1a 70%, #000511 100%)',
       color: '#fff',
       fontFamily: 'var(--vv-pixel)',
-      paddingBottom: '80px',
+      paddingBottom: isEmbeddedInBaseApp ? '40px' : '80px',
       overflowX: 'hidden',
       textTransform: 'uppercase',
-      width: '100vw'
+      width: '100%'
     }}>
       {/* Inline animation & Mobile CSS Override */}
       <style>{`
@@ -582,10 +582,12 @@ export default function NftClubPage() {
 
       {/* ── MAIN CONTAINER ── */}
       <div className="vv-nft-club-container" style={{
-        maxWidth: '1050px',
+        maxWidth: '1040px',
         margin: '0 auto',
         padding: '0 12px 30px 12px',
-        textAlign: 'center'
+        textAlign: 'center',
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
 
         {/* ── MAIN CARD CONTAINER ── */}

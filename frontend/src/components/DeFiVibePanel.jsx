@@ -429,16 +429,17 @@ export default function DeFiVibePanel({ player }) {
         boxSizing: 'border-box',
         gap: '6px'
       }}>
-        <div style={{ fontSize: '9.5px', color: '#ffd700', fontWeight: 900, letterSpacing: '0.4px', whiteSpace: 'nowrap' }}>
+        <div className="vv-defi-mode-title" style={{ fontSize: '9.5px', color: '#ffd700', fontWeight: 900, letterSpacing: '0.4px', whiteSpace: 'nowrap' }}>
           {mode === 'buy' ? 'BUY $VIBE' : 'SELL $VIBE'}
         </div>
 
         {/* Slippage Tolerance Selector (Single row, compact) */}
         <div className="vv-defi-slippage-row" style={{ display: 'flex', alignItems: 'center', gap: '3px', marginLeft: 'auto', flexShrink: 0 }}>
-          <span style={{ fontSize: '5.5px', color: '#88aacc', fontWeight: 900 }}>SLIPPAGE:</span>
+          <span className="vv-defi-slippage-label" style={{ fontSize: '5.5px', color: '#88aacc', fontWeight: 900 }}>SLIPPAGE:</span>
           {[0.5, 1.0, 3.0, 5.0].map((s) => (
             <button
               key={s}
+              className={`vv-defi-slippage-btn ${slippage === s ? 'active' : ''}`}
               onClick={() => setSlippage(s)}
               style={{
                 fontFamily: 'var(--vv-pixel)',
@@ -469,9 +470,9 @@ export default function DeFiVibePanel({ player }) {
         width: '100%',
         boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#aaa', fontSize: '6.5px', marginBottom: '8px', fontWeight: 900, gap: '4px' }}>
-          <span style={{ color: '#88aacc' }}>YOU PAY</span>
-          <span style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
+        <div className="vv-defi-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#aaa', fontSize: '6.5px', marginBottom: '8px', fontWeight: 900, gap: '4px' }}>
+          <span className="vv-defi-card-label" style={{ color: '#88aacc' }}>YOU PAY</span>
+          <span className="vv-defi-card-balance" style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
             BALANCE:{' '}
             <strong style={{ color: mode === 'buy' ? '#00f5ff' : '#ffd700' }}>
               {balances.loading
@@ -486,6 +487,7 @@ export default function DeFiVibePanel({ player }) {
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <input
             type="number"
+            className="vv-defi-amount-input"
             placeholder="0.00"
             value={fromAmount}
             onChange={(e) => {
@@ -505,7 +507,7 @@ export default function DeFiVibePanel({ player }) {
               fontWeight: 900
             }}
           />
-          <span style={{
+          <span className="vv-defi-token-badge" style={{
             fontFamily: 'var(--vv-pixel)',
             fontSize: '8px',
             fontWeight: 900,
@@ -522,15 +524,16 @@ export default function DeFiVibePanel({ player }) {
         </div>
 
         {/* Small USD Equivalent Display */}
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '6.5px', marginTop: '4px', fontWeight: 700 }}>
+        <div className="vv-defi-usd-val" style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '6.5px', marginTop: '4px', fontWeight: 700 }}>
           {fromUsd}
         </div>
 
         {/* Percentage Preset Buttons (25%, 50%, 75%, MAX) */}
-        <div style={{ display: 'flex', gap: '5px', marginTop: '8px' }}>
+        <div className="vv-defi-pct-row" style={{ display: 'flex', gap: '5px', marginTop: '8px' }}>
           {[25, 50, 75, 100].map((p) => (
             <button
               key={p}
+              className="vv-defi-pct-btn"
               onClick={() => handlePercentage(p)}
               style={{
                 flex: 1,
@@ -553,8 +556,9 @@ export default function DeFiVibePanel({ player }) {
       </div>
 
       {/* FLIP DIRECTION BUTTON ↕ */}
-      <div style={{ textAlign: 'center', margin: '-4px 0 6px 0' }}>
+      <div className="vv-defi-flip-wrap" style={{ textAlign: 'center', margin: '-4px 0 6px 0' }}>
         <button
+          className="vv-defi-flip-btn"
           onClick={handleToggleMode}
           title="Switch Swap Direction"
           style={{
@@ -586,9 +590,9 @@ export default function DeFiVibePanel({ player }) {
         width: '100%',
         boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#aaa', fontSize: '6.5px', marginBottom: '8px', fontWeight: 900, gap: '4px' }}>
-          <span style={{ color: '#88aacc' }}>YOU RECEIVE</span>
-          <span style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
+        <div className="vv-defi-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#aaa', fontSize: '6.5px', marginBottom: '8px', fontWeight: 900, gap: '4px' }}>
+          <span className="vv-defi-card-label" style={{ color: '#88aacc' }}>YOU RECEIVE</span>
+          <span className="vv-defi-card-balance" style={{ whiteSpace: 'nowrap', textAlign: 'right' }}>
             BALANCE:{' '}
             <strong style={{ color: mode === 'buy' ? '#ffd700' : '#00f5ff' }}>
               {balances.loading
@@ -601,7 +605,7 @@ export default function DeFiVibePanel({ player }) {
         </div>
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <div style={{
+          <div className="vv-defi-receive-val" style={{
             flex: 1,
             width: '100%',
             minWidth: '0',
@@ -612,7 +616,7 @@ export default function DeFiVibePanel({ player }) {
           }}>
             {isFetchingQuote ? 'CALC...' : (toAmount || '0.00')}
           </div>
-          <span style={{
+          <span className="vv-defi-token-badge" style={{
             fontFamily: 'var(--vv-pixel)',
             fontSize: '8px',
             fontWeight: 900,
@@ -629,14 +633,14 @@ export default function DeFiVibePanel({ player }) {
         </div>
 
         {/* Small USD Equivalent Display */}
-        <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '6.5px', marginTop: '4px', fontWeight: 700 }}>
+        <div className="vv-defi-usd-val" style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '6.5px', marginTop: '4px', fontWeight: 700 }}>
           {toUsd}
         </div>
       </div>
 
       {/* Status Toast Message */}
       {txStatus.msg && (
-        <div style={{
+        <div className="vv-defi-status-msg" style={{
           marginBottom: '12px',
           padding: '8px 10px',
           borderRadius: '8px',
@@ -680,6 +684,7 @@ export default function DeFiVibePanel({ player }) {
 
       {/* MAIN SWAP ACTION BUTTON */}
       <button
+        className="vv-defi-swap-btn"
         onClick={handleSwap}
         disabled={swapping || !fromAmount || Number(fromAmount) <= 0}
         style={{

@@ -222,11 +222,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
       <section className="tokenomics-baseapp-container" style={{ padding: '16px 12px 60px 12px', maxWidth: '1040px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
         
         {/* ── BLOCK 1: TOKENOMICS INFO ── */}
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <h2 className="tokenomics-main-title" style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
+        <div className="rewards-hero-header" style={{ textAlign: 'center', marginBottom: '24px', padding: '12px 8px 8px 8px', width: '100%' }}>
+          <h2 className="rewards-hero-title" style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             $VIBE <span style={{ color: '#00f5ff' }}>TOKENOMICS</span>
           </h2>
           <div
+            className="rewards-hero-pill"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -241,7 +242,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             }}
           >
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.4px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.4px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
               FAIR LAUNCH. NO TEAM ALLOCATIONS. NO INSIDER BUYS.
             </span>
           </div>
