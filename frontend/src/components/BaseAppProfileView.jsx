@@ -114,7 +114,7 @@ export function BaseAppProfileView(props) {
   };
 
   return (
-    <div style={{ width: '100%', boxSizing: 'border-box' }}>
+    <div className="profile-view-container" style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* ── 1. MODERN PROFILE HERO HEADER ── */}
       <div
         className="rewards-hero-header"

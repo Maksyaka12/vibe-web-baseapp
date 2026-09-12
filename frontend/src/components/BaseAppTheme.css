@@ -739,7 +739,12 @@
   }
 
   /* ── 4. Desktop User Profile View ── */
+  .base-app-pixel-theme .profile-view-container {
+    max-width: 960px !important;
+    margin: 0 auto !important;
+  }
   .base-app-pixel-theme .profile-user-card {
+    padding: 0 !important;
     border-radius: 20px !important;
     margin-bottom: 28px !important;
   }
@@ -754,7 +759,7 @@
     margin-bottom: 10px !important;
   }
   .base-app-pixel-theme .profile-connect-desc {
-    font-size: 9px !important;
+    font-size: 9.5px !important;
     line-height: 1.6 !important;
     margin-bottom: 20px !important;
   }
@@ -764,90 +769,107 @@
     border-radius: 14px !important;
   }
   .base-app-pixel-theme .profile-avatar-col {
-    width: 32% !important;
-    min-width: 150px !important;
-    max-width: 190px !important;
+    width: 34% !important;
+    min-width: 170px !important;
+    max-width: 220px !important;
   }
   .base-app-pixel-theme .profile-details-col {
-    padding: 18px 20px !important;
-    gap: 10px !important;
+    padding: 20px 24px !important;
+    gap: 12px !important;
   }
   .base-app-pixel-theme .profile-address-txt {
-    font-size: 8.5px !important;
+    font-size: 9.5px !important;
   }
   .base-app-pixel-theme .profile-refresh-btn {
-    font-size: 7.5px !important;
-    padding: 5px 10px !important;
-    border-radius: 6px !important;
-  }
-  .base-app-pixel-theme .profile-nft-title {
-    font-size: 15px !important;
-    letter-spacing: 0.4px !important;
-    margin: 4px 0 !important;
-  }
-  .base-app-pixel-theme .profile-badge-pill {
-    font-size: 8px !important;
+    font-size: 8.5px !important;
     padding: 6px 12px !important;
     border-radius: 8px !important;
+  }
+  .base-app-pixel-theme .profile-nft-title {
+    font-size: 18px !important;
+    letter-spacing: 0.5px !important;
+    margin: 6px 0 !important;
+  }
+  .base-app-pixel-theme .profile-badge-pill {
+    padding: 7px 14px !important;
+    border-radius: 8px !important;
+  }
+  .base-app-pixel-theme .profile-badge-pill span {
+    font-size: 9px !important;
   }
   .base-app-pixel-theme .profile-dashboard-zone {
     margin-bottom: 30px !important;
   }
   .base-app-pixel-theme .profile-section-title {
-    font-size: 12px !important;
-    letter-spacing: 0.5px !important;
+    font-size: 13px !important;
+    letter-spacing: 0.6px !important;
+    margin-bottom: 14px !important;
   }
   .base-app-pixel-theme .profile-stat-grid {
-    gap: 14px !important;
+    gap: 16px !important;
   }
   .base-app-pixel-theme .profile-stat-card {
-    padding: 16px 16px !important;
-    border-radius: 14px !important;
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
   }
   .base-app-pixel-theme .profile-stat-label {
-    font-size: 8px !important;
+    font-size: 9px !important;
   }
   .base-app-pixel-theme .profile-stat-val {
-    font-size: 13px !important;
-    letter-spacing: 0.4px !important;
-    margin-bottom: 4px !important;
+    font-size: 17px !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 6px !important;
   }
   .base-app-pixel-theme .profile-stat-sub {
-    font-size: 7.5px !important;
+    font-size: 8.5px !important;
   }
   .base-app-pixel-theme .profile-quicklink-card {
-    padding: 16px 16px !important;
-    border-radius: 14px !important;
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
   }
   .base-app-pixel-theme .profile-quicklink-title {
-    font-size: 9.5px !important;
-    letter-spacing: 0.4px !important;
+    font-size: 11.5px !important;
+    letter-spacing: 0.5px !important;
   }
   .base-app-pixel-theme .profile-quicklink-sub {
-    font-size: 7.5px !important;
+    font-size: 8.5px !important;
   }
 
   /* ── 5. Desktop Claim Portal View ── */
+  .base-app-pixel-theme .claim-view-container {
+    max-width: 960px !important;
+    margin: 0 auto !important;
+  }
   .base-app-pixel-theme .claim-section-title {
-    font-size: 12px !important;
-    letter-spacing: 0.5px !important;
+    font-size: 13px !important;
+    letter-spacing: 0.6px !important;
   }
   .base-app-pixel-theme .claim-empty-box {
-    padding: 24px 20px !important;
+    padding: 26px 22px !important;
     border-radius: 18px !important;
   }
-  .base-app-pixel-theme .claim-card {
-    padding: 22px 20px !important;
+  .base-app-pixel-theme .claim-empty-title {
+    font-size: 11.5px !important;
+  }
+  .base-app-pixel-theme .claim-empty-desc {
+    font-size: 9.5px !important;
+    line-height: 1.7 !important;
+  }
+  .base-app-pixel-theme .claim-card,
+  .base-app-pixel-theme .claim-upcoming-card {
+    padding: 24px 22px !important;
     border-radius: 18px !important;
     margin-bottom: 18px !important;
   }
-  .base-app-pixel-theme .claim-card-title {
-    font-size: 11.5px !important;
-    letter-spacing: 0.4px !important;
+  .base-app-pixel-theme .claim-card-title,
+  .base-app-pixel-theme .claim-upcoming-title {
+    font-size: 12.5px !important;
+    letter-spacing: 0.5px !important;
   }
-  .base-app-pixel-theme .claim-card-status {
-    font-size: 8px !important;
-    padding: 5px 10px !important;
+  .base-app-pixel-theme .claim-card-status,
+  .base-app-pixel-theme .claim-upcoming-status {
+    font-size: 9px !important;
+    padding: 6px 12px !important;
     border-radius: 8px !important;
   }
   .base-app-pixel-theme .claim-box {
@@ -856,18 +878,97 @@
     margin-bottom: 16px !important;
   }
   .base-app-pixel-theme .claim-box-label {
-    font-size: 8.5px !important;
+    font-size: 9.5px !important;
     margin-bottom: 6px !important;
   }
   .base-app-pixel-theme .claim-box-amount {
-    font-size: 18px !important;
-    letter-spacing: 0.5px !important;
+    font-size: 20px !important;
+    letter-spacing: 0.6px !important;
   }
   .base-app-pixel-theme .claim-action-btn {
-    font-size: 11.5px !important;
-    padding: 15px 20px !important;
-    border-radius: 12px !important;
+    font-size: 12px !important;
+    padding: 16px 22px !important;
+    border-radius: 14px !important;
     letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .claim-action-btn span {
+    font-size: 12px !important;
+  }
+  .base-app-pixel-theme .claim-deadline-wrap {
+    font-size: 9px !important;
+    margin-top: 14px !important;
+  }
+  .base-app-pixel-theme .claim-deadline-pill {
+    font-size: 9.5px !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+  }
+  .base-app-pixel-theme .claim-info-grid {
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+  .base-app-pixel-theme .claim-info-box {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .claim-info-label,
+  .base-app-pixel-theme .claim-info-label span {
+    font-size: 9px !important;
+    margin-bottom: 5px !important;
+  }
+  .base-app-pixel-theme .claim-info-val {
+    font-size: 11.5px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .claim-eligibility-banner {
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .claim-eligibility-banner span {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+  }
+  .base-app-pixel-theme .claim-upcoming-cta {
+    padding: 12px 16px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .claim-upcoming-cta span {
+    font-size: 10px !important;
+  }
+  .base-app-pixel-theme .claim-history-empty {
+    padding: 24px 20px !important;
+    border-radius: 16px !important;
+  }
+  .base-app-pixel-theme .claim-history-empty p {
+    font-size: 9.5px !important;
+  }
+  .base-app-pixel-theme .claim-history-row {
+    padding: 16px 18px !important;
+    border-radius: 14px !important;
+    margin-bottom: 12px !important;
+  }
+  .base-app-pixel-theme .claim-history-title {
+    font-size: 11px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .claim-history-title span {
+    font-size: 11px !important;
+  }
+  .base-app-pixel-theme .claim-history-btn {
+    font-size: 9px !important;
+    padding: 7px 12px !important;
+    border-radius: 8px !important;
+  }
+  .base-app-pixel-theme .claim-history-btn span {
+    font-size: 9px !important;
+  }
+  .base-app-pixel-theme .claim-history-amount {
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 5px !important;
+  }
+  .base-app-pixel-theme .claim-history-date {
+    font-size: 8.5px !important;
   }
 
   /* ── 6. Desktop Tokenomics View ── */
@@ -876,20 +977,111 @@
     padding: 20px 16px 60px 16px !important;
   }
   .base-app-pixel-theme .tokenomics-section-title {
-    font-size: 20px !important;
+    font-size: 22px !important;
     letter-spacing: 0.8px !important;
     margin-bottom: 12px !important;
   }
-  .base-app-pixel-theme .tokenomics-top-stats-grid > div {
-    padding: 16px 16px !important;
-    border-radius: 14px !important;
+  .base-app-pixel-theme .tokenomics-section-sub {
+    font-size: 9.5px !important;
+    line-height: 1.7 !important;
+    margin-bottom: 24px !important;
   }
-  .base-app-pixel-theme .tokenomics-top-stats-grid span[style*="text-transform: uppercase"] {
+  .base-app-pixel-theme .tokenomics-top-stats-grid {
+    gap: 14px !important;
+    margin-bottom: 40px !important;
+  }
+  .base-app-pixel-theme .tokenomics-top-stat-card,
+  .base-app-pixel-theme .tokenomics-rev-tile {
+    padding: 18px 16px !important;
+    border-radius: 16px !important;
+  }
+  .base-app-pixel-theme .tokenomics-top-stat-label,
+  .base-app-pixel-theme .tokenomics-rev-label {
+    font-size: 9.5px !important;
+    margin-bottom: 4px !important;
+  }
+  .base-app-pixel-theme .tokenomics-top-stat-val,
+  .base-app-pixel-theme .tokenomics-rev-val {
+    font-size: 20px !important;
+    letter-spacing: 0.6px !important;
+  }
+  .base-app-pixel-theme .tokenomics-top-stat-badge {
+    font-size: 8.5px !important;
+    padding: 5px 10px !important;
+    border-radius: 7px !important;
+  }
+  .base-app-pixel-theme .tokenomics-rev-btn {
     font-size: 9px !important;
+    padding: 8px 14px !important;
+    border-radius: 8px !important;
   }
-  .base-app-pixel-theme .tokenomics-top-stats-grid span[style*="font-size: 14px"] {
-    font-size: 18px !important;
+  .base-app-pixel-theme .tokenomics-buyback-card,
+  .base-app-pixel-theme .tokenomics-content-card {
+    padding: 28px 24px !important;
+    border-radius: 20px !important;
+  }
+  .base-app-pixel-theme .tokenomics-buyback-title,
+  .base-app-pixel-theme .tokenomics-card-title {
+    font-size: 13px !important;
     letter-spacing: 0.5px !important;
+    margin-bottom: 8px !important;
+  }
+  .base-app-pixel-theme .tokenomics-buyback-sub,
+  .base-app-pixel-theme .tokenomics-card-sub {
+    font-size: 9.5px !important;
+    line-height: 1.6 !important;
+  }
+  .base-app-pixel-theme .tokenomics-list-row {
+    padding: 14px 16px !important;
+    border-radius: 12px !important;
+    gap: 14px !important;
+    margin-bottom: 10px !important;
+  }
+  .base-app-pixel-theme .tokenomics-list-icon {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 8px !important;
+  }
+  .base-app-pixel-theme .tokenomics-list-title {
+    font-size: 10.5px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .tokenomics-list-desc {
+    font-size: 9px !important;
+    line-height: 1.6 !important;
+    margin-top: 4px !important;
+  }
+  .base-app-pixel-theme .tokenomics-badge-pill,
+  .base-app-pixel-theme .tokenomics-donut-badge {
+    font-size: 9px !important;
+    padding: 8px 14px !important;
+    border-radius: 8px !important;
+  }
+  .base-app-pixel-theme .tokenomics-cta-btn {
+    font-size: 11px !important;
+    padding: 15px 20px !important;
+    border-radius: 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .base-app-pixel-theme .tokenomics-cta-btn span {
+    font-size: 11px !important;
+  }
+  .base-app-pixel-theme .tokenomics-unlock-row {
+    padding: 12px 16px !important;
+    border-radius: 10px !important;
+    margin-bottom: 8px !important;
+  }
+  .base-app-pixel-theme .tokenomics-unlock-date {
+    font-size: 9.5px !important;
+  }
+  .base-app-pixel-theme .tokenomics-unlock-amount {
+    font-size: 11px !important;
+    letter-spacing: 0.4px !important;
+  }
+  .base-app-pixel-theme .tokenomics-unlock-status {
+    font-size: 8.5px !important;
+    padding: 6px 12px !important;
+    border-radius: 6px !important;
   }
 
   /* ── 7. Desktop Contracts & Addresses View ── */

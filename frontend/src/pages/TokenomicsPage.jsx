@@ -251,15 +251,15 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         {/* 4 Stat Tiles (1 row of 4 on Desktop, 2x2 on Mobile) */}
         <div className="tokenomics-top-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px', marginBottom: '36px' }}>
           {/* Total Supply */}
-          <div style={tileStyle}>
-            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+          <div className="tokenomics-top-stat-card" style={tileStyle}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Total Supply
             </span>
-            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               {totalSupplyStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
                 <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
@@ -267,15 +267,15 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Circulating */}
-          <div style={tileStyle}>
-            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+          <div className="tokenomics-top-stat-card" style={tileStyle}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Circulating
             </span>
-            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               {circulatingStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
                 <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
@@ -283,27 +283,27 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Vesting */}
-          <div style={tileStyle}>
-            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+          <div className="tokenomics-top-stat-card" style={tileStyle}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Vesting Rewards
             </span>
-            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               100M
             </span>
-            <span style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
               10% MONTHLY
             </span>
           </div>
 
           {/* Monthly Unlock */}
-          <div style={tileStyle}>
-            <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+          <div className="tokenomics-top-stat-card" style={tileStyle}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
               Monthly Unlock
             </span>
-            <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
               10M
             </span>
-            <span style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
               TO HOLDERS
             </span>
           </div>
@@ -314,34 +314,35 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REVENUE <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Creator Revenue is going towards buybacks and actions aimed at strengthening the token economy.
           </p>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
           {/* 2 Stats + 2 Info Rows */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px' }}>
-            <div style={tileStyle}>
-              <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+          <div className="tokenomics-revenue-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '12px' }}>
+            <div className="tokenomics-rev-tile" style={tileStyle}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Buyback
               </span>
-              <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
               </span>
             </div>
 
-            <div style={tileStyle}>
-              <span style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <div className="tokenomics-rev-tile" style={tileStyle}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Total Burned
               </span>
-              <span style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
               </span>
             </div>
 
             {/* Current Community Pool Banner */}
             <div
+              className="tokenomics-rev-tile"
               style={{
                 background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
                 border: '1.5px solid rgba(0, 245, 255, 0.25)',
@@ -355,16 +356,17 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 textAlign: 'center'
               }}
             >
-              <span style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
                 Current community pool:
               </span>
-              <span style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                 {loading ? <Loader2 size={16} className="spin"/> : communityRewards}
               </span>
             </div>
 
             {/* Buyback Address Card */}
             <div
+              className="tokenomics-rev-tile"
               style={{
                 background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
                 border: '1.5px solid rgba(0, 245, 255, 0.25)',
@@ -378,13 +380,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 textAlign: 'center'
               }}
             >
-              <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Buyback &amp; Rewards Address
               </span>
               <a
                 href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="tokenomics-rev-btn"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -408,43 +411,43 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Buyback Program Card (Side-by-side on Desktop: Left text & bullets, Right SVG Donut Chart) */}
-          <div style={cardStyle}>
+          <div className="tokenomics-buyback-card" style={cardStyle}>
             <div className="tokenomics-buyback-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'center' }}>
               {/* Left Column: Descriptions & Badges */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div>
-                  <h3 style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                  <h3 className="tokenomics-buyback-title" style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                     BUYBACK PROGRAM
                   </h3>
-                  <p style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6 }}>
+                  <p className="tokenomics-buyback-sub" style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6 }}>
                     Strategic utilization of revenue generated to strengthen $VIBE ecosystem on Base.
                   </p>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div style={listRowStyle}>
-                    <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+                  <div className="tokenomics-list-row" style={listRowStyle}>
+                    <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
                       <Flame color="#ef4444" size={15} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                      <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                         30% Burn Allocation
                       </div>
-                      <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                      <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                         Tokens purchased from the open market are permanently sent to dead address
                       </div>
                     </div>
                   </div>
 
-                  <div style={listRowStyle}>
-                    <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                  <div className="tokenomics-list-row" style={listRowStyle}>
+                    <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                       <Users color="#00f5ff" size={15} />
                     </div>
                     <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '8px', fontWeight: 800, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                      <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                         70% Community Vault
                       </div>
-                      <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                      <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                         Distributed back to active holders, stakers, NFT members &amp; app rewards
                       </div>
                     </div>
@@ -453,10 +456,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 {/* Badges */}
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
                     <Flame size={12} /> BURN 30%
                   </div>
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                     <Users size={12} /> COMMUNITY 70%
                   </div>
                 </div>
@@ -525,7 +528,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             REWARDS <span style={{ color: '#00f5ff' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Constitutes the 70% reserved for the community in the Buyback Program.
           </p>
         </div>
@@ -534,97 +537,97 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
           
           {/* Left Column: Distribution Breakdown */}
-          <div style={cardStyle}>
-            <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+          <div className="tokenomics-content-card" style={cardStyle}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
               DISTRIBUTION BREAKDOWN
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {/* 10-Day Rolling Epochs (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Clock color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     10-Day Rolling Epochs
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Reward distribution across all pools happens every 10 days
                   </div>
                 </div>
               </div>
 
               {/* Epoch Allocation Size (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Calculator color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Epoch Allocation Size
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Equals designated % of Community Rewards Pool
                   </div>
                 </div>
               </div>
 
               {/* VibeVerse App (Blue) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(59, 130, 246, 0.15)', 'rgba(59, 130, 246, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(59, 130, 246, 0.15)', 'rgba(59, 130, 246, 0.3)')}>
                   <Gamepad2 color="#3b82f6" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     VibeVerse App (30%)
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Rewards pool inside the upcoming Vibe Verse App
                   </div>
                 </div>
               </div>
 
               {/* $VIBE Staking (Purple) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
                   <Coins color="#a855f7" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     $VIBE Staking (15%)
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Yield for locking $VIBE in verified staking pool on o1
                   </div>
                 </div>
               </div>
 
               {/* Vibe Club NFTs (Orange/Amber) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(245, 158, 11, 0.15)', 'rgba(245, 158, 11, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(245, 158, 11, 0.15)', 'rgba(245, 158, 11, 0.3)')}>
                   <Crown color="#f59e0b" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Vibe Club NFTs (15%)
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Direct royalties for holders of the 333 Vibe Club NFTs
                   </div>
                 </div>
               </div>
 
               {/* Reserve (Green) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
                   <ShieldCheck color="#10b981" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Reserve (40%)
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Buffer for continuous reward refills and marketing
                   </div>
                 </div>
@@ -633,6 +636,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Hub Link CTA */}
               <Link
                 to={hubLink}
+                className="tokenomics-cta-btn"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -660,12 +664,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Column: Donut Chart Card (Community Distribution) */}
-          <div style={cardStyle}>
+          <div className="tokenomics-content-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 COMMUNITY ALLOCATION
               </h3>
-              <p style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Allocation of the 70% Revenue Share.
               </p>
             </div>
@@ -736,38 +740,38 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   {/* Callouts */}
                   <circle cx="56" cy="-40" r="3.5" fill="#3b82f6" />
                   <polyline points="56,-40 85,-60 115,-60" fill="none" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="120" y="-56" fill="#3b82f6" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">VibeVerse 30%</text>
+                  <text x="120" y="-56" fill="#3b82f6" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">VibeVerse 30%</text>
 
                   <circle cx="48" cy="48" r="3.5" fill="#a855f7" />
                   <polyline points="48,48 72,70 100,70" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="73" fill="#a855f7" fontSize="7.5" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
+                  <text x="106" y="73" fill="#a855f7" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
 
                   <circle cx="-11" cy="67" r="3.5" fill="#f59e0b" />
                   <polyline points="-11,67 -35,82 -70,82" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-76" y="85" fill="#f59e0b" fontSize="7.5" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
+                  <text x="-76" y="85" fill="#f59e0b" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
 
                   <circle cx="-65" cy="-21" r="3.5" fill="#10b981" />
                   <polyline points="-65,-21 -90,-48 -120,-48" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-126" y="-44" fill="#10b981" fontSize="7.5" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 40%</text>
+                  <text x="-126" y="-44" fill="#10b981" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 40%</text>
 
                   <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">COMMUNITY</text>
+                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">COMMUNITY</text>
                 </g>
               </svg>
             </div>
 
             {/* Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#3b82f6', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#3b82f6', fontFamily: "'Press Start 2P', monospace" }}>
                 <Gamepad2 size={11} /> VIBEVERSE 30%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
                 <Coins size={11} /> STAKING 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#f59e0b', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#f59e0b', fontFamily: "'Press Start 2P', monospace" }}>
                 <Crown size={11} /> NFT CLUB 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
                 <ShieldCheck size={11} /> RESERVE 40%
               </div>
             </div>
@@ -779,7 +783,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             VIBE CLUB <span style={{ color: '#ffd700' }}>ECONOMY</span>
           </h2>
-          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Official $VIBE NFT collection fully integrated into B20 economy.
           </p>
         </div>
@@ -788,82 +792,82 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
           
           {/* Left Column: Vibe Club Breakdown */}
-          <div style={cardStyle}>
-            <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
+          <div className="tokenomics-content-card" style={cardStyle}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
               VIBE CLUB BREAKDOWN
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {/* Deflationary Mint Burn (Red) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
                   <Flame color="#ef4444" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Deflationary Mint Burn
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Every mint triggers an instant burn, reducing total $VIBE supply
                   </div>
                 </div>
               </div>
 
               {/* NFTs Utility (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Crown color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     NFTs Utility
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Holders receive regular royalty payouts distributed every 10 days
                   </div>
                 </div>
               </div>
 
               {/* Mint Process (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Coins color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Mint Process
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Minting is available with both ETH and native $VIBE tokens
                   </div>
                 </div>
               </div>
 
               {/* Limited 333 Supply (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <ShieldCheck color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Limited 333 Supply
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Strictly capped 333 NFTs with lifetime community benefits
                   </div>
                 </div>
               </div>
 
               {/* Equal Holder Rewards (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Users color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Equal Holder Rewards
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     All 333 NFTs receive identical royalty rewards
                   </div>
                 </div>
@@ -872,6 +876,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Join Vibe Club CTA */}
               <Link
                 to={vibeClubLink}
+                className="tokenomics-cta-btn"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -899,12 +904,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Column: Donut Chart Card (Mint Revenue) */}
-          <div style={cardStyle}>
+          <div className="tokenomics-content-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 MINT REVENUE ALLOCATION
               </h3>
-              <p style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Utilization of revenue collected from NFT mint.
               </p>
             </div>
@@ -957,17 +962,17 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                   {/* Center text */}
                   <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="6.5" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
+                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
                 </g>
               </svg>
             </div>
 
             {/* Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
                 <Flame size={12} /> BURN 80%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                 <Users size={12} /> COMMUNITY 20%
               </div>
             </div>
@@ -979,7 +984,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
             VESTING <span style={{ color: '#00f5ff' }}>DETAILS</span>
           </h2>
-          <p style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             100M tokens vested. Every month 10M unlocks and get distributed among holders.
           </p>
         </div>
@@ -988,112 +993,112 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '20px', alignItems: 'stretch' }}>
           
           {/* Left Column: Holder Rewards Card */}
-          <div style={cardStyle}>
-            <h3 style={{ fontSize: '9.5px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+          <div className="tokenomics-content-card" style={cardStyle}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '9.5px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
               HOLDER REWARDS · 100M $VIBE
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {/* $VIBE Holders (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <img src="/vibe-logo.png" alt="Vibe" style={{ width: '18px', height: '18px', borderRadius: '4px', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     $VIBE Holders
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Hold 5M+ $VIBE to qualify
                   </div>
                 </div>
               </div>
 
               {/* Allocation Size (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <TrendingUp color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Allocation Size
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     The more you hold, the larger your allocation
                   </div>
                 </div>
               </div>
 
               {/* Max Allocation Cap (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <ShieldCheck color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Max Allocation Cap
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Set to prevent whale dominance &amp; ensure fair distribution
                   </div>
                 </div>
               </div>
 
               {/* Allocation Calculation (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Calculator color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Allocation Calculation
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Proportionally calculated based on holding balance
                   </div>
                 </div>
               </div>
 
               {/* Snapshot Schedule (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Clock color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Snapshot Schedule
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Balance snapshot at 00:00 UTC on the day of unlock
                   </div>
                 </div>
               </div>
 
               {/* Claim Window (Cyan) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
                   <Calendar color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Claim Window
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Stays open for 30 days until the next unlock
                   </div>
                 </div>
               </div>
 
               {/* Unclaimed Tokens (Red) */}
-              <div style={listRowStyle}>
-                <div style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
+              <div className="tokenomics-list-row" style={listRowStyle}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
                   <Flame color="#ef4444" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                     Unclaimed Tokens
                   </div>
-                  <div style={{ fontSize: '6.5px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Permanently burned
                   </div>
                 </div>
@@ -1102,6 +1107,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               {/* Claim Eligibility CTA */}
               <Link
                 to={claimLink}
+                className="tokenomics-cta-btn"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -1129,12 +1135,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Column: Unlock Schedule Card */}
-          <div style={cardStyle}>
+          <div className="tokenomics-content-card" style={cardStyle}>
             <div>
-              <h3 style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 UNLOCK SCHEDULE
               </h3>
-              <p style={{ fontSize: '7px', color: '#88aacc', margin: '0 0 14px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: '0 0 14px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
                 Aug 2026 → May 2027
               </p>
             </div>
@@ -1145,6 +1151,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 return (
                   <div
                     key={i}
+                    className="tokenomics-unlock-row"
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -1156,13 +1163,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                       gap: '8px'
                     }}
                   >
-                    <span style={{ fontSize: '7px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span className="tokenomics-unlock-date" style={{ fontSize: '7px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
                       {u.d}
                     </span>
-                    <span style={{ fontSize: '8px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span className="tokenomics-unlock-amount" style={{ fontSize: '8px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
                       {u.a}
                     </span>
                     <span
+                      className="tokenomics-unlock-status"
                       style={{
                         fontSize: '6.5px',
                         fontWeight: 900,
