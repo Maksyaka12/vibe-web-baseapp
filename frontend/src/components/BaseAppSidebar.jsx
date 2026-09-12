@@ -305,7 +305,7 @@ export function BaseAppSidebar({
                       letterSpacing: '0.6px'
                     }}
                   >
-                    $VIBE
+                    $VIBE HUB
                   </span>
                 </div>
 

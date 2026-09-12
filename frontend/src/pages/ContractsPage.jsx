@@ -232,7 +232,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
           </div>
 
           <p className="contracts-hero-subtext" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: 0 }}>
-            Official smart contracts and verified addresses for $VIBE ecosystem on Base.
+            Official smart contracts &amp; addresses for $VIBE ecosystem.
           </p>
         </div>
 

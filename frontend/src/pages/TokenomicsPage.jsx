@@ -643,22 +643,22 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   justifyContent: 'space-between',
                   padding: '13px 16px',
                   borderRadius: '10px',
-                  background: '#0052ff',
-                  border: '1.5px solid #0052ff',
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
                   textDecoration: 'none',
                   marginTop: '6px',
                   boxSizing: 'border-box'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Gift color="#ffffff" size={13} />
+                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Gift color="#020b1a" size={13} />
                   </div>
-                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
                     EXPLORE REWARDS HUB
                   </span>
                 </div>
-                <ArrowRight size={15} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -1114,22 +1114,22 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   justifyContent: 'space-between',
                   padding: '13px 16px',
                   borderRadius: '10px',
-                  background: '#0052ff',
-                  border: '1.5px solid #0052ff',
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
                   textDecoration: 'none',
                   marginTop: '6px',
                   boxSizing: 'border-box'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Check color="#ffffff" size={15} strokeWidth={3} />
+                  <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Check color="#020b1a" size={15} strokeWidth={3} />
                   </div>
-                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
                     CHECK YOUR ELIGIBILITY
                   </span>
                 </div>
-                <ArrowRight size={15} color="#ffffff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>

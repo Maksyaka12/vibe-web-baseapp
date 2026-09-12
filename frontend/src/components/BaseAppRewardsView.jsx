@@ -352,11 +352,11 @@ export default function BaseAppRewardsView({
               }}
               style={{
                 background: isActive
-                  ? 'linear-gradient(135deg, #0052ff 0%, #0036b3 100%)'
+                  ? 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)'
                   : 'rgba(255, 255, 255, 0.02)',
-                color: isActive ? '#ffffff' : '#88aacc',
+                color: isActive ? '#020b1a' : '#88aacc',
                 border: isActive
-                  ? '1.5px solid #00f5ff'
+                  ? '1.5px solid #ffffff'
                   : '1.5px solid rgba(0, 245, 255, 0.45)',
                 borderRadius: '12px',
                 padding: '10px 2px',
@@ -371,7 +371,7 @@ export default function BaseAppRewardsView({
                 justifyContent: 'center',
                 gap: '5px',
                 boxShadow: isActive
-                  ? '0 4px 16px rgba(0, 82, 255, 0.45), 0 0 10px rgba(0, 245, 255, 0.35)'
+                  ? '0 0 20px rgba(0, 245, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.6)'
                   : 'none',
                 transition: 'all 0.18s ease',
                 position: 'relative',
@@ -381,18 +381,18 @@ export default function BaseAppRewardsView({
               <span className="rewards-cat-icon" style={{ fontSize: '13px', filter: isActive ? 'drop-shadow(0 2px 6px rgba(0,0,0,0.5))' : 'grayscale(0.2)' }}>
                 {tab.icon}
               </span>
-              <span className="rewards-cat-label" style={{ whiteSpace: 'nowrap', color: isActive ? '#ffffff' : '#e2e8f0', fontWeight: 900 }}>
+              <span className="rewards-cat-label" style={{ whiteSpace: 'nowrap', color: isActive ? '#020b1a' : '#e2e8f0', fontWeight: 900 }}>
                 {tab.label}
               </span>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: isActive ? '#020b1a' : '#00ff88', boxShadow: isActive ? 'none' : '0 0 5px #00ff88', flexShrink: 0 }} />
                 <span
                   className="rewards-cat-count"
                   style={{
                     fontSize: '5px',
-                    color: '#00ff88',
+                    color: isActive ? '#020b1a' : '#00ff88',
                     letterSpacing: '0.2px',
-                    fontWeight: 800,
+                    fontWeight: 900,
                     whiteSpace: 'nowrap'
                   }}
                 >
@@ -458,16 +458,16 @@ export default function BaseAppRewardsView({
               className="rewards-featured-card"
               style={{
                 background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00ff88',
+                border: '2px solid #00f5ff',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00ff88' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredHolder.unlock}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>CLAIM IS LIVE</div>
@@ -705,16 +705,16 @@ export default function BaseAppRewardsView({
               className="rewards-featured-card"
               style={{
                 background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00ff88',
+                border: '2px solid #00f5ff',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00ff88' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredVibeClub.epoch}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
@@ -1071,16 +1071,16 @@ export default function BaseAppRewardsView({
               className="rewards-featured-card"
               style={{
                 background: 'rgba(4, 20, 48, 0.94)',
-                border: featuredStakingStatus === 'active' ? '2px solid #00ff88' : featuredStakingStatus === 'ended' ? '2px solid #00f5ff' : '2px solid rgba(0, 245, 255, 0.4)',
+                border: '2px solid #00f5ff',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: featuredStakingStatus === 'active' ? '2px solid #00ff88' : '2px solid #00f5ff' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredStaking.epoch}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: featuredStakingStatus === 'active' ? '#00ff88' : featuredStakingStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
@@ -1347,11 +1347,11 @@ export default function BaseAppRewardsView({
               className="rewards-featured-card"
               style={{
                 background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00ff88',
+                border: '2px solid #00f5ff',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8)'
+                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
@@ -1359,7 +1359,7 @@ export default function BaseAppRewardsView({
                   <img
                     src="/new-logo-vibe.png"
                     alt="VIBE"
-                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00ff88', objectFit: 'cover' }}
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', objectFit: 'cover' }}
                   />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>

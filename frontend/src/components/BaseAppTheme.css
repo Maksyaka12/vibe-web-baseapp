@@ -278,12 +278,12 @@
 .base-app-pixel-theme #rewards a[style*="background: var(--blue)"],
 .base-app-pixel-theme #rewards a[style*="background: rgb(0, 0, 255)"],
 .base-app-pixel-theme #rewards button[style*="background: var(--blue)"] {
-  background: linear-gradient(135deg, #00f5ff 0%, #0050ff 100%) !important;
+  background: linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%) !important;
   border: 1.5px solid #ffffff !important;
-  box-shadow: 0 0 14px rgba(0, 245, 255, 0.4) !important;
+  box-shadow: 0 0 14px rgba(0, 245, 255, 0.45) !important;
   font-size: 7.5px !important;
   font-weight: 900 !important;
-  color: #ffffff !important;
+  color: #020b1a !important;
   padding: 9px 12px !important;
   border-radius: 10px !important;
   letter-spacing: 0.4px !important;
@@ -378,6 +378,16 @@
     border-radius: 14px !important;
     gap: 8px !important;
   }
+  .base-app-pixel-theme .rewards-cat-btn.active {
+    background: linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%) !important;
+    color: #020b1a !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+  }
+  .base-app-pixel-theme .rewards-cat-btn.active .rewards-cat-label,
+  .base-app-pixel-theme .rewards-cat-btn.active .rewards-cat-count {
+    color: #020b1a !important;
+  }
   .base-app-pixel-theme .rewards-cat-icon {
     font-size: 20px !important;
   }
@@ -426,6 +436,8 @@
 
   /* ── Desktop Featured Active Spotlight Card ── */
   .base-app-pixel-theme .rewards-featured-card {
+    border: 2px solid #00f5ff !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 245, 255, 0.25) !important;
     padding: 24px 22px !important;
     border-radius: 20px !important;
     margin-bottom: 28px !important;

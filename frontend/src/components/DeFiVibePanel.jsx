@@ -694,16 +694,16 @@ export default function DeFiVibePanel({ player }) {
           fontSize: '10px',
           fontWeight: 900,
           background: mode === 'buy'
-            ? 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)'
+            ? 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)'
             : 'linear-gradient(135deg, #ffd700 0%, #ff6b35 100%)',
           border: '2px solid #ffffff',
           borderRadius: '10px',
           padding: '10px',
-          color: '#ffffff',
+          color: mode === 'buy' ? '#020b1a' : '#ffffff',
           cursor: swapping || !fromAmount || Number(fromAmount) <= 0 ? 'not-allowed' : 'pointer',
           opacity: swapping || !fromAmount || Number(fromAmount) <= 0 ? 0.6 : 1,
           boxShadow: mode === 'buy'
-            ? '0 0 16px rgba(0, 245, 255, 0.4)'
+            ? '0 0 20px rgba(0, 245, 255, 0.5)'
             : '0 0 16px rgba(255, 215, 0, 0.4)',
           display: 'flex',
           alignItems: 'center',

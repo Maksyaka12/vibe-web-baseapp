@@ -320,8 +320,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '8px',
-                background: 'linear-gradient(135deg, #00f5ff, #0050ff)',
-                color: '#fff',
+                background: 'linear-gradient(135deg, #00f5ff, #00b8ff)',
+                color: '#020b1a',
                 border: '1.5px solid #ffffff',
                 padding: '8px 14px',
                 borderRadius: '10px',
@@ -918,7 +918,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
                 {!authenticated ? (
                   /* SINGLE BUTTON WHEN UNAUTHENTICATED */
-                  <button
+                    <button
                     onClick={login}
                     style={{
                       width: '100%',
@@ -926,12 +926,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                       fontFamily: 'var(--vv-pixel)',
                       fontSize: '10px',
                       fontWeight: 900,
-                      background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
+                      background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
                       border: '2px solid #ffffff',
                       borderRadius: '10px',
-                      color: '#ffffff',
+                      color: '#020b1a',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 16px rgba(0, 245, 255, 0.4)',
+                      boxShadow: '0 4px 16px rgba(0, 245, 255, 0.45)',
                       letterSpacing: '0.5px',
                       textTransform: 'uppercase',
                       whiteSpace: 'nowrap',
@@ -1001,12 +1001,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                         fontFamily: 'var(--vv-pixel)',
                         fontSize: '10px',
                         fontWeight: 900,
-                        background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
+                        background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
                         border: '2px solid #ffffff',
                         borderRadius: '10px',
-                        color: '#ffffff',
+                        color: '#020b1a',
                         cursor: (isMintingEth || isMintingVibe || isApprovingVibe) ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 4px 16px rgba(0, 245, 255, 0.4)',
+                        boxShadow: '0 4px 16px rgba(0, 245, 255, 0.45)',
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
                         whiteSpace: 'nowrap',
@@ -1791,10 +1791,10 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                       fontFamily: 'var(--vv-pixel)',
                       fontSize: '8px',
                       fontWeight: 900,
-                      background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
+                      background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
                       border: '1.5px solid #ffffff',
                       borderRadius: '8px',
-                      color: '#ffffff',
+                      color: '#020b1a',
                       cursor: (isAdminPaidMinting || isMintingEth || isMintingVibe || isApprovingVibe) ? 'not-allowed' : 'pointer',
                       textTransform: 'uppercase',
                       boxShadow: '0 0 12px rgba(0, 245, 255, 0.25)'
@@ -2061,10 +2061,10 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '9px',
                     fontWeight: 900,
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
+                    background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
                     border: '1.5px solid #ffffff',
                     borderRadius: '12px',
-                    color: '#ffffff',
+                    color: '#020b1a',
                     cursor: 'pointer',
                     boxShadow: '0 4px 14px rgba(0, 245, 255, 0.35)',
                     letterSpacing: '0.4px',

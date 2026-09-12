@@ -10,7 +10,7 @@ const TAB_TITLES = {
   buy: 'SWAP $VIBE',
   vibeclub: 'VIBE CLUB NFT',
   claim: 'CLAIM PORTAL',
-  profile: 'DASHBOARD',
+  profile: 'USER PROFILE',
   tokenomics: 'TOKENOMICS',
   contracts: 'CONTRACTS & ADDRESSES'
 };
@@ -73,7 +73,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
           <Menu size={18} color="#00f5ff" strokeWidth={2.5} />
         </button>
 
-        {/* Mobile Logo + $VIBE */}
+        {/* Mobile Logo + $VIBE HUB */}
         <div
           className="mobile-brand-pill"
           style={{
@@ -103,7 +103,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               letterSpacing: '0.5px'
             }}
           >
-            $VIBE
+            $VIBE HUB
           </span>
         </div>
 
@@ -125,19 +125,6 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
             }}
           >
             {pageTitle}
-          </span>
-          <span
-            style={{
-              fontSize: '6.5px',
-              color: '#00f5ff',
-              background: 'rgba(0, 245, 255, 0.1)',
-              border: '1px solid rgba(0, 245, 255, 0.3)',
-              padding: '3px 8px',
-              borderRadius: '99px',
-              letterSpacing: '0.4px'
-            }}
-          >
-            BASE MAINNET
           </span>
         </div>
       </div>
