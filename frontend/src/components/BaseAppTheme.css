@@ -357,6 +357,43 @@ html, body {
   stroke: #00f5ff !important;
 }
 
+/* ── Mobile Tokenomics Revenue Grid ── */
+.base-app-pixel-theme .tokenomics-revenue-stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+.base-app-pixel-theme .tokenomics-rev-pool-tile {
+  grid-column: span 2 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 16px !important;
+  text-align: left !important;
+}
+.base-app-pixel-theme .tokenomics-rev-pool-tile .tokenomics-rev-label {
+  text-align: left !important;
+  margin: 0 !important;
+}
+.base-app-pixel-theme .tokenomics-rev-pool-tile .tokenomics-rev-val {
+  text-align: right !important;
+  margin: 0 !important;
+}
+.base-app-pixel-theme .tokenomics-rev-addr-tile {
+  grid-column: span 2 !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 14px 16px !important;
+  text-align: left !important;
+  gap: 12px !important;
+}
+.base-app-pixel-theme .tokenomics-rev-addr-tile .tokenomics-rev-label {
+  text-align: left !important;
+  margin: 0 !important;
+}
+
 /* ── 8. DESKTOP & RESPONSIVE LAYOUT HELPERS ── */
 @media (min-width: 1024px) {
   .base-app-bottom-nav {
@@ -1064,25 +1101,44 @@ html, body {
     gap: 14px !important;
     margin-bottom: 40px !important;
   }
-  .base-app-pixel-theme .tokenomics-revenue-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 20px !important;
-    align-items: stretch !important;
+  .base-app-pixel-theme .tokenomics-revenue-stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 14px !important;
   }
   .base-app-pixel-theme .tokenomics-top-stat-card,
   .base-app-pixel-theme .tokenomics-rev-tile {
     padding: 18px 16px !important;
     border-radius: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    grid-column: auto !important;
+  }
+  .base-app-pixel-theme .tokenomics-rev-pool-tile,
+  .base-app-pixel-theme .tokenomics-rev-addr-tile {
+    grid-column: auto !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 6px !important;
+  }
+  .base-app-pixel-theme .tokenomics-rev-addr-tile {
+    gap: 8px !important;
   }
   .base-app-pixel-theme .tokenomics-top-stat-label,
   .base-app-pixel-theme .tokenomics-rev-label {
     font-size: 9.5px !important;
     margin-bottom: 4px !important;
+    text-align: center !important;
   }
   .base-app-pixel-theme .tokenomics-top-stat-val,
   .base-app-pixel-theme .tokenomics-rev-val {
     font-size: 20px !important;
     letter-spacing: 0.6px !important;
+    text-align: center !important;
   }
   .base-app-pixel-theme .tokenomics-top-stat-badge {
     font-size: 8.5px !important;

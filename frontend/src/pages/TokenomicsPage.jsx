@@ -319,48 +319,29 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </p>
         </div>
 
-        <div className="tokenomics-revenue-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '16px', marginBottom: '40px' }}>
-          {/* Revenue Left Stack / Mobile Top Stack */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
-            {/* 1st Line: Total Buyback & Total Burned side by side */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '12px', width: '100%' }}>
-              <div className="tokenomics-rev-tile" style={tileStyle}>
-                <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
-                  Total Buyback
-                </span>
-                <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-                  {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
-                </span>
-              </div>
-
-              <div className="tokenomics-rev-tile" style={tileStyle}>
-                <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
-                  Total Burned
-                </span>
-                <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
-                  {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
-                </span>
-              </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
+          {/* 4 Revenue Tiles (4 cols on Desktop, 2x2 grid on Mobile with pool & addr full width) */}
+          <div className="tokenomics-revenue-stats-grid">
+            <div className="tokenomics-rev-tile" style={tileStyle}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+                Total Buyback
+              </span>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+                {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
+              </span>
             </div>
 
-            {/* 2nd Line: Current Community Pool Banner (Full Width) */}
-            <div
-              className="tokenomics-rev-tile tokenomics-rev-full"
-              style={{
-                background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-                border: '1.5px solid rgba(0, 245, 255, 0.25)',
-                borderRadius: '14px',
-                padding: '14px 16px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                textAlign: 'center',
-                width: '100%',
-                boxSizing: 'border-box'
-              }}
-            >
+            <div className="tokenomics-rev-tile" style={tileStyle}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+                Total Burned
+              </span>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+                {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
+              </span>
+            </div>
+
+            {/* Current Community Pool Banner */}
+            <div className="tokenomics-rev-tile tokenomics-rev-pool-tile" style={tileStyle}>
               <span className="tokenomics-rev-label" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
                 Current community pool:
               </span>
@@ -369,24 +350,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               </span>
             </div>
 
-            {/* 3rd Line: Buyback Address Card (Full Width) */}
-            <div
-              className="tokenomics-rev-tile tokenomics-rev-full"
-              style={{
-                background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-                border: '1.5px solid rgba(0, 245, 255, 0.25)',
-                borderRadius: '14px',
-                padding: '14px 16px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                textAlign: 'center',
-                width: '100%',
-                boxSizing: 'border-box'
-              }}
-            >
+            {/* Buyback Address Card */}
+            <div className="tokenomics-rev-tile tokenomics-rev-addr-tile" style={tileStyle}>
               <span className="tokenomics-rev-label" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
                 Buyback &amp; Rewards Address
               </span>
