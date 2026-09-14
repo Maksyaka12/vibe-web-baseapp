@@ -139,8 +139,8 @@
       const query = window.location.search;
       const appUrl = "https://" + appDomain + "/" + query;
       
-      // Standard Base Bridge (best for Desktop with QR code)
-      const bridgeUrl = "https://base.app/app/" + appDomain + query;
+      // Official Coinbase Wallet / Base App Bridge (best for Desktop with QR code)
+      const bridgeUrl = "https://wallet.coinbase.com/app/https://" + appDomain + query;
       
       // Direct Deep Link (best for Mobile to directly launch Coinbase Wallet)
       const deepLink = "cbwallet://dapp?url=" + encodeURIComponent(appUrl);
