@@ -618,7 +618,7 @@ function Tokenomics() {
                   </div>
                   <div className="who-t">
                     Epoch Allocation Size
-                    <span>Equals the designated percentage of the total Community Rewards Pool</span>
+                    <span>Equals designated % of Community Pool</span>
                   </div>
                 </div>
 
@@ -629,7 +629,7 @@ function Tokenomics() {
                   </div>
                   <div className="who-t">
                     VibeVerse App <span style={{ color: '#3b82f6', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(30%)</span>
-                    <span>Rewards pool inside the upcoming Vibe Verse App</span>
+                    <span>Rewards pool inside the Vibe Verse App</span>
                   </div>
                 </div>
 
@@ -662,7 +662,7 @@ function Tokenomics() {
                   </div>
                   <div className="who-t">
                     Reserve <span style={{ color: '#f59e0b', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(40%)</span>
-                    <span>Buffer for continuous reward refills and marketing</span>
+                    <span>Buffer for continuous reward refills</span>
                   </div>
                 </div>
 
@@ -842,14 +842,14 @@ function Tokenomics() {
                   </div>
                 </div>
 
-                {/* 4. Limited 333 Supply */}
+                {/* 4. Royalties Pool */}
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ShieldCheck color="#f59e0b" size={20} />
+                    <Coins color="#00f5ff" size={20} />
                   </div>
                   <div className="who-t">
-                    Limited 333 Supply
-                    <span>Strictly capped 333 NFTs with lifetime community benefits</span>
+                    Royalties Pool
+                    <span>Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout</span>
                   </div>
                 </div>
 
@@ -860,7 +860,7 @@ function Tokenomics() {
                   </div>
                   <div className="who-t">
                     Equal Holder Rewards
-                    <span>All 333 NFTs are equal, ensuring every holder receives identical royalty rewards</span>
+                    <span>All holders receive equal royalty payouts</span>
                   </div>
                 </div>
 

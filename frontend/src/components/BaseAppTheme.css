@@ -394,6 +394,14 @@ html, body {
   margin: 0 !important;
 }
 
+/* ── Mobile Tokenomics Chart First Reordering ── */
+.base-app-pixel-theme .tokenomics-chart-card {
+  order: 1 !important;
+}
+.base-app-pixel-theme .tokenomics-breakdown-card {
+  order: 2 !important;
+}
+
 /* ── 8. DESKTOP & RESPONSIVE LAYOUT HELPERS ── */
 @media (min-width: 1024px) {
   .base-app-bottom-nav {
@@ -1105,9 +1113,15 @@ html, body {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     gap: 14px !important;
   }
+  .base-app-pixel-theme .tokenomics-breakdown-card {
+    order: 1 !important;
+  }
+  .base-app-pixel-theme .tokenomics-chart-card {
+    order: 2 !important;
+  }
   .base-app-pixel-theme .tokenomics-top-stat-card,
   .base-app-pixel-theme .tokenomics-rev-tile {
-    padding: 18px 16px !important;
+    padding: 16px 8px !important;
     border-radius: 16px !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1130,9 +1144,10 @@ html, body {
   }
   .base-app-pixel-theme .tokenomics-top-stat-label,
   .base-app-pixel-theme .tokenomics-rev-label {
-    font-size: 9.5px !important;
-    margin-bottom: 4px !important;
+    font-size: 7.5px !important;
+    margin-bottom: 5px !important;
     text-align: center !important;
+    white-space: nowrap !important;
   }
   .base-app-pixel-theme .tokenomics-top-stat-val,
   .base-app-pixel-theme .tokenomics-rev-val {
@@ -1333,6 +1348,17 @@ html, body {
 }
 
 @media (max-width: 1023px) {
+  .base-app-pixel-theme .tokenomics-two-col-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .base-app-pixel-theme .tokenomics-chart-card {
+    order: 1 !important;
+  }
+  .base-app-pixel-theme .tokenomics-breakdown-card {
+    order: 2 !important;
+  }
   .desktop-header-title {
     display: none !important;
   }

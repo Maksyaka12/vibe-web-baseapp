@@ -353,7 +353,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             {/* Buyback Address Card */}
             <div className="tokenomics-rev-tile tokenomics-rev-addr-tile" style={tileStyle}>
               <span className="tokenomics-rev-label" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
-                Buyback &amp; Rewards Address
+                Buyback &amp; Burn, Rewards
               </span>
               <a
                 href="https://basescan.org/token/0xb200000000000000000000df24ecb8bf51100a01?a=0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf#transactions"
@@ -474,7 +474,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
           
           {/* Left Column: Distribution Breakdown */}
-          <div className="tokenomics-content-card" style={cardStyle}>
+          <div className="tokenomics-content-card tokenomics-breakdown-card" style={cardStyle}>
             <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
               DISTRIBUTION BREAKDOWN
             </h3>
@@ -505,7 +505,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     Epoch Allocation Size
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Equals designated % of Community Rewards Pool
+                    Equals designated % of Community Pool
                   </div>
                 </div>
               </div>
@@ -520,7 +520,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     VibeVerse App (30%)
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Rewards pool inside the upcoming Vibe Verse App
+                    Rewards pool inside the Vibe Verse App
                   </div>
                 </div>
               </div>
@@ -565,7 +565,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     Reserve (40%)
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Buffer for continuous reward refills and marketing
+                    Buffer for continuous reward refills
                   </div>
                 </div>
               </div>
@@ -601,7 +601,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Column: Donut Chart Card (Community Distribution) */}
-          <div className="tokenomics-content-card" style={cardStyle}>
+          <div className="tokenomics-content-card tokenomics-chart-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
               <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 COMMUNITY ALLOCATION
@@ -729,7 +729,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-two-col-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '16px', marginBottom: '40px', alignItems: 'stretch' }}>
           
           {/* Left Column: Vibe Club Breakdown */}
-          <div className="tokenomics-content-card" style={cardStyle}>
+          <div className="tokenomics-content-card tokenomics-breakdown-card" style={cardStyle}>
             <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
               VIBE CLUB BREAKDOWN
             </h3>
@@ -780,17 +780,17 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
               </div>
 
-              {/* Limited 333 Supply (Cyan) */}
+              {/* Royalties Pool (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
                 <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <ShieldCheck color="#00f5ff" size={15} />
+                  <Coins color="#00f5ff" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Limited 333 Supply
+                    Royalties Pool
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Strictly capped 333 NFTs with lifetime community benefits
+                    Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout
                   </div>
                 </div>
               </div>
@@ -805,7 +805,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     Equal Holder Rewards
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    All 333 NFTs receive identical royalty rewards
+                    All holders receive equal royalty payouts
                   </div>
                 </div>
               </div>
@@ -841,7 +841,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           </div>
 
           {/* Right Column: Donut Chart Card (Mint Revenue) */}
-          <div className="tokenomics-content-card" style={cardStyle}>
+          <div className="tokenomics-content-card tokenomics-chart-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
               <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
                 MINT REVENUE ALLOCATION
@@ -1344,7 +1344,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </div>
                   <div className="who-t">
                     Epoch Allocation Size
-                    <span>Equals the designated percentage of the total Community Rewards Pool</span>
+                    <span>Equals designated % of Community Pool</span>
                   </div>
                 </div>
 
@@ -1354,7 +1354,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </div>
                   <div className="who-t">
                     VibeVerse App <span style={{ color: '#3b82f6', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(30%)</span>
-                    <span>Rewards pool inside the upcoming Vibe Verse App</span>
+                    <span>Rewards pool inside the Vibe Verse App</span>
                   </div>
                 </div>
 
@@ -1384,7 +1384,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </div>
                   <div className="who-t">
                     Reserve <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(40%)</span>
-                    <span>Buffer for continuous reward refills and marketing</span>
+                    <span>Buffer for continuous reward refills</span>
                   </div>
                 </div>
 
@@ -1550,11 +1550,11 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ShieldCheck color="#f59e0b" size={20} />
+                    <Coins color="#00f5ff" size={20} />
                   </div>
                   <div className="who-t">
-                    Limited 333 Supply
-                    <span>Strictly capped 333 NFTs with lifetime community benefits</span>
+                    Royalties Pool
+                    <span>Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout</span>
                   </div>
                 </div>
 
@@ -1564,7 +1564,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </div>
                   <div className="who-t">
                     Equal Holder Rewards
-                    <span>All 333 NFTs are equal, ensuring every holder receives identical royalty rewards</span>
+                    <span>All holders receive equal royalty payouts</span>
                   </div>
                 </div>
 
