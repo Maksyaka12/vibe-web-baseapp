@@ -289,6 +289,28 @@ html, body {
   letter-spacing: 0.3px !important;
 }
 
+/* ── Rewards Countdown Wrapper & Label (Mobile First) ── */
+.base-app-pixel-theme .rewards-countdown-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  justify-content: center !important;
+  gap: 3px !important;
+  flex-shrink: 0 !important;
+}
+
+.base-app-pixel-theme .rewards-countdown-label {
+  font-size: 5px !important;
+  color: #88aacc !important;
+  font-family: 'Press Start 2P', monospace !important;
+  letter-spacing: 0.2px !important;
+  white-space: nowrap !important;
+  text-shadow: none !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  text-align: right !important;
+}
+
 .base-app-pixel-theme span[style*="color: #059669"],
 .base-app-pixel-theme span[style*="color: rgb(5, 150, 105)"],
 .base-app-pixel-theme span[style*="color: #10b981"],
@@ -540,6 +562,16 @@ html, body {
   .base-app-pixel-theme .rewards-featured-status {
     font-size: 9px !important;
     margin-top: 4px !important;
+  }
+  .base-app-pixel-theme .rewards-countdown-wrap {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+  .base-app-pixel-theme .rewards-countdown-label {
+    font-size: 8px !important;
+    letter-spacing: 0.4px !important;
+    line-height: 1.4 !important;
   }
   .base-app-pixel-theme .rewards-countdown-pill {
     font-size: 9px !important;

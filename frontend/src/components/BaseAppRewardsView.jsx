@@ -468,17 +468,20 @@ export default function BaseAppRewardsView({
                 boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
+              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredHolder.unlock}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>CLAIM IS LIVE</div>
                   </div>
                 </div>
-                <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
-                  <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
+                <div className="rewards-countdown-wrap">
+                  <span className="rewards-countdown-label">CLAIM WINDOW ENDS IN:</span>
+                  <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
+                    <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
+                  </div>
                 </div>
               </div>
 
@@ -718,9 +721,9 @@ export default function BaseAppRewardsView({
                 boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
+              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredVibeClub.epoch}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
@@ -728,17 +731,22 @@ export default function BaseAppRewardsView({
                     </div>
                   </div>
                 </div>
-                <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
-                  {isFeaturedVibeClubClaimLive ? (
-                    <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
-                  ) : featuredVibeClubStatus === 'active' ? (
-                    'ACTIVE'
-                  ) : featuredVibeClubStatus === 'ended' ? (
-                    'ENDED'
-                  ) : (
-                    'UPCOMING'
+                <div className="rewards-countdown-wrap">
+                  {isFeaturedVibeClubClaimLive && (
+                    <span className="rewards-countdown-label">CLAIM WINDOW ENDS IN:</span>
                   )}
+                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
+                    {isFeaturedVibeClubClaimLive ? (
+                      <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
+                    ) : featuredVibeClubStatus === 'active' ? (
+                      'ACTIVE'
+                    ) : featuredVibeClubStatus === 'ended' ? (
+                      'ENDED'
+                    ) : (
+                      'UPCOMING'
+                    )}
+                  </div>
                 </div>
               </div>
 
