@@ -425,7 +425,7 @@ export default function BaseAppRewardsView({
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                Hold 5M+ $VIBE at snapshot time to share the prize pool.
+                Hold 5M+ $VIBE at snapshot time to share the rewards pool.
               </span>
             </div>
             <a
@@ -1507,15 +1507,85 @@ export default function BaseAppRewardsView({
           {[
             {
               question: 'How to claim rewards?',
-              answer: 'Claim active Holder & Vibe Club rewards directly via the Claim button at snapshot dates.'
+              answer: (
+                <span>
+                  Claim active Holder rewards &amp; Vibe Club royalties directly in the{' '}
+                  <Link
+                    to="/claim"
+                    style={{
+                      color: '#00f5ff',
+                      textDecoration: 'underline',
+                      fontWeight: 800,
+                      fontFamily: "'Press Start 2P', monospace",
+                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
+                    }}
+                  >
+                    Claim Portal ↗
+                  </Link>
+                </span>
+              )
             },
             {
               question: 'How does staking yield work?',
-              answer: 'Stake $VIBE into open epochs on the o1 vault to earn rewards automatically.'
+              answer: (
+                <span>
+                  Stake $VIBE into active staking vaults on{' '}
+                  <a
+                    href="https://launch.o1.exchange/staking/vaults?chain=8453&token=0xb200000000000000000000df24ecb8bf51100a01"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      color: '#00f5ff',
+                      textDecoration: 'underline',
+                      fontWeight: 800,
+                      fontFamily: "'Press Start 2P', monospace",
+                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
+                    }}
+                  >
+                    o1 Exchange ↗
+                  </a>{' '}
+                  to earn passive yields every 10 days.
+                </span>
+              )
+            },
+            {
+              question: 'How to claim staking rewards & withdraw?',
+              answer: (
+                <span>
+                  You can claim your staking rewards and withdraw your staked tokens directly on{' '}
+                  <a
+                    href="https://launch.o1.exchange/staking/vaults?chain=8453&token=0xb200000000000000000000df24ecb8bf51100a01"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      color: '#00f5ff',
+                      textDecoration: 'underline',
+                      fontWeight: 800,
+                      fontFamily: "'Press Start 2P', monospace",
+                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
+                    }}
+                  >
+                    o1 Exchange ↗
+                  </a>{' '}
+                  in the corresponding staking vault.
+                </span>
+              )
+            },
+            {
+              question: 'How long do I have to claim rewards?',
+              answer: (
+                <span>
+                  You can claim your Holder Rewards and Vibe Club Royalties during the active claim window indicated by the countdown timer. Staking Rewards have no deadline and can be claimed at any time.
+                </span>
+              )
             },
             {
               question: 'What happens to unclaimed tokens?',
-              answer: 'Unclaimed rewards after the claim deadline are permanently burned.'
+              answer: (
+                <span>
+                  Unclaimed Holder rewards and Vibe Club Royalties after the claim deadline are permanently burned.
+                </span>
+              )
             }
           ].map((faq, idx) => {
             const isOpen = openFaq === idx;
