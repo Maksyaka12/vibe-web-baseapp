@@ -289,26 +289,74 @@ html, body {
   letter-spacing: 0.3px !important;
 }
 
-/* ── Rewards Countdown Wrapper & Label (Mobile First) ── */
+/* ── Rewards Countdown Wrapper & Info Tooltip (Mobile & Desktop) ── */
 .base-app-pixel-theme .rewards-countdown-wrap {
   display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  justify-content: center !important;
-  gap: 3px !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 6px !important;
   flex-shrink: 0 !important;
+  position: relative !important;
 }
 
-.base-app-pixel-theme .rewards-countdown-label {
-  font-size: 5px !important;
-  color: #88aacc !important;
+.base-app-pixel-theme .rewards-timer-info-btn {
+  background: rgba(0, 245, 255, 0.12) !important;
+  border: 1px solid rgba(0, 245, 255, 0.4) !important;
+  color: #00f5ff !important;
+  border-radius: 50% !important;
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
+  transition: all 0.15s ease !important;
+}
+
+.base-app-pixel-theme .rewards-timer-info-btn:hover,
+.base-app-pixel-theme .rewards-timer-info-btn:active {
+  background: rgba(0, 245, 255, 0.25) !important;
+  border-color: #00f5ff !important;
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.4) !important;
+}
+
+.base-app-pixel-theme .rewards-timer-tooltip {
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  right: 0 !important;
+  min-width: 220px !important;
+  max-width: 280px !important;
+  background: rgba(0, 20, 40, 0.98) !important;
+  border: 1.5px solid #00f5ff !important;
+  border-radius: 10px !important;
+  padding: 10px 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9), 0 0 16px rgba(0, 245, 255, 0.25) !important;
   font-family: 'Press Start 2P', monospace !important;
-  letter-spacing: 0.2px !important;
-  white-space: nowrap !important;
+  z-index: 60 !important;
+  text-align: left !important;
+  pointer-events: auto !important;
+}
+
+.base-app-pixel-theme .rewards-timer-tooltip-title {
+  font-size: 6.5px !important;
+  color: #00f5ff !important;
+  font-weight: 800 !important;
+  margin-bottom: 5px !important;
   text-shadow: none !important;
-  font-weight: 700 !important;
-  line-height: 1.2 !important;
-  text-align: right !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  font-family: 'Press Start 2P', monospace !important;
+}
+
+.base-app-pixel-theme .rewards-timer-tooltip-desc {
+  font-size: 6px !important;
+  color: #cbd5e1 !important;
+  line-height: 1.6 !important;
+  text-shadow: none !important;
+  font-family: 'Press Start 2P', monospace !important;
 }
 
 .base-app-pixel-theme span[style*="color: #059669"],
@@ -564,14 +612,25 @@ html, body {
     margin-top: 4px !important;
   }
   .base-app-pixel-theme .rewards-countdown-wrap {
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
   }
-  .base-app-pixel-theme .rewards-countdown-label {
+  .base-app-pixel-theme .rewards-timer-info-btn {
+    width: 22px !important;
+    height: 22px !important;
+  }
+  .base-app-pixel-theme .rewards-timer-tooltip {
+    min-width: 260px !important;
+    max-width: 320px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+  .base-app-pixel-theme .rewards-timer-tooltip-title {
     font-size: 8px !important;
-    letter-spacing: 0.4px !important;
-    line-height: 1.4 !important;
+    margin-bottom: 6px !important;
+  }
+  .base-app-pixel-theme .rewards-timer-tooltip-desc {
+    font-size: 7.5px !important;
+    line-height: 1.6 !important;
   }
   .base-app-pixel-theme .rewards-countdown-pill {
     font-size: 9px !important;

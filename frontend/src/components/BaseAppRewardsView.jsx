@@ -476,12 +476,39 @@ export default function BaseAppRewardsView({
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>CLAIM IS LIVE</div>
                   </div>
                 </div>
-                <div className="rewards-countdown-wrap">
-                  <span className="rewards-countdown-label">CLAIM WINDOW ENDS IN:</span>
+                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveTooltip(activeTooltip === 'holder-timer' ? null : 'holder-timer');
+                    }}
+                    onMouseEnter={() => setActiveTooltip('holder-timer')}
+                    onMouseLeave={() => setActiveTooltip(null)}
+                    className="rewards-timer-info-btn"
+                    aria-label="Claim Window Info"
+                  >
+                    <Info size={9} strokeWidth={2.5} />
+                  </button>
                   <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                     <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
                     <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
                   </div>
+
+                  {activeTooltip === 'holder-timer' && (
+                    <div
+                      className="rewards-timer-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="rewards-timer-tooltip-title">
+                        <Info size={10} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <span>CLAIM WINDOW</span>
+                      </div>
+                      <div className="rewards-timer-tooltip-desc">
+                        The claim window remains open until this timer expires. Make sure to claim your rewards before the countdown ends.
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -731,9 +758,21 @@ export default function BaseAppRewardsView({
                     </div>
                   </div>
                 </div>
-                <div className="rewards-countdown-wrap">
+                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
                   {isFeaturedVibeClubClaimLive && (
-                    <span className="rewards-countdown-label">CLAIM WINDOW ENDS IN:</span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTooltip(activeTooltip === 'vibeclub-timer' ? null : 'vibeclub-timer');
+                      }}
+                      onMouseEnter={() => setActiveTooltip('vibeclub-timer')}
+                      onMouseLeave={() => setActiveTooltip(null)}
+                      className="rewards-timer-info-btn"
+                      aria-label="Claim Window Info"
+                    >
+                      <Info size={9} strokeWidth={2.5} />
+                    </button>
                   )}
                   <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                     {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
@@ -747,6 +786,21 @@ export default function BaseAppRewardsView({
                       'UPCOMING'
                     )}
                   </div>
+
+                  {activeTooltip === 'vibeclub-timer' && (
+                    <div
+                      className="rewards-timer-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="rewards-timer-tooltip-title">
+                        <Info size={10} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <span>CLAIM WINDOW</span>
+                      </div>
+                      <div className="rewards-timer-tooltip-desc">
+                        The claim window remains open until this timer expires. Make sure to claim your royalties before the countdown ends.
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
