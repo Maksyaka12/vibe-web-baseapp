@@ -138,7 +138,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
       {/* Right side: Balances or Connect Wallet */}
       <div className="base-app-header-right" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
         {hasWallet ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <div className="header-balances-wrap" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             {/* NFT Balance Pill */}
             <div
               className="header-balance-pill header-nft-pill"
@@ -157,6 +157,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               }}
             >
               <span
+                className="header-balance-text"
                 style={{
                   fontSize: '7px',
                   fontWeight: 900,
@@ -171,6 +172,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               <img
                 src="/new-logo-vibe.png"
                 alt="NFT"
+                className="header-balance-icon"
                 style={{
                   width: '12px',
                   height: '12px',
@@ -199,6 +201,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               }}
             >
               <span
+                className="header-balance-text"
                 style={{
                   fontSize: '7px',
                   fontWeight: 900,
@@ -214,6 +217,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               <img
                 src="/new-logo-vibe.png"
                 alt="$VIBE"
+                className="header-balance-icon"
                 style={{
                   width: '12px',
                   height: '12px',

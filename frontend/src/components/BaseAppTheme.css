@@ -1333,6 +1333,8 @@ html, body {
     font-size: 8.5px !important;
     padding: 6px 12px !important;
     letter-spacing: 0.4px !important;
+  }
+
   /* Header Desktop Polish */
   .base-app-header {
     padding: 0 24px !important;
@@ -1342,20 +1344,37 @@ html, body {
     font-size: 12px !important;
     letter-spacing: 0.6px !important;
   }
+  .base-app-header-right {
+    gap: 10px !important;
+  }
+  .base-app-header .header-balances-wrap {
+    gap: 8px !important;
+  }
   .base-app-header .header-balance-pill {
-    padding: 7px 10px !important;
-    border-radius: 9px !important;
+    padding: 8px 13px !important;
+    border-radius: 10px !important;
+    gap: 7px !important;
   }
-  .base-app-header .header-balance-pill span {
-    font-size: 8px !important;
+  .base-app-header .header-balance-pill span,
+  .base-app-header .header-balance-text {
+    font-size: 9.5px !important;
+    letter-spacing: 0.4px !important;
   }
-  .base-app-header .header-balance-pill img {
-    width: 14px !important;
-    height: 14px !important;
+  .base-app-header .header-balance-pill img,
+  .base-app-header .header-balance-icon {
+    width: 17px !important;
+    height: 17px !important;
+    border-radius: 4px !important;
   }
   .base-app-header .header-connect-btn {
-    padding: 8px 14px !important;
-    font-size: 8px !important;
+    padding: 9px 16px !important;
+    font-size: 9px !important;
+    border-radius: 10px !important;
+    gap: 7px !important;
+  }
+  .base-app-header .header-connect-btn svg {
+    width: 13px !important;
+    height: 13px !important;
   }
 }
 
