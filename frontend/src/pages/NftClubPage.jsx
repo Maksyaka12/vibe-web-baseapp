@@ -474,7 +474,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
       background: isEmbeddedInBaseApp ? 'transparent' : 'radial-gradient(circle at 50% 10%, #041430 0%, #020b1a 70%, #000511 100%)',
       color: '#fff',
       fontFamily: 'var(--vv-pixel)',
-      paddingBottom: isEmbeddedInBaseApp ? '40px' : '80px',
+      paddingBottom: isEmbeddedInBaseApp ? '0px' : '80px',
       overflowX: 'hidden',
       textTransform: 'uppercase',
       width: '100%'
@@ -515,7 +515,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           }
           .vv-nft-club-container {
             padding: 0 12px !important;
-            margin-top: 14px !important;
+            margin-top: 0 !important;
           }
           .vv-nft-club-main-card {
             padding: 16px 14px !important;
