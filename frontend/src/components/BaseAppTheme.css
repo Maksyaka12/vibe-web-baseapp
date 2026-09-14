@@ -514,6 +514,15 @@ html, body {
     font-size: 9px !important;
     padding: 6px 12px !important;
     border-radius: 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .base-app-pixel-theme .rewards-rule-arrow {
+    width: 13px !important;
+    height: 13px !important;
+    stroke-width: 2.5 !important;
+    flex-shrink: 0 !important;
   }
 
   /* ── Desktop Featured Active Spotlight Card ── */
@@ -566,6 +575,12 @@ html, body {
   .base-app-pixel-theme .rewards-info-label {
     font-size: 8.5px !important;
     margin-bottom: 4px !important;
+  }
+  .base-app-pixel-theme .rewards-snapshot-check-icon {
+    width: 14px !important;
+    height: 14px !important;
+    stroke-width: 2.5 !important;
+    flex-shrink: 0 !important;
   }
   .base-app-pixel-theme .rewards-info-value {
     font-size: 10px !important;

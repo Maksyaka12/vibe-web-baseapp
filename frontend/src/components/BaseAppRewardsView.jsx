@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
-import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check, Lightbulb } from 'lucide-react';
+import { Coins, Lock, ArrowUpRight, ArrowRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check, Lightbulb } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
@@ -445,10 +445,13 @@ export default function BaseAppRewardsView({
                 flexShrink: 0,
                 background: 'rgba(255, 215, 0, 0.15)',
                 fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none'
+                textShadow: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
               }}
             >
-              Rules ↗
+              <span>RULES</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
             </a>
           </div>
 
@@ -495,7 +498,7 @@ export default function BaseAppRewardsView({
                 </div>
                 <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
-                    <CheckCircle2 size={9} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <CheckCircle2 className="rewards-snapshot-check-icon" size={9} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     <span className="rewards-info-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>SNAPSHOT COMPLETED</span>
                   </div>
                   <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredHolder.snapshotTime)}</div>
@@ -692,10 +695,13 @@ export default function BaseAppRewardsView({
                 flexShrink: 0,
                 background: 'rgba(255, 215, 0, 0.15)',
                 fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none'
+                textShadow: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
               }}
             >
-              Mint NFT ↗
+              <span>MINT NFT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
             </Link>
           </div>
 
@@ -751,8 +757,8 @@ export default function BaseAppRewardsView({
                   <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", whiteSpace: 'nowrap', textShadow: 'none' }}>Vibe Club NFT Holder</div>
                 </div>
                 <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px', overflow: 'hidden' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px', marginBottom: '3px', overflow: 'hidden' }}>
-                    <CheckCircle2 size={8} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '3px', overflow: 'hidden' }}>
+                    <CheckCircle2 className="rewards-snapshot-check-icon" size={8} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                     <span className="rewards-info-label" style={{ fontSize: '4.8px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, whiteSpace: 'nowrap' }}>SNAPSHOT COMPLETED</span>
                   </div>
                   <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredVibeClub.snapshotTime)}</div>
@@ -1058,10 +1064,13 @@ export default function BaseAppRewardsView({
                 flexShrink: 0,
                 background: 'rgba(255, 215, 0, 0.15)',
                 fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none'
+                textShadow: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px'
               }}
             >
-              Vault ↗
+              <span>VAULT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
             </a>
           </div>
 
