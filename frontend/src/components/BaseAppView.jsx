@@ -275,7 +275,7 @@ export function BaseAppView({ RewardsComponent }) {
             ) : (activeTab === 'claim' || activeTab === 'profile') ? (
               <Checker isBaseAppMode={true} isProfileMode={activeTab === 'profile'} />
             ) : activeTab === 'vibeclub' ? (
-              <div className="vibeclub-view-container" style={{ width: '100%', boxSizing: 'border-box' }}>
+              <div className="vibeclub-view-container" style={{ width: '100%', boxSizing: 'border-box', padding: '20px 12px 60px 12px' }}>
                 {/* Vibe Club Hero Header */}
                 <div
                   className="rewards-hero-header"
@@ -286,7 +286,7 @@ export function BaseAppView({ RewardsComponent }) {
                     alignItems: 'center',
                     justifyContent: 'center',
                     textAlign: 'center',
-                    marginBottom: '22px',
+                    marginBottom: '20px',
                     padding: '12px 8px 8px 8px'
                   }}
                 >

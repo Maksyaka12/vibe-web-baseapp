@@ -410,114 +410,79 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             </div>
           </div>
 
-          {/* Buyback Program Card (Side-by-side on Desktop: Left text & bullets, Right SVG Donut Chart) */}
-          <div className="tokenomics-buyback-card" style={cardStyle}>
-            <div className="tokenomics-buyback-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', alignItems: 'center' }}>
-              {/* Left Column: Descriptions & Badges */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div>
-                  <h3 className="tokenomics-buyback-title" style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
-                    BUYBACK PROGRAM
-                  </h3>
-                  <p className="tokenomics-buyback-sub" style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6 }}>
-                    Strategic utilization of revenue generated to strengthen $VIBE ecosystem on Base.
-                  </p>
-                </div>
+          {/* Buyback Program Card (Centered Title, Subtitle, SVG Donut Chart & 2 Badges) */}
+          <div className="tokenomics-buyback-card" style={{ ...cardStyle, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <h3 className="tokenomics-buyback-title" style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", textAlign: 'center' }}>
+                BUYBACK PROGRAM
+              </h3>
+              <p className="tokenomics-buyback-sub" style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, textAlign: 'center' }}>
+                Strategic utilization of revenue generated.
+              </p>
+            </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <div className="tokenomics-list-row" style={listRowStyle}>
-                    <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(239, 68, 68, 0.15)', 'rgba(239, 68, 68, 0.3)')}>
-                      <Flame color="#ef4444" size={15} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                        30% Burn Allocation
-                      </div>
-                      <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                        Tokens purchased from the open market are permanently sent to dead address
-                      </div>
-                    </div>
-                  </div>
+            {/* Centered SVG Donut Chart */}
+            <div style={{ width: '100%', maxWidth: '420px', margin: '14px auto 10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
+                <defs>
+                  <linearGradient id="bpBurnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#ff5f5f" />
+                    <stop offset="100%" stopColor="#ef4444" />
+                  </linearGradient>
+                  <linearGradient id="bpBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#00f5ff" />
+                    <stop offset="100%" stopColor="#0052ff" />
+                  </linearGradient>
+                  <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
+                  </filter>
+                  <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                  </filter>
+                </defs>
 
-                  <div className="tokenomics-list-row" style={listRowStyle}>
-                    <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                      <Users color="#00f5ff" size={15} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                        70% Community Vault
-                      </div>
-                      <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                        Distributed back to active holders, stakers, NFT members &amp; app rewards
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <g transform="translate(210, 125)">
+                  {/* Track */}
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
 
-                {/* Badges */}
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
-                    <Flame size={12} /> BURN 30%
-                  </div>
-                  <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
-                    <Users size={12} /> COMMUNITY 70%
-                  </div>
-                </div>
+                  {/* Community 70% */}
+                  <circle
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
+                    transform="rotate(-90)" filter="url(#bpBlueGlow)"
+                  />
+
+                  {/* Burn 30% */}
+                  <circle
+                    cx="0" cy="0" r="68" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
+                    transform="rotate(-90)" filter="url(#bpRedGlow)"
+                  />
+
+                  {/* Left Callout: Burn 30% */}
+                  <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
+                  <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
+
+                  {/* Right Callout: Community 70% */}
+                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
+                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
+
+                  {/* Center Text */}
+                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
+                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
+                </g>
+              </svg>
+            </div>
+
+            {/* Bottom 2 Badges */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', width: '100%' }}>
+              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+                <Flame size={12} /> BURN 30%
               </div>
-
-              {/* Right Column: SVG Donut Chart */}
-              <div style={{ width: '100%', maxWidth: '380px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg viewBox="0 0 420 250" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
-                  <defs>
-                    <linearGradient id="bpBurnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#ff5f5f" />
-                      <stop offset="100%" stopColor="#ef4444" />
-                    </linearGradient>
-                    <linearGradient id="bpBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#00f5ff" />
-                      <stop offset="100%" stopColor="#0052ff" />
-                    </linearGradient>
-                    <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
-                    </filter>
-                    <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
-                    </filter>
-                  </defs>
-
-                  <g transform="translate(210, 125)">
-                    {/* Track */}
-                    <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
-
-                    {/* Community 70% */}
-                    <circle
-                      cx="0" cy="0" r="68" fill="none" stroke="url(#bpBlueGrad)" strokeWidth="16"
-                      strokeLinecap="round" pathLength="100" strokeDasharray="65 100" strokeDashoffset="-2.5"
-                      transform="rotate(-90)" filter="url(#bpBlueGlow)"
-                    />
-
-                    {/* Burn 30% */}
-                    <circle
-                      cx="0" cy="0" r="68" fill="none" stroke="url(#bpBurnGrad)" strokeWidth="16"
-                      strokeLinecap="round" pathLength="100" strokeDasharray="25 100" strokeDashoffset="-72.5"
-                      transform="rotate(-90)" filter="url(#bpRedGlow)"
-                    />
-
-                    {/* Left Callout: Burn 30% */}
-                    <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
-                    <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
-                    <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
-
-                    {/* Right Callout: Community 70% */}
-                    <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
-                    <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                    <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
-
-                    {/* Center Text */}
-                    <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                    <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
-                  </g>
-                </svg>
+              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                <Users size={12} /> COMMUNITY 70%
               </div>
             </div>
           </div>

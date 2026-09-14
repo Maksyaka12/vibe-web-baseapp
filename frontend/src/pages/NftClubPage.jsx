@@ -514,7 +514,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             font-size: 7px !important;
           }
           .vv-nft-club-container {
-            padding: 0 12px !important;
+            padding: 0 !important;
             margin-top: 0 !important;
           }
           .vv-nft-club-main-card {
@@ -584,7 +584,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
       <div className="vv-nft-club-container" style={{
         maxWidth: '1040px',
         margin: '0 auto',
-        padding: '0 12px 30px 12px',
+        padding: isEmbeddedInBaseApp ? '0 0 30px 0' : '0 12px 30px 12px',
         textAlign: 'center',
         width: '100%',
         boxSizing: 'border-box'
