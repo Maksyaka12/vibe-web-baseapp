@@ -167,7 +167,7 @@ export function BaseAppSidebar({
     },
     {
       id: 'contracts',
-      name: 'Contract & Addresses',
+      name: 'Official Addresses',
       icon: <FileCode2 size={isDesktop ? 15 : 13} strokeWidth={2.5} />
     }
   ];

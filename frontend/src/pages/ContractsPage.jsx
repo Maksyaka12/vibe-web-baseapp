@@ -206,7 +206,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
               lineHeight: 1.3
             }}
           >
-            CONTRACTS <span style={{ color: '#00f5ff' }}>&amp; ADDRESSES</span>
+            OFFICIAL <span style={{ color: '#00f5ff' }}>ADDRESSES</span>
           </h2>
 
           <div
@@ -221,8 +221,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
               borderRadius: '99px',
               padding: '7px 16px',
               maxWidth: '100%',
-              boxSizing: 'border-box',
-              marginBottom: '12px'
+              boxSizing: 'border-box'
             }}
           >
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
@@ -230,10 +229,6 @@ export default function ContractsPage({ isBaseAppMode = false }) {
               VERIFIED CONTRACTS · TRANSPARENCY ZONE
             </span>
           </div>
-
-          <p className="contracts-hero-subtext" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: 0 }}>
-            Official smart contracts &amp; addresses for $VIBE ecosystem.
-          </p>
         </div>
 
         {/* Contract Cards List */}
@@ -252,10 +247,7 @@ export default function ContractsPage({ isBaseAppMode = false }) {
         
         {/* Section Header styled consistently with other sections */}
         <div className="sec-head" style={{ marginBottom: '36px' }}>
-          <h2>Contracts & <span className="bl">Adresses</span>.</h2>
-          <p className="sec-sub">
-            Transparency Zone. All verified contracts and addresses related to the $VIBE Economy.
-          </p>
+          <h2>Official <span className="bl">Addresses</span>.</h2>
         </div>
 
         {/* Clean full-width list */}

@@ -93,7 +93,7 @@ function Nav() {
     { id: 'tokenomics', label: 'Tokenomics' },
     { id: 'hub', label: 'Rewards Hub' },
     { id: 'claim', label: 'Claim Portal' },
-    { id: 'contracts', label: 'Contracts & Adresses' },
+    { id: 'contracts', label: 'Official Addresses' },
     // { id: 'roadmap', label: 'Roadmap' },
     { id: 'chart', label: 'Chart' },
     { id: 'trade', label: 'Trade' }

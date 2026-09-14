@@ -12,7 +12,7 @@ const TAB_TITLES = {
   claim: 'CLAIM PORTAL',
   profile: 'USER PROFILE',
   tokenomics: 'TOKENOMICS',
-  contracts: 'CONTRACTS & ADDRESSES'
+  contracts: 'OFFICIAL ADDRESSES'
 };
 
 export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
