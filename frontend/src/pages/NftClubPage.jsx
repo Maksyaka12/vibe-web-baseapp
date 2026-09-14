@@ -1162,7 +1162,46 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             flexDirection: 'column',
             gap: '16px'
           }}>
-            {/* FAQ 1: 80% AUTO-BURN & 20% REWARDS POOL */}
+            {/* FAQ 1: VIBE CLUB UTILITY */}
+            <div className="vv-faq-card" style={{
+              background: 'rgba(4, 20, 48, 0.75)',
+              border: '1.5px solid rgba(0, 245, 255, 0.35)',
+              borderRadius: '16px',
+              padding: '22px 24px',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
+              backdropFilter: 'blur(12px)'
+            }}>
+              <div className="vv-faq-title" style={{
+                fontFamily: 'var(--vv-pixel)',
+                fontSize: '11px',
+                color: '#00f5ff',
+                marginBottom: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                <span style={{ fontSize: '13px' }}>💎</span> VIBE CLUB UTILITY
+              </div>
+
+              <div className="vv-faq-text" style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '10px',
+                fontFamily: 'var(--vv-pixel)',
+                fontSize: '8px',
+                color: '#a0b5d0',
+                lineHeight: 1.8,
+                letterSpacing: '0.3px',
+                textTransform: 'uppercase'
+              }}>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#00f5ff', fontSize: '9px', flexShrink: 0 }}>•</span>
+                  <span>LIFETIME $VIBE ROYALTIES DISTRIBUTED TO NFT HOLDERS EVERY 10 DAYS</span>
+                </div>
+              </div>
+            </div>
+
+            {/* FAQ 2: 80% AUTO-BURN & 20% REWARDS POOL */}
             <div className="vv-faq-card" style={{
               background: 'rgba(4, 20, 48, 0.75)',
               border: '1.5px solid rgba(255, 68, 102, 0.35)',
@@ -1206,55 +1245,6 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               </div>
             </div>
 
-            {/* FAQ 2: VIBE CLUB PRIVILEGES */}
-            <div className="vv-faq-card" style={{
-              background: 'rgba(4, 20, 48, 0.75)',
-              border: '1.5px solid rgba(0, 245, 255, 0.35)',
-              borderRadius: '16px',
-              padding: '22px 24px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(12px)'
-            }}>
-              <div className="vv-faq-title" style={{
-                fontFamily: 'var(--vv-pixel)',
-                fontSize: '11px',
-                color: '#00f5ff',
-                marginBottom: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px'
-              }}>
-                <span style={{ fontSize: '13px' }}>💎</span> VIBE CLUB PRIVILEGES
-              </div>
-
-              <div className="vv-faq-text" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-                fontFamily: 'var(--vv-pixel)',
-                fontSize: '8px',
-                color: '#a0b5d0',
-                lineHeight: 1.8,
-                letterSpacing: '0.3px',
-                textTransform: 'uppercase'
-              }}>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00ff88', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>UNLOCKS EXCLUSIVE PERKS IN VIBE VERSE</span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#ffd700', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>LIFETIME $VIBE ROYALTIES DISTRIBUTED TO NFT HOLDERS EVERY 10 DAYS</span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00f5ff', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>DAO ACCESS AND MORE COMING SOON</span>
-                </div>
-              </div>
-            </div>
-
             {/* FAQ 3: FCFS & 4-PHASE PROGRESSION */}
             <div className="vv-faq-card" style={{
               background: 'rgba(4, 20, 48, 0.75)',
@@ -1289,12 +1279,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <span style={{ color: '#ffd700', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>MINT OPERATES ON A STRICT FIRST-COME, FIRST-SERVED (FCFS) BASIS FOR ALL PARTICIPANTS.</span>
+                  <span>MINT OPERATES ON A STRICT FIRST-COME, FIRST-SERVED (FCFS) BASIS.</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <span style={{ color: '#00ff88', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>THE MINT IS DIVIDED INTO 4 PHASES (103 / 100 / 100 / 30 NFTS) WITH INCREASING PRICES.</span>
+                  <span>THE MINT IS DIVIDED INTO 4 PHASES WITH INCREASING PRICES.</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
@@ -1338,7 +1328,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <span style={{ color: '#00ff88', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>PRIMARY MINT IS EXCLUSIVELY AVAILABLE ONLY ON THIS OFFICIAL VIBE LAUNCHPAD PAGE.</span>
+                  <span>MINT IS AVAILABLE ONLY ON THIS OFFICIAL VIBE LAUNCHPAD PAGE.</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
