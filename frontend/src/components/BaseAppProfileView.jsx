@@ -171,7 +171,7 @@ export function BaseAppProfileView(props) {
       {/* ── 2. USER PROFILE CARD (FULL HEIGHT NFT IMAGE + CLEAN RIGHT INFO) ── */}
       {!address ? (
         <div
-          className="profile-user-card"
+          className="profile-user-card profile-connect-card"
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
             border: '1.5px solid rgba(0, 245, 255, 0.3)',
@@ -230,7 +230,7 @@ export function BaseAppProfileView(props) {
         </div>
       ) : (
         <div
-          className="profile-user-card"
+          className="profile-user-card profile-connected-card"
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
             border: '1.5px solid rgba(0, 245, 255, 0.25)',

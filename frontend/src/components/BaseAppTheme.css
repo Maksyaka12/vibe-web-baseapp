@@ -848,15 +848,25 @@ html, body {
     margin: 0 auto !important;
   }
   .base-app-pixel-theme .profile-user-card {
-    padding: 0 !important;
     border-radius: 20px !important;
     margin-bottom: 28px !important;
   }
+  .base-app-pixel-theme .profile-connected-card {
+    padding: 0 !important;
+  }
+  .base-app-pixel-theme .profile-connect-card {
+    padding: 40px 24px !important;
+    min-height: 280px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
   .base-app-pixel-theme .profile-avatar-box {
-    width: 100px !important;
-    height: 100px !important;
+    width: 90px !important;
+    height: 90px !important;
     border-radius: 20px !important;
-    margin-bottom: 18px !important;
+    margin: 0 auto 18px auto !important;
   }
   .base-app-pixel-theme .profile-connect-title {
     font-size: 13px !important;
