@@ -849,7 +849,7 @@ function Tokenomics() {
                   </div>
                   <div className="who-t">
                     Royalties Pool
-                    <span>Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout</span>
+                    <span>15% of the Community Pool, refilled every 10 days for each royalty payout</span>
                   </div>
                 </div>
 
@@ -2172,7 +2172,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                   <strong style={{ fontSize: '0.92rem', color: 'var(--ink)', fontWeight: 800 }}>Epoch Reward Pool</strong>
                 </div>
                 <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--ink2)', lineHeight: 1.45 }}>
-                  Equals 15% of the total Community Rewards Pool available at the start of each epoch.
+                  Equals 15% of the total Community Pool available at the start of each epoch.
                 </p>
               </div>
             </div>
@@ -2531,7 +2531,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                   <strong style={{ fontSize: '0.92rem', color: 'var(--ink)', fontWeight: 800 }}>Vibe Club Royalty Pool</strong>
                 </div>
                 <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--ink2)', lineHeight: 1.45 }}>
-                  Equals 15% of the total Community Rewards Pool available at the start of each epoch.
+                  Equals 15% of the total Community Pool available at the start of each epoch.
                 </p>
               </div>
             </div>

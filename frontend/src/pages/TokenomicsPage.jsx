@@ -790,7 +790,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     Royalties Pool
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout
+                    15% of the Community Pool, refilled every 10 days for each royalty payout
                   </div>
                 </div>
               </div>
@@ -1554,7 +1554,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </div>
                   <div className="who-t">
                     Royalties Pool
-                    <span>Constitutes 15% of the Community Pool, refilled every 10 days for each royalty payout</span>
+                    <span>15% of the Community Pool, refilled every 10 days for each royalty payout</span>
                   </div>
                 </div>
 

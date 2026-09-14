@@ -98,12 +98,14 @@ html, body {
   letter-spacing: 0.5px !important;
 }
 
-.base-app-pixel-theme .sec-sub {
+.base-app-pixel-theme .sec-sub,
+.base-app-pixel-theme .tokenomics-section-sub {
   font-size: 7.5px !important;
   color: #88aacc !important;
   line-height: 1.5 !important;
   letter-spacing: 0.3px !important;
   margin: 0 auto !important;
+  text-align: center !important;
 }
 
 .base-app-pixel-theme .bl {
@@ -1358,6 +1360,16 @@ html, body {
   }
   .base-app-pixel-theme .tokenomics-breakdown-card {
     order: 2 !important;
+  }
+  .base-app-pixel-theme .sec-sub,
+  .base-app-pixel-theme .tokenomics-section-sub,
+  .base-app-pixel-theme .tokenomics-section-title,
+  .base-app-pixel-theme .sec-head,
+  .base-app-pixel-theme .sec-head h2,
+  .base-app-pixel-theme .sec-head p {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
   .desktop-header-title {
     display: none !important;

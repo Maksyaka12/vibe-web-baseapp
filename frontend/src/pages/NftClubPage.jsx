@@ -1240,7 +1240,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <span style={{ color: '#00ff88', fontSize: '9px', flexShrink: 0 }}>•</span>
-                  <span>THE REMAINING 20% GOES DIRECTLY INTO THE COMMUNITY REWARDS POOL.</span>
+                  <span>THE REMAINING 20% GOES DIRECTLY INTO THE COMMUNITY POOL.</span>
                 </div>
               </div>
             </div>
