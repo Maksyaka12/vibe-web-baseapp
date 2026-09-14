@@ -40,6 +40,24 @@ function ActiveClaimCountdown({ targetDate }) {
   return <span>{timeLeft}</span>;
 }
 
+function InfoSvgIcon({ size = 18, color = '#00f5ff', className = '' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={{ display: 'block', flexShrink: 0 }}
+    >
+      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="rgba(0, 245, 255, 0.15)" />
+      <path d="M12 11v5" stroke={color} strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="1.3" fill={color} />
+    </svg>
+  );
+}
+
 function BaseAppClaimCountdownButton({ targetDate }) {
   const [timeLeft, setTimeLeft] = useState(() => {
     if (!targetDate) return '';
@@ -488,7 +506,7 @@ export default function BaseAppRewardsView({
                     className="rewards-timer-info-btn"
                     aria-label="Claim Window Info"
                   >
-                    <Info size={9} strokeWidth={2.5} />
+                    <InfoSvgIcon className="rewards-timer-info-icon" />
                   </button>
                   <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
                     <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
@@ -501,7 +519,7 @@ export default function BaseAppRewardsView({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="rewards-timer-tooltip-title">
-                        <Info size={10} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <InfoSvgIcon size={14} color="#00f5ff" />
                         <span>CLAIM WINDOW</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
@@ -771,7 +789,7 @@ export default function BaseAppRewardsView({
                       className="rewards-timer-info-btn"
                       aria-label="Claim Window Info"
                     >
-                      <Info size={9} strokeWidth={2.5} />
+                      <InfoSvgIcon className="rewards-timer-info-icon" />
                     </button>
                   )}
                   <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
@@ -793,7 +811,7 @@ export default function BaseAppRewardsView({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="rewards-timer-tooltip-title">
-                        <Info size={10} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <InfoSvgIcon size={14} color="#00f5ff" />
                         <span>CLAIM WINDOW</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
