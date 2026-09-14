@@ -679,6 +679,25 @@ export function BaseAppClaimView(props) {
                   </span>
                 </div>
 
+                {/* Rewards Pool highlight */}
+                <div
+                  className="rewards-pool-box"
+                  style={{
+                    background: 'rgba(2, 11, 26, 0.85)',
+                    border: '1px solid rgba(0, 245, 255, 0.25)',
+                    borderRadius: '12px',
+                    padding: '12px 14px',
+                    marginBottom: '12px'
+                  }}
+                >
+                  <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    REWARDS POOL
+                  </div>
+                  <div className="rewards-pool-value" style={{ fontSize: '13px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    10,000,000 <span className="rewards-pool-unit" style={{ fontSize: '8px', color: '#00f5ff' }}>$VIBE</span>
+                  </div>
+                </div>
+
                 {/* 2-Column Info Grid: Countdown & Requirement */}
                 <div className="claim-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
                   {/* Box 1: Snapshot Countdown / Completed */}
@@ -686,7 +705,7 @@ export function BaseAppClaimView(props) {
                     <div className="claim-info-label" style={{ fontSize: '5.5px', color: isHolderSnapshotDone ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
                       {isHolderSnapshotDone ? (
                         <>
-                          <Check size={8} color="#00ff88" strokeWidth={3} />
+                          <Check size={8} color="#00ff88" strokeWidth={3} className="rewards-snapshot-check-icon" style={{ flexShrink: 0 }} />
                           <span>SNAPSHOT COMPLETED</span>
                         </>
                       ) : (
@@ -814,6 +833,11 @@ export function BaseAppClaimView(props) {
             const isVibeClubSnapshotDone = Boolean(upcomingVibeClubRound?.snapshotIso && (currentTime instanceof Date ? currentTime.getTime() : new Date().getTime()) >= new Date(upcomingVibeClubRound.snapshotIso).getTime());
             const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
             const isRoyaltyEligibleNow = hasRoyaltyProof || hasNft;
+            const vibeClubPoolAmount = upcomingVibeClubRound?.pool
+              ? (upcomingVibeClubRound.pool.includes('$VIBE') || upcomingVibeClubRound.pool === 'TBA'
+                  ? upcomingVibeClubRound.pool
+                  : `${upcomingVibeClubRound.pool} $VIBE`)
+              : 'TBA';
             return (
               <div
                 className="claim-upcoming-card"
@@ -849,6 +873,25 @@ export function BaseAppClaimView(props) {
                   </span>
                 </div>
 
+                {/* Royalty Pool highlight */}
+                <div
+                  className="rewards-pool-box"
+                  style={{
+                    background: 'rgba(2, 11, 26, 0.85)',
+                    border: '1px solid rgba(0, 245, 255, 0.25)',
+                    borderRadius: '12px',
+                    padding: '12px 14px',
+                    marginBottom: '12px'
+                  }}
+                >
+                  <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    ROYALTY POOL
+                  </div>
+                  <div className="rewards-pool-value" style={{ fontSize: '13px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    {vibeClubPoolAmount}
+                  </div>
+                </div>
+
                 {/* 2-Column Info Grid: Countdown & Requirement */}
                 <div className="claim-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
                   {/* Box 1: Snapshot Countdown / Completed */}
@@ -856,7 +899,7 @@ export function BaseAppClaimView(props) {
                     <div className="claim-info-label" style={{ fontSize: '5.5px', color: isVibeClubSnapshotDone ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px', display: 'flex', alignItems: 'center', gap: '3px' }}>
                       {isVibeClubSnapshotDone ? (
                         <>
-                          <Check size={8} color="#00ff88" strokeWidth={3} />
+                          <Check size={8} color="#00ff88" strokeWidth={3} className="rewards-snapshot-check-icon" style={{ flexShrink: 0 }} />
                           <span>SNAPSHOT COMPLETED</span>
                         </>
                       ) : (
