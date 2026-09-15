@@ -756,7 +756,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 marginBottom: '4px',
                 width: '100%'
               }}>
-                <div style={{
+                <div className="vv-desktop-phase-pill" style={{
                   display: 'inline-block',
                   background: 'rgba(0, 255, 136, 0.15)',
                   border: '1.5px solid #00ff88',
@@ -775,6 +775,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                   href={`https://basescan.org/address/${NFT_CONTRACT_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="vv-desktop-contract-link"
                   style={{
                     fontSize: '8px',
                     color: '#88aacc',
@@ -792,80 +793,80 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               </div>
 
               {/* CARD 1: ETH PRICE & LIVE $VIBE PRICE + LIMIT */}
-              <div style={{
+              <div className="vv-nft-ctrl-card vv-nft-price-card" style={{
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(0, 245, 255, 0.25)',
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>ETH PRICE</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>ETH PRICE</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
                     {ethPriceFormatted} ETH
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>LIVE $VIBE PRICE</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#ffd700' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIVE $VIBE PRICE</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#ffd700' }}>
                     {formatVibeComma(currentDynamicVibeAmount)}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>LIMIT</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: '#00ff88' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIMIT</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: '#00ff88' }}>
                     1 NFT PER WALLET
                   </span>
                 </div>
               </div>
 
               {/* CARD 2: TOTAL MINTED & PROGRESS BAR */}
-              <div style={{
+              <div className="vv-nft-ctrl-card vv-nft-minted-card" style={{
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(0, 245, 255, 0.25)',
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>TOTAL MINTED</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>TOTAL MINTED</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
                     {totalMinted} / {maxSupply}
                   </span>
                 </div>
                 {/* Progress Bar */}
-                <div style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+                <div className="vv-nft-progress-bar-wrap" style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
                   <div style={{ width: `${Math.max(1, (totalMinted / maxSupply) * 100)}%`, height: '100%', background: 'linear-gradient(90deg, #00f5ff, #00ff88)' }} />
                 </div>
               </div>
 
               {/* CARD 3: TOTAL BURNED */}
-              <div style={{
+              <div className="vv-nft-ctrl-card vv-nft-burned-card" style={{
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(255, 68, 102, 0.35)',
                 borderRadius: '10px',
                 padding: '7px 10px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '7px', color: '#ff4466', fontWeight: 900, letterSpacing: '0.2px' }}>TOTAL BURNED BY MINT</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '7.5px', color: '#ffffff' }}>
+                  <span className="vv-nft-burned-label" style={{ fontSize: '7px', color: '#ff4466', fontWeight: 900, letterSpacing: '0.2px' }}>TOTAL BURNED BY MINT</span>
+                  <span className="vv-nft-burned-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '7.5px', color: '#ffffff' }}>
                     {formatVibeComma(totalVibeBurnedByContract)}
                   </span>
                 </div>
               </div>
 
               {/* USER WALLET BALANCES */}
-              <div style={{ padding: '2px 4px' }}>
-                <div style={{ fontSize: '8px', color: '#88aacc', marginBottom: '4px', letterSpacing: '0.4px', whiteSpace: 'nowrap' }}>
+              <div className="vv-nft-wallet-balances-box" style={{ padding: '2px 4px' }}>
+                <div className="vv-nft-wallet-title" style={{ fontSize: '8px', color: '#88aacc', marginBottom: '4px', letterSpacing: '0.4px', whiteSpace: 'nowrap' }}>
                   YOUR WALLET BALANCES:
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>• ETH BALANCE:</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#aaa' }}>• ETH BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
                     {authenticated ? `${Number(balances?.eth || 0).toFixed(4)} ETH` : 'NOT CONNECTED'}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
-                  <span style={{ fontSize: '8px', color: '#aaa' }}>• $VIBE BALANCE:</span>
-                  <span style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: authenticated ? '#ffd700' : '#ff4466' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#aaa' }}>• $VIBE BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: authenticated ? '#ffd700' : '#ff4466' }}>
                     {authenticated ? formatVibeComma(Math.floor(Number(balances?.vibe || 0))) : 'NOT CONNECTED'}
                   </span>
                 </div>

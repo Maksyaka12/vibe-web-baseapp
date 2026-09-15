@@ -448,7 +448,7 @@ export function BaseAppProfileView(props) {
               <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 TOTAL CLAIMED
               </span>
-              <CheckCircle2 size={11} color="#00ff88" />
+              <CheckCircle2 size={13} color="#00ff88" className="profile-stat-icon" />
             </div>
             <div>
               <div className="profile-stat-val" style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
@@ -479,7 +479,7 @@ export function BaseAppProfileView(props) {
               <span className="profile-stat-label" style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 STAKING REWARDS
               </span>
-              <Coins size={11} color="#c084fc" />
+              <Coins size={13} color="#c084fc" className="profile-stat-icon" />
             </div>
             <div>
               <div className="profile-stat-val" style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
@@ -510,7 +510,7 @@ export function BaseAppProfileView(props) {
               <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 AVAILABLE NOW
               </span>
-              <Gift size={11} color="#00f5ff" />
+              <Gift size={13} color="#00f5ff" className="profile-stat-icon" />
             </div>
             <div>
               <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
@@ -541,7 +541,7 @@ export function BaseAppProfileView(props) {
               <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                 EXPIRED CLAIMS
               </span>
-              <Clock size={11} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} />
+              <Clock size={13} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
             </div>
             <div>
               <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
@@ -552,74 +552,6 @@ export function BaseAppProfileView(props) {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* ── 4. QUICK LINKS / REDIRECTS ── */}
-      <div className="profile-quicklinks-zone" style={{ marginBottom: '16px' }}>
-        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
-            TRACK. JOIN. EARN
-          </h3>
-        </div>
-
-        <div className="profile-quicklinks-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <Link
-            to={getLinkPath('/hub')}
-            className="profile-quicklink-card"
-            style={{
-              padding: '12px 10px',
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: '1px solid rgba(0, 245, 255, 0.35)',
-              borderRadius: '14px',
-              textDecoration: 'none',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '8px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
-              <span className="profile-quicklink-title" style={{ fontSize: '7px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
-                REWARDS HUB
-              </span>
-              <ArrowRight size={13} color="#00f5ff" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-            </div>
-            <span className="profile-quicklink-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-              TRACK ACTIVE REWARDS
-            </span>
-          </Link>
-
-          <Link
-            to={getLinkPath('/claim')}
-            className="profile-quicklink-card"
-            style={{
-              padding: '12px 10px',
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: '1px solid rgba(0, 255, 136, 0.35)',
-              borderRadius: '14px',
-              textDecoration: 'none',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '8px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
-              <span className="profile-quicklink-title" style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, lineHeight: 1.3 }}>
-                CLAIM PORTAL
-              </span>
-              <ArrowRight size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-            </div>
-            <span className="profile-quicklink-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-              CLAIM ACTIVE REWARDS
-            </span>
-          </Link>
         </div>
       </div>
     </div>
