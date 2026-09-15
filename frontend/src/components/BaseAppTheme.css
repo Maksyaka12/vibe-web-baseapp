@@ -433,69 +433,7 @@ html, body {
   stroke: #00f5ff !important;
 }
 
-/* ── 8. USER PROFILE CARD & ACHIEVEMENTS (BASE / MOBILE) ── */
-.base-app-pixel-theme .profile-user-card {
-  background: linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%) !important;
-  border: 1.5px solid rgba(0, 245, 255, 0.3) !important;
-  border-radius: 18px !important;
-  overflow: hidden !important;
-  margin-bottom: 24px !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 245, 255, 0.15) !important;
-  display: flex !important;
-  align-items: stretch !important;
-  min-height: 110px !important;
-}
-
-.base-app-pixel-theme .profile-avatar-col {
-  width: 36% !important;
-  min-width: 100px !important;
-  max-width: 140px !important;
-  background: #020b1a !important;
-  flex-shrink: 0 !important;
-  position: relative !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-right: 1.5px solid rgba(0, 245, 255, 0.2) !important;
-}
-
-.base-app-pixel-theme .profile-avatar-col img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-.base-app-pixel-theme .profile-avatar-tag {
-  position: absolute !important;
-  bottom: 6px !important;
-  left: 6px !important;
-  right: 6px !important;
-  font-size: 4.5px !important;
-  font-weight: 900 !important;
-  text-align: center !important;
-  padding: 3px 2px !important;
-  border-radius: 4px !important;
-  letter-spacing: 0.2px !important;
-}
-
-.base-app-pixel-theme .profile-details-col {
-  flex: 1 !important;
-  min-width: 0 !important;
-  padding: 12px 14px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: space-between !important;
-  gap: 8px !important;
-  box-sizing: border-box !important;
-}
-
-.base-app-pixel-theme .profile-copy-btn:hover {
-  background: rgba(0, 245, 255, 0.2) !important;
-  border-color: #00f5ff !important;
-  color: #00f5ff !important;
-}
-
+/* ── 8. ACHIEVEMENTS SECTION (BASE / MOBILE) ── */
 /* ── Achievements Grid (3 columns on Mobile) ── */
 .base-app-pixel-theme .profile-achievements-grid {
   display: grid !important;
@@ -601,11 +539,12 @@ html, body {
 }
 
 .base-app-pixel-theme .profile-achievement-name {
-  font-size: 5px !important;
+  font-size: 6px !important;
   font-family: 'Press Start 2P', monospace !important;
   font-weight: 900 !important;
   line-height: 1.3 !important;
-  margin-bottom: 3px !important;
+  margin-top: 1px !important;
+  margin-bottom: 2px !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
@@ -621,25 +560,6 @@ html, body {
   color: #64748b !important;
 }
 
-.base-app-pixel-theme .profile-achievement-desc {
-  font-size: 4px !important;
-  font-family: 'Press Start 2P', monospace !important;
-  line-height: 1.3 !important;
-  letter-spacing: 0.1px !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  width: 100% !important;
-}
-
-.base-app-pixel-theme .profile-achievement-card.unlocked .profile-achievement-desc {
-  color: #00ff88 !important;
-}
-
-.base-app-pixel-theme .profile-achievement-card.locked .profile-achievement-desc {
-  color: #475569 !important;
-}
-
 /* ── Placeholder Tile (More Coming Soon) ── */
 .base-app-pixel-theme .profile-achievement-placeholder {
   background: rgba(2, 11, 26, 0.5) !important;
@@ -648,7 +568,7 @@ html, body {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 10px 6px !important;
+  padding: 10px 4px !important;
 }
 
 .base-app-pixel-theme .profile-placeholder-icon-box {
@@ -664,17 +584,18 @@ html, body {
 }
 
 .base-app-pixel-theme .profile-placeholder-title {
-  font-size: 5.5px !important;
+  font-size: 7px !important;
   color: #00f5ff !important;
   font-weight: 900 !important;
   margin-bottom: 3px !important;
   letter-spacing: 0.2px !important;
   font-family: 'Press Start 2P', monospace !important;
   text-align: center !important;
+  line-height: 1.3 !important;
 }
 
 .base-app-pixel-theme .profile-placeholder-sub {
-  font-size: 4px !important;
+  font-size: 5px !important;
   color: #88aacc !important;
   font-family: 'Press Start 2P', monospace !important;
   text-align: center !important;
@@ -1252,54 +1173,26 @@ html, body {
     font-weight: 900 !important;
   }
   .base-app-pixel-theme .profile-avatar-col {
-    width: 30% !important;
+    width: 34% !important;
     min-width: 170px !important;
     max-width: 220px !important;
-  }
-  .base-app-pixel-theme .profile-avatar-tag {
-    font-size: 7.5px !important;
-    padding: 5px 6px !important;
-    bottom: 10px !important;
-    left: 10px !important;
-    right: 10px !important;
-    border-radius: 6px !important;
   }
   .base-app-pixel-theme .profile-details-col {
     padding: 20px 24px !important;
     gap: 12px !important;
   }
-  .base-app-pixel-theme .profile-id-pill span {
-    font-size: 8px !important;
-  }
-  .base-app-pixel-theme .profile-copy-btn {
-    font-size: 8px !important;
-    padding: 5px 10px !important;
-  }
-  .base-app-pixel-theme .profile-copy-btn svg {
-    width: 11px !important;
-    height: 11px !important;
+  .base-app-pixel-theme .profile-address-txt {
+    font-size: 9.5px !important;
   }
   .base-app-pixel-theme .profile-refresh-btn {
-    font-size: 8px !important;
-    padding: 5px 10px !important;
-    border-radius: 7px !important;
-  }
-  .base-app-pixel-theme .profile-refresh-btn svg {
-    width: 10px !important;
-    height: 10px !important;
-  }
-  .base-app-pixel-theme .profile-nft-title {
-    font-size: 16px !important;
-    letter-spacing: 0.5px !important;
-    margin: 4px 0 !important;
-  }
-  .base-app-pixel-theme .profile-stat-mini-pill {
+    font-size: 8.5px !important;
     padding: 6px 12px !important;
     border-radius: 8px !important;
-    gap: 6px !important;
   }
-  .base-app-pixel-theme .profile-stat-mini-pill span {
-    font-size: 7.5px !important;
+  .base-app-pixel-theme .profile-nft-title {
+    font-size: 18px !important;
+    letter-spacing: 0.5px !important;
+    margin: 6px 0 !important;
   }
   .base-app-pixel-theme .profile-badge-pill {
     padding: 7px 14px !important;
@@ -1337,11 +1230,9 @@ html, body {
     height: 5px !important;
   }
   .base-app-pixel-theme .profile-achievement-name {
-    font-size: 7.5px !important;
-    margin-bottom: 5px !important;
-  }
-  .base-app-pixel-theme .profile-achievement-desc {
-    font-size: 6px !important;
+    font-size: 8.5px !important;
+    margin-top: 3px !important;
+    margin-bottom: 2px !important;
   }
   .base-app-pixel-theme .profile-achievement-placeholder {
     grid-column: span 3 !important;
@@ -1361,13 +1252,15 @@ html, body {
     height: 24px !important;
   }
   .base-app-pixel-theme .profile-placeholder-title {
-    font-size: 8.5px !important;
-    margin-bottom: 4px !important;
+    font-size: 11px !important;
+    margin-bottom: 6px !important;
     text-align: left !important;
+    letter-spacing: 0.5px !important;
   }
   .base-app-pixel-theme .profile-placeholder-sub {
-    font-size: 6.5px !important;
+    font-size: 8.5px !important;
     text-align: left !important;
+    letter-spacing: 0.3px !important;
   }
   .base-app-pixel-theme .profile-section-header {
     display: flex !important;
