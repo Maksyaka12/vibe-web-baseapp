@@ -275,13 +275,201 @@ export function BaseAppProfileView(props) {
             </div>
           </div>
 
-          {/* Desktop Right Side Banner Art */}
-          <div className="profile-desktop-banner-art">
-            <img
-              src="/vibe-club-royalties-banner.png"
-              alt="Vibe Club Royalties Banner"
-              className="profile-desktop-banner-img"
-            />
+          {/* Desktop Right Column: Identity, Balances & Rewards Info Controls (Matching Vibe Club layout 1:1) */}
+          <div className="profile-desktop-controls">
+            {/* Top Row: Phase / Status badge on left + Explorer link on right */}
+            <div className="profile-desktop-top-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2px', width: '100%' }}>
+              <div
+                style={{
+                  display: 'inline-block',
+                  background: hasNft ? 'rgba(0, 255, 136, 0.15)' : 'rgba(0, 245, 255, 0.15)',
+                  border: hasNft ? '1.5px solid #00ff88' : '1.5px solid #00f5ff',
+                  color: hasNft ? '#00ff88' : '#00f5ff',
+                  borderRadius: '8px',
+                  padding: '6px 10px',
+                  fontSize: '8px',
+                  letterSpacing: '0.4px',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  fontFamily: "'Press Start 2P', monospace"
+                }}
+              >
+                ● {hasNft ? 'VIBE CLUB VIP MEMBER' : 'BASE DOG CITIZEN'}
+              </div>
+
+              <a
+                href={`https://basescan.org/address/${address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: '8px',
+                  color: '#88aacc',
+                  textDecoration: 'none',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  marginLeft: 'auto',
+                  textAlign: 'right',
+                  whiteSpace: 'nowrap',
+                  fontFamily: "'Press Start 2P', monospace"
+                }}
+              >
+                WALLET: {address.slice(0, 6)}...{address.slice(-4)} ↗
+              </a>
+            </div>
+
+            {/* Card 1: Balance & NFT Holdings & 5M Pool Eligibility */}
+            <div
+              style={{
+                background: 'rgba(2, 11, 26, 0.7)',
+                border: '1px solid rgba(0, 245, 255, 0.25)',
+                borderRadius: '12px',
+                padding: '10px 14px'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>$VIBE BALANCE</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '9px', color: '#00f5ff', fontWeight: 800 }}>
+                  {balance ? Number(balance).toLocaleString('en-US', { maximumFractionDigits: 0 }) : '0'} $VIBE
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>VIBE CLUB PASS</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '9px', color: hasNft ? '#00ff88' : '#cbd5e1', fontWeight: 800 }}>
+                  {hasNft ? `${nftCount} NFT (${userNft?.name || 'MEMBER'})` : 'NO NFT HELD'}
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>5M+ REWARDS POOL</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8px', color: isHolderUnlocked ? '#00ff88' : '#ff4466', fontWeight: 800 }}>
+                  {isHolderUnlocked ? 'QUALIFIED (TIER 1)' : 'HOLD 5M+ TO QUALIFY'}
+                </span>
+              </div>
+            </div>
+
+            {/* Card 2: Rewards Overview (Total Claimed & Staking Earned) */}
+            <div
+              style={{
+                background: 'rgba(2, 11, 26, 0.7)',
+                border: '1px solid rgba(0, 245, 255, 0.25)',
+                borderRadius: '12px',
+                padding: '10px 14px'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>TOTAL CLAIMED</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '9px', color: '#00ff88', fontWeight: 800 }}>
+                  +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>STAKING REWARDS</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '9px', color: '#c084fc', fontWeight: 800 }}>
+                  +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
+                </span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '8px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>AVAILABLE NOW</span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '8.5px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontWeight: 800 }}>
+                  +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE ({totalAvailableCount} READY)
+                </span>
+              </div>
+            </div>
+
+            {/* Card 3: Network & Status Row */}
+            <div
+              style={{
+                background: 'rgba(2, 11, 26, 0.7)',
+                border: '1px solid rgba(0, 255, 136, 0.35)',
+                borderRadius: '10px',
+                padding: '7px 10px'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
+                <span style={{ fontSize: '7px', color: '#00ff88', fontWeight: 900, letterSpacing: '0.2px', fontFamily: "'Press Start 2P', monospace" }}>
+                  NETWORK STATUS
+                </span>
+                <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '7.5px', color: '#00ff88', fontWeight: 800 }}>
+                  ● BASE MAINNET (CHAIN 8453)
+                </span>
+              </div>
+            </div>
+
+            {/* Card 4: Action Buttons Row */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr auto',
+                gap: '8px',
+                alignItems: 'center',
+                marginTop: '2px'
+              }}
+            >
+              <Link
+                to={getLinkPath('/claim')}
+                style={{
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
+                  borderRadius: '10px',
+                  padding: '10px 12px',
+                  color: '#020b1a',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '8px',
+                  fontWeight: 900,
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  boxShadow: '0 0 14px rgba(0, 245, 255, 0.35)',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                CLAIM PORTAL ↗
+              </Link>
+
+              <Link
+                to={getLinkPath('/hub')}
+                style={{
+                  background: 'rgba(4, 20, 48, 0.9)',
+                  border: '1.5px solid #00ff88',
+                  borderRadius: '10px',
+                  padding: '10px 12px',
+                  color: '#00ff88',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '8px',
+                  fontWeight: 900,
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  boxShadow: '0 0 14px rgba(0, 255, 136, 0.25)',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                REWARDS HUB ↗
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => fetchBalances(true)}
+                disabled={loading}
+                title="Refresh Balances"
+                style={{
+                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
+                  border: '1.5px solid rgba(0, 245, 255, 0.4)',
+                  color: '#00f5ff',
+                  borderRadius: '10px',
+                  padding: '10px 12px',
+                  fontSize: '8px',
+                  fontFamily: "'Press Start 2P', monospace",
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px',
+                  boxShadow: '0 0 10px rgba(0, 245, 255, 0.2)'
+                }}
+              >
+                <RefreshCw size={9} className={loading ? 'spin' : ''} />
+                <span>{loading ? '...' : 'SYNC'}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
