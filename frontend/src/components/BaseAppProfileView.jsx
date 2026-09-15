@@ -259,203 +259,29 @@ export function BaseAppProfileView(props) {
           </button>
         </div>
       ) : (
-        <div
-          className="profile-user-card profile-connected-card"
-          style={{
-            background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-            border: '1.5px solid rgba(0, 245, 255, 0.25)',
-            borderRadius: '18px',
-            overflow: 'hidden',
-            marginBottom: '24px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)',
-            display: 'flex',
-            alignItems: 'stretch',
-            minHeight: '110px'
-          }}
-        >
-          {/* Left Column: Full-Height NFT Image (occupies ~38-42% width) */}
-          <div
-            className="profile-avatar-col"
-            style={{
-              width: '38%',
-              minWidth: '110px',
-              maxWidth: '150px',
-              background: '#020b1a',
-              flexShrink: 0,
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRight: '1px solid rgba(0, 245, 255, 0.15)'
-            }}
-          >
+        <div className="profile-user-card profile-connected-card">
+          {/* Main NFT Card Frame (Identical to Vibe Club NFT section) */}
+          <div className="profile-nft-card-frame">
             <img
               src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/new-logo-vibe.png'}
-              alt="Profile Avatar"
+              alt={nftDisplayName}
+              className="profile-nft-main-img"
               style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.6)'
+                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.65)'
               }}
             />
+            <div className="profile-nft-name-badge">
+              <span>{nftDisplayName.toUpperCase()}</span>
+            </div>
           </div>
 
-          {/* Right Column: Address/Refresh top, Name middle, Dual Badges bottom */}
-          <div
-            className="profile-details-col"
-            style={{
-              flex: 1,
-              minWidth: 0,
-              padding: '12px 14px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxSizing: 'border-box'
-            }}
-          >
-            {/* Top Row: Address & Refresh */}
-            <div className="profile-address-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '6px' }}>
-              <span className="profile-address-txt" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {address.slice(0, 6)}...{address.slice(-4)}
-              </span>
-              <button
-                className="profile-refresh-btn"
-                onClick={() => fetchBalances(true)}
-                disabled={loading}
-                title="Refresh Balances"
-                style={{
-                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
-                  border: '1px solid rgba(0, 245, 255, 0.4)',
-                  color: '#00f5ff',
-                  borderRadius: '5px',
-                  padding: '3px 6px',
-                  fontSize: '5.5px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '3px',
-                  boxShadow: '0 0 6px rgba(0, 245, 255, 0.2)',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <RefreshCw size={7} className={loading ? 'spin' : ''} />
-                <span>{loading ? '...' : 'Refresh'}</span>
-              </button>
-            </div>
-
-            {/* Middle: NFT Name (Always Single Line with smart auto-scaling font) */}
-            <div
-              className="profile-nft-title"
-              style={{
-                fontSize: getNftFontSize(nftDisplayName),
-                color: '#ffffff',
-                fontFamily: "'Press Start 2P', monospace",
-                fontWeight: 900,
-                margin: '2px 0',
-                lineHeight: 1.25,
-                letterSpacing: '0.2px',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                width: '100%'
-              }}
-              title={nftDisplayName}
-            >
-              {nftDisplayName}
-            </div>
-
-            {/* Bottom Badges: Vibe Club Status + 5M+ Holder Status */}
-            <div className="profile-badge-row" style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              {/* Badge 1: Vibe Club Status */}
-              {hasNft ? (
-                <div
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1px solid #00ff88',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content'
-                  }}
-                >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    Vibe Club Member
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  to={getLinkPath('/vibeclub')}
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid #ff4466',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content',
-                    textDecoration: 'none',
-                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    JOIN VIBE CLUB · MINT NFT ↗
-                  </span>
-                </Link>
-              )}
-
-              {/* Badge 2: 5M+ Holder Status */}
-              {isHolderEligibleLive ? (
-                <div
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1px solid #00ff88',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content'
-                  }}
-                >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    5M+ $VIBE HOLDER
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  to={getLinkPath('/buy')}
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid #ff4466',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content',
-                    textDecoration: 'none',
-                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    BUY 5M+ $VIBE · GET POOL ↗
-                  </span>
-                </Link>
-              )}
-            </div>
+          {/* Desktop Right Side Banner Art */}
+          <div className="profile-desktop-banner-art">
+            <img
+              src="/vibe-club-royalties-banner.png"
+              alt="Vibe Club Royalties Banner"
+              className="profile-desktop-banner-img"
+            />
           </div>
         </div>
       )}
