@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw, CheckCircle2, Gift, Clock, Coins, ArrowRight } from 'lucide-react';
+import { RefreshCw, CheckCircle2, Gift, Clock, Coins, ArrowRight, Copy, Check, Lock, Sparkles } from 'lucide-react';
 import { formatUnits } from 'viem';
 import { getPublicClient } from '../config/rpc';
 import { STAKING_CONTRACT, STAKING_VAULTS_INFO } from '../Checker';
@@ -45,6 +45,19 @@ export function BaseAppProfileView(props) {
   } = props;
 
   const [stakingStats, setStakingStats] = useState({ participationByVault: [], loading: false });
+  const [copiedAddress, setCopiedAddress] = useState(false);
+
+  const handleCopyAddress = (e) => {
+    e.stopPropagation();
+    if (!address) return;
+    if (props.copyAddress) {
+      props.copyAddress(address);
+    } else {
+      navigator.clipboard?.writeText(address);
+    }
+    setCopiedAddress(true);
+    setTimeout(() => setCopiedAddress(false), 2000);
+  };
 
   useEffect(() => {
     if (!address) {
@@ -105,6 +118,53 @@ export function BaseAppProfileView(props) {
   const totalClaimedTokens = portalClaims.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
   const hasNft = Boolean(nftCount && nftCount > 0);
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
+
+  // Dynamic achievement unlock calculations
+  const isHolderUnlocked = Boolean(isHolderEligibleLive || (balance && Number(balance) >= 5000000));
+  const isNftHolderUnlocked = Boolean(hasNft && nftCount > 0);
+  const isStakerUnlocked = false; // criteria in progress
+  const isClaimerUnlocked = false; // criteria in progress
+  const isActiveUnlocked = false; // criteria in progress
+
+  const ACHIEVEMENTS_LIST = [
+    {
+      id: 'holder',
+      name: '5M+ HOLDER',
+      desc: 'HOLD 5M+ $VIBE',
+      image: '/achievements/holder.jfif',
+      unlocked: isHolderUnlocked
+    },
+    {
+      id: 'nft-holder',
+      name: 'VIBE CLUB MEMBER',
+      desc: 'HOLD VIBE CLUB NFT',
+      image: '/achievements/nft-holder.jfif',
+      unlocked: isNftHolderUnlocked
+    },
+    {
+      id: 'staker',
+      name: 'STAKING EXPERT',
+      desc: 'STAKE IN O1 VAULTS',
+      image: '/achievements/staker.jfif',
+      unlocked: isStakerUnlocked
+    },
+    {
+      id: 'claimer',
+      name: 'RICH DOG',
+      desc: 'CLAIM PORTAL REWARDS',
+      image: '/achievements/claimer.jfif',
+      unlocked: isClaimerUnlocked
+    },
+    {
+      id: 'active',
+      name: 'ACTIVE DOG',
+      desc: 'ECOSYSTEM ACTIVE',
+      image: '/achievements/active.jfif',
+      unlocked: isActiveUnlocked
+    }
+  ];
+
+  const unlockedCount = ACHIEVEMENTS_LIST.filter(a => a.unlocked).length;
 
   const getLinkPath = (path) => {
     if (typeof window !== 'undefined' && window.location.pathname.startsWith('/app')) {
@@ -168,7 +228,7 @@ export function BaseAppProfileView(props) {
         </div>
       </div>
 
-      {/* ── 2. USER PROFILE CARD (FULL HEIGHT NFT IMAGE + CLEAN RIGHT INFO) ── */}
+      {/* ── 2. USER PROFILE CARD (STYLISH BASE DOG ID CARD) ── */}
       {!address ? (
         <div
           className="profile-user-card profile-connect-card"
@@ -198,13 +258,13 @@ export function BaseAppProfileView(props) {
               boxShadow: '0 0 20px rgba(0, 245, 255, 0.35)'
             }}
           >
-            <img src="/new-logo-vibe.png" alt="Vibe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            <img src="/mascot.png" alt="Mascot" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
           <div className="profile-connect-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', fontWeight: 900 }}>
             CONNECT YOUR WALLET
           </div>
           <p className="profile-connect-desc" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 0 18px 0' }}>
-            Connect to view your identity, holding balances and Vibe Club status.
+            Connect to view your identity, achievements and reward dashboard.
           </p>
           <button
             onClick={login}
@@ -233,17 +293,17 @@ export function BaseAppProfileView(props) {
           className="profile-user-card profile-connected-card"
           style={{
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-            border: '1.5px solid rgba(0, 245, 255, 0.25)',
+            border: '1.5px solid rgba(0, 245, 255, 0.3)',
             borderRadius: '18px',
             overflow: 'hidden',
             marginBottom: '24px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 245, 255, 0.2)',
             display: 'flex',
             alignItems: 'stretch',
             minHeight: '110px'
           }}
         >
-          {/* Left Column: Full-Height NFT Image (occupies ~38-42% width) */}
+          {/* Left Column: Full-Height Avatar Image with Cyberpunk Frame */}
           <div
             className="profile-avatar-col"
             style={{
@@ -256,23 +316,45 @@ export function BaseAppProfileView(props) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRight: '1px solid rgba(0, 245, 255, 0.15)'
+              borderRight: '1.5px solid rgba(0, 245, 255, 0.2)'
             }}
           >
             <img
-              src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/new-logo-vibe.png'}
+              src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/mascot.png'}
               alt="Profile Avatar"
               style={{
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                display: 'block',
-                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.6)'
+                display: 'block'
               }}
             />
+            <div
+              className="profile-avatar-tag"
+              style={{
+                position: 'absolute',
+                bottom: '6px',
+                left: '6px',
+                right: '6px',
+                background: hasNft ? 'rgba(0, 255, 136, 0.9)' : 'rgba(0, 245, 255, 0.85)',
+                color: '#020b1a',
+                fontSize: '4.5px',
+                fontWeight: 900,
+                fontFamily: "'Press Start 2P', monospace",
+                textAlign: 'center',
+                padding: '2.5px 2px',
+                borderRadius: '4px',
+                boxShadow: hasNft ? '0 0 8px rgba(0, 255, 136, 0.6)' : '0 0 8px rgba(0, 245, 255, 0.6)',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
+            >
+              {hasNft ? 'VIBE CLUB VIP' : 'DOG CITIZEN'}
+            </div>
           </div>
 
-          {/* Right Column: Address/Refresh top, Name middle, Dual Badges bottom */}
+          {/* Right Column: Base Dog ID, Identity Name & Stats */}
           <div
             className="profile-details-col"
             style={{
@@ -282,42 +364,72 @@ export function BaseAppProfileView(props) {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              gap: '6px',
+              gap: '8px',
               boxSizing: 'border-box'
             }}
           >
-            {/* Top Row: Address & Refresh */}
+            {/* Top Row: Base Dog ID Label + Truncated Address & Copy / Refresh */}
             <div className="profile-address-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', gap: '6px' }}>
-              <span className="profile-address-txt" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {address.slice(0, 6)}...{address.slice(-4)}
-              </span>
-              <button
-                className="profile-refresh-btn"
-                onClick={() => fetchBalances(true)}
-                disabled={loading}
-                title="Refresh Balances"
-                style={{
-                  background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
-                  border: '1px solid rgba(0, 245, 255, 0.4)',
-                  color: '#00f5ff',
-                  borderRadius: '5px',
-                  padding: '3px 6px',
-                  fontSize: '5.5px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '3px',
-                  boxShadow: '0 0 6px rgba(0, 245, 255, 0.2)',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <RefreshCw size={7} className={loading ? 'spin' : ''} />
-                <span>{loading ? '...' : 'Refresh'}</span>
-              </button>
+              <div className="profile-id-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(0, 245, 255, 0.1)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '6px', padding: '3px 6px' }}>
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 6px #00f5ff' }} />
+                <span style={{ fontSize: '5.5px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                  BASE ID
+                </span>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <button
+                  type="button"
+                  onClick={handleCopyAddress}
+                  className="profile-copy-btn"
+                  title="Copy Address"
+                  style={{
+                    background: copiedAddress ? 'rgba(0, 255, 136, 0.2)' : 'rgba(0, 245, 255, 0.1)',
+                    border: copiedAddress ? '1px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.3)',
+                    color: copiedAddress ? '#00ff88' : '#88aacc',
+                    borderRadius: '5px',
+                    padding: '3px 6px',
+                    fontSize: '5.5px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  {copiedAddress ? <Check size={8} color="#00ff88" /> : <Copy size={8} color="#88aacc" />}
+                  <span>{copiedAddress ? 'COPIED!' : `${address.slice(0, 4)}...${address.slice(-3)}`}</span>
+                </button>
+
+                <button
+                  className="profile-refresh-btn"
+                  onClick={() => fetchBalances(true)}
+                  disabled={loading}
+                  title="Refresh Balances"
+                  style={{
+                    background: loading ? 'rgba(0, 245, 255, 0.25)' : 'rgba(0, 245, 255, 0.12)',
+                    border: '1px solid rgba(0, 245, 255, 0.4)',
+                    color: '#00f5ff',
+                    borderRadius: '5px',
+                    padding: '3px 6px',
+                    fontSize: '5.5px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    cursor: loading ? 'not-allowed' : 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '3px',
+                    boxShadow: '0 0 6px rgba(0, 245, 255, 0.2)',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <RefreshCw size={7} className={loading ? 'spin' : ''} />
+                  <span>{loading ? '...' : 'Refresh'}</span>
+                </button>
+              </div>
             </div>
 
-            {/* Middle: NFT Name (Always Single Line with smart auto-scaling font) */}
+            {/* Middle: Identity Name */}
             <div
               className="profile-nft-title"
               style={{
@@ -325,8 +437,8 @@ export function BaseAppProfileView(props) {
                 color: '#ffffff',
                 fontFamily: "'Press Start 2P', monospace",
                 fontWeight: 900,
-                margin: '2px 0',
-                lineHeight: 1.25,
+                margin: '1px 0',
+                lineHeight: 1.3,
                 letterSpacing: '0.2px',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -338,99 +450,89 @@ export function BaseAppProfileView(props) {
               {nftDisplayName}
             </div>
 
-            {/* Bottom Badges: Vibe Club Status + 5M+ Holder Status */}
-            <div className="profile-badge-row" style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-              {/* Badge 1: Vibe Club Status */}
-              {hasNft ? (
-                <div
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1px solid #00ff88',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content'
-                  }}
-                >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    Vibe Club Member
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  to={getLinkPath('/vibeclub')}
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid #ff4466',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content',
-                    textDecoration: 'none',
-                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    JOIN VIBE CLUB · MINT NFT ↗
-                  </span>
-                </Link>
-              )}
-
-              {/* Badge 2: 5M+ Holder Status */}
-              {isHolderEligibleLive ? (
-                <div
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1px solid #00ff88',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content'
-                  }}
-                >
-                  <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                  <span style={{ fontSize: '5.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    5M+ $VIBE HOLDER
-                  </span>
-                </div>
-              ) : (
-                <Link
-                  to={getLinkPath('/buy')}
-                  className="profile-badge-pill"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4.5px',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid #ff4466',
-                    borderRadius: '6px',
-                    padding: '3.5px 7px',
-                    width: 'fit-content',
-                    textDecoration: 'none',
-                    boxShadow: '0 0 8px rgba(255, 68, 102, 0.2)'
-                  }}
-                >
-                  <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                    BUY 5M+ $VIBE ↗
-                  </span>
-                </Link>
-              )}
+            {/* Bottom Row: Sleek Mini Stats Bar */}
+            <div className="profile-stats-pill-row" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', width: '100%' }}>
+              <div className="profile-stat-mini-pill" style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '6px', padding: '3.5px 7px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ fontSize: '5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>BAL:</span>
+                <span style={{ fontSize: '5.5px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>{formatCompactBalance(balance)}</span>
+              </div>
+              <div className="profile-stat-mini-pill" style={{ background: 'rgba(2, 11, 26, 0.8)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '6px', padding: '3.5px 7px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <span style={{ fontSize: '5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>NFT:</span>
+                <span style={{ fontSize: '5.5px', color: hasNft ? '#00ff88' : '#cbd5e1', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>{nftCount || 0}</span>
+              </div>
+              <div className="profile-stat-mini-pill" style={{ background: 'rgba(0, 255, 136, 0.08)', border: '1px solid rgba(0, 255, 136, 0.3)', borderRadius: '6px', padding: '3.5px 6px', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                <span style={{ fontSize: '5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>BASE</span>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* ── 3. REWARD DASHBOARD ZONE ── */}
+      {/* ── 3. ACHIEVEMENTS SECTION (RESPONSIVE 3 COL MOB / 4 COL DESKTOP) ── */}
+      <div className="profile-achievements-zone" style={{ marginBottom: '24px' }}>
+        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
+            <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+              ACHIEVEMENTS
+            </h3>
+          </div>
+          <div className="profile-achievements-tracker" style={{ background: 'rgba(0, 255, 136, 0.12)', border: '1px solid rgba(0, 255, 136, 0.4)', borderRadius: '99px', padding: '4px 10px', fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88' }} />
+            <span>{unlockedCount}/5 UNLOCKED</span>
+          </div>
+        </div>
+
+        <div className="profile-achievements-grid">
+          {ACHIEVEMENTS_LIST.map((ach) => (
+            <div
+              key={ach.id}
+              className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+            >
+              <div className="profile-achievement-img-box">
+                <img
+                  src={ach.image}
+                  alt={ach.name}
+                  className="profile-achievement-img"
+                />
+                <div className="profile-achievement-badge">
+                  {ach.unlocked ? (
+                    <>
+                      <span className="profile-achievement-badge-dot" />
+                      <span>UNLOCKED</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock size={7} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <span>LOCKED</span>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="profile-achievement-name" title={ach.name}>
+                {ach.name}
+              </div>
+              <div className="profile-achievement-desc">
+                {ach.desc}
+              </div>
+            </div>
+          ))}
+
+          {/* 6th Slot: More Achievements Coming Soon */}
+          <div className="profile-achievement-card profile-achievement-placeholder">
+            <div className="profile-placeholder-icon-box">
+              <Sparkles size={18} color="#00f5ff" />
+            </div>
+            <div className="profile-placeholder-text-box">
+              <div className="profile-placeholder-title">MORE COMING</div>
+              <div className="profile-placeholder-sub">NEW ACHIEVEMENTS SOON</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 4. REWARD DASHBOARD ZONE ── */}
       <div className="profile-dashboard-zone" style={{ marginBottom: '24px' }}>
         <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
           <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
