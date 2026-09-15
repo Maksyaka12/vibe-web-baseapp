@@ -310,7 +310,7 @@ export function BaseAppProfileView(props) {
                         </>
                       ) : (
                         <>
-                          <Lock size={7} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                          <Lock size={9} strokeWidth={2.5} style={{ flexShrink: 0 }} />
                           <span>LOCKED</span>
                         </>
                       )}
@@ -325,7 +325,7 @@ export function BaseAppProfileView(props) {
               {/* 6th Slot: More Achievements Coming Soon */}
               <div className="profile-achievement-card profile-achievement-placeholder">
                 <div className="profile-placeholder-icon-box">
-                  <Sparkles size={18} color="#00f5ff" />
+                  <Sparkles size={20} color="#00f5ff" />
                 </div>
                 <div className="profile-placeholder-text-box">
                   <div className="profile-placeholder-title">MORE COMING</div>
@@ -372,7 +372,7 @@ export function BaseAppProfileView(props) {
                     </>
                   ) : (
                     <>
-                      <Lock size={7} strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <Lock size={9} strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       <span>LOCKED</span>
                     </>
                   )}
