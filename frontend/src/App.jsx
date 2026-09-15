@@ -3617,7 +3617,7 @@ function DomainRouter() {
   const location = useLocation();
 
   useEffect(() => {
-    document.title = "$VIBE — The Base Dog";
+    document.title = "Vibe Hub";
   }, []);
 
   return (
