@@ -499,62 +499,83 @@ html, body {
   position: absolute !important;
   top: 10px !important;
   left: 10px !important;
-  background: rgba(2, 11, 26, 0.9) !important;
-  border: 1.5px solid #00ff88 !important;
-  padding: 5px 8px !important;
-  border-radius: 7px !important;
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
   font-family: 'Press Start 2P', monospace !important;
-  font-size: 5.5px !important;
-  color: #00ff88 !important;
+  font-size: 7px !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 4px !important;
-  box-shadow: 0 0 14px rgba(0, 255, 136, 0.45), 0 4px 10px rgba(0, 0, 0, 0.8) !important;
+  gap: 5px !important;
   z-index: 10 !important;
   backdrop-filter: blur(8px) !important;
-  letter-spacing: 0.25px !important;
+  letter-spacing: 0.3px !important;
+}
+
+.base-app-pixel-theme .profile-nft-member-badge.member-green {
+  background: rgba(0, 255, 136, 0.12) !important;
+  border: 1.5px solid #00ff88 !important;
+  color: #00ff88 !important;
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.35), 0 4px 10px rgba(0, 0, 0, 0.8) !important;
+}
+
+.base-app-pixel-theme .profile-nft-member-badge.member-orange {
+  background: rgba(255, 153, 0, 0.14) !important;
+  border: 1.5px solid #ff9900 !important;
+  color: #ff9900 !important;
+  box-shadow: 0 0 14px rgba(255, 153, 0, 0.35), 0 4px 10px rgba(0, 0, 0, 0.8) !important;
 }
 
 .base-app-pixel-theme .profile-nft-member-badge-dot {
-  width: 4px !important;
-  height: 4px !important;
+  width: 4.5px !important;
+  height: 4.5px !important;
   border-radius: 50% !important;
-  background: #00ff88 !important;
-  box-shadow: 0 0 5px #00ff88 !important;
   flex-shrink: 0 !important;
 }
 
+.base-app-pixel-theme .profile-nft-member-badge-dot.member-green-dot {
+  background: #00ff88 !important;
+  box-shadow: 0 0 6px #00ff88 !important;
+}
+
+.base-app-pixel-theme .profile-nft-member-badge-dot.member-orange-dot {
+  background: #ff9900 !important;
+  box-shadow: 0 0 6px #ff9900 !important;
+}
+
 .base-app-pixel-theme .profile-nft-mint-cta-badge {
-  background: linear-gradient(135deg, rgba(0, 245, 255, 0.22) 0%, rgba(0, 184, 255, 0.38) 100%) !important;
-  border: 1.5px solid #00f5ff !important;
-  color: #00f5ff !important;
   text-decoration: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 6px !important;
   cursor: pointer !important;
-  font-size: 6px !important;
-  box-shadow: 0 0 18px rgba(0, 245, 255, 0.45), 0 4px 16px rgba(0, 0, 0, 0.85) !important;
+  font-size: 6.8px !important;
   transition: all 0.25s ease !important;
 }
 
-.base-app-pixel-theme .profile-nft-mint-cta-badge .profile-mint-arrow-icon {
-  color: #00f5ff !important;
-  stroke: #00f5ff !important;
+.base-app-pixel-theme .profile-nft-mint-cta-badge.mint-orange {
+  background: linear-gradient(135deg, rgba(255, 153, 0, 0.18) 0%, rgba(255, 110, 0, 0.32) 100%) !important;
+  border: 1.5px solid #ff9900 !important;
+  color: #ff9900 !important;
+  box-shadow: 0 0 20px rgba(255, 153, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.85) !important;
+}
+
+.base-app-pixel-theme .profile-nft-mint-cta-badge .profile-mint-arrow-icon.mint-orange-arrow {
+  color: #ff9900 !important;
+  stroke: #ff9900 !important;
   flex-shrink: 0 !important;
   transition: transform 0.25s ease !important;
 }
 
-.base-app-pixel-theme .profile-nft-mint-cta-badge:hover {
-  background: linear-gradient(135deg, rgba(0, 245, 255, 0.35) 0%, rgba(0, 184, 255, 0.55) 100%) !important;
-  border-color: #ffffff !important;
+.base-app-pixel-theme .profile-nft-mint-cta-badge.mint-orange:hover {
+  background: linear-gradient(135deg, rgba(255, 153, 0, 0.32) 0%, rgba(255, 110, 0, 0.48) 100%) !important;
+  border-color: #ffb84d !important;
   color: #ffffff !important;
-  box-shadow: 0 0 28px rgba(0, 245, 255, 0.75), 0 6px 20px rgba(0, 0, 0, 0.95) !important;
+  box-shadow: 0 0 28px rgba(255, 153, 0, 0.7), 0 6px 20px rgba(0, 0, 0, 0.95) !important;
   transform: translateY(-1px) !important;
 }
 
-.base-app-pixel-theme .profile-nft-mint-cta-badge:hover .profile-mint-arrow-icon {
+.base-app-pixel-theme .profile-nft-mint-cta-badge.mint-orange:hover .profile-mint-arrow-icon.mint-orange-arrow {
   color: #ffffff !important;
   stroke: #ffffff !important;
   transform: translateX(3px) !important;
@@ -1345,19 +1366,24 @@ html, body {
   .base-app-pixel-theme .profile-nft-member-badge {
     top: 14px !important;
     left: 14px !important;
-    padding: 6px 12px !important;
-    font-size: 7.5px !important;
+    padding: 7px 14px !important;
+    font-size: 8.5px !important;
     border-radius: 8px !important;
     gap: 6px !important;
   }
   .base-app-pixel-theme .profile-nft-member-badge-dot {
-    width: 5px !important;
-    height: 5px !important;
+    width: 5.5px !important;
+    height: 5.5px !important;
+  }
+  .base-app-pixel-theme .profile-nft-member-badge-dot.member-green-dot {
     box-shadow: 0 0 8px #00ff88 !important;
   }
+  .base-app-pixel-theme .profile-nft-member-badge-dot.member-orange-dot {
+    box-shadow: 0 0 8px #ff9900 !important;
+  }
   .base-app-pixel-theme .profile-nft-mint-cta-badge {
-    font-size: 8px !important;
-    padding: 10px 14px !important;
+    font-size: 9px !important;
+    padding: 10px 16px !important;
     gap: 8px !important;
   }
   .base-app-pixel-theme .profile-desktop-controls {

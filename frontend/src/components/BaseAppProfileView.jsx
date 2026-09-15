@@ -271,11 +271,16 @@ export function BaseAppProfileView(props) {
               }}
             />
 
-            {/* Top-left VIP/Member floating badge when user holds an NFT */}
-            {hasNft && (
-              <div className="profile-nft-member-badge">
-                <span className="profile-nft-member-badge-dot" />
+            {/* Top-left floating status badge (Green for Vibe Club Member, Orange for Unknown Dog) */}
+            {hasNft ? (
+              <div className="profile-nft-member-badge member-green">
+                <span className="profile-nft-member-badge-dot member-green-dot" />
                 <span>VIBE CLUB MEMBER</span>
+              </div>
+            ) : (
+              <div className="profile-nft-member-badge member-orange">
+                <span className="profile-nft-member-badge-dot member-orange-dot" />
+                <span>UNKNOWN DOG</span>
               </div>
             )}
 
@@ -285,9 +290,9 @@ export function BaseAppProfileView(props) {
                 <span>{nftDisplayName.toUpperCase()}</span>
               </div>
             ) : (
-              <Link to={getLinkPath('/nft')} className="profile-nft-name-badge profile-nft-mint-cta-badge">
+              <Link to={getLinkPath('/nft')} className="profile-nft-name-badge profile-nft-mint-cta-badge mint-orange">
                 <span>MINT YOUR NFT &amp; JOIN VIBE CLUB</span>
-                <ArrowRight size={10} strokeWidth={2.5} className="profile-mint-arrow-icon" />
+                <ArrowRight size={11} strokeWidth={2.5} className="profile-mint-arrow-icon mint-orange-arrow" />
               </Link>
             )}
           </div>
