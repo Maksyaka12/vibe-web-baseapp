@@ -267,12 +267,29 @@ export function BaseAppProfileView(props) {
               alt={nftDisplayName}
               className="profile-nft-main-img"
               style={{
-                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.65)'
+                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.7)'
               }}
             />
-            <div className="profile-nft-name-badge">
-              <span>{nftDisplayName.toUpperCase()}</span>
-            </div>
+
+            {/* Top-left VIP/Member floating badge when user holds an NFT */}
+            {hasNft && (
+              <div className="profile-nft-member-badge">
+                <span className="profile-nft-member-badge-dot" />
+                <span>VIBE CLUB MEMBER</span>
+              </div>
+            )}
+
+            {/* Bottom badge: NFT name if holder, or interactive MINT & JOIN CTA if non-holder */}
+            {hasNft ? (
+              <div className="profile-nft-name-badge">
+                <span>{nftDisplayName.toUpperCase()}</span>
+              </div>
+            ) : (
+              <Link to={getLinkPath('/nft')} className="profile-nft-name-badge profile-nft-mint-cta-badge">
+                <span>MINT YOUR NFT &amp; JOIN VIBE CLUB</span>
+                <ArrowRight size={10} strokeWidth={2.5} className="profile-mint-arrow-icon" />
+              </Link>
+            )}
           </div>
 
           {/* Desktop Right Column: Achievements (Replacing previous balance/controls) */}
