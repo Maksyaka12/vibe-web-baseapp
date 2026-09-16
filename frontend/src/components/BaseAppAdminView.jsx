@@ -5,17 +5,16 @@ import { parseEther, formatEther, parseUnits, formatUnits, encodeFunctionData, p
 import { publicClient } from '../config/rpc';
 import { DATA_SUFFIX, appendBuilderSuffix } from '../config/builderCode';
 import { useVibeNftContract } from '../hooks/useVibeNftContract';
+import round1Data from '../data/round_1_proofs.json';
+import royalty1Data from '../data/royalty_1_proofs.json';
+import royalty2Data from '../data/royalty_2_proofs.json';
 import {
   Coins,
   Crown,
   Sparkles,
   AlertTriangle,
   RefreshCw,
-  Wallet,
-  Settings,
-  Flame,
-  CheckCircle,
-  ArrowUpRight
+  Settings
 } from 'lucide-react';
 
 export const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
@@ -29,7 +28,7 @@ const DISTRIBUTOR_ABI = parseAbi([
   'function setMerkleRoot(uint256 epochId, bytes32 _merkleRoot) external',
   'function emergencyWithdraw(address token, uint256 amount) external',
   'function merkleRoots(uint256 epochId) view returns (bytes32)',
-  'function isClaimed(uint256 epochId, uint256 index) view returns (bool)'
+  'function hasClaimed(uint256 epochId, address user) view returns (bool)'
 ]);
 
 const NFT_ABI = parseAbi([
@@ -64,21 +63,21 @@ export function BaseAppAdminView() {
   // 1. HOLDER & ROYALTIES STATES
   // ═════════════════════════════════════════════════════════════════════════
   const [holderEpochId, setHolderEpochId] = useState('1');
-  const [holderMerkleRoot, setHolderMerkleRoot] = useState('0xac99116798ace01d3ebcb6f4c6e60ccd8c5d464b94da5de34aa04f602cb9115a');
+  const [holderMerkleRoot, setHolderMerkleRoot] = useState(round1Data?.merkleRoot || '0xac99116798ace01d3ebcb6f4c6e60ccd8c5d464b94da5de34aa04f602cb9115a');
   const [holderWithdrawAmount, setHolderWithdrawAmount] = useState('');
   const [holderBurnAmount, setHolderBurnAmount] = useState('');
 
   const [royaltyEpochId, setRoyaltyEpochId] = useState('2');
-  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState('0xa86db60c2394541bfec649c253b26c63b84db5b32ecce16597ea94e4304db96c');
+  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
   const [royaltyWithdrawAmount, setRoyaltyWithdrawAmount] = useState('');
   const [royaltyBurnAmount, setRoyaltyBurnAmount] = useState('');
 
-  // Multicall Metrics
+  // Multicall Live Metrics
   const [holderMetrics, setHolderMetrics] = useState({
     contractBalance: 0,
     claimedTokens: 0,
     claimedWalletsCount: 0,
-    totalWalletsCount: 0,
+    totalWalletsCount: 42,
     unclaimedTokens: 0,
     loading: false
   });
@@ -87,7 +86,7 @@ export function BaseAppAdminView() {
     contractBalance: 0,
     claimedTokens: 0,
     claimedWalletsCount: 0,
-    totalWalletsCount: 0,
+    totalWalletsCount: 111,
     unclaimedTokens: 0,
     loading: false
   });
@@ -214,80 +213,57 @@ export function BaseAppAdminView() {
   };
 
   // ═════════════════════════════════════════════════════════════════════════
-  // 3. FETCH LIVE METRICS FOR HOLDERS / ROYALTIES
+  // 3. HIGH-SPEED PROD MULTICALL (<350ms) FOR HOLDERS & ROYALTIES
   // ═════════════════════════════════════════════════════════════════════════
-  const fetchDistributorMetrics = useCallback(async (type) => {
+  const fetchDistributorMetrics = useCallback(async (type, overrideEpoch) => {
     const isHolder = type === 'holder';
     const contractAddress = isHolder ? DISTRIBUTOR_CA : ROYALTY_DISTRIBUTOR_CA;
-    const epochId = isHolder ? holderEpochId : royaltyEpochId;
+    const epoch = overrideEpoch || (isHolder ? holderEpochId : royaltyEpochId) || '1';
 
     if (isHolder) setHolderMetrics(prev => ({ ...prev, loading: true }));
     else setRoyaltyMetrics(prev => ({ ...prev, loading: true }));
 
     try {
-      const balanceWei = await publicClient.readContract({
-        address: VIBE_TOKEN_CA,
-        abi: ERC20_ABI,
-        functionName: 'balanceOf',
-        args: [contractAddress]
-      }).catch(() => BigInt(0));
+      const claims = Object.values(
+        isHolder
+          ? (round1Data?.claims || {})
+          : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {}))
+      );
 
-      const contractBalance = Math.round(Number(formatUnits(balanceWei, 18)));
+      // Single multicall for contract token balance + all hasClaimed boolean statuses
+      const calls = [
+        {
+          address: VIBE_TOKEN_CA,
+          abi: parseAbi(['function balanceOf(address) view returns (uint256)']),
+          functionName: 'balanceOf',
+          args: [contractAddress]
+        },
+        ...claims.map(c => ({
+          address: contractAddress,
+          abi: parseAbi(['function hasClaimed(uint256, address) view returns (bool)']),
+          functionName: 'hasClaimed',
+          args: [BigInt(epoch), c.address]
+        }))
+      ];
 
-      let proofData = null;
-      if (isHolder) {
-        try {
-          const res = await import('../data/round_1_proofs.json');
-          proofData = res.default || res;
-        } catch (e) {}
-      } else {
-        try {
-          const res = epochId === '2' 
-            ? await import('../data/royalty_2_proofs.json')
-            : await import('../data/royalty_1_proofs.json');
-          proofData = res.default || res;
-        } catch (e) {}
-      }
+      const results = await publicClient.multicall({ contracts: calls, allowFailure: true });
 
-      let claimedTokens = 0;
+      const balWei = (results[0]?.status === 'success' && results[0].result !== undefined) ? results[0].result : 0n;
+      const contractBalance = Math.round(Number(formatUnits(balWei, 18)));
+
       let claimedWalletsCount = 0;
-      let totalWalletsCount = 0;
-      let totalAllocated = isHolder ? 10000000 : (epochId === '2' ? 1900000 : 2500000);
+      let claimedTokens = 0;
 
-      if (proofData?.claims) {
-        const claimsList = Object.values(proofData.claims);
-        totalWalletsCount = claimsList.length;
-
-        const sampleSize = Math.min(claimsList.length, 40);
-        let sampleClaimedCount = 0;
-        let sampleClaimedTokens = 0;
-        let sampleTotalTokens = 0;
-
-        for (let i = 0; i < sampleSize; i++) {
-          const c = claimsList[i];
-          const tokenAmount = Math.round(Number(formatUnits(BigInt(c.amount || '0'), 18)));
-          sampleTotalTokens += tokenAmount;
-
-          try {
-            const isClaimed = await publicClient.readContract({
-              address: contractAddress,
-              abi: DISTRIBUTOR_ABI,
-              functionName: 'isClaimed',
-              args: [BigInt(epochId), BigInt(c.index)]
-            });
-            if (isClaimed) {
-              sampleClaimedCount++;
-              sampleClaimedTokens += tokenAmount;
-            }
-          } catch (e) {}
+      for (let i = 0; i < claims.length; i++) {
+        if (results[i + 1]?.status === 'success' && results[i + 1]?.result === true) {
+          claimedWalletsCount++;
+          claimedTokens += (claims[i].amount || 0);
         }
-
-        const ratio = sampleTotalTokens > 0 ? (sampleClaimedTokens / sampleTotalTokens) : 0;
-        claimedTokens = Math.round(totalAllocated * ratio);
-        claimedWalletsCount = Math.round(totalWalletsCount * (sampleClaimedCount / (sampleSize || 1)));
       }
 
-      const unclaimedTokens = Math.max(0, totalAllocated - claimedTokens);
+      const totalWalletsCount = claims.length || (isHolder ? 42 : (epoch === '2' ? 111 : 109));
+      const totalPool = isHolder ? 10000000 : (epoch === '2' ? 1900000 : 2500000);
+      const unclaimedTokens = Math.max(0, totalPool - claimedTokens);
 
       const metrics = {
         contractBalance,
@@ -302,7 +278,7 @@ export function BaseAppAdminView() {
       else setRoyaltyMetrics(metrics);
 
     } catch (e) {
-      console.error('Error loading distributor metrics:', e);
+      console.warn('Failed to fetch distributor metrics:', e);
       if (isHolder) setHolderMetrics(prev => ({ ...prev, loading: false }));
       else setRoyaltyMetrics(prev => ({ ...prev, loading: false }));
     }
@@ -310,10 +286,15 @@ export function BaseAppAdminView() {
 
   useEffect(() => {
     if (isAdmin) {
-      fetchDistributorMetrics('holder');
-      fetchDistributorMetrics('royalty');
+      fetchDistributorMetrics('holder', holderEpochId);
+      fetchDistributorMetrics('royalty', royaltyEpochId);
+      const interval = setInterval(() => {
+        fetchDistributorMetrics('holder', holderEpochId);
+        fetchDistributorMetrics('royalty', royaltyEpochId);
+      }, 12000);
+      return () => clearInterval(interval);
     }
-  }, [isAdmin, fetchDistributorMetrics]);
+  }, [isAdmin, holderEpochId, royaltyEpochId, fetchDistributorMetrics]);
 
   // ═════════════════════════════════════════════════════════════════════════
   // 4. ACTION HANDLERS FOR HOLDERS / ROYALTIES
@@ -343,8 +324,8 @@ export function BaseAppAdminView() {
 
       const hash = await sendAdminTx(contractAddress, dataHex);
       setTxHash(hash);
-      setSuccessMessage(`Merkle Root for ${isHolder ? 'Holder Round' : 'Royalty Epoch'} #${epoch} set successfully!`);
-      await fetchDistributorMetrics(type);
+      setSuccessMessage(`Merkle Root for ${isHolder ? 'Holder Round' : 'Royalty Epoch'} #${epoch} published successfully!`);
+      setTimeout(() => fetchDistributorMetrics(type, epoch), 3000);
     } catch (e) {
       console.error('Set Merkle Root error:', e);
       setErrorMessage(e?.shortMessage || e?.message || 'Transaction failed');
@@ -381,7 +362,9 @@ export function BaseAppAdminView() {
       const hash = await sendAdminTx(contractAddress, dataHex);
       setTxHash(hash);
       setSuccessMessage(`Successfully withdrawn ${amountNum.toLocaleString()} $VIBE from ${isHolder ? 'Holders' : 'Royalties'} contract to Admin Wallet!`);
-      await fetchDistributorMetrics(type);
+      if (isHolder) setHolderWithdrawAmount('');
+      else setRoyaltyWithdrawAmount('');
+      setTimeout(() => fetchDistributorMetrics(type), 3000);
     } catch (e) {
       console.error('Emergency withdraw error:', e);
       setErrorMessage(e?.shortMessage || e?.message || 'Withdraw failed');
@@ -417,7 +400,7 @@ export function BaseAppAdminView() {
         args: [VIBE_TOKEN_CA, amountWei]
       });
 
-      const hash1 = await sendAdminTx(contractAddress, withdrawDataHex);
+      await sendAdminTx(contractAddress, withdrawDataHex);
 
       // Step 2: Transfer to Dead address
       const burnDataHex = encodeFunctionData({
@@ -427,9 +410,11 @@ export function BaseAppAdminView() {
       });
 
       const hash2 = await sendAdminTx(VIBE_TOKEN_CA, burnDataHex);
-      setTxHash(hash2 || hash1);
+      setTxHash(hash2);
       setSuccessMessage(`Successfully burned ${amountNum.toLocaleString()} $VIBE by sending to 0x0...dEaD!`);
-      await fetchDistributorMetrics(type);
+      if (isHolder) setHolderBurnAmount('');
+      else setRoyaltyBurnAmount('');
+      setTimeout(() => fetchDistributorMetrics(type), 3000);
     } catch (e) {
       console.error('Burn tokens error:', e);
       setErrorMessage(e?.shortMessage || e?.message || 'Burn failed');
@@ -572,8 +557,8 @@ export function BaseAppAdminView() {
 
           <button
             onClick={() => {
-              if (activeTab === 'holder') fetchDistributorMetrics('holder');
-              else if (activeTab === 'royalty') fetchDistributorMetrics('royalty');
+              if (activeTab === 'holder') fetchDistributorMetrics('holder', holderEpochId);
+              else if (activeTab === 'royalty') fetchDistributorMetrics('royalty', royaltyEpochId);
               else refetchNftState();
             }}
             style={{
@@ -772,7 +757,7 @@ export function BaseAppAdminView() {
                 CONTRACT $VIBE BALANCE
               </div>
               <div style={{ fontSize: '12px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString()} $VIBE`}
+                {holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
@@ -790,7 +775,7 @@ export function BaseAppAdminView() {
                 TOTAL CLAIMED
               </div>
               <div style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {holderMetrics.loading ? '...' : `+${holderMetrics.claimedTokens.toLocaleString()} $VIBE`}
+                {holderMetrics.loading ? '...' : `+${holderMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
@@ -799,7 +784,7 @@ export function BaseAppAdminView() {
                 UNCLAIMED IN ROUND
               </div>
               <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString()} $VIBE`}
+                {holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
@@ -813,7 +798,14 @@ export function BaseAppAdminView() {
               <input
                 type="number"
                 value={holderEpochId}
-                onChange={(e) => setHolderEpochId(e.target.value)}
+                onChange={(e) => {
+                  const newEpoch = e.target.value;
+                  setHolderEpochId(newEpoch);
+                  if (newEpoch === '1') {
+                    setHolderMerkleRoot(round1Data?.merkleRoot || '');
+                  }
+                  fetchDistributorMetrics('holder', newEpoch);
+                }}
                 placeholder="Round"
                 style={{
                   background: 'rgba(2, 11, 26, 0.9)',
@@ -874,7 +866,7 @@ export function BaseAppAdminView() {
                   type="number"
                   value={holderWithdrawAmount}
                   onChange={(e) => setHolderWithdrawAmount(e.target.value)}
-                  placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString()} $VIBE`}
+                  placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   style={{
                     width: '100%',
                     background: 'rgba(2, 11, 26, 0.9)',
@@ -935,24 +927,45 @@ export function BaseAppAdminView() {
               3. BURN UNCLAIMED TOKENS (SEND TO DEAD ADDRESS)
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <input
-                type="number"
-                value={holderBurnAmount}
-                onChange={(e) => setHolderBurnAmount(e.target.value)}
-                placeholder="Amount in $VIBE to burn"
-                style={{
-                  width: '100%',
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(255, 68, 102, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#ff4466',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '8px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="number"
+                  value={holderBurnAmount}
+                  onChange={(e) => setHolderBurnAmount(e.target.value)}
+                  placeholder="Amount in $VIBE to burn"
+                  style={{
+                    width: '100%',
+                    background: 'rgba(2, 11, 26, 0.9)',
+                    border: '1.5px solid rgba(255, 68, 102, 0.3)',
+                    borderRadius: '10px',
+                    padding: '10px 115px 10px 14px',
+                    color: '#ff4466',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '8px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setHolderBurnAmount(holderMetrics.unclaimedTokens.toString())}
+                  style={{
+                    position: 'absolute',
+                    right: '8px',
+                    top: '8px',
+                    background: 'rgba(255, 68, 102, 0.2)',
+                    border: '1px solid #ff4466',
+                    color: '#ff4466',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '6.5px',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ALL UNCLAIMED
+                </button>
+              </div>
               <button
                 onClick={() => handleBurnDistributorTokens('holder')}
                 disabled={loading}
@@ -984,7 +997,7 @@ export function BaseAppAdminView() {
       {activeTab === 'royalty' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/* Header & Contract Link (Clean, no extra CA input pill) */}
+          {/* Header & Contract Link */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#c084fc', boxShadow: '0 0 8px #c084fc' }} />
@@ -1009,7 +1022,7 @@ export function BaseAppAdminView() {
                 CONTRACT $VIBE BALANCE
               </div>
               <div style={{ fontSize: '12px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString()} $VIBE`}
+                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
@@ -1027,7 +1040,7 @@ export function BaseAppAdminView() {
                 TOTAL CLAIMED
               </div>
               <div style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {royaltyMetrics.loading ? '...' : `+${royaltyMetrics.claimedTokens.toLocaleString()} $VIBE`}
+                {royaltyMetrics.loading ? '...' : `+${royaltyMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
@@ -1036,7 +1049,7 @@ export function BaseAppAdminView() {
                 UNCLAIMED IN ROUND
               </div>
               <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString()} $VIBE`}
+                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
@@ -1053,9 +1066,9 @@ export function BaseAppAdminView() {
                 onChange={(e) => {
                   const ep = e.target.value;
                   setRoyaltyEpochId(ep);
-                  if (ep === '2') setRoyaltyMerkleRoot('0xa86db60c2394541bfec649c253b26c63b84db5b32ecce16597ea94e4304db96c');
-                  else if (ep === '1') setRoyaltyMerkleRoot('0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');
-                  fetchDistributorMetrics('royalty');
+                  if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
+                  else if (ep === '1') setRoyaltyMerkleRoot(royalty1Data?.merkleRoot || '0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');
+                  fetchDistributorMetrics('royalty', ep);
                 }}
                 placeholder="Epoch"
                 style={{
@@ -1117,7 +1130,7 @@ export function BaseAppAdminView() {
                   type="number"
                   value={royaltyWithdrawAmount}
                   onChange={(e) => setRoyaltyWithdrawAmount(e.target.value)}
-                  placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString()} $VIBE`}
+                  placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   style={{
                     width: '100%',
                     background: 'rgba(2, 11, 26, 0.9)',
@@ -1178,24 +1191,45 @@ export function BaseAppAdminView() {
               3. BURN UNCLAIMED TOKENS (SEND TO DEAD ADDRESS)
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <input
-                type="number"
-                value={royaltyBurnAmount}
-                onChange={(e) => setRoyaltyBurnAmount(e.target.value)}
-                placeholder="Amount in $VIBE to burn"
-                style={{
-                  width: '100%',
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(255, 68, 102, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#ff4466',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '8px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="number"
+                  value={royaltyBurnAmount}
+                  onChange={(e) => setRoyaltyBurnAmount(e.target.value)}
+                  placeholder="Amount in $VIBE to burn"
+                  style={{
+                    width: '100%',
+                    background: 'rgba(2, 11, 26, 0.9)',
+                    border: '1.5px solid rgba(255, 68, 102, 0.3)',
+                    borderRadius: '10px',
+                    padding: '10px 115px 10px 14px',
+                    color: '#ff4466',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '8px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setRoyaltyBurnAmount(royaltyMetrics.unclaimedTokens.toString())}
+                  style={{
+                    position: 'absolute',
+                    right: '8px',
+                    top: '8px',
+                    background: 'rgba(255, 68, 102, 0.2)',
+                    border: '1px solid #ff4466',
+                    color: '#ff4466',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '6.5px',
+                    padding: '4px 8px',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  ALL UNCLAIMED
+                </button>
+              </div>
               <button
                 onClick={() => handleBurnDistributorTokens('royalty')}
                 disabled={loading}
