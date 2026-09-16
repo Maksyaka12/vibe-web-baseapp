@@ -13,8 +13,7 @@ import {
   Crown,
   Sparkles,
   AlertTriangle,
-  RefreshCw,
-  Settings
+  RefreshCw
 } from 'lucide-react';
 
 export const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
@@ -125,7 +124,6 @@ export function BaseAppAdminView() {
 
   const [adminEthInput, setAdminEthInput] = useState('0.005');
   const [adminGiveawayRecipient, setAdminGiveawayRecipient] = useState('');
-  const [isRouterEditOpen, setIsRouterEditOpen] = useState(false);
   const [customRouterInput, setCustomRouterInput] = useState('');
   const [isCustomRouterSaving, setIsCustomRouterSaving] = useState(false);
   const [customRouterSuccess, setCustomRouterSuccess] = useState(false);
@@ -443,7 +441,6 @@ export function BaseAppAdminView() {
       const hash = await sendAdminTx(NFT_CONTRACT_ADDRESS, dataHex);
       setTxHash(hash);
       setCustomRouterSuccess(true);
-      setIsRouterEditOpen(false);
       await refetchNftState();
     } catch (e) {
       console.error('Set Custom Router error:', e);
@@ -1256,436 +1253,327 @@ export function BaseAppAdminView() {
       )}
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* TAB 3: VIBE CLUB (NFT MINT ADMIN PANEL - MATCHING ORIGINAL DESIGN)   */}
+      {/* TAB 3: VIBE CLUB (MATCHING HOLDERS & ROYALTIES UNIFIED STRUCTURE)    */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {activeTab === 'nft' && (
-        <div
-          style={{
-            background: 'rgba(4, 14, 36, 0.95)',
-            border: '2px dashed #ffd700',
-            borderRadius: '18px',
-            padding: '22px',
-            boxShadow: '0 0 24px rgba(255, 215, 0, 0.15)',
-            boxSizing: 'border-box'
-          }}
-        >
-          {/* Header Bar with Live Contract Badges */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              flexWrap: 'wrap',
-              gap: '12px',
-              marginBottom: '16px'
-            }}
-          >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* Header & Contract Link */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ color: '#ffd700', fontSize: '13px' }}>⚡</span>
-              <h3
-                style={{
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '11px',
-                  color: '#ffd700',
-                  margin: 0,
-                  fontWeight: 900,
-                  letterSpacing: '0.5px'
-                }}
-              >
-                ADMIN PANEL: SWAP & AUTO-BURN
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffd700', boxShadow: '0 0 8px #ffd700' }} />
+              <h3 style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+                VIBE CLUB NFT CONTROLS
               </h3>
             </div>
+            <a
+              href="https://basescan.org/address/0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886"
+              target="_blank"
+              rel="noreferrer"
+              style={{ fontSize: '7.5px', color: '#ffd700', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace" }}
+            >
+              CA: 0x9E92...b886 ↗
+            </a>
+          </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-              <div
+          {/* 3 Metric Cards (Balance VIBE, Balance ETH, Current DEX Router) */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+                CONTRACT $VIBE BALANCE
+              </div>
+              <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                {Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE
+              </div>
+            </div>
+
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+                CONTRACT ETH BALANCE
+              </div>
+              <div style={{ fontSize: '12px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                {parseFloat(contractEthBalance || '0').toFixed(4)} ETH
+              </div>
+            </div>
+
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+                CURRENT DEX ROUTER
+              </div>
+              <div style={{ fontSize: '11px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, wordBreak: 'break-all' }}>
+                {aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'}
+              </div>
+            </div>
+          </div>
+
+          {/* Action 1: Execute Swap & Burn */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 215, 0, 0.3)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '8px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+              1. EXECUTE SWAP & BURN
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="number"
+                  step="0.001"
+                  min="0.0001"
+                  value={adminEthInput}
+                  onChange={(e) => setAdminEthInput(e.target.value)}
+                  placeholder="0.005"
+                  style={{
+                    width: '100%',
+                    background: 'rgba(2, 11, 26, 0.9)',
+                    border: '1.5px solid rgba(255, 215, 0, 0.3)',
+                    borderRadius: '10px',
+                    padding: '10px 170px 10px 14px',
+                    color: '#ffd700',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '8px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+                <div style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '4px' }}>
+                  {['0.001', '0.005', contractEthBalance || '0.005'].map((preset, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setAdminEthInput(Number(preset).toFixed(4))}
+                      style={{
+                        background: 'rgba(255, 215, 0, 0.15)',
+                        border: '1px solid rgba(255, 215, 0, 0.4)',
+                        color: '#ffd700',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontSize: '6.5px',
+                        padding: '4px 6px',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: 800
+                      }}
+                    >
+                      {idx === 2 ? 'MAX' : `${preset}`}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button
+                onClick={() => executeAdminSwapAndBurn(adminEthInput)}
+                disabled={isAdminSwapping || parseFloat(adminEthInput || '0') <= 0}
                 style={{
-                  padding: '6px 12px',
-                  background: 'rgba(0, 245, 255, 0.12)',
-                  border: '1.5px solid #00f5ff',
-                  borderRadius: '99px',
-                  color: '#00f5ff',
+                  background: 'linear-gradient(135deg, #ffd700 0%, #ff4466 100%)',
+                  border: '1.5px solid #ffffff',
+                  color: '#ffffff',
                   fontFamily: "'Press Start 2P', monospace",
                   fontSize: '7.5px',
-                  fontWeight: 900
+                  fontWeight: 900,
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  cursor: isAdminSwapping ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap',
+                  boxShadow: '0 0 16px rgba(255, 68, 102, 0.3)'
                 }}
               >
-                CONTRACT ETH: {contractEthBalance || '0.0000'} ETH
-              </div>
+                {isAdminSwapping ? 'PROCESSING...' : `🔥 SWAP & BURN (${adminEthInput} ETH)`}
+              </button>
+            </div>
+          </div>
 
-              <div
+          {/* Action 2: Withdraw $VIBE to Admin Wallet */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 215, 0, 0.3)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '8px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+              2. WITHDRAW $VIBE TO ADMIN WALLET
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="text"
+                  readOnly
+                  value={`CONTRACT BALANCE: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(2, 11, 26, 0.9)',
+                    border: '1.5px solid rgba(255, 215, 0, 0.3)',
+                    borderRadius: '10px',
+                    padding: '10px 14px',
+                    color: '#ffd700',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '8px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
+              </div>
+              <button
+                onClick={executeWithdrawVibe}
+                disabled={isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0}
                 style={{
-                  padding: '6px 12px',
-                  background: 'rgba(255, 215, 0, 0.12)',
+                  background: 'linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)',
                   border: '1.5px solid #ffd700',
-                  borderRadius: '99px',
-                  color: '#ffd700',
+                  color: '#020b1a',
                   fontFamily: "'Press Start 2P', monospace",
                   fontSize: '7.5px',
-                  fontWeight: 900
+                  fontWeight: 900,
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  cursor: (isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap'
                 }}
               >
-                CONTRACT $VIBE: {Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE
+                {isWithdrawingVibe ? 'PROCESSING...' : 'WITHDRAW $VIBE'}
+              </button>
+            </div>
+          </div>
+
+          {/* Action 3: Withdraw $ETH to Admin Wallet */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+              3. WITHDRAW $ETH TO ADMIN WALLET
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
+              <div style={{ position: 'relative', width: '100%' }}>
+                <input
+                  type="text"
+                  readOnly
+                  value={`CONTRACT BALANCE: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(2, 11, 26, 0.9)',
+                    border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                    borderRadius: '10px',
+                    padding: '10px 14px',
+                    color: '#00f5ff',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '8px',
+                    outline: 'none',
+                    boxSizing: 'border-box'
+                  }}
+                />
               </div>
+              <button
+                onClick={executeWithdrawEth}
+                disabled={isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0}
+                style={{
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
+                  color: '#020b1a',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '7.5px',
+                  fontWeight: 900,
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  cursor: (isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0) ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {isWithdrawingEth ? 'PROCESSING...' : 'WITHDRAW $ETH'}
+              </button>
             </div>
           </div>
 
-          {/* Router Status & Settings */}
-          <div style={{ marginBottom: '14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
-            <div
-              style={{
-                padding: '6px 12px',
-                background: 'rgba(0, 255, 136, 0.1)',
-                border: '1px solid #00ff88',
-                borderRadius: '8px',
-                color: '#00ff88',
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '7.5px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              <span>✓ ON-CHAIN DEX ROUTER CONNECTED ({aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'})</span>
+          {/* Action 4: Mint to Admin Wallet (or Giveaway Recipient) */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+              4. MINT TO ADMIN WALLET (OR WINNER RECIPIENT)
             </div>
-
-            <button
-              onClick={() => setIsRouterEditOpen(!isRouterEditOpen)}
-              style={{
-                background: 'rgba(4, 20, 48, 0.8)',
-                border: '1px solid rgba(0, 245, 255, 0.3)',
-                color: '#88aacc',
-                borderRadius: '6px',
-                padding: '5px 8px',
-                fontSize: '7px',
-                fontFamily: "'Press Start 2P', monospace",
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              <Settings size={10} />
-              <span>{isRouterEditOpen ? 'CLOSE ROUTER SETTINGS' : 'CHANGE ROUTER'}</span>
-            </button>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: '10px', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={adminGiveawayRecipient}
+                onChange={(e) => setAdminGiveawayRecipient(e.target.value)}
+                placeholder={activeAddress || '0x... (Leave empty for Admin Wallet)'}
+                style={{
+                  background: 'rgba(2, 11, 26, 0.9)',
+                  border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  color: '#00f5ff',
+                  fontFamily: 'monospace',
+                  fontSize: '8.5px',
+                  outline: 'none',
+                  boxSizing: 'border-box'
+                }}
+              />
+              <button
+                onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)}
+                disabled={isAdminPaidMinting}
+                style={{
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
+                  color: '#020b1a',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '7.5px',
+                  fontWeight: 900,
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {isAdminPaidMinting ? 'MINTING...' : `MINT WITH ETH (${ethPriceFormatted} ETH)`}
+              </button>
+              <button
+                onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
+                disabled={isAdminPaidMinting}
+                style={{
+                  background: 'linear-gradient(135deg, #ff9900 0%, #ff5500 100%)',
+                  border: '1.5px solid #ff9900',
+                  color: '#ffffff',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '7.5px',
+                  fontWeight: 900,
+                  padding: '12px 14px',
+                  borderRadius: '10px',
+                  cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH $VIBE'}
+              </button>
+            </div>
           </div>
 
-          {/* Optional Router Setter Field */}
-          {isRouterEditOpen && (
-            <div style={{ background: 'rgba(2, 11, 26, 0.9)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '10px', padding: '12px', marginBottom: '14px', display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+          {/* Action 5: Set New DEX Router */}
+          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '8px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+              5. SET NEW DEX ROUTER
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
               <input
                 type="text"
                 value={customRouterInput}
                 onChange={(e) => setCustomRouterInput(e.target.value)}
                 placeholder={aggregatorRouterAddress || '0x6131B5fae19EA4f9D964eAc0408E4408b66337b5'}
                 style={{
-                  flex: 1,
-                  minWidth: '220px',
-                  background: 'rgba(4, 20, 48, 0.9)',
-                  border: '1px solid #00f5ff',
-                  borderRadius: '6px',
-                  padding: '8px 10px',
-                  color: '#ffffff',
+                  width: '100%',
+                  background: 'rgba(2, 11, 26, 0.9)',
+                  border: '1.5px solid rgba(168, 85, 247, 0.3)',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  color: '#c084fc',
                   fontFamily: 'monospace',
-                  fontSize: '8px',
-                  outline: 'none'
+                  fontSize: '8.5px',
+                  outline: 'none',
+                  boxSizing: 'border-box'
                 }}
               />
               <button
                 onClick={handleSaveCustomRouter}
                 disabled={isCustomRouterSaving}
                 style={{
-                  background: '#00f5ff',
+                  background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
+                  border: '1.5px solid #c084fc',
                   color: '#020b1a',
-                  border: 'none',
-                  borderRadius: '6px',
-                  padding: '9px 14px',
                   fontFamily: "'Press Start 2P', monospace",
                   fontSize: '7.5px',
                   fontWeight: 900,
-                  cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer'
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {isCustomRouterSaving ? 'SAVING...' : 'SET ROUTER'}
               </button>
-            </div>
-          )}
-
-          {/* Subtitle description */}
-          <p
-            style={{
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '7.5px',
-              color: '#a0b5d0',
-              lineHeight: 1.6,
-              marginBottom: '14px',
-              textTransform: 'uppercase'
-            }}
-          >
-            EXECUTE 'ADMINSWAPANDBURN' WITH LIVE DEX ROUTER CALLDATA TO SWAP CONTRACT ETH INTO $VIBE & BURN 80% TO DEAD ADDRESS.
-          </p>
-
-          {/* ETH Amount Input & Quick Amount Buttons */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '10px',
-              alignItems: 'center',
-              marginBottom: '12px',
-              flexWrap: 'wrap'
-            }}
-          >
-            <div style={{ flex: 1, minWidth: '140px', position: 'relative' }}>
-              <input
-                type="number"
-                step="0.001"
-                min="0.0001"
-                value={adminEthInput}
-                onChange={(e) => setAdminEthInput(e.target.value)}
-                placeholder="0.005"
-                style={{
-                  width: '100%',
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid #ffd700',
-                  borderRadius: '10px',
-                  color: '#ffd700',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '11px',
-                  padding: '10px 48px 10px 14px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
-                }}
-              />
-              <span
-                style={{
-                  position: 'absolute',
-                  right: '14px',
-                  top: '12px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '9px',
-                  color: '#88aacc',
-                  fontWeight: 800
-                }}
-              >
-                ETH
-              </span>
-            </div>
-
-            {/* Quick Amount Preset Buttons */}
-            <div style={{ display: 'flex', gap: '6px' }}>
-              {['0.001', '0.005', contractEthBalance || '0.005'].map((preset, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setAdminEthInput(Number(preset).toFixed(4))}
-                  style={{
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    background: 'rgba(255, 215, 0, 0.15)',
-                    border: '1px solid rgba(255, 215, 0, 0.5)',
-                    color: '#ffd700',
-                    padding: '8px 10px',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    fontWeight: 900
-                  }}
-                >
-                  {idx === 2 ? 'MAX' : `${preset}`}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Action Buttons Column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {/* Execute Swap & Burn */}
-            <button
-              onClick={() => executeAdminSwapAndBurn(adminEthInput)}
-              disabled={isAdminSwapping || isWithdrawingEth || isWithdrawingVibe || parseFloat(adminEthInput || '0') <= 0}
-              style={{
-                width: '100%',
-                height: '44px',
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '9.5px',
-                fontWeight: 900,
-                background: 'linear-gradient(135deg, #ffd700 0%, #ff4466 100%)',
-                border: '2px solid #ffffff',
-                borderRadius: '10px',
-                color: '#ffffff',
-                cursor: (isAdminSwapping || isWithdrawingEth || isWithdrawingVibe) ? 'not-allowed' : 'pointer',
-                boxShadow: '0 4px 16px rgba(255, 68, 102, 0.4)',
-                letterSpacing: '0.5px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                textTransform: 'uppercase'
-              }}
-            >
-              {isAdminSwapping ? '⏳ SWAPPING & BURNING...' : `🔥 EXECUTE SWAP & BURN (${adminEthInput} ETH)`}
-            </button>
-
-            {/* Withdraw All ETH to Admin Wallet */}
-            <button
-              onClick={executeWithdrawEth}
-              disabled={isWithdrawingEth || isAdminSwapping || isWithdrawingVibe || parseFloat(contractEthBalance || '0') <= 0}
-              style={{
-                width: '100%',
-                height: '38px',
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '8.5px',
-                fontWeight: 900,
-                background: 'rgba(0, 245, 255, 0.12)',
-                border: '1.5px solid #00f5ff',
-                borderRadius: '10px',
-                color: '#00f5ff',
-                cursor: (isWithdrawingEth || isAdminSwapping || isWithdrawingVibe) ? 'not-allowed' : 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                textTransform: 'uppercase',
-                boxShadow: '0 0 12px rgba(0, 245, 255, 0.2)'
-              }}
-            >
-              {isWithdrawingEth ? '⏳ WITHDRAWING ETH...' : `💸 WITHDRAW ALL ETH TO ADMIN WALLET (${parseFloat(contractEthBalance || '0').toFixed(4)} ETH)`}
-            </button>
-
-            {/* Withdraw All VIBE to Admin Wallet */}
-            <button
-              onClick={executeWithdrawVibe}
-              disabled={isWithdrawingVibe || isAdminSwapping || isWithdrawingEth || parseFloat(contractVibeBalance || '0') <= 0}
-              style={{
-                width: '100%',
-                height: '38px',
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '8.5px',
-                fontWeight: 900,
-                background: 'rgba(255, 215, 0, 0.12)',
-                border: '1.5px solid #ffd700',
-                borderRadius: '10px',
-                color: '#ffd700',
-                cursor: (isWithdrawingVibe || isAdminSwapping || isWithdrawingEth) ? 'not-allowed' : 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                textTransform: 'uppercase',
-                boxShadow: '0 0 12px rgba(255, 215, 0, 0.2)'
-              }}
-            >
-              {isWithdrawingVibe ? '⏳ WITHDRAWING $VIBE...' : `💰 WITHDRAW ALL $VIBE TO ADMIN WALLET (${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE)`}
-            </button>
-          </div>
-
-          {/* ── ADMIN NFT MINT & DIRECT GIVEAWAY SECTION ── */}
-          <div
-            style={{
-              marginTop: '20px',
-              paddingTop: '16px',
-              borderTop: '1px solid rgba(0, 245, 255, 0.25)'
-            }}
-          >
-            <div
-              style={{
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '10px',
-                color: '#00f5ff',
-                marginBottom: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <span style={{ color: '#00f5ff' }}>⚡</span> ADMIN NFT MINT & DIRECT GIVEAWAY (FULL PHASE PRICE)
-            </div>
-
-            <p
-              style={{
-                fontFamily: "'Press Start 2P', monospace",
-                fontSize: '7.5px',
-                color: '#a0b5d0',
-                lineHeight: 1.6,
-                marginBottom: '14px',
-                textTransform: 'uppercase'
-              }}
-            >
-              MINT NFTS AT FULL PHASE PRICE AND AUTOMATICALLY SEND THEM DIRECTLY TO A WINNER ADDRESS (OR YOUR OWN WALLET). 80% BURNS $VIBE & 20% GOES TO REWARDS POOL.
-            </p>
-
-            <div
-              style={{
-                background: 'rgba(2, 11, 26, 0.6)',
-                border: '1px solid rgba(0, 245, 255, 0.3)',
-                borderRadius: '10px',
-                padding: '12px',
-                marginBottom: '12px'
-              }}
-            >
-              <div style={{ marginBottom: '10px' }}>
-                <div style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '4px' }}>
-                  RECIPIENT ADDRESS (LEAVE EMPTY TO MINT TO YOUR ADMIN WALLET):
-                </div>
-                <input
-                  type="text"
-                  value={adminGiveawayRecipient}
-                  onChange={(e) => setAdminGiveawayRecipient(e.target.value)}
-                  placeholder={activeAddress || '0x... (Winner / Destination Address)'}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1px solid #00f5ff',
-                    borderRadius: '8px',
-                    color: '#00f5ff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    padding: '8px 10px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
-                />
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                <button
-                  onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)}
-                  disabled={isAdminPaidMinting}
-                  style={{
-                    height: '42px',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    fontWeight: 900,
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                    border: '1.5px solid #ffffff',
-                    borderRadius: '8px',
-                    color: '#020b1a',
-                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
-                    textTransform: 'uppercase',
-                    boxShadow: '0 0 12px rgba(0, 245, 255, 0.25)'
-                  }}
-                >
-                  {isAdminPaidMinting ? '⏳ MINTING...' : `MINT WITH ETH (${ethPriceFormatted} ETH)`}
-                </button>
-
-                <button
-                  onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
-                  disabled={isAdminPaidMinting}
-                  style={{
-                    height: '42px',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    fontWeight: 900,
-                    background: 'linear-gradient(135deg, #ff9900 0%, #ff5500 100%)',
-                    border: '1.5px solid #ffffff',
-                    borderRadius: '8px',
-                    color: '#ffffff',
-                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
-                    textTransform: 'uppercase',
-                    boxShadow: '0 0 12px rgba(255, 153, 0, 0.25)'
-                  }}
-                >
-                  {isAdminPaidMinting ? '⏳ MINTING...' : 'MINT WITH $VIBE'}
-                </button>
-              </div>
             </div>
           </div>
 
