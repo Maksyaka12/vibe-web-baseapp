@@ -562,7 +562,7 @@ export function BaseAppAdminView() {
     border: `1.5px solid ${borderColor}`,
     color: textColor,
     fontFamily: "'Press Start 2P', monospace",
-    fontSize: '7.5px',
+    fontSize: '8.5px',
     fontWeight: 900,
     letterSpacing: '0.4px',
     padding: '0 18px',
