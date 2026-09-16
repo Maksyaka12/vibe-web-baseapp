@@ -995,7 +995,7 @@ export function BaseAppAdminView() {
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
-                {loading ? 'PROCESSING...' : '🔥 BURN TOKENS'}
+                {loading ? 'PROCESSING...' : 'BURN TOKENS'}
               </button>
             </div>
           </div>
@@ -1198,7 +1198,7 @@ export function BaseAppAdminView() {
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
-                {loading ? 'PROCESSING...' : '🔥 BURN TOKENS'}
+                {loading ? 'PROCESSING...' : 'BURN TOKENS'}
               </button>
             </div>
           </div>
@@ -1304,7 +1304,7 @@ export function BaseAppAdminView() {
                   cursor: (isAdminSwapping || parseFloat(adminEthInput || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
-                {isAdminSwapping ? 'PROCESSING...' : `🔥 SWAP & BURN (${adminEthInput} ETH)`}
+                {isAdminSwapping ? 'PROCESSING...' : 'SWAP & BURN'}
               </button>
             </div>
           </div>
@@ -1394,7 +1394,7 @@ export function BaseAppAdminView() {
                     padding: '0 16px'
                   }}
                 >
-                  {isAdminPaidMinting ? 'MINTING...' : `MINT WITH ETH (${ethPriceFormatted} ETH)`}
+                  {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH ETH'}
                 </button>
                 <button
                   onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
