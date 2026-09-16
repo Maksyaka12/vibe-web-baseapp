@@ -14,10 +14,13 @@ import {
   FileCode2,
   ChevronDown,
   ArrowUpRight,
-  Home
+  Home,
+  ShieldCheck
 } from 'lucide-react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAccount, useDisconnect } from 'wagmi';
+
+const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
 
 const shortAddress = (a) => (a ? a.slice(0, 6) + '...' + a.slice(-4) : '');
 
@@ -113,6 +116,7 @@ export function BaseAppSidebar({
 
   const activeAddress = user?.wallet?.address || wallets?.[0]?.address || wagmiAddress;
   const hasWallet = (authenticated && !!activeAddress) || (isWagmiConnected && !!wagmiAddress);
+  const isAdmin = hasWallet && !!activeAddress && activeAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
 
   const handleCopy = () => {
     if (!activeAddress) return;
@@ -739,6 +743,88 @@ export function BaseAppSidebar({
 
           </div>
         </div>
+
+        {/* Admin Panel (Only visible to Admin Wallet) */}
+        {isAdmin && (
+          <div style={{ marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px dashed rgba(255, 68, 102, 0.4)' }}>
+            {isCollapsed ? (
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  onClick={() => {
+                    onSelectTab('admin');
+                    if (!isDesktop) onClose();
+                  }}
+                  title="Admin Panel"
+                  style={{
+                    width: '38px',
+                    height: '38px',
+                    borderRadius: '8px',
+                    background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.25)' : 'rgba(255, 68, 102, 0.1)',
+                    border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.4)',
+                    color: '#ff4466',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.4)' : 'none',
+                    transition: 'all 0.15s ease'
+                  }}
+                >
+                  <ShieldCheck size={16} strokeWidth={2.5} />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => {
+                  onSelectTab('admin');
+                  if (!isDesktop) onClose();
+                }}
+                title="Admin Panel"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: isDesktop ? '10px' : '8px',
+                  width: '100%',
+                  padding: isDesktop ? '9px 11px' : '7px 9px',
+                  borderRadius: '10px',
+                  border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.4)',
+                  background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.2)' : 'rgba(255, 68, 102, 0.08)',
+                  color: activeTab === 'admin' ? '#ff4466' : '#ff7799',
+                  fontSize: isDesktop ? '8.5px' : '7px',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.15s ease',
+                  boxShadow: activeTab === 'admin' ? '0 0 14px rgba(255, 68, 102, 0.35)' : '0 0 8px rgba(255, 68, 102, 0.1)',
+                  fontFamily: "'Press Start 2P', monospace",
+                  textTransform: 'uppercase'
+                }}
+              >
+                <div
+                  style={{
+                    width: isDesktop ? '26px' : '22px',
+                    height: isDesktop ? '26px' : '22px',
+                    borderRadius: '6px',
+                    background: activeTab === 'admin' ? '#ff4466' : 'rgba(255, 68, 102, 0.15)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: activeTab === 'admin' ? '#FFFFFF' : '#ff4466',
+                    flexShrink: 0
+                  }}
+                >
+                  <ShieldCheck size={isDesktop ? 15 : 13} strokeWidth={2.5} />
+                </div>
+                <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  Admin Panel
+                </span>
+                <span style={{ fontSize: '6px', color: '#ff4466', padding: '2px 5px', borderRadius: '4px', background: 'rgba(255, 68, 102, 0.2)', border: '1px solid rgba(255, 68, 102, 0.4)' }}>
+                  ROOT
+                </span>
+              </button>
+            )}
+          </div>
+        )}
 
         {/* Footer: Wallet status */}
         <div style={{ paddingTop: '16px', borderTop: '1.5px solid rgba(0, 245, 255, 0.18)', marginTop: '16px' }}>

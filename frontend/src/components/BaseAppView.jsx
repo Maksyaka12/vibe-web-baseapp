@@ -9,6 +9,7 @@ import NftClubPage from '../pages/NftClubPage';
 import DeFiVibePanel from './DeFiVibePanel';
 import TokenomicsPage from '../pages/TokenomicsPage';
 import ContractsPage from '../pages/ContractsPage';
+import BaseAppAdminView from './BaseAppAdminView';
 import './BaseAppTheme.css';
 
 class BaseAppErrorBoundary extends React.Component {
@@ -104,6 +105,7 @@ export function BaseAppView({ RewardsComponent }) {
 
   const getInitialTab = () => {
     const path = location.pathname.toLowerCase();
+    if (path.includes('admin')) return 'admin';
     if (path.includes('buy') || path.includes('swap') || path.includes('exchange') || path.includes('trade')) return 'buy';
     if (path.includes('claim') || path.includes('checker') || path.includes('portal')) return 'claim';
     if (path.includes('vibeclub') || path.includes('vibe-club') || path.includes('mint') || path.includes('nft') || path.includes('nft-club')) return 'vibeclub';
@@ -130,6 +132,8 @@ export function BaseAppView({ RewardsComponent }) {
 
     if (tabId === 'home') {
       navigate('/', { replace: false });
+    } else if (tabId === 'admin') {
+      navigate(prefix ? '/app/admin' : '/admin', { replace: false });
     } else if (tabId === 'buy') {
       navigate(prefix ? '/app/buy' : '/buy', { replace: false });
     } else if (tabId === 'claim') {
@@ -333,6 +337,8 @@ export function BaseAppView({ RewardsComponent }) {
               <TokenomicsPage isBaseAppMode={true} />
             ) : activeTab === 'contracts' ? (
               <ContractsPage isBaseAppMode={true} />
+            ) : activeTab === 'admin' ? (
+              <BaseAppAdminView />
             ) : (
               RewardsComponent ? <RewardsComponent isBaseAppMode={true} /> : null
             )}

@@ -3640,6 +3640,7 @@ function DomainRouter() {
       {/* ── Main App Routes (Unified BaseAppView with Collapsible Sidebar) ── */}
       <Route path="/app" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/app/*" element={<BaseAppView RewardsComponent={Rewards} />} />
+      <Route path="/admin" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/tokenomics" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/hub" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/rewards" element={<BaseAppView RewardsComponent={Rewards} />} />

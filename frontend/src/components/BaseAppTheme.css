@@ -2221,4 +2221,19 @@ html, body {
   background: rgba(0, 245, 255, 0.5);
 }
 
+/* ── Admin Panel Styles ── */
+.admin-view-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .admin-view-container {
+    padding: 28px 24px 80px 24px !important;
+  }
+}
+
+
 
