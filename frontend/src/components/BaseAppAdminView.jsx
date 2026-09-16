@@ -522,12 +522,85 @@ export function BaseAppAdminView() {
     );
   }
 
+  // Consistent Pixel UI Style Constants
+  const ACTION_CARD_STYLE = (borderColor) => ({
+    background: 'rgba(4, 20, 48, 0.85)',
+    border: `1.5px solid ${borderColor}`,
+    borderRadius: '16px',
+    padding: '18px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.35)'
+  });
+
+  const ACTION_HEADER_STYLE = (color) => ({
+    fontSize: '8px',
+    color: color,
+    fontFamily: "'Press Start 2P', monospace",
+    fontWeight: 900,
+    marginBottom: '14px',
+    letterSpacing: '0.4px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px'
+  });
+
+  const INPUT_STYLE = (borderColor, textColor = '#ffffff', isMonospace = false) => ({
+    height: '42px',
+    background: 'rgba(2, 11, 26, 0.9)',
+    border: `1.5px solid ${borderColor}`,
+    borderRadius: '10px',
+    padding: '0 14px',
+    color: textColor,
+    fontFamily: isMonospace ? 'monospace' : "'Press Start 2P', monospace",
+    fontSize: isMonospace ? '8.5px' : '8px',
+    outline: 'none',
+    boxSizing: 'border-box'
+  });
+
+  const ACTION_BTN_STYLE = (bgGradient, borderColor, textColor = '#020b1a', isDanger = false) => ({
+    height: '42px',
+    background: bgGradient,
+    border: `1.5px solid ${borderColor}`,
+    color: textColor,
+    fontFamily: "'Press Start 2P', monospace",
+    fontSize: '7.5px',
+    fontWeight: 900,
+    letterSpacing: '0.4px',
+    padding: '0 18px',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxSizing: 'border-box',
+    boxShadow: isDanger ? '0 0 16px rgba(255, 68, 102, 0.3)' : 'none',
+    transition: 'all 0.15s ease'
+  });
+
+  const BADGE_BTN_STYLE = (bg, border, color) => ({
+    height: '26px',
+    background: bg,
+    border: `1px solid ${border}`,
+    color: color,
+    fontFamily: "'Press Start 2P', monospace",
+    fontSize: '6.5px',
+    fontWeight: 800,
+    padding: '0 8px',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxSizing: 'border-box',
+    transition: 'all 0.15s ease'
+  });
+
   return (
     <div className="admin-view-container" style={{ padding: '20px 12px 80px 12px', maxWidth: '1100px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
       
       {/* Header Banner */}
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '20px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0 0 10px 0', letterSpacing: '0.6px' }}>
+        <h2 style={{ fontSize: '18px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0 0 10px 0', letterSpacing: '0.6px' }}>
           ADMIN <span style={{ color: '#ff4466' }}>PANEL</span>
         </h2>
 
@@ -559,18 +632,21 @@ export function BaseAppAdminView() {
               else refetchNftState();
             }}
             style={{
+              height: '36px',
               background: 'rgba(4, 20, 48, 0.9)',
               border: '1.5px solid rgba(0, 245, 255, 0.35)',
               color: '#00f5ff',
               borderRadius: '8px',
-              padding: '7px 12px',
+              padding: '0 12px',
               fontFamily: "'Press Start 2P', monospace",
               fontSize: '7px',
               fontWeight: 800,
               cursor: 'pointer',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '6px'
+              justifyContent: 'center',
+              gap: '6px',
+              boxSizing: 'border-box'
             }}
           >
             <RefreshCw size={12} />
@@ -733,7 +809,7 @@ export function BaseAppAdminView() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-              <h3 style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 HOLDER REWARDS VESTING CONTROLS
               </h3>
             </div>
@@ -741,7 +817,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#88aacc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace" }}
+              style={{ fontSize: '7.5px', color: '#88aacc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
             >
               CA: 0x77e0...d089 ↗
             </a>
@@ -749,49 +825,49 @@ export function BaseAppAdminView() {
 
           {/* 4 Metric Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 CONTRACT $VIBE BALANCE
               </div>
-              <div style={{ fontSize: '12px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 WALLETS CLAIMED
               </div>
-              <div style={{ fontSize: '12px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.claimedWalletsCount} / ${holderMetrics.totalWalletsCount}`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 TOTAL CLAIMED
               </div>
-              <div style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {holderMetrics.loading ? '...' : `+${holderMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 UNCLAIMED IN ROUND
               </div>
-              <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
 
           {/* Action 1: Set Merkle Root */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(0, 245, 255, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#00f5ff')}>
               1. PUBLISH MERKLE ROOT PROOF
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr auto', gap: '10px', alignItems: 'center' }}>
+            <div className="admin-action-row">
               <input
                 type="number"
                 value={holderEpochId}
@@ -805,14 +881,10 @@ export function BaseAppAdminView() {
                 }}
                 placeholder="Round"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '8px',
-                  outline: 'none'
+                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#ffffff'),
+                  width: '90px',
+                  padding: '0 10px',
+                  textAlign: 'center'
                 }}
               />
               <input
@@ -821,30 +893,16 @@ export function BaseAppAdminView() {
                 onChange={(e) => setHolderMerkleRoot(e.target.value)}
                 placeholder="0x... Merkle Root"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#00f5ff',
-                  fontFamily: 'monospace',
-                  fontSize: '8.5px',
-                  outline: 'none'
+                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff', true),
+                  flex: 1
                 }}
               />
               <button
                 onClick={() => handleSetMerkleRoot('holder')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'SAVING...' : 'PUBLISH ROOT'}
@@ -853,45 +911,32 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw Tokens */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(0, 245, 255, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#00f5ff')}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
                 <input
                   type="number"
                   value={holderWithdrawAmount}
                   onChange={(e) => setHolderWithdrawAmount(e.target.value)}
                   placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   style={{
+                    ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff'),
                     width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 60px 10px 14px',
-                    color: '#00f5ff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
+                    paddingRight: '65px'
                   }}
                 />
                 <button
                   type="button"
                   onClick={() => setHolderWithdrawAmount(holderMetrics.contractBalance.toString())}
                   style={{
+                    ...BADGE_BTN_STYLE('rgba(0, 245, 255, 0.18)', 'rgba(0, 245, 255, 0.45)', '#00f5ff'),
                     position: 'absolute',
                     right: '8px',
-                    top: '8px',
-                    background: 'rgba(0, 245, 255, 0.2)',
-                    border: '1px solid #00f5ff',
-                    color: '#00f5ff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
+                    top: '50%',
+                    transform: 'translateY(-50%)'
                   }}
                 >
                   MAX
@@ -901,16 +946,8 @@ export function BaseAppAdminView() {
                 onClick={() => handleWithdrawDistributorTokens('holder')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'PROCESSING...' : 'WITHDRAW TO ADMIN'}
@@ -919,45 +956,32 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Burn Unclaimed Tokens */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 68, 102, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(255, 68, 102, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#ff4466')}>
               3. BURN UNCLAIMED TOKENS (SEND TO DEAD ADDRESS)
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
                 <input
                   type="number"
                   value={holderBurnAmount}
                   onChange={(e) => setHolderBurnAmount(e.target.value)}
                   placeholder="Amount in $VIBE to burn"
                   style={{
+                    ...INPUT_STYLE('rgba(255, 68, 102, 0.3)', '#ff4466'),
                     width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(255, 68, 102, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 115px 10px 14px',
-                    color: '#ff4466',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
+                    paddingRight: '125px'
                   }}
                 />
                 <button
                   type="button"
                   onClick={() => setHolderBurnAmount(holderMetrics.unclaimedTokens.toString())}
                   style={{
+                    ...BADGE_BTN_STYLE('rgba(255, 68, 102, 0.18)', 'rgba(255, 68, 102, 0.45)', '#ff4466'),
                     position: 'absolute',
                     right: '8px',
-                    top: '8px',
-                    background: 'rgba(255, 68, 102, 0.2)',
-                    border: '1px solid #ff4466',
-                    color: '#ff4466',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
+                    top: '50%',
+                    transform: 'translateY(-50%)'
                   }}
                 >
                   ALL UNCLAIMED
@@ -967,17 +991,8 @@ export function BaseAppAdminView() {
                 onClick={() => handleBurnDistributorTokens('holder')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #ff4466 0%, #cc0033 100%)',
-                  border: '1.5px solid #ff4466',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 0 16px rgba(255, 68, 102, 0.3)'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff4466 0%, #cc0033 100%)', '#ff4466', '#ffffff', true),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'PROCESSING...' : '🔥 BURN TOKENS'}
@@ -998,7 +1013,7 @@ export function BaseAppAdminView() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#c084fc', boxShadow: '0 0 8px #c084fc' }} />
-              <h3 style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 VIBE CLUB ROYALTIES CONTROLS
               </h3>
             </div>
@@ -1006,7 +1021,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#c084fc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace" }}
+              style={{ fontSize: '7.5px', color: '#c084fc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
             >
               CA: 0x3753...97c1 ↗
             </a>
@@ -1014,49 +1029,49 @@ export function BaseAppAdminView() {
 
           {/* 4 Metric Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 CONTRACT $VIBE BALANCE
               </div>
-              <div style={{ fontSize: '12px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 WALLETS CLAIMED
               </div>
-              <div style={{ fontSize: '12px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.claimedWalletsCount} / ${royaltyMetrics.totalWalletsCount}`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(168, 85, 247, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 TOTAL CLAIMED
               </div>
-              <div style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {royaltyMetrics.loading ? '...' : `+${royaltyMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 UNCLAIMED IN ROUND
               </div>
-              <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
 
           {/* Action 1: Set Merkle Root */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(168, 85, 247, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#c084fc')}>
               1. PUBLISH ROYALTIES MERKLE ROOT
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr auto', gap: '10px', alignItems: 'center' }}>
+            <div className="admin-action-row">
               <input
                 type="number"
                 value={royaltyEpochId}
@@ -1069,14 +1084,10 @@ export function BaseAppAdminView() {
                 }}
                 placeholder="Epoch"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(168, 85, 247, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '8px',
-                  outline: 'none'
+                  ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#ffffff'),
+                  width: '90px',
+                  padding: '0 10px',
+                  textAlign: 'center'
                 }}
               />
               <input
@@ -1085,30 +1096,16 @@ export function BaseAppAdminView() {
                 onChange={(e) => setRoyaltyMerkleRoot(e.target.value)}
                 placeholder="0x... Merkle Root"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(168, 85, 247, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#c084fc',
-                  fontFamily: 'monospace',
-                  fontSize: '8.5px',
-                  outline: 'none'
+                  ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc', true),
+                  flex: 1
                 }}
               />
               <button
                 onClick={() => handleSetMerkleRoot('royalty')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
-                  border: '1.5px solid #c084fc',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'SAVING...' : 'PUBLISH ROOT'}
@@ -1117,45 +1114,32 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw Tokens */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(168, 85, 247, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#c084fc')}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
                 <input
                   type="number"
                   value={royaltyWithdrawAmount}
                   onChange={(e) => setRoyaltyWithdrawAmount(e.target.value)}
                   placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   style={{
+                    ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc'),
                     width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(168, 85, 247, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 60px 10px 14px',
-                    color: '#c084fc',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
+                    paddingRight: '65px'
                   }}
                 />
                 <button
                   type="button"
                   onClick={() => setRoyaltyWithdrawAmount(royaltyMetrics.contractBalance.toString())}
                   style={{
+                    ...BADGE_BTN_STYLE('rgba(168, 85, 247, 0.18)', 'rgba(168, 85, 247, 0.45)', '#c084fc'),
                     position: 'absolute',
                     right: '8px',
-                    top: '8px',
-                    background: 'rgba(168, 85, 247, 0.2)',
-                    border: '1px solid #c084fc',
-                    color: '#c084fc',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
+                    top: '50%',
+                    transform: 'translateY(-50%)'
                   }}
                 >
                   MAX
@@ -1165,16 +1149,8 @@ export function BaseAppAdminView() {
                 onClick={() => handleWithdrawDistributorTokens('royalty')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
-                  border: '1.5px solid #c084fc',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'PROCESSING...' : 'WITHDRAW TO ADMIN'}
@@ -1183,45 +1159,32 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Burn Unclaimed Tokens */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 68, 102, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(255, 68, 102, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#ff4466')}>
               3. BURN UNCLAIMED TOKENS (SEND TO DEAD ADDRESS)
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
                 <input
                   type="number"
                   value={royaltyBurnAmount}
                   onChange={(e) => setRoyaltyBurnAmount(e.target.value)}
                   placeholder="Amount in $VIBE to burn"
                   style={{
+                    ...INPUT_STYLE('rgba(255, 68, 102, 0.3)', '#ff4466'),
                     width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(255, 68, 102, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 115px 10px 14px',
-                    color: '#ff4466',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
+                    paddingRight: '125px'
                   }}
                 />
                 <button
                   type="button"
                   onClick={() => setRoyaltyBurnAmount(royaltyMetrics.unclaimedTokens.toString())}
                   style={{
+                    ...BADGE_BTN_STYLE('rgba(255, 68, 102, 0.18)', 'rgba(255, 68, 102, 0.45)', '#ff4466'),
                     position: 'absolute',
                     right: '8px',
-                    top: '8px',
-                    background: 'rgba(255, 68, 102, 0.2)',
-                    border: '1px solid #ff4466',
-                    color: '#ff4466',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    padding: '4px 8px',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
+                    top: '50%',
+                    transform: 'translateY(-50%)'
                   }}
                 >
                   ALL UNCLAIMED
@@ -1231,17 +1194,8 @@ export function BaseAppAdminView() {
                 onClick={() => handleBurnDistributorTokens('royalty')}
                 disabled={loading}
                 style={{
-                  background: 'linear-gradient(135deg, #ff4466 0%, #cc0033 100%)',
-                  border: '1.5px solid #ff4466',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: loading ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 0 16px rgba(255, 68, 102, 0.3)'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff4466 0%, #cc0033 100%)', '#ff4466', '#ffffff', true),
+                  cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 {loading ? 'PROCESSING...' : '🔥 BURN TOKENS'}
@@ -1262,7 +1216,7 @@ export function BaseAppAdminView() {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffd700', boxShadow: '0 0 8px #ffd700' }} />
-              <h3 style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900 }}>
+              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 VIBE CLUB NFT CONTROLS
               </h3>
             </div>
@@ -1270,7 +1224,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#ffd700', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace" }}
+              style={{ fontSize: '7.5px', color: '#ffd700', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
             >
               CA: 0x9E92...b886 ↗
             </a>
@@ -1278,41 +1232,41 @@ export function BaseAppAdminView() {
 
           {/* 3 Metric Cards (Balance VIBE, Balance ETH, Current DEX Router) */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 CONTRACT $VIBE BALANCE
               </div>
-              <div style={{ fontSize: '12px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 CONTRACT ETH BALANCE
               </div>
-              <div style={{ fontSize: '12px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <div style={{ fontSize: '11px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, letterSpacing: '0.3px' }}>
                 {parseFloat(contractEthBalance || '0').toFixed(4)} ETH
               </div>
             </div>
 
-            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
-              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '6px' }}>
+            <div style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.35)', borderRadius: '14px', padding: '14px 16px' }}>
+              <div style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', letterSpacing: '0.4px' }}>
                 CURRENT DEX ROUTER
               </div>
-              <div style={{ fontSize: '11px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, wordBreak: 'break-all' }}>
+              <div style={{ fontSize: '10px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, wordBreak: 'break-all', letterSpacing: '0.3px' }}>
                 {aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'}
               </div>
             </div>
           </div>
 
           {/* Action 1: Execute Swap & Burn */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 215, 0, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(255, 215, 0, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#ffd700')}>
               1. EXECUTE SWAP & BURN
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
                 <input
                   type="number"
                   step="0.001"
@@ -1321,16 +1275,9 @@ export function BaseAppAdminView() {
                   onChange={(e) => setAdminEthInput(e.target.value)}
                   placeholder="0.005"
                   style={{
+                    ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
                     width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(255, 215, 0, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 170px 10px 14px',
-                    color: '#ffd700',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
+                    paddingRight: '175px'
                   }}
                 />
                 <div style={{ position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '4px' }}>
@@ -1340,15 +1287,8 @@ export function BaseAppAdminView() {
                       type="button"
                       onClick={() => setAdminEthInput(Number(preset).toFixed(4))}
                       style={{
-                        background: 'rgba(255, 215, 0, 0.15)',
-                        border: '1px solid rgba(255, 215, 0, 0.4)',
-                        color: '#ffd700',
-                        fontFamily: "'Press Start 2P', monospace",
-                        fontSize: '6.5px',
-                        padding: '4px 6px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontWeight: 800
+                        ...BADGE_BTN_STYLE('rgba(255, 215, 0, 0.18)', 'rgba(255, 215, 0, 0.45)', '#ffd700'),
+                        padding: '0 6px'
                       }}
                     >
                       {idx === 2 ? 'MAX' : `${preset}`}
@@ -1360,17 +1300,8 @@ export function BaseAppAdminView() {
                 onClick={() => executeAdminSwapAndBurn(adminEthInput)}
                 disabled={isAdminSwapping || parseFloat(adminEthInput || '0') <= 0}
                 style={{
-                  background: 'linear-gradient(135deg, #ffd700 0%, #ff4466 100%)',
-                  border: '1.5px solid #ffffff',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: isAdminSwapping ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap',
-                  boxShadow: '0 0 16px rgba(255, 68, 102, 0.3)'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ff4466 100%)', '#ffffff', '#ffffff', true),
+                  cursor: (isAdminSwapping || parseFloat(adminEthInput || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
                 {isAdminSwapping ? 'PROCESSING...' : `🔥 SWAP & BURN (${adminEthInput} ETH)`}
@@ -1379,44 +1310,27 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw $VIBE to Admin Wallet */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(255, 215, 0, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(255, 215, 0, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#ffd700')}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <input
-                  type="text"
-                  readOnly
-                  value={`CONTRACT BALANCE: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(255, 215, 0, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 14px',
-                    color: '#ffd700',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
-                />
-              </div>
+            <div className="admin-action-row">
+              <input
+                type="text"
+                readOnly
+                value={`CONTRACT BALANCE: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
+                style={{
+                  ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
+                  flex: 1,
+                  width: '100%'
+                }}
+              />
               <button
                 onClick={executeWithdrawVibe}
                 disabled={isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0}
                 style={{
-                  background: 'linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)',
-                  border: '1.5px solid #ffd700',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: (isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', '#ffd700', '#020b1a'),
+                  cursor: (isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
                 {isWithdrawingVibe ? 'PROCESSING...' : 'WITHDRAW $VIBE'}
@@ -1425,44 +1339,27 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Withdraw $ETH to Admin Wallet */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(0, 245, 255, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#00f5ff')}>
               3. WITHDRAW $ETH TO ADMIN WALLET
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <input
-                  type="text"
-                  readOnly
-                  value={`CONTRACT BALANCE: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(2, 11, 26, 0.9)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                    borderRadius: '10px',
-                    padding: '10px 14px',
-                    color: '#00f5ff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '8px',
-                    outline: 'none',
-                    boxSizing: 'border-box'
-                  }}
-                />
-              </div>
+            <div className="admin-action-row">
+              <input
+                type="text"
+                readOnly
+                value={`CONTRACT BALANCE: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
+                style={{
+                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff'),
+                  flex: 1,
+                  width: '100%'
+                }}
+              />
               <button
                 onClick={executeWithdrawEth}
                 disabled={isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0}
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: (isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0) ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  cursor: (isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
                 {isWithdrawingEth ? 'PROCESSING...' : 'WITHDRAW $ETH'}
@@ -1470,106 +1367,73 @@ export function BaseAppAdminView() {
             </div>
           </div>
 
-          {/* Action 4: Mint to Admin Wallet (or Giveaway Recipient) */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(0, 245, 255, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          {/* Action 4: Mint to Admin Wallet (or Winner Recipient) */}
+          <div style={ACTION_CARD_STYLE('rgba(0, 245, 255, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#00f5ff')}>
               4. MINT TO ADMIN WALLET (OR WINNER RECIPIENT)
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: '10px', alignItems: 'center' }}>
+            <div className="admin-action-row-wrap">
               <input
                 type="text"
                 value={adminGiveawayRecipient}
                 onChange={(e) => setAdminGiveawayRecipient(e.target.value)}
                 placeholder={activeAddress || '0x... (Leave empty for Admin Wallet)'}
                 style={{
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#00f5ff',
-                  fontFamily: 'monospace',
-                  fontSize: '8.5px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
+                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff', true),
+                  flex: 1,
+                  minWidth: '240px'
                 }}
               />
-              <button
-                onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)}
-                disabled={isAdminPaidMinting}
-                style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {isAdminPaidMinting ? 'MINTING...' : `MINT WITH ETH (${ethPriceFormatted} ETH)`}
-              </button>
-              <button
-                onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
-                disabled={isAdminPaidMinting}
-                style={{
-                  background: 'linear-gradient(135deg, #ff9900 0%, #ff5500 100%)',
-                  border: '1.5px solid #ff9900',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 14px',
-                  borderRadius: '10px',
-                  cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH $VIBE'}
-              </button>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <button
+                  onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)}
+                  disabled={isAdminPaidMinting}
+                  style={{
+                    ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
+                    padding: '0 16px'
+                  }}
+                >
+                  {isAdminPaidMinting ? 'MINTING...' : `MINT WITH ETH (${ethPriceFormatted} ETH)`}
+                </button>
+                <button
+                  onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
+                  disabled={isAdminPaidMinting}
+                  style={{
+                    ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff9900 0%, #ff5500 100%)', '#ff9900', '#ffffff'),
+                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer',
+                    padding: '0 16px'
+                  }}
+                >
+                  {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH $VIBE'}
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Action 5: Set New DEX Router */}
-          <div style={{ background: 'rgba(4, 20, 48, 0.85)', border: '1px solid rgba(168, 85, 247, 0.3)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '8px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '12px' }}>
+          <div style={ACTION_CARD_STYLE('rgba(168, 85, 247, 0.3)')}>
+            <div style={ACTION_HEADER_STYLE('#c084fc')}>
               5. SET NEW DEX ROUTER
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '10px', alignItems: 'center' }}>
+            <div className="admin-action-row">
               <input
                 type="text"
                 value={customRouterInput}
                 onChange={(e) => setCustomRouterInput(e.target.value)}
                 placeholder={aggregatorRouterAddress || '0x6131B5fae19EA4f9D964eAc0408E4408b66337b5'}
                 style={{
-                  width: '100%',
-                  background: 'rgba(2, 11, 26, 0.9)',
-                  border: '1.5px solid rgba(168, 85, 247, 0.3)',
-                  borderRadius: '10px',
-                  padding: '10px 14px',
-                  color: '#c084fc',
-                  fontFamily: 'monospace',
-                  fontSize: '8.5px',
-                  outline: 'none',
-                  boxSizing: 'border-box'
+                  ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc', true),
+                  flex: 1,
+                  width: '100%'
                 }}
               />
               <button
                 onClick={handleSaveCustomRouter}
                 disabled={isCustomRouterSaving}
                 style={{
-                  background: 'linear-gradient(135deg, #a855f7 0%, #c084fc 100%)',
-                  border: '1.5px solid #c084fc',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '7.5px',
-                  fontWeight: 900,
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer'
                 }}
               >
                 {isCustomRouterSaving ? 'SAVING...' : 'SET ROUTER'}

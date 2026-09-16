@@ -2235,5 +2235,35 @@ html, body {
   }
 }
 
+.admin-action-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.admin-action-row-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .admin-action-row,
+  .admin-action-row-wrap {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  .admin-action-row > *,
+  .admin-action-row-wrap > * {
+    width: 100% !important;
+  }
+}
+
+
 
 
