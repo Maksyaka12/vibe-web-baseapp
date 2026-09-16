@@ -6,24 +6,6 @@ import { getPublicClient } from '../config/rpc';
 import { STAKING_CONTRACT, STAKING_VAULTS_INFO } from '../Checker';
 import { useVibeCheckIn } from '../hooks/useVibeCheckIn';
 
-const STREAK_MILESTONES = [
-  { day: 1, label: 'START', sub: 'DAY 1' },
-  { day: 7, label: 'MILESTONE', sub: 'DAY 7' },
-  { day: 14, label: 'MILESTONE', sub: 'DAY 14' },
-  { day: 30, label: 'SBT BADGE', sub: 'DAY 30' }
-];
-
-function getStreakProgressPercent(streak) {
-  if (!streak || streak <= 0) return 0;
-  if (streak === 1) return 8;
-  if (streak < 7) return 8 + ((streak - 1) / 6) * 25.33;
-  if (streak === 7) return 33.33;
-  if (streak < 14) return 33.33 + ((streak - 7) / 7) * 33.33;
-  if (streak === 14) return 66.66;
-  if (streak < 30) return 66.66 + ((streak - 14) / 16) * 33.34;
-  return 100;
-}
-
 function getNftFontSize(name) {
   if (!name) return '13px';
   const len = name.length;
@@ -394,7 +376,7 @@ export function BaseAppProfileView(props) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: '12px',
+            marginBottom: '14px',
             flexWrap: 'wrap',
             gap: '8px'
           }}
@@ -407,7 +389,7 @@ export function BaseAppProfileView(props) {
                 height: '8px',
                 borderRadius: '50%',
                 background: '#ffaa00',
-                boxShadow: '0 0 8px #ffaa00',
+                boxShadow: '0 0 10px #ffaa00',
                 flexShrink: 0,
                 display: 'inline-block'
               }}
@@ -415,7 +397,7 @@ export function BaseAppProfileView(props) {
             <h3
               className="profile-section-title"
               style={{
-                fontSize: '10px',
+                fontSize: '11px',
                 color: '#ffffff',
                 fontFamily: "'Press Start 2P', monospace",
                 margin: 0,
@@ -429,19 +411,19 @@ export function BaseAppProfileView(props) {
           <div
             style={{
               background: 'rgba(255, 170, 0, 0.12)',
-              border: '1px solid rgba(255, 170, 0, 0.4)',
+              border: '1.5px solid rgba(255, 170, 0, 0.4)',
               borderRadius: '8px',
-              padding: '5px 10px',
-              fontSize: '6.5px',
+              padding: '6px 12px',
+              fontSize: '7.5px',
               color: '#ffaa00',
               fontFamily: "'Press Start 2P', monospace",
               fontWeight: 800,
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '5px'
+              gap: '6px'
             }}
           >
-            <Flame size={10} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 3px rgba(255, 170, 0, 0.8))' }} />
+            <Flame size={12} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))' }} />
             <span>ON-CHAIN STREAK</span>
           </div>
         </div>
@@ -453,369 +435,202 @@ export function BaseAppProfileView(props) {
             background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
             border: '1.5px solid rgba(255, 170, 0, 0.35)',
             borderRadius: '16px',
-            padding: '16px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(255, 170, 0, 0.08)',
+            padding: '20px 22px',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 170, 0, 0.1)',
             display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '16px',
+            flexWrap: 'wrap'
           }}
         >
-          {/* Top Row: Info & Streak Counter + CTA Button */}
+          {/* Left: Flame Icon + Main Title + Subtitle */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', minWidth: '240px', flex: '1 1 auto' }}>
+            <div
+              style={{
+                width: '52px',
+                height: '52px',
+                borderRadius: '14px',
+                background: 'rgba(255, 170, 0, 0.12)',
+                border: '1.5px solid rgba(255, 170, 0, 0.45)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 0 16px rgba(255, 170, 0, 0.3)',
+                flexShrink: 0
+              }}
+            >
+              <Flame size={26} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 170, 0, 0.9))' }} />
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: '11px',
+                  color: '#ffffff',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontWeight: 900,
+                  letterSpacing: '0.4px',
+                  marginBottom: '6px'
+                }}
+              >
+                KEEP YOUR <span style={{ color: '#ffaa00' }}>STREAK</span>
+              </div>
+              <div
+                style={{
+                  fontSize: '7.5px',
+                  color: '#88aacc',
+                  fontFamily: "'Press Start 2P', monospace",
+                  lineHeight: 1.6
+                }}
+              >
+                Check in daily to build your on-chain streak.
+              </div>
+            </div>
+          </div>
+
+          {/* Right: Streak Counter + Action Button */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '12px',
-              flexWrap: 'wrap'
+              gap: '14px',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-end',
+              flexShrink: 0
             }}
           >
-            {/* Left: Flame Icon Box + Text Details */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: '220px', flex: '1 1 auto' }}>
-              <div
+            {/* Streak Counter Pill */}
+            <div
+              style={{
+                background: 'rgba(4, 14, 36, 0.9)',
+                border: '1.5px solid rgba(255, 170, 0, 0.45)',
+                boxShadow: '0 0 12px rgba(255, 170, 0, 0.2)',
+                borderRadius: '12px',
+                padding: '10px 16px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                userSelect: 'none'
+              }}
+            >
+              <span
                 style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '10px',
-                  background: 'rgba(255, 170, 0, 0.1)',
-                  border: '1.5px solid rgba(255, 170, 0, 0.4)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 0 12px rgba(255, 170, 0, 0.25)',
-                  flexShrink: 0
+                  fontSize: '7px',
+                  color: '#88aacc',
+                  fontFamily: "'Press Start 2P', monospace",
+                  letterSpacing: '0.4px',
+                  marginBottom: '5px'
                 }}
               >
-                <Flame size={22} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 6px rgba(255, 170, 0, 0.8))' }} />
-              </div>
-              <div>
-                <div
+                CURRENT STREAK
+              </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <Flame size={14} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px #ffaa00)' }} />
+                <span
                   style={{
-                    fontSize: '8px',
+                    fontSize: '12px',
                     color: '#ffaa00',
                     fontFamily: "'Press Start 2P', monospace",
                     fontWeight: 900,
-                    letterSpacing: '0.4px',
-                    marginBottom: '4px'
+                    textShadow: '0 0 10px rgba(255, 170, 0, 0.6)'
                   }}
                 >
-                  KEEP YOUR STREAK
-                </div>
-                <div
-                  style={{
-                    fontSize: '6px',
-                    color: '#88aacc',
-                    fontFamily: "'Press Start 2P', monospace",
-                    lineHeight: 1.5
-                  }}
-                >
-                  Check in daily to build streak and unlock milestone SBT achievements.
-                </div>
+                  {streak} {streak === 1 ? 'DAY' : 'DAYS'}
+                </span>
               </div>
             </div>
 
-            {/* Right: Current Streak Pill + Action Button */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                flexWrap: 'wrap',
-                justifyContent: 'flex-end',
-                flexShrink: 0
-              }}
-            >
-              {/* Streak Stat Display */}
+            {/* CTA / Status Button */}
+            {!address ? (
+              <button
+                onClick={login}
+                style={{
+                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
+                  border: '1.5px solid #00f5ff',
+                  color: '#020b1a',
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '9px',
+                  fontWeight: 900,
+                  padding: '13px 20px',
+                  borderRadius: '12px',
+                  cursor: 'pointer',
+                  boxShadow: '0 0 16px rgba(0, 245, 255, 0.45)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                CONNECT WALLET
+              </button>
+            ) : hasCheckedInToday ? (
               <div
                 style={{
-                  background: 'rgba(4, 14, 36, 0.9)',
-                  border: '1.5px solid rgba(255, 170, 0, 0.45)',
-                  boxShadow: '0 0 10px rgba(255, 170, 0, 0.2)',
-                  borderRadius: '10px',
-                  padding: '7px 12px',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  userSelect: 'none'
+                  gap: '6px'
                 }}
               >
-                <span
-                  style={{
-                    fontSize: '5px',
-                    color: '#88aacc',
-                    fontFamily: "'Press Start 2P', monospace",
-                    letterSpacing: '0.3px',
-                    marginBottom: '3px'
-                  }}
-                >
-                  CURRENT STREAK
-                </span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <Flame size={12} color="#ffaa00" />
-                  <span
-                    style={{
-                      fontSize: '9px',
-                      color: '#ffaa00',
-                      fontFamily: "'Press Start 2P', monospace",
-                      fontWeight: 900,
-                      textShadow: '0 0 8px rgba(255, 170, 0, 0.6)'
-                    }}
-                  >
-                    {streak} {streak === 1 ? 'DAY' : 'DAYS'}
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Button */}
-              {!address ? (
-                <button
-                  onClick={login}
-                  style={{
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                    border: '1.5px solid #00f5ff',
-                    color: '#020b1a',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '7.5px',
-                    fontWeight: 900,
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    cursor: 'pointer',
-                    boxShadow: '0 0 14px rgba(0, 245, 255, 0.45)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  CONNECT WALLET
-                </button>
-              ) : hasCheckedInToday ? (
                 <div
                   style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    gap: '4px'
-                  }}
-                >
-                  <div
-                    style={{
-                      background: 'rgba(0, 255, 136, 0.12)',
-                      border: '1.5px solid rgba(0, 255, 136, 0.45)',
-                      borderRadius: '10px',
-                      padding: '8px 14px',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      color: '#00ff88',
-                      fontFamily: "'Press Start 2P', monospace",
-                      fontSize: '7.5px',
-                      fontWeight: 900,
-                      boxShadow: '0 0 12px rgba(0, 255, 136, 0.25)',
-                      userSelect: 'none'
-                    }}
-                  >
-                    <CheckCircle2 size={12} color="#00ff88" />
-                    <span>CHECKED IN</span>
-                  </div>
-                  <span
-                    style={{
-                      fontSize: '5.5px',
-                      color: '#88aacc',
-                      fontFamily: "'Press Start 2P', monospace",
-                      letterSpacing: '0.2px'
-                    }}
-                  >
-                    NEXT IN: {timeUntilNext}
-                  </span>
-                </div>
-              ) : (
-                <button
-                  onClick={performCheckIn}
-                  disabled={isCheckingIn}
-                  style={{
-                    background: 'linear-gradient(135deg, #ffaa00 0%, #ff5500 100%)',
-                    border: '1.5px solid #ffaa00',
-                    color: '#020b1a',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '7.5px',
-                    fontWeight: 900,
-                    padding: '10px 16px',
-                    borderRadius: '10px',
-                    cursor: isCheckingIn ? 'not-allowed' : 'pointer',
-                    boxShadow: '0 0 16px rgba(255, 170, 0, 0.45)',
+                    background: 'rgba(0, 255, 136, 0.12)',
+                    border: '1.5px solid rgba(0, 255, 136, 0.5)',
+                    borderRadius: '12px',
+                    padding: '11px 18px',
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: '6px',
-                    whiteSpace: 'nowrap',
-                    opacity: isCheckingIn ? 0.7 : 1,
-                    transition: 'all 0.15s ease'
+                    gap: '7px',
+                    color: '#00ff88',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: '9px',
+                    fontWeight: 900,
+                    boxShadow: '0 0 14px rgba(0, 255, 136, 0.25)',
+                    userSelect: 'none'
                   }}
                 >
-                  <Flame size={12} color="#020b1a" strokeWidth={2.5} />
-                  <span>{isCheckingIn ? 'CHECKING IN...' : 'CHECK IN NOW'}</span>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Bottom Row: Milestone Progress Rail (1 - 7 - 14 - 30 Days) */}
-          <div
-            style={{
-              background: 'rgba(2, 11, 26, 0.75)',
-              border: '1px solid rgba(0, 245, 255, 0.2)',
-              borderRadius: '12px',
-              padding: '14px 12px 12px 12px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '12px'
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '0 4px',
-                flexWrap: 'wrap',
-                gap: '6px'
-              }}
-            >
-              <span
+                  <CheckCircle2 size={14} color="#00ff88" />
+                  <span>CHECKED IN</span>
+                </div>
+                <span
+                  style={{
+                    fontSize: '7px',
+                    color: '#88aacc',
+                    fontFamily: "'Press Start 2P', monospace",
+                    letterSpacing: '0.4px'
+                  }}
+                >
+                  NEXT IN: {timeUntilNext}
+                </span>
+              </div>
+            ) : (
+              <button
+                onClick={performCheckIn}
+                disabled={isCheckingIn}
                 style={{
-                  fontSize: '6px',
-                  color: '#00f5ff',
+                  background: 'linear-gradient(135deg, #ffaa00 0%, #ff5500 100%)',
+                  border: '1.5px solid #ffaa00',
+                  color: '#020b1a',
                   fontFamily: "'Press Start 2P', monospace",
+                  fontSize: '9.5px',
                   fontWeight: 900,
-                  letterSpacing: '0.4px'
+                  padding: '13px 22px',
+                  borderRadius: '12px',
+                  cursor: isCheckingIn ? 'not-allowed' : 'pointer',
+                  boxShadow: '0 0 20px rgba(255, 170, 0, 0.5)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  whiteSpace: 'nowrap',
+                  opacity: isCheckingIn ? 0.7 : 1,
+                  transition: 'all 0.15s ease'
                 }}
               >
-                MILESTONE PATH
-              </span>
-              <span
-                style={{
-                  fontSize: '5.5px',
-                  color: '#88aacc',
-                  fontFamily: "'Press Start 2P', monospace"
-                }}
-              >
-                {streak >= 30 ? 'ALL MILESTONES UNLOCKED 🏆' : `NEXT GOAL: DAY ${streak < 1 ? 1 : streak < 7 ? 7 : streak < 14 ? 14 : 30}`}
-              </span>
-            </div>
-
-            {/* Horizontal Rail */}
-            <div
-              style={{
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'flex-start',
-                justifyContent: 'space-between',
-                padding: '0 6px',
-                marginTop: '4px'
-              }}
-            >
-              {/* Background Connecting Line */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '12px',
-                  left: '25px',
-                  right: '25px',
-                  height: '3px',
-                  background: 'rgba(0, 245, 255, 0.15)',
-                  borderRadius: '2px',
-                  zIndex: 1
-                }}
-              />
-
-              {/* Active Progress Fill Line */}
-              <div
-                style={{
-                  position: 'absolute',
-                  top: '12px',
-                  left: '25px',
-                  width: `calc((100% - 50px) * ${getStreakProgressPercent(streak) / 100})`,
-                  height: '3px',
-                  background: 'linear-gradient(90deg, #00ff88 0%, #ffaa00 100%)',
-                  borderRadius: '2px',
-                  zIndex: 2,
-                  boxShadow: '0 0 8px rgba(255, 170, 0, 0.6)',
-                  transition: 'width 0.4s ease'
-                }}
-              />
-
-              {/* Milestones Nodes */}
-              {STREAK_MILESTONES.map((m) => {
-                const isReached = streak >= m.day;
-                return (
-                  <div
-                    key={m.day}
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      zIndex: 3,
-                      position: 'relative',
-                      minWidth: '50px'
-                    }}
-                  >
-                    {/* Circle / Badge */}
-                    <div
-                      style={{
-                        width: '24px',
-                        height: '24px',
-                        borderRadius: '6px',
-                        background: isReached ? 'rgba(255, 170, 0, 0.25)' : 'rgba(2, 11, 26, 0.95)',
-                        border: isReached ? '1.5px solid #ffaa00' : '1.5px solid rgba(0, 245, 255, 0.25)',
-                        boxShadow: isReached ? '0 0 10px rgba(255, 170, 0, 0.4)' : 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '6px',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      {isReached ? (
-                        m.day === 30 ? (
-                          <span style={{ fontSize: '10px' }}>🏆</span>
-                        ) : (
-                          <Flame size={12} color="#ffaa00" />
-                        )
-                      ) : (
-                        <Lock size={10} color="#88aacc" />
-                      )}
-                    </div>
-
-                    {/* Day label */}
-                    <span
-                      style={{
-                        fontSize: '6px',
-                        color: isReached ? '#ffaa00' : '#88aacc',
-                        fontFamily: "'Press Start 2P', monospace",
-                        fontWeight: 900,
-                        marginBottom: '2px',
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      {m.sub}
-                    </span>
-
-                    {/* Milestone title */}
-                    <span
-                      style={{
-                        fontSize: '5px',
-                        color: isReached ? '#ffffff' : '#557799',
-                        fontFamily: "'Press Start 2P', monospace",
-                        whiteSpace: 'nowrap'
-                      }}
-                    >
-                      {m.label}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+                <Flame size={14} color="#020b1a" strokeWidth={2.5} />
+                <span>{isCheckingIn ? 'CHECKING IN...' : 'CHECK IN NOW'}</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
