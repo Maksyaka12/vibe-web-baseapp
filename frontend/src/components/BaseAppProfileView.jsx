@@ -375,10 +375,7 @@ export function BaseAppProfileView(props) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '14px',
-            flexWrap: 'wrap',
-            gap: '8px'
+            marginBottom: '12px'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -397,7 +394,7 @@ export function BaseAppProfileView(props) {
             <h3
               className="profile-section-title"
               style={{
-                fontSize: '11px',
+                fontSize: '10.5px',
                 color: '#ffffff',
                 fontFamily: "'Press Start 2P', monospace",
                 margin: 0,
@@ -408,229 +405,59 @@ export function BaseAppProfileView(props) {
               DAILY CHECK-IN
             </h3>
           </div>
-          <div
-            style={{
-              background: 'rgba(255, 170, 0, 0.12)',
-              border: '1.5px solid rgba(255, 170, 0, 0.4)',
-              borderRadius: '8px',
-              padding: '6px 12px',
-              fontSize: '7.5px',
-              color: '#ffaa00',
-              fontFamily: "'Press Start 2P', monospace",
-              fontWeight: 800,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
-          >
-            <Flame size={12} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))' }} />
-            <span>ON-CHAIN STREAK</span>
-          </div>
         </div>
 
         {/* Main Check-In Card */}
-        <div
-          className="profile-checkin-card"
-          style={{
-            background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-            border: '1.5px solid rgba(255, 170, 0, 0.35)',
-            borderRadius: '16px',
-            padding: '20px 22px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 170, 0, 0.1)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '16px',
-            flexWrap: 'wrap'
-          }}
-        >
+        <div className="profile-checkin-card">
           {/* Left: Flame Icon + Main Title + Subtitle */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', minWidth: '240px', flex: '1 1 auto' }}>
-            <div
-              style={{
-                width: '52px',
-                height: '52px',
-                borderRadius: '14px',
-                background: 'rgba(255, 170, 0, 0.12)',
-                border: '1.5px solid rgba(255, 170, 0, 0.45)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 0 16px rgba(255, 170, 0, 0.3)',
-                flexShrink: 0
-              }}
-            >
-              <Flame size={26} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 170, 0, 0.9))' }} />
+          <div className="profile-checkin-left">
+            <div className="profile-checkin-icon-box">
+              <Flame size={24} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 6px rgba(255, 170, 0, 0.9))' }} />
             </div>
             <div>
-              <div
-                style={{
-                  fontSize: '11px',
-                  color: '#ffffff',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontWeight: 900,
-                  letterSpacing: '0.4px',
-                  marginBottom: '6px'
-                }}
-              >
+              <div className="profile-checkin-title">
                 KEEP YOUR <span style={{ color: '#ffaa00' }}>STREAK</span>
               </div>
-              <div
-                style={{
-                  fontSize: '7.5px',
-                  color: '#88aacc',
-                  fontFamily: "'Press Start 2P', monospace",
-                  lineHeight: 1.6
-                }}
-              >
+              <div className="profile-checkin-sub">
                 Check in daily to build your on-chain streak.
               </div>
             </div>
           </div>
 
-          {/* Right: Streak Counter + Action Button */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-              flexWrap: 'wrap',
-              justifyContent: 'flex-end',
-              flexShrink: 0
-            }}
-          >
-            {/* Streak Counter Pill */}
-            <div
-              style={{
-                background: 'rgba(4, 14, 36, 0.9)',
-                border: '1.5px solid rgba(255, 170, 0, 0.45)',
-                boxShadow: '0 0 12px rgba(255, 170, 0, 0.2)',
-                borderRadius: '12px',
-                padding: '10px 16px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                userSelect: 'none'
-              }}
-            >
-              <span
-                style={{
-                  fontSize: '7px',
-                  color: '#88aacc',
-                  fontFamily: "'Press Start 2P', monospace",
-                  letterSpacing: '0.4px',
-                  marginBottom: '5px'
-                }}
-              >
-                CURRENT STREAK
-              </span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <Flame size={14} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px #ffaa00)' }} />
-                <span
-                  style={{
-                    fontSize: '12px',
-                    color: '#ffaa00',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontWeight: 900,
-                    textShadow: '0 0 10px rgba(255, 170, 0, 0.6)'
-                  }}
-                >
-                  {streak} {streak === 1 ? 'DAY' : 'DAYS'}
-                </span>
-              </div>
-            </div>
-
-            {/* CTA / Status Button */}
+          {/* Right: Action Button FIRST, Current Streak SECOND */}
+          <div className="profile-checkin-right">
+            {/* 1. Action Button or Checked Status (FIRST) */}
             {!address ? (
-              <button
-                onClick={login}
-                style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '9px',
-                  fontWeight: 900,
-                  padding: '13px 20px',
-                  borderRadius: '12px',
-                  cursor: 'pointer',
-                  boxShadow: '0 0 16px rgba(0, 245, 255, 0.45)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  whiteSpace: 'nowrap'
-                }}
-              >
+              <button onClick={login} className="profile-checkin-connect-btn">
                 CONNECT WALLET
               </button>
             ) : hasCheckedInToday ? (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
-                <div
-                  style={{
-                    background: 'rgba(0, 255, 136, 0.12)',
-                    border: '1.5px solid rgba(0, 255, 136, 0.5)',
-                    borderRadius: '12px',
-                    padding: '11px 18px',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '7px',
-                    color: '#00ff88',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '9px',
-                    fontWeight: 900,
-                    boxShadow: '0 0 14px rgba(0, 255, 136, 0.25)',
-                    userSelect: 'none'
-                  }}
-                >
-                  <CheckCircle2 size={14} color="#00ff88" />
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+                <div className="profile-checkin-checked">
+                  <CheckCircle2 size={13} color="#00ff88" />
                   <span>CHECKED IN</span>
                 </div>
-                <span
-                  style={{
-                    fontSize: '7px',
-                    color: '#88aacc',
-                    fontFamily: "'Press Start 2P', monospace",
-                    letterSpacing: '0.4px'
-                  }}
-                >
+                <span className="profile-checkin-timer">
                   NEXT IN: {timeUntilNext}
                 </span>
               </div>
             ) : (
-              <button
-                onClick={performCheckIn}
-                disabled={isCheckingIn}
-                style={{
-                  background: 'linear-gradient(135deg, #ffaa00 0%, #ff5500 100%)',
-                  border: '1.5px solid #ffaa00',
-                  color: '#020b1a',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: '9.5px',
-                  fontWeight: 900,
-                  padding: '13px 22px',
-                  borderRadius: '12px',
-                  cursor: isCheckingIn ? 'not-allowed' : 'pointer',
-                  boxShadow: '0 0 20px rgba(255, 170, 0, 0.5)',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  whiteSpace: 'nowrap',
-                  opacity: isCheckingIn ? 0.7 : 1,
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                <Flame size={14} color="#020b1a" strokeWidth={2.5} />
+              <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-checkin-btn">
+                <Flame size={13} color="#020b1a" strokeWidth={2.5} />
                 <span>{isCheckingIn ? 'CHECKING IN...' : 'CHECK IN NOW'}</span>
               </button>
             )}
+
+            {/* 2. Streak Counter Box (SECOND) */}
+            <div className="profile-checkin-streak-box">
+              <span className="profile-checkin-streak-label">
+                CURRENT STREAK
+              </span>
+              <div className="profile-checkin-streak-val">
+                <Flame size={13} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px #ffaa00)' }} />
+                <span>{streak} {streak === 1 ? 'DAY' : 'DAYS'}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

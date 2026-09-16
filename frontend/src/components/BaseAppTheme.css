@@ -2554,3 +2554,269 @@ button.admin-action-btn {
     padding: 0 10px !important;
   }
 }
+
+/* ==========================================================================
+   DAILY CHECK-IN PROFILE SECTION (RESPONSIVE)
+   ========================================================================== */
+.profile-checkin-card {
+  background: linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%) !important;
+  border: 1.5px solid rgba(255, 170, 0, 0.35) !important;
+  border-radius: 16px !important;
+  padding: 18px 22px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 170, 0, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.profile-checkin-left {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
+}
+
+.profile-checkin-icon-box {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 12px !important;
+  background: rgba(255, 170, 0, 0.12) !important;
+  border: 1.5px solid rgba(255, 170, 0, 0.45) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 0 16px rgba(255, 170, 0, 0.3) !important;
+  flex-shrink: 0 !important;
+}
+
+.profile-checkin-title {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10.5px !important;
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.4px !important;
+  margin-bottom: 5px !important;
+}
+
+.profile-checkin-sub {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 7px !important;
+  color: #88aacc !important;
+  line-height: 1.5 !important;
+}
+
+.profile-checkin-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.profile-checkin-btn {
+  background: linear-gradient(135deg, #ffaa00 0%, #ff5500 100%) !important;
+  border: 1.5px solid #ffaa00 !important;
+  color: #020b1a !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 8.5px !important;
+  font-weight: 900 !important;
+  padding: 12px 18px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 16px rgba(255, 170, 0, 0.45) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+}
+
+.profile-checkin-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 0 22px rgba(255, 170, 0, 0.7) !important;
+}
+
+.profile-checkin-btn:disabled {
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
+}
+
+.profile-checkin-connect-btn {
+  background: linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%) !important;
+  border: 1.5px solid #00f5ff !important;
+  color: #020b1a !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 8.5px !important;
+  font-weight: 900 !important;
+  padding: 12px 18px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 16px rgba(0, 245, 255, 0.45) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.profile-checkin-checked {
+  background: rgba(0, 255, 136, 0.12) !important;
+  border: 1.5px solid rgba(0, 255, 136, 0.5) !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  color: #00ff88 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 8px !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.25) !important;
+  user-select: none !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.profile-checkin-timer {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 6px !important;
+  color: #88aacc !important;
+  letter-spacing: 0.3px !important;
+  text-align: center !important;
+  margin-top: 4px !important;
+}
+
+.profile-checkin-streak-box {
+  background: rgba(4, 14, 36, 0.9) !important;
+  border: 1.5px solid rgba(255, 170, 0, 0.45) !important;
+  box-shadow: 0 0 10px rgba(255, 170, 0, 0.2) !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  user-select: none !important;
+  min-width: 90px !important;
+  box-sizing: border-box !important;
+}
+
+.profile-checkin-streak-label {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 6px !important;
+  color: #88aacc !important;
+  letter-spacing: 0.3px !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap !important;
+}
+
+.profile-checkin-streak-val {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 10px !important;
+  color: #ffaa00 !important;
+  font-weight: 900 !important;
+  text-shadow: 0 0 8px rgba(255, 170, 0, 0.6) !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px) {
+  .profile-checkin-card {
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
+  .profile-checkin-left {
+    gap: 10px !important;
+  }
+
+  .profile-checkin-icon-box {
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+  }
+
+  .profile-checkin-icon-box svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .profile-checkin-title {
+    font-size: 8px !important;
+    margin-bottom: 3px !important;
+  }
+
+  .profile-checkin-sub {
+    font-size: 5.5px !important;
+    line-height: 1.4 !important;
+  }
+
+  .profile-checkin-right {
+    display: grid !important;
+    grid-template-columns: 1.25fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+
+  .profile-checkin-btn {
+    font-size: 7px !important;
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 36px !important;
+  }
+
+  .profile-checkin-connect-btn {
+    font-size: 7px !important;
+    padding: 8px 10px !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 36px !important;
+  }
+
+  .profile-checkin-checked {
+    font-size: 6.5px !important;
+    padding: 7px 8px !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+  }
+
+  .profile-checkin-timer {
+    font-size: 5px !important;
+    margin-top: 2px !important;
+  }
+
+  .profile-checkin-streak-box {
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .profile-checkin-streak-label {
+    font-size: 5px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .profile-checkin-streak-val {
+    font-size: 8.5px !important;
+    gap: 3px !important;
+  }
+}
+
