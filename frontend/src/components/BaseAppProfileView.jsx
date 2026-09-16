@@ -432,14 +432,9 @@ export function BaseAppProfileView(props) {
                 CONNECT WALLET
               </button>
             ) : hasCheckedInToday ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                <div className="profile-checkin-checked">
-                  <CheckCircle2 size={13} color="#00ff88" />
-                  <span>CHECKED IN</span>
-                </div>
-                <span className="profile-checkin-timer">
-                  NEXT IN: {timeUntilNext}
-                </span>
+              <div className="profile-checkin-checked" title={`Checked in today! Next reset in ${timeUntilNext}`}>
+                <CheckCircle2 size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <span>{timeUntilNext}</span>
               </div>
             ) : (
               <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-checkin-btn">
