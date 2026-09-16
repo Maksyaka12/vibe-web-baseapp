@@ -1,8 +1,9 @@
 import React from 'react';
-import { Menu, Wallet } from 'lucide-react';
+import { Menu, Wallet, Flame } from 'lucide-react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAccount } from 'wagmi';
 import { useVibeBalances } from '../hooks/useVibeBalances';
+import { useVibeCheckIn } from '../hooks/useVibeCheckIn';
 
 const TAB_TITLES = {
   home: 'HOME · OVERVIEW',
@@ -24,6 +25,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
   const hasWallet = (authenticated && !!activeAddress) || (isWagmiConnected && !!wagmiAddress);
 
   const { balance, nftCount, formattedBalance } = useVibeBalances(activeAddress);
+  const { streak } = useVibeCheckIn(activeAddress);
 
   const pageTitle = TAB_TITLES[activeTab] || '$VIBE';
 
@@ -139,6 +141,40 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
       <div className="base-app-header-right" style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
         {hasWallet ? (
           <div className="header-balances-wrap" style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+            {/* Daily Streak Pill */}
+            <div
+              className="header-balance-pill header-streak-pill"
+              title={`Daily Check-In Streak: ${streak} ${streak === 1 ? 'Day' : 'Days'}`}
+              style={{
+                background: 'rgba(4, 14, 36, 0.9)',
+                border: '1.5px solid rgba(255, 170, 0, 0.45)',
+                boxShadow: '0 0 8px rgba(255, 170, 0, 0.2)',
+                borderRadius: '8px',
+                padding: '5px 7px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                userSelect: 'none',
+                flexShrink: 0
+              }}
+            >
+              <Flame size={12} color="#ffaa00" strokeWidth={2.5} style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))' }} />
+              <span
+                className="header-balance-text"
+                style={{
+                  fontSize: '7px',
+                  fontWeight: 900,
+                  color: '#ffaa00',
+                  letterSpacing: '0.2px',
+                  fontVariantNumeric: 'tabular-nums',
+                  textShadow: '0 0 8px rgba(255, 170, 0, 0.5)',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                {streak}
+              </span>
+            </div>
+
             {/* NFT Balance Pill */}
             <div
               className="header-balance-pill header-nft-pill"
