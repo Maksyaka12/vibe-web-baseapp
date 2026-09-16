@@ -150,10 +150,10 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 border: '1.5px solid rgba(255, 170, 0, 0.45)',
                 boxShadow: '0 0 8px rgba(255, 170, 0, 0.2)',
                 borderRadius: '8px',
-                padding: '5px 7px',
+                padding: '5px 8px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '4px',
+                gap: '5px',
                 userSelect: 'none',
                 flexShrink: 0
               }}
@@ -161,7 +161,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               <span
                 className="header-balance-text"
                 style={{
-                  fontSize: '7px',
+                  fontSize: '7.5px',
                   fontWeight: 900,
                   color: '#ffaa00',
                   letterSpacing: '0.2px',
@@ -170,9 +170,9 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                   whiteSpace: 'nowrap'
                 }}
               >
-                {streak} D
+                {streak}
               </span>
-              <Flame size={12} color="#ffaa00" strokeWidth={2.5} style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))', flexShrink: 0 }} />
+              <Flame size={13} color="#ffaa00" strokeWidth={2.5} style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))', flexShrink: 0 }} />
             </div>
 
             {/* NFT Balance Pill */}
