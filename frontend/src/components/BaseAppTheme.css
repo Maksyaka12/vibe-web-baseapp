@@ -2781,4 +2781,170 @@ button.admin-action-btn {
   }
 }
 
+/* ==========================================================================
+   OFFICIAL ADDRESSES SECTION (RESPONSIVE)
+   ========================================================================== */
+.contracts-view-container {
+  padding: 16px 12px 60px 12px !important;
+  max-width: 720px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.contracts-card {
+  background: linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%) !important;
+  border: 1.5px solid rgba(0, 245, 255, 0.25) !important;
+  border-radius: 16px !important;
+  padding: 16px 18px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
+}
+
+.contracts-card-title {
+  font-size: 8.5px !important;
+  color: #ffffff !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.3px !important;
+}
+
+.contracts-card-addr-row {
+  background: rgba(2, 11, 26, 0.85) !important;
+  border: 1px solid rgba(0, 245, 255, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 8px 10px 8px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+}
+
+.contracts-card-addr-text {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 7.5px !important;
+  color: #00ff88 !important;
+  line-height: 1.5 !important;
+  word-break: break-all !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.contracts-btn-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-shrink: 0 !important;
+}
+
+.contracts-copy-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  background: rgba(0, 245, 255, 0.1) !important;
+  border: 1.5px solid #00f5ff !important;
+  color: #00f5ff !important;
+  font-size: 6.5px !important;
+  font-weight: 900 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+.contracts-copy-btn.copied {
+  background: rgba(0, 255, 136, 0.18) !important;
+  border-color: #00ff88 !important;
+  color: #00ff88 !important;
+}
+
+.contracts-copy-btn:hover {
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.4) !important;
+}
+
+.contracts-scan-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  background: rgba(0, 82, 255, 0.2) !important;
+  border: 1.5px solid #0052ff !important;
+  color: #ffffff !important;
+  font-size: 6.5px !important;
+  font-weight: 900 !important;
+  font-family: 'Press Start 2P', monospace !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+
+.contracts-scan-btn:hover {
+  box-shadow: 0 0 12px rgba(0, 82, 255, 0.5) !important;
+}
+
+@media (max-width: 768px) {
+  .contracts-view-container {
+    max-width: 560px !important;
+    padding: 14px 10px 60px 10px !important;
+  }
+
+  .contracts-card {
+    padding: 14px 12px !important;
+    gap: 10px !important;
+  }
+
+  .contracts-card-addr-row {
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .contracts-card-addr-text {
+    background: rgba(2, 11, 26, 0.85) !important;
+    border: 1px solid rgba(0, 245, 255, 0.18) !important;
+    border-radius: 10px !important;
+    padding: 10px 10px !important;
+    font-size: 7px !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .contracts-btn-group {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .contracts-copy-btn,
+  .contracts-scan-btn {
+    padding: 9px 10px !important;
+    width: 100% !important;
+  }
+}
+
+
 

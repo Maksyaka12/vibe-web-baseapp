@@ -48,92 +48,36 @@ function DocContractCard({ item, isBaseAppMode }) {
 
   if (isBaseAppMode) {
     return (
-      <div
-        className="contracts-card"
-        style={{
-          background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-          border: '1.5px solid rgba(0, 245, 255, 0.25)',
-          borderRadius: '16px',
-          padding: '16px 14px',
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '12px'
-        }}
-      >
-        <div className="contracts-card-title" style={{ fontSize: '8px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+      <div className="contracts-card">
+        <div className="contracts-card-title">
           {item.title}
         </div>
 
-        <div
-          className="contracts-card-addr-box"
-          style={{
-            background: 'rgba(2, 11, 26, 0.85)',
-            border: '1px solid rgba(0, 245, 255, 0.18)',
-            borderRadius: '10px',
-            padding: '10px 10px',
-            wordBreak: 'break-all',
-            fontSize: '7px',
-            color: '#00ff88',
-            fontFamily: "'Press Start 2P', monospace",
-            lineHeight: 1.5
-          }}
-        >
-          {item.address}
-        </div>
+        <div className="contracts-card-addr-row">
+          <span className="contracts-card-addr-text" title={item.address}>
+            {item.address}
+          </span>
 
-        <div className="contracts-btn-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-          <button
-            type="button"
-            className="contracts-copy-btn"
-            onClick={handleCopy}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              padding: '9px 10px',
-              borderRadius: '8px',
-              background: copied ? 'rgba(0, 255, 136, 0.18)' : 'rgba(0, 245, 255, 0.1)',
-              border: copied ? '1.5px solid #00ff88' : '1.5px solid #00f5ff',
-              color: copied ? '#00ff88' : '#00f5ff',
-              fontSize: '6.5px',
-              fontWeight: 900,
-              fontFamily: "'Press Start 2P', monospace",
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            {copied ? <Check size={12} strokeWidth={3} /> : <Copy size={12} />}
-            <span>{copied ? 'COPIED' : 'COPY'}</span>
-          </button>
+          <div className="contracts-btn-group">
+            <button
+              type="button"
+              className={`contracts-copy-btn ${copied ? 'copied' : ''}`}
+              onClick={handleCopy}
+            >
+              {copied ? <Check size={12} strokeWidth={3} /> : <Copy size={12} />}
+              <span>{copied ? 'COPIED' : 'COPY'}</span>
+            </button>
 
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="contracts-scan-btn"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              padding: '9px 10px',
-              borderRadius: '8px',
-              background: 'rgba(0, 82, 255, 0.2)',
-              border: '1.5px solid #0052ff',
-              color: '#ffffff',
-              fontSize: '6.5px',
-              fontWeight: 900,
-              fontFamily: "'Press Start 2P', monospace",
-              textDecoration: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.15s ease'
-            }}
-          >
-            <span>BASESCAN</span>
-            <ArrowUpRight size={12} strokeWidth={2.5} />
-          </a>
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contracts-scan-btn"
+            >
+              <span>BASESCAN</span>
+              <ArrowUpRight size={12} strokeWidth={2.5} />
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -178,7 +122,7 @@ function DocContractCard({ item, isBaseAppMode }) {
 export default function ContractsPage({ isBaseAppMode = false }) {
   if (isBaseAppMode) {
     return (
-      <div className="contracts-view-container" style={{ padding: '16px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+      <div className="contracts-view-container">
         {/* Contracts Hero Header */}
         <div
           className="rewards-hero-header"
