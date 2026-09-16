@@ -744,10 +744,12 @@ export function BaseAppSidebar({
           </div>
         </div>
 
-        {/* Admin Panel (Only visible to Admin Wallet) */}
-        {isAdmin && (
-          <div style={{ marginBottom: '12px', paddingBottom: '12px', borderBottom: '1px dashed rgba(255, 68, 102, 0.4)' }}>
-            {isCollapsed ? (
+        {/* Footer: Wallet status & Admin Panel */}
+        <div style={{ paddingTop: '16px', borderTop: '1.5px solid rgba(0, 245, 255, 0.18)', marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          
+          {/* Admin Panel (Only visible to Admin Wallet) */}
+          {isAdmin && (
+            isCollapsed ? (
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button
                   onClick={() => {
@@ -759,14 +761,14 @@ export function BaseAppSidebar({
                     width: '38px',
                     height: '38px',
                     borderRadius: '8px',
-                    background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.25)' : 'rgba(255, 68, 102, 0.1)',
-                    border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.4)',
+                    background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.25)' : 'rgba(4, 14, 36, 0.6)',
+                    border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.3)',
                     color: '#ff4466',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.4)' : 'none',
+                    boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.3)' : 'none',
                     transition: 'all 0.15s ease'
                   }}
                 >
@@ -785,17 +787,17 @@ export function BaseAppSidebar({
                   alignItems: 'center',
                   gap: isDesktop ? '10px' : '8px',
                   width: '100%',
-                  padding: isDesktop ? '9px 11px' : '7px 9px',
+                  padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                   borderRadius: '10px',
-                  border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.4)',
-                  background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.2)' : 'rgba(255, 68, 102, 0.08)',
-                  color: activeTab === 'admin' ? '#ff4466' : '#ff7799',
+                  border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.25)',
+                  background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.2)' : 'rgba(4, 14, 36, 0.6)',
+                  color: activeTab === 'admin' ? '#ff4466' : '#cbd5e1',
                   fontSize: isDesktop ? '8.5px' : '7px',
                   fontWeight: 800,
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.15s ease',
-                  boxShadow: activeTab === 'admin' ? '0 0 14px rgba(255, 68, 102, 0.35)' : '0 0 8px rgba(255, 68, 102, 0.1)',
+                  boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.25)' : 'none',
                   fontFamily: "'Press Start 2P', monospace",
                   textTransform: 'uppercase'
                 }}
@@ -816,18 +818,11 @@ export function BaseAppSidebar({
                   <ShieldCheck size={isDesktop ? 15 : 13} strokeWidth={2.5} />
                 </div>
                 <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  Admin Panel
-                </span>
-                <span style={{ fontSize: '6px', color: '#ff4466', padding: '2px 5px', borderRadius: '4px', background: 'rgba(255, 68, 102, 0.2)', border: '1px solid rgba(255, 68, 102, 0.4)' }}>
-                  ROOT
+                  ADMIN PANEL
                 </span>
               </button>
-            )}
-          </div>
-        )}
-
-        {/* Footer: Wallet status */}
-        <div style={{ paddingTop: '16px', borderTop: '1.5px solid rgba(0, 245, 255, 0.18)', marginTop: '16px' }}>
+            )
+          )}
           {hasWallet ? (
             isCollapsed ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>

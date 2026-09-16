@@ -599,60 +599,10 @@ export function BaseAppAdminView() {
     <div className="admin-view-container" style={{ padding: '20px 12px 80px 12px', maxWidth: '1100px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
       
       {/* Header Banner */}
-      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <h2 style={{ fontSize: '18px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0 0 10px 0', letterSpacing: '0.6px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <h2 style={{ fontSize: '18px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0', letterSpacing: '0.6px', textAlign: 'center' }}>
           ADMIN <span style={{ color: '#ff4466' }}>PANEL</span>
         </h2>
-
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <div
-            className="rewards-hero-pill"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              background: 'rgba(0, 255, 136, 0.12)',
-              border: '1.5px solid #00ff88',
-              borderRadius: '99px',
-              padding: '7px 16px',
-              boxSizing: 'border-box'
-            }}
-          >
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span className="rewards-hero-pill-text" style={{ fontSize: '7px', color: '#00ff88', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-              AUTHENTICATED OWNER: {activeAddress?.slice(0, 6)}...{activeAddress?.slice(-4)}
-            </span>
-          </div>
-
-          <button
-            onClick={() => {
-              if (activeTab === 'holder') fetchDistributorMetrics('holder', holderEpochId);
-              else if (activeTab === 'royalty') fetchDistributorMetrics('royalty', royaltyEpochId);
-              else refetchNftState();
-            }}
-            style={{
-              height: '36px',
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: '1.5px solid rgba(0, 245, 255, 0.35)',
-              color: '#00f5ff',
-              borderRadius: '8px',
-              padding: '0 12px',
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '7px',
-              fontWeight: 800,
-              cursor: 'pointer',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              boxSizing: 'border-box'
-            }}
-          >
-            <RefreshCw size={12} />
-            <span>REFRESH</span>
-          </button>
-        </div>
       </div>
 
       {/* Global Status Banner (Success / Error / TxHash) */}
