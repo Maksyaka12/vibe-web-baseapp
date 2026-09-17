@@ -57,6 +57,7 @@ export function getRoyaltyBannerUrl(epochId) {
 }
 
 export const ADMIN_WITHDRAWAL_TXS = new Set([
+  '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa'.toLowerCase(),
   '0xc5fe9349e0b588d94607417f20505c0de06e1730fb2602a7b263374970005d69'.toLowerCase(),
   '0x446037424b8644c1baad63e063463e64cb0c3428292d18c66b43622f1dfceeda'.toLowerCase(),
   '0x97814e0f70482aa7e14e467d5ee08775c166fc7d2eb7c685d388f61370337fb9'.toLowerCase(),
@@ -79,6 +80,13 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
     const ROYALTY_CA_LOWER = ROYALTY_DISTRIBUTOR_CA.toLowerCase();
     const STAKING_CA_LOWER = STAKING_CONTRACT.toLowerCase();
     const CLAIM_TOPIC = '0xb63b787020ee0a48ed6ddf0667249b333cea03eb87043aa21cb0490467df040c';
+
+    // Seed verified historical claim hashes for admin
+    if (lowerUser === ADMIN_WALLET.toLowerCase()) {
+      map['holder-1'] = { id: 'holder-1', type: 'holder', roundId: 1, title: 'Holder Rewards · Unlock 1', txHash: '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14', amount: 126127, timestamp: '2026-08-26T14:30:25.000Z' };
+      map['vibeclub-1'] = { id: 'vibeclub-1', type: 'vibeclub', roundId: 1, title: 'Vibe Club Royalties · Royalty 1', txHash: '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84', amount: 22935, timestamp: '2026-08-28T14:00:17.000Z' };
+      map['vibeclub-2'] = { id: 'vibeclub-2', type: 'vibeclub', roundId: 2, title: 'Vibe Club Royalties · Royalty 2', txHash: '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7', amount: 17117, timestamp: '2026-09-07T14:00:00.000Z' };
+    }
 
     // Expected allocations for this user if available in proof data
     const expHolder1 = round1Data?.claims?.[lowerUser]?.amount;
@@ -522,7 +530,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 if (item.id === 'vibeclub-2') {
                   const correctAmt = royalty2Data?.claims?.[address.toLowerCase()]?.amount || 17117;
                   const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
-                  const fallbackTx = isAdminWallet ? '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa' : null;
+                  const fallbackTx = isAdminWallet ? '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7' : null;
                   const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
                   return {
                     ...item,
@@ -716,7 +724,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       let defaultAdminTx = null;
       if (isAdminWallet) {
         if (roundId === 1) defaultAdminTx = '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84';
-        if (roundId === 2) defaultAdminTx = '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
+        if (roundId === 2) defaultAdminTx = '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7';
       }
       let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
