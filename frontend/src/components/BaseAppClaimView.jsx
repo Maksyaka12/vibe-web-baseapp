@@ -359,6 +359,7 @@ export function BaseAppClaimView(props) {
             <img
               src="/claim-banner.jfif"
               alt="No Rewards To Claim"
+              className="claim-empty-banner-img"
               style={{
                 width: '100%',
                 height: 'auto',
