@@ -57,8 +57,8 @@ export function getRoyaltyBannerUrl(epochId) {
 }
 
 export const ADMIN_WITHDRAWAL_TXS = new Set([
-  '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa'.toLowerCase(),
   '0xc5fe9349e0b588d94607417f20505c0de06e1730fb2602a7b263374970005d69'.toLowerCase(),
+  '0x446037424b8644c1baad63e063463e64cb0c3428292d18c66b43622f1dfceeda'.toLowerCase(),
   '0x97814e0f70482aa7e14e467d5ee08775c166fc7d2eb7c685d388f61370337fb9'.toLowerCase(),
   '0x66ca9ba2a0b434fb265da1bc4241baffeb677556153522d4279cc301d55731b3'.toLowerCase(),
   '0xcc7c60604c8e2cc9c674c9070e7c03b118b6fad3d943006979fff76fc00c6623'.toLowerCase()
@@ -521,22 +521,30 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 }
                 if (item.id === 'vibeclub-2') {
                   const correctAmt = royalty2Data?.claims?.[address.toLowerCase()]?.amount || 17117;
-                  const isBad = isBadTxHash(item.txHash) || (item.amount && item.amount > 100000);
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
                   return {
                     ...item,
                     roundId: 2,
                     title: 'Vibe Club Royalties · Royalty 2',
                     amount: correctAmt,
-                    txHash: isBad ? null : item.txHash
+                    txHash
                   };
                 }
                 if (item.id === 'vibeclub-1') {
                   const correctAmt = royalty1Data?.claims?.[address.toLowerCase()]?.amount || 22935;
-                  return { ...item, roundId: 1, title: 'Vibe Club Royalties · Royalty 1', amount: correctAmt };
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
+                  return { ...item, roundId: 1, title: 'Vibe Club Royalties · Royalty 1', amount: correctAmt, txHash };
                 }
                 if (item.id === 'holder-1') {
                   const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
-                  return { ...item, roundId: 1, title: 'Holder Rewards · Unlock 1', amount: Math.round(Number(correctAmt)) };
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
+                  return { ...item, roundId: 1, title: 'Holder Rewards · Unlock 1', amount: Math.round(Number(correctAmt)), txHash };
                 }
                 return { ...item, amount: Math.round(Number(item.amount || 0)) };
               });
@@ -665,9 +673,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const existingItem = existingHistory.find(h => h && h.id === 'holder-1');
       const holderAmount = round1Data?.claims?.[userAddress.toLowerCase()]?.amount || 126127;
       const txInfo = txMap['holder-1'];
+      const isAdminWallet = userAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
+      const defaultAdminTx = isAdminWallet ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
       let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
-        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : null);
+        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : defaultAdminTx);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || '2026-08-26T14:00:00.000Z';
       const amount = holderAmount;
 
@@ -702,9 +712,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const defaultTime = roundId === 3 ? '2026-09-17T14:00:00.000Z' : (roundId === 2 ? '2026-09-07T14:00:00.000Z' : '2026-08-28T14:00:00.000Z');
       const royaltyAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
       const txInfo = txMap[`vibeclub-${roundId}`];
+      const isAdminWallet = userAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
+      let defaultAdminTx = null;
+      if (isAdminWallet) {
+        if (roundId === 1) defaultAdminTx = '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84';
+        if (roundId === 2) defaultAdminTx = '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
+      }
       let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
-        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : null);
+        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : defaultAdminTx);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || defaultTime;
       const amount = royaltyAmount;
 
