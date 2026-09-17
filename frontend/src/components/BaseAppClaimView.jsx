@@ -1065,7 +1065,8 @@ export function BaseAppClaimView(props) {
               const isStaking = item?.type === 'staking' || item?.id?.startsWith('staking-') || item?.title?.toLowerCase().includes('staking');
               const isRoyalty = item?.type === 'vibeclub' || item?.id?.includes('vibeclub') || item?.title?.toLowerCase().includes('royalty');
               const categoryLabel = isStaking ? 'STAKING' : isRoyalty ? 'VIBE CLUB' : 'HOLDER REWARDS';
-              const roundLabel = isStaking ? `EPOCH ${item?.roundId || 1}` : isRoyalty ? `ROYALTY ${item?.roundId || 1}` : `UNLOCK ${item?.roundId || 1}`;
+              const itemRoundId = item?.roundId || (item?.id ? parseInt(item.id.replace(/\D/g, '')) : null) || 1;
+              const roundLabel = isStaking ? `EPOCH ${itemRoundId}` : isRoyalty ? `ROYALTY ${itemRoundId}` : `UNLOCK ${itemRoundId}`;
 
               return (
                 <div
