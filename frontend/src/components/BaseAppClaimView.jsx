@@ -384,32 +384,6 @@ export function BaseAppClaimView(props) {
                   boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <div className="claim-card-title" style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                    HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 1').toUpperCase()}</span>
-                  </div>
-                  <span
-                    className="claim-card-status"
-                    style={{
-                      fontSize: '6px',
-                      color: '#00ff88',
-                      background: 'rgba(0, 255, 136, 0.15)',
-                      border: '1px solid #00ff88',
-                      borderRadius: '6px',
-                      padding: '3.5px 7px',
-                      fontFamily: "'Press Start 2P', monospace",
-                      fontWeight: 800,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      boxShadow: '0 0 8px rgba(0, 255, 136, 0.25)'
-                    }}
-                  >
-                    <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                    CLAIM LIVE
-                  </span>
-                </div>
-
                 <div
                   className="claim-allocation-banner-wrap"
                   style={{
@@ -418,7 +392,7 @@ export function BaseAppClaimView(props) {
                     aspectRatio: '16 / 9',
                     borderRadius: '12px',
                     overflow: 'hidden',
-                    marginBottom: '12px',
+                    marginBottom: '14px',
                     border: '1.5px solid rgba(0, 245, 255, 0.3)',
                     boxShadow: '0 0 16px rgba(0, 245, 255, 0.2)',
                     background: '#020b1a',
@@ -436,6 +410,69 @@ export function BaseAppClaimView(props) {
                       display: 'block'
                     }}
                   />
+
+                  {/* Top header overlay inside banner */}
+                  <div
+                    className="claim-banner-top-header"
+                    style={{
+                      position: 'absolute',
+                      top: '3%',
+                      left: '3%',
+                      right: '3%',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      pointerEvents: 'none',
+                      zIndex: 2
+                    }}
+                  >
+                    <div
+                      className="claim-banner-top-title"
+                      style={{
+                        fontSize: 'clamp(6px, 2.1cqi, 11px)',
+                        color: '#ffffff',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 900,
+                        textShadow: '0 0 8px rgba(0,0,0,0.95)',
+                        background: 'rgba(2, 11, 26, 0.75)',
+                        padding: 'clamp(3px, 1cqi, 6px) clamp(5px, 1.5cqi, 9px)',
+                        borderRadius: '7px',
+                        border: '1px solid rgba(0, 245, 255, 0.35)',
+                        backdropFilter: 'blur(4px)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 1').toUpperCase()}</span>
+                    </div>
+
+                    <span
+                      className="claim-banner-top-status"
+                      style={{
+                        fontSize: 'clamp(5px, 1.5cqi, 8.5px)',
+                        color: '#00ff88',
+                        background: 'rgba(2, 11, 26, 0.85)',
+                        border: '1px solid #00ff88',
+                        borderRadius: '7px',
+                        padding: 'clamp(3px, 1cqi, 5px) clamp(4px, 1.4cqi, 8px)',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 800,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        boxShadow: '0 0 10px rgba(0, 255, 136, 0.35)',
+                        backdropFilter: 'blur(4px)',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                      CLAIM LIVE
+                    </span>
+                  </div>
+
+                  {/* Amount overlay inside box */}
                   <div
                     className="claim-allocation-banner-overlay"
                     style={{
@@ -449,7 +486,8 @@ export function BaseAppClaimView(props) {
                       justifyContent: 'center',
                       textAlign: 'center',
                       pointerEvents: 'none',
-                      padding: '0 6px'
+                      padding: '0 6px',
+                      zIndex: 2
                     }}
                   >
                     <div
@@ -458,10 +496,11 @@ export function BaseAppClaimView(props) {
                         fontFamily: "'Press Start 2P', monospace",
                         fontWeight: 900,
                         color: '#00ff88',
-                        textShadow: '0 0 8px rgba(0, 255, 136, 0.8), 0 0 18px rgba(0, 255, 136, 0.45)',
-                        fontSize: 'clamp(7.5px, 4.2cqi, 20px)',
+                        textShadow: '0 0 10px rgba(0, 255, 136, 0.9), 0 0 22px rgba(0, 255, 136, 0.5), 0 0 35px rgba(0, 255, 136, 0.25)',
+                        fontSize: 'clamp(8px, 4.2cqi, 22px)',
                         letterSpacing: '0.3px',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        lineHeight: 1.2
                       }}
                     >
                       +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
@@ -551,32 +590,6 @@ export function BaseAppClaimView(props) {
                   boxShadow: '0 0 20px rgba(0, 255, 136, 0.2)'
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                  <div className="claim-card-title" style={{ fontSize: '8.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                    VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 2}`).toUpperCase()}</span>
-                  </div>
-                  <span
-                    className="claim-card-status"
-                    style={{
-                      fontSize: '6px',
-                      color: '#00ff88',
-                      background: 'rgba(0, 255, 136, 0.15)',
-                      border: '1px solid #00ff88',
-                      borderRadius: '6px',
-                      padding: '3.5px 7px',
-                      fontFamily: "'Press Start 2P', monospace",
-                      fontWeight: 800,
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      boxShadow: '0 0 8px rgba(0, 255, 136, 0.25)'
-                    }}
-                  >
-                    <span style={{ width: '4.5px', height: '4.5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                    CLAIM LIVE
-                  </span>
-                </div>
-
                 <div
                   className="claim-allocation-banner-wrap"
                   style={{
@@ -585,7 +598,7 @@ export function BaseAppClaimView(props) {
                     aspectRatio: '16 / 9',
                     borderRadius: '12px',
                     overflow: 'hidden',
-                    marginBottom: '12px',
+                    marginBottom: '14px',
                     border: '1.5px solid rgba(0, 245, 255, 0.3)',
                     boxShadow: '0 0 16px rgba(0, 245, 255, 0.2)',
                     background: '#020b1a',
@@ -603,6 +616,69 @@ export function BaseAppClaimView(props) {
                       display: 'block'
                     }}
                   />
+
+                  {/* Top header overlay inside banner */}
+                  <div
+                    className="claim-banner-top-header"
+                    style={{
+                      position: 'absolute',
+                      top: '3%',
+                      left: '3%',
+                      right: '3%',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      pointerEvents: 'none',
+                      zIndex: 2
+                    }}
+                  >
+                    <div
+                      className="claim-banner-top-title"
+                      style={{
+                        fontSize: 'clamp(6px, 2.1cqi, 11px)',
+                        color: '#ffffff',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 900,
+                        textShadow: '0 0 8px rgba(0,0,0,0.95)',
+                        background: 'rgba(2, 11, 26, 0.75)',
+                        padding: 'clamp(3px, 1cqi, 6px) clamp(5px, 1.5cqi, 9px)',
+                        borderRadius: '7px',
+                        border: '1px solid rgba(0, 245, 255, 0.35)',
+                        backdropFilter: 'blur(4px)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      VIBE CLUB <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(activeRoyaltyRound?.name || `ROYALTY ${activeRoyaltyEpochId || 2}`).toUpperCase()}</span>
+                    </div>
+
+                    <span
+                      className="claim-banner-top-status"
+                      style={{
+                        fontSize: 'clamp(5px, 1.5cqi, 8.5px)',
+                        color: '#00ff88',
+                        background: 'rgba(2, 11, 26, 0.85)',
+                        border: '1px solid #00ff88',
+                        borderRadius: '7px',
+                        padding: 'clamp(3px, 1cqi, 5px) clamp(4px, 1.4cqi, 8px)',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 800,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        boxShadow: '0 0 10px rgba(0, 255, 136, 0.35)',
+                        backdropFilter: 'blur(4px)',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                      CLAIM LIVE
+                    </span>
+                  </div>
+
+                  {/* Amount overlay inside box */}
                   <div
                     className="claim-allocation-banner-overlay"
                     style={{
@@ -616,7 +692,8 @@ export function BaseAppClaimView(props) {
                       justifyContent: 'center',
                       textAlign: 'center',
                       pointerEvents: 'none',
-                      padding: '0 6px'
+                      padding: '0 6px',
+                      zIndex: 2
                     }}
                   >
                     <div
@@ -625,10 +702,11 @@ export function BaseAppClaimView(props) {
                         fontFamily: "'Press Start 2P', monospace",
                         fontWeight: 900,
                         color: '#00ff88',
-                        textShadow: '0 0 8px rgba(0, 255, 136, 0.8), 0 0 18px rgba(0, 255, 136, 0.45)',
-                        fontSize: 'clamp(7.5px, 4.2cqi, 20px)',
+                        textShadow: '0 0 10px rgba(0, 255, 136, 0.9), 0 0 22px rgba(0, 255, 136, 0.5), 0 0 35px rgba(0, 255, 136, 0.25)',
+                        fontSize: 'clamp(8px, 4.2cqi, 22px)',
                         letterSpacing: '0.3px',
-                        whiteSpace: 'nowrap'
+                        whiteSpace: 'nowrap',
+                        lineHeight: 1.2
                       }}
                     >
                       +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE

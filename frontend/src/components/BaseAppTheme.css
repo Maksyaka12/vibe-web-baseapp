@@ -1827,8 +1827,14 @@ button.admin-action-btn {
     margin-bottom: 16px !important;
     border-radius: 14px !important;
   }
+  .base-app-pixel-theme .claim-banner-top-title {
+    font-size: clamp(6.5px, 2.2cqi, 12px) !important;
+  }
+  .base-app-pixel-theme .claim-banner-top-status {
+    font-size: clamp(5.5px, 1.6cqi, 9.5px) !important;
+  }
   .base-app-pixel-theme .claim-allocation-banner-amount {
-    font-size: clamp(8px, 4.2cqi, 20px) !important;
+    font-size: clamp(8px, 4.4cqi, 24px) !important;
   }
   .base-app-pixel-theme .claim-box-label {
     font-size: 9.5px !important;
