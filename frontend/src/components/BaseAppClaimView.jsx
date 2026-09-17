@@ -416,9 +416,9 @@ export function BaseAppClaimView(props) {
                     className="claim-banner-top-header"
                     style={{
                       position: 'absolute',
-                      top: '3%',
-                      left: '3%',
-                      right: '3%',
+                      top: '3.5%',
+                      left: '3.5%',
+                      right: '3.5%',
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
@@ -429,19 +429,21 @@ export function BaseAppClaimView(props) {
                     <div
                       className="claim-banner-top-title"
                       style={{
-                        fontSize: 'clamp(6px, 2.1cqi, 11px)',
+                        fontSize: 'clamp(7.5px, 2.6cqi, 14.5px)',
                         color: '#ffffff',
                         fontFamily: "'Press Start 2P', monospace",
                         fontWeight: 900,
+                        letterSpacing: '0.3px',
                         textShadow: '0 0 8px rgba(0,0,0,0.95)',
-                        background: 'rgba(2, 11, 26, 0.75)',
-                        padding: 'clamp(3px, 1cqi, 6px) clamp(5px, 1.5cqi, 9px)',
-                        borderRadius: '7px',
-                        border: '1px solid rgba(0, 245, 255, 0.35)',
-                        backdropFilter: 'blur(4px)',
+                        background: 'rgba(2, 11, 26, 0.82)',
+                        padding: 'clamp(4px, 1.4cqi, 9px) clamp(8px, 2.2cqi, 15px)',
+                        borderRadius: '9px',
+                        border: '1.5px solid rgba(0, 245, 255, 0.45)',
+                        boxShadow: '0 0 14px rgba(0, 245, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.6)',
+                        backdropFilter: 'blur(6px)',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '4px',
+                        gap: '6px',
                         whiteSpace: 'nowrap'
                       }}
                     >
@@ -451,23 +453,24 @@ export function BaseAppClaimView(props) {
                     <span
                       className="claim-banner-top-status"
                       style={{
-                        fontSize: 'clamp(5px, 1.5cqi, 8.5px)',
+                        fontSize: 'clamp(6.5px, 2.1cqi, 12px)',
                         color: '#00ff88',
-                        background: 'rgba(2, 11, 26, 0.85)',
-                        border: '1px solid #00ff88',
-                        borderRadius: '7px',
-                        padding: 'clamp(3px, 1cqi, 5px) clamp(4px, 1.4cqi, 8px)',
+                        background: 'rgba(2, 11, 26, 0.88)',
+                        border: '1.5px solid #00ff88',
+                        borderRadius: '9px',
+                        padding: 'clamp(4px, 1.4cqi, 9px) clamp(8px, 2.0cqi, 14px)',
                         fontFamily: "'Press Start 2P', monospace",
-                        fontWeight: 800,
+                        fontWeight: 900,
+                        letterSpacing: '0.3px',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '4px',
-                        boxShadow: '0 0 10px rgba(0, 255, 136, 0.35)',
-                        backdropFilter: 'blur(4px)',
+                        gap: '6px',
+                        boxShadow: '0 0 14px rgba(0, 255, 136, 0.45), 0 4px 12px rgba(0, 0, 0, 0.6)',
+                        backdropFilter: 'blur(6px)',
                         whiteSpace: 'nowrap'
                       }}
                     >
-                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                      <span style={{ width: 'clamp(5px, 1.3cqi, 8px)', height: 'clamp(5px, 1.3cqi, 8px)', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
                       CLAIM LIVE
                     </span>
                   </div>
@@ -491,19 +494,35 @@ export function BaseAppClaimView(props) {
                     }}
                   >
                     <div
-                      className="claim-allocation-banner-amount"
+                      className="claim-allocation-banner-amount-inter"
                       style={{
-                        fontFamily: "'Press Start 2P', monospace",
+                        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                         fontWeight: 900,
                         color: '#00ff88',
-                        textShadow: '0 0 10px rgba(0, 255, 136, 0.9), 0 0 22px rgba(0, 255, 136, 0.5), 0 0 35px rgba(0, 255, 136, 0.25)',
-                        fontSize: 'clamp(8px, 4.2cqi, 22px)',
-                        letterSpacing: '0.3px',
+                        textShadow: '0 0 14px rgba(0, 255, 136, 0.9), 0 0 32px rgba(0, 255, 136, 0.5), 0 2px 12px rgba(0,0,0,0.85)',
+                        fontSize: 'clamp(18px, 7.8cqi, 54px)',
+                        letterSpacing: '-0.025em',
                         whiteSpace: 'nowrap',
-                        lineHeight: 1.2
+                        lineHeight: 1,
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'center',
+                        gap: 'clamp(4px, 1.2cqi, 10px)'
                       }}
                     >
-                      +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
+                      <span>+{(holderRewardAmount || 500000).toLocaleString('en-US')}</span>
+                      <span
+                        className="claim-allocation-currency"
+                        style={{
+                          fontSize: '0.65em',
+                          fontWeight: 900,
+                          color: '#00f5ff',
+                          textShadow: '0 0 12px rgba(0, 245, 255, 0.8), 0 2px 8px rgba(0,0,0,0.8)',
+                          letterSpacing: '0.02em'
+                        }}
+                      >
+                        $VIBE
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -622,9 +641,9 @@ export function BaseAppClaimView(props) {
                     className="claim-banner-top-header"
                     style={{
                       position: 'absolute',
-                      top: '3%',
-                      left: '3%',
-                      right: '3%',
+                      top: '3.5%',
+                      left: '3.5%',
+                      right: '3.5%',
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
@@ -635,19 +654,21 @@ export function BaseAppClaimView(props) {
                     <div
                       className="claim-banner-top-title"
                       style={{
-                        fontSize: 'clamp(6px, 2.1cqi, 11px)',
+                        fontSize: 'clamp(7.5px, 2.6cqi, 14.5px)',
                         color: '#ffffff',
                         fontFamily: "'Press Start 2P', monospace",
                         fontWeight: 900,
+                        letterSpacing: '0.3px',
                         textShadow: '0 0 8px rgba(0,0,0,0.95)',
-                        background: 'rgba(2, 11, 26, 0.75)',
-                        padding: 'clamp(3px, 1cqi, 6px) clamp(5px, 1.5cqi, 9px)',
-                        borderRadius: '7px',
-                        border: '1px solid rgba(0, 245, 255, 0.35)',
-                        backdropFilter: 'blur(4px)',
+                        background: 'rgba(2, 11, 26, 0.82)',
+                        padding: 'clamp(4px, 1.4cqi, 9px) clamp(8px, 2.2cqi, 15px)',
+                        borderRadius: '9px',
+                        border: '1.5px solid rgba(0, 245, 255, 0.45)',
+                        boxShadow: '0 0 14px rgba(0, 245, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.6)',
+                        backdropFilter: 'blur(6px)',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '4px',
+                        gap: '6px',
                         whiteSpace: 'nowrap'
                       }}
                     >
@@ -657,23 +678,24 @@ export function BaseAppClaimView(props) {
                     <span
                       className="claim-banner-top-status"
                       style={{
-                        fontSize: 'clamp(5px, 1.5cqi, 8.5px)',
+                        fontSize: 'clamp(6.5px, 2.1cqi, 12px)',
                         color: '#00ff88',
-                        background: 'rgba(2, 11, 26, 0.85)',
+                        background: 'rgba(2, 11, 26, 0.88)',
                         border: '1px solid #00ff88',
-                        borderRadius: '7px',
-                        padding: 'clamp(3px, 1cqi, 5px) clamp(4px, 1.4cqi, 8px)',
+                        borderRadius: '9px',
+                        padding: 'clamp(4px, 1.4cqi, 9px) clamp(8px, 2.0cqi, 14px)',
                         fontFamily: "'Press Start 2P', monospace",
-                        fontWeight: 800,
+                        fontWeight: 900,
+                        letterSpacing: '0.3px',
                         display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '4px',
-                        boxShadow: '0 0 10px rgba(0, 255, 136, 0.35)',
-                        backdropFilter: 'blur(4px)',
+                        gap: '6px',
+                        boxShadow: '0 0 14px rgba(0, 255, 136, 0.45), 0 4px 12px rgba(0, 0, 0, 0.6)',
+                        backdropFilter: 'blur(6px)',
                         whiteSpace: 'nowrap'
                       }}
                     >
-                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
+                      <span style={{ width: 'clamp(5px, 1.3cqi, 8px)', height: 'clamp(5px, 1.3cqi, 8px)', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
                       CLAIM LIVE
                     </span>
                   </div>
@@ -697,19 +719,35 @@ export function BaseAppClaimView(props) {
                     }}
                   >
                     <div
-                      className="claim-allocation-banner-amount"
+                      className="claim-allocation-banner-amount-inter"
                       style={{
-                        fontFamily: "'Press Start 2P', monospace",
+                        fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
                         fontWeight: 900,
                         color: '#00ff88',
-                        textShadow: '0 0 10px rgba(0, 255, 136, 0.9), 0 0 22px rgba(0, 255, 136, 0.5), 0 0 35px rgba(0, 255, 136, 0.25)',
-                        fontSize: 'clamp(8px, 4.2cqi, 22px)',
-                        letterSpacing: '0.3px',
+                        textShadow: '0 0 14px rgba(0, 255, 136, 0.9), 0 0 32px rgba(0, 255, 136, 0.5), 0 2px 12px rgba(0,0,0,0.85)',
+                        fontSize: 'clamp(18px, 7.8cqi, 54px)',
+                        letterSpacing: '-0.025em',
                         whiteSpace: 'nowrap',
-                        lineHeight: 1.2
+                        lineHeight: 1,
+                        display: 'flex',
+                        alignItems: 'baseline',
+                        justifyContent: 'center',
+                        gap: 'clamp(4px, 1.2cqi, 10px)'
                       }}
                     >
-                      +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE
+                      <span>+{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')}</span>
+                      <span
+                        className="claim-allocation-currency"
+                        style={{
+                          fontSize: '0.65em',
+                          fontWeight: 900,
+                          color: '#00f5ff',
+                          textShadow: '0 0 12px rgba(0, 245, 255, 0.8), 0 2px 8px rgba(0,0,0,0.8)',
+                          letterSpacing: '0.02em'
+                        }}
+                      >
+                        $VIBE
+                      </span>
                     </div>
                   </div>
                 </div>
