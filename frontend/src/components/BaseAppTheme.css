@@ -1792,14 +1792,14 @@ button.admin-action-btn {
     overflow: hidden !important;
     background: rgba(4, 20, 48, 0.85) !important;
     border: 1.5px solid rgba(0, 245, 255, 0.25) !important;
-    max-height: 280px !important;
+    max-height: 380px !important;
   }
   .base-app-pixel-theme .claim-empty-banner-img {
     width: 100% !important;
-    height: 280px !important;
-    max-height: 280px !important;
+    height: 380px !important;
+    max-height: 380px !important;
     object-fit: cover !important;
-    object-position: center 38% !important;
+    object-position: center 45% !important;
   }
   .base-app-pixel-theme .claim-card,
   .base-app-pixel-theme .claim-upcoming-card {
@@ -2960,15 +2960,15 @@ button.admin-action-btn {
 
 @media (min-width: 769px) and (max-width: 1023px) {
   .base-app-pixel-theme .claim-empty-box {
-    max-height: 240px !important;
+    max-height: 340px !important;
     overflow: hidden !important;
   }
   .base-app-pixel-theme .claim-empty-banner-img {
     width: 100% !important;
-    height: 240px !important;
-    max-height: 240px !important;
+    height: 340px !important;
+    max-height: 340px !important;
     object-fit: cover !important;
-    object-position: center 38% !important;
+    object-position: center 45% !important;
   }
 }
 
