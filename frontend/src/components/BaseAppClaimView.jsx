@@ -426,7 +426,7 @@ export function BaseAppClaimView(props) {
                   }}
                 >
                   <img
-                    src="/allocation-banner.jfif"
+                    src="/allocation-banner.png"
                     alt="Your Allocation"
                     className="claim-allocation-banner-img"
                     style={{
@@ -593,7 +593,7 @@ export function BaseAppClaimView(props) {
                   }}
                 >
                   <img
-                    src="/allocation-banner.jfif"
+                    src="/allocation-banner.png"
                     alt="Your Allocation"
                     className="claim-allocation-banner-img"
                     style={{
