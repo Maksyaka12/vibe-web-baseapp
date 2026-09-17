@@ -5,6 +5,7 @@ import { Coins, Lock, ArrowUpRight, ChevronDown, Info, Sparkles, CheckCircle2, X
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
+import royalty3Data from '../data/royalty_3_proofs.json';
 
 function formatClaimCountdown(targetDate) {
   if (!targetDate) return '';
@@ -240,6 +241,9 @@ export default function BaseAppRewardsView({
       return true;
     }
     if (epochNum === 2 && royalty2Data?.claims?.[userAddress]) {
+      return true;
+    }
+    if (epochNum === 3 && royalty3Data?.claims?.[userAddress]) {
       return true;
     }
     if (userNftCount > 0) {

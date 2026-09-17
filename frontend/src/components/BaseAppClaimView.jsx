@@ -184,6 +184,7 @@ export function BaseAppClaimView(props) {
     activeRoyaltyAvailable,
     activeRoyaltyClaimed,
     royalty2Data,
+    royalty3Data,
     totalAvailableCount,
     upcomingHolderRound,
     upcomingVibeClubRound
@@ -196,7 +197,7 @@ export function BaseAppClaimView(props) {
   // Download / Save Banner
   const handleDownloadBanner = async () => {
     setDownloadingBanner(true);
-    const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
+    const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3)));
     const imageUrl = getRoyaltyBannerUrl(ep);
     const fileName = `vibe-club-royalties-${ep}-claimed.jpg`;
     try {
@@ -528,14 +529,14 @@ export function BaseAppClaimView(props) {
                     YOU'RE ELIGIBLE FOR CLAIM
                   </div>
                   <div style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
-                    +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
+                    +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE
                   </div>
                 </div>
 
                 <button
                   onClick={async () => {
-                    const ep = activeRoyaltyEpochId || 2;
-                    const amt = vibeClubRewardAmount || (ep === 2 ? 17117 : 22935);
+                    const ep = activeRoyaltyEpochId || 3;
+                    const amt = vibeClubRewardAmount || (ep === 3 ? 18018 : (ep === 2 ? 17117 : 22935));
                     await handleClaim('vibeclub', ep, amt);
                     setShareModalItem({
                       id: `vibeclub-${ep}`,
@@ -545,7 +546,7 @@ export function BaseAppClaimView(props) {
                       amount: amt
                     });
                   }}
-                  disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming'}
+                  disabled={claimStatus[`vibeclub-${activeRoyaltyEpochId || 3}`] === 'claiming'}
                   style={{
                     width: '100%',
                     background: 'rgba(0, 255, 136, 0.18)',
@@ -556,7 +557,7 @@ export function BaseAppClaimView(props) {
                     fontFamily: "'Press Start 2P', monospace",
                     fontSize: '8px',
                     fontWeight: 900,
-                    cursor: claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming' ? 'not-allowed' : 'pointer',
+                    cursor: claimStatus[`vibeclub-${activeRoyaltyEpochId || 3}`] === 'claiming' ? 'not-allowed' : 'pointer',
                     boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
@@ -564,7 +565,7 @@ export function BaseAppClaimView(props) {
                     gap: '7px'
                   }}
                 >
-                  {claimStatus[`vibeclub-${activeRoyaltyEpochId || 2}`] === 'claiming' ? (
+                  {claimStatus[`vibeclub-${activeRoyaltyEpochId || 3}`] === 'claiming' ? (
                     <>
                       <Loader2 size={13} className="spin" color="#00ff88" />
                       <span style={{ color: '#00ff88' }}>CLAIMING ON BASE...</span>
@@ -573,7 +574,7 @@ export function BaseAppClaimView(props) {
                     <>
                       <Gift size={13} color="#00ff88" strokeWidth={2.5} />
                       <span style={{ color: '#00ff88' }}>
-                        CLAIM +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE
+                        CLAIM +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE
                       </span>
                     </>
                   )}
@@ -788,7 +789,7 @@ export function BaseAppClaimView(props) {
           {/* Card 2: Vibe Club Royalty */}
           {(() => {
             const isVibeClubSnapshotDone = Boolean(upcomingVibeClubRound?.snapshotIso && (currentTime instanceof Date ? currentTime.getTime() : new Date().getTime()) >= new Date(upcomingVibeClubRound.snapshotIso).getTime());
-            const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
+            const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty3Data?.claims && address && royalty3Data.claims[address.toLowerCase()]) || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
             const isRoyaltyEligibleNow = hasRoyaltyProof || hasNft;
             return (
               <div
@@ -1178,17 +1179,17 @@ export function BaseAppClaimView(props) {
             </h3>
 
             <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, margin: '0 0 16px 0' }}>
-              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 2 ? 17117 : 22935)).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 2}`} 🐶🔥
+              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 3}`} 🐶🔥
             </p>
 
             {/* Banner Preview */}
             <div style={{ borderRadius: '14px', overflow: 'hidden', border: '1.5px solid rgba(0, 245, 255, 0.35)', marginBottom: '18px' }}>
               <img
-                src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2)))}
+                src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3))))}
                 alt="Claim Banner"
                 style={{ width: '100%', height: 'auto', display: 'block' }}
                 onError={(e) => {
-                  const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 2));
+                  const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3)));
                   if (!e.currentTarget.src.includes('.jpg')) {
                     e.currentTarget.src = `/vibe-club-royalties-${ep}.jpg`;
                   } else {
