@@ -1867,7 +1867,7 @@ button.admin-action-btn {
     font-weight: 900 !important;
   }
   .base-app-pixel-theme .claim-allocation-banner-amount-inter {
-    font-size: clamp(20px, 8cqi, 54px) !important;
+    font-size: clamp(48px, 10cqi, 53px) !important;
   }
   .base-app-pixel-theme .claim-allocation-currency {
     font-size: 0.65em !important;
