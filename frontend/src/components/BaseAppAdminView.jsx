@@ -8,6 +8,7 @@ import { useVibeNftContract } from '../hooks/useVibeNftContract';
 import round1Data from '../data/round_1_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
+import royalty3Data from '../data/royalty_3_proofs.json';
 import {
   Coins,
   Crown,
@@ -66,8 +67,8 @@ export function BaseAppAdminView() {
   const [holderWithdrawAmount, setHolderWithdrawAmount] = useState('');
   const [holderBurnAmount, setHolderBurnAmount] = useState('');
 
-  const [royaltyEpochId, setRoyaltyEpochId] = useState('2');
-  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
+  const [royaltyEpochId, setRoyaltyEpochId] = useState('3');
+  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
   const [royaltyWithdrawAmount, setRoyaltyWithdrawAmount] = useState('');
   const [royaltyBurnAmount, setRoyaltyBurnAmount] = useState('');
 
@@ -225,7 +226,7 @@ export function BaseAppAdminView() {
       const claims = Object.values(
         isHolder
           ? (round1Data?.claims || {})
-          : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {}))
+          : (epoch === '3' ? (royalty3Data?.claims || {}) : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {})))
       );
 
       // Single multicall for contract token balance + all hasClaimed boolean statuses
@@ -259,8 +260,8 @@ export function BaseAppAdminView() {
         }
       }
 
-      const totalWalletsCount = claims.length || (isHolder ? 42 : (epoch === '2' ? 111 : 109));
-      const totalPool = isHolder ? 10000000 : (epoch === '2' ? 1900000 : 2500000);
+      const totalWalletsCount = claims.length || (isHolder ? 42 : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109)));
+      const totalPool = isHolder ? 10000000 : (epoch === '3' ? 2000000 : (epoch === '2' ? 1900000 : 2500000));
       const unclaimedTokens = Math.max(0, totalPool - claimedTokens);
 
       const metrics = {
@@ -1039,7 +1040,8 @@ export function BaseAppAdminView() {
                   onChange={(e) => {
                     const ep = e.target.value;
                     setRoyaltyEpochId(ep);
-                    if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
+                    if (ep === '3') setRoyaltyMerkleRoot(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
+                    else if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
                     else if (ep === '1') setRoyaltyMerkleRoot(royalty1Data?.merkleRoot || '0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');
                     fetchDistributorMetrics('royalty', ep);
                   }}
