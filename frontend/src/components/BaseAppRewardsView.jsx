@@ -102,6 +102,7 @@ function BaseAppClaimCountdownButton({ targetDate }) {
     return (
       <Link
         to="/claim"
+        className="rewards-claim-btn"
         style={{
           width: '100%',
           padding: '12px',
@@ -130,6 +131,7 @@ function BaseAppClaimCountdownButton({ targetDate }) {
   return (
     <button
       disabled
+      className="rewards-claim-btn"
       style={{
         width: '100%',
         padding: '12px',
@@ -150,7 +152,7 @@ function BaseAppClaimCountdownButton({ targetDate }) {
         boxShadow: '0 0 16px rgba(0, 255, 136, 0.2)'
       }}
     >
-      <Clock size={13} color="#00ff88" strokeWidth={2.5} />
+      <Clock size={14} color="#00ff88" strokeWidth={2.5} />
       <span style={{ color: '#00ff88' }}>CLAIM IN {timeLeft}</span>
     </button>
   );

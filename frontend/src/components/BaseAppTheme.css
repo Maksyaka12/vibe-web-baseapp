@@ -1073,6 +1073,14 @@ button.admin-action-btn {
     border-radius: 12px !important;
     letter-spacing: 0.5px !important;
   }
+  .base-app-pixel-theme .rewards-claim-btn span {
+    font-size: 11.5px !important;
+  }
+  .base-app-pixel-theme .rewards-claim-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+    flex-shrink: 0 !important;
+  }
   .base-app-pixel-theme .rewards-eligibility-msg {
     font-size: 9px !important;
     margin-top: 14px !important;
