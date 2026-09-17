@@ -346,22 +346,27 @@ export function BaseAppClaimView(props) {
             className="claim-empty-box"
             style={{
               background: 'rgba(4, 20, 48, 0.85)',
-              border: '1.5px solid rgba(0, 245, 255, 0.2)',
+              border: '1.5px solid rgba(0, 245, 255, 0.25)',
               borderRadius: '16px',
-              padding: '20px 16px',
-              textAlign: 'center'
+              overflow: 'hidden',
+              padding: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)'
             }}
           >
-            {/* Green Checkmark in Circle + Green NO REWARDS TO CLAIM */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px' }}>
-              <CheckCircle2 size={16} color="#00ff88" strokeWidth={2.5} />
-              <span className="claim-empty-title" style={{ fontSize: '8.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
-                NO REWARDS TO CLAIM
-              </span>
-            </div>
-            <p className="claim-empty-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: 0 }}>
-              Make sure you are eligible &amp; complete requirements before the snapshot for upcoming rewards below.
-            </p>
+            <img
+              src="/claim-banner.jfif"
+              alt="No Rewards To Claim"
+              style={{
+                width: '100%',
+                height: 'auto',
+                display: 'block',
+                borderRadius: '14px',
+                objectFit: 'cover'
+              }}
+            />
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>

@@ -1787,15 +1787,11 @@ button.admin-action-btn {
     letter-spacing: 0.6px !important;
   }
   .base-app-pixel-theme .claim-empty-box {
-    padding: 26px 22px !important;
+    padding: 0 !important;
     border-radius: 18px !important;
-  }
-  .base-app-pixel-theme .claim-empty-title {
-    font-size: 11.5px !important;
-  }
-  .base-app-pixel-theme .claim-empty-desc {
-    font-size: 9.5px !important;
-    line-height: 1.7 !important;
+    overflow: hidden !important;
+    background: rgba(4, 20, 48, 0.85) !important;
+    border: 1.5px solid rgba(0, 245, 255, 0.25) !important;
   }
   .base-app-pixel-theme .claim-card,
   .base-app-pixel-theme .claim-upcoming-card {
