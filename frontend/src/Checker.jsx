@@ -56,6 +56,20 @@ export function getRoyaltyBannerUrl(epochId) {
   return `/vibe-club-royalties-${epoch}.jfif`;
 }
 
+export const ADMIN_WITHDRAWAL_TXS = new Set([
+  '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa'.toLowerCase(),
+  '0xc5fe9349e0b588d94607417f20505c0de06e1730fb2602a7b263374970005d69'.toLowerCase(),
+  '0x446037424b8644c1baad63e063463e64cb0c3428292d18c66b43622f1dfceeda'.toLowerCase(),
+  '0x97814e0f70482aa7e14e467d5ee08775c166fc7d2eb7c685d388f61370337fb9'.toLowerCase(),
+  '0x66ca9ba2a0b434fb265da1bc4241baffeb677556153522d4279cc301d55731b3'.toLowerCase(),
+  '0xcc7c60604c8e2cc9c674c9070e7c03b118b6fad3d943006979fff76fc00c6623'.toLowerCase()
+]);
+
+export const isBadTxHash = (hash) => {
+  if (!hash || typeof hash !== 'string' || !hash.startsWith('0x')) return true;
+  return ADMIN_WITHDRAWAL_TXS.has(hash.toLowerCase());
+};
+
 // Helper to fetch exact historical claim transactions from on-chain RPC logs + Base block explorer
 export async function fetchUserClaimTransactions(userAddress, customClient = null) {
   if (!userAddress) return {};
@@ -66,6 +80,13 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
     const ROYALTY_CA_LOWER = ROYALTY_DISTRIBUTOR_CA.toLowerCase();
     const STAKING_CA_LOWER = STAKING_CONTRACT.toLowerCase();
     const CLAIM_TOPIC = '0xb63b787020ee0a48ed6ddf0667249b333cea03eb87043aa21cb0490467df040c';
+
+    // Seed verified historical claim hashes for admin
+    if (lowerUser === ADMIN_WALLET.toLowerCase()) {
+      map['holder-1'] = { id: 'holder-1', type: 'holder', roundId: 1, title: 'Holder Rewards · Unlock 1', txHash: '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14', amount: 126127, timestamp: '2026-08-26T14:30:25.000Z' };
+      map['vibeclub-1'] = { id: 'vibeclub-1', type: 'vibeclub', roundId: 1, title: 'Vibe Club Royalties · Royalty 1', txHash: '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84', amount: 22935, timestamp: '2026-08-28T14:00:17.000Z' };
+      map['vibeclub-2'] = { id: 'vibeclub-2', type: 'vibeclub', roundId: 2, title: 'Vibe Club Royalties · Royalty 2', txHash: '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7', amount: 17117, timestamp: '2026-09-07T14:00:00.000Z' };
+    }
 
     // Expected allocations for this user if available in proof data
     const expHolder1 = round1Data?.claims?.[lowerUser]?.amount;
@@ -121,21 +142,52 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
       if (transferLogs && transferLogs.length > 0) {
         for (const log of transferLogs) {
           const from = log.args.from?.toLowerCase();
+          const txHash = log.transactionHash;
           const valNum = Math.round(Number(formatUnits(log.args.value || 0n, 18)));
 
-          if (from === ROYALTY_CA_LOWER && log.transactionHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') {
-            if (!map['vibeclub-2'] || (expRoyalty2 && Math.abs(valNum - expRoyalty2) < 1)) {
+          if (isBadTxHash(txHash)) continue;
+
+          if (from === ROYALTY_CA_LOWER) {
+            if (expRoyalty3 && Math.abs(valNum - expRoyalty3) < 2) {
+              map['vibeclub-3'] = {
+                id: 'vibeclub-3',
+                type: 'vibeclub',
+                roundId: 3,
+                title: 'Vibe Club Royalties · Royalty 3',
+                txHash,
+                amount: expRoyalty3,
+                timestamp: new Date().toISOString()
+              };
+            } else if (expRoyalty2 && Math.abs(valNum - expRoyalty2) < 2) {
               map['vibeclub-2'] = {
-                txHash: log.transactionHash,
-                amount: expRoyalty2 || valNum,
+                id: 'vibeclub-2',
+                type: 'vibeclub',
+                roundId: 2,
+                title: 'Vibe Club Royalties · Royalty 2',
+                txHash,
+                amount: expRoyalty2,
+                timestamp: new Date().toISOString()
+              };
+            } else if (expRoyalty1 && Math.abs(valNum - expRoyalty1) < 2) {
+              map['vibeclub-1'] = {
+                id: 'vibeclub-1',
+                type: 'vibeclub',
+                roundId: 1,
+                title: 'Vibe Club Royalties · Royalty 1',
+                txHash,
+                amount: expRoyalty1,
                 timestamp: new Date().toISOString()
               };
             }
           } else if (from === DISTRIBUTOR_CA_LOWER) {
-            if (!map['holder-1'] || (expHolder1 && Math.abs(valNum - expHolder1) < 1)) {
+            if (expHolder1 && Math.abs(valNum - expHolder1) < 2) {
               map['holder-1'] = {
-                txHash: log.transactionHash,
-                amount: expHolder1 || valNum,
+                id: 'holder-1',
+                type: 'holder',
+                roundId: 1,
+                title: 'Holder Rewards · Unlock 1',
+                txHash,
+                amount: expHolder1,
                 timestamp: new Date().toISOString()
               };
             }
@@ -162,15 +214,22 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
           const timestamp = item?.timestamp;
           const valueNum = Math.round(Number(BigInt(item?.total?.value || 0) / 10n**18n));
 
-          // Ignore specific admin withdrawal tx
-          if (txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') continue;
+          if (isBadTxHash(txHash)) continue;
 
           if (from === DISTRIBUTOR_CA_LOWER) {
             const isUnlock1 = !timestamp || new Date(timestamp).getTime() < new Date('2026-09-20').getTime();
             const roundKey = isUnlock1 ? 'holder-1' : 'holder-2';
             const expectedAmt = isUnlock1 ? expHolder1 : null;
-            if (!map[roundKey] || (expectedAmt && Math.abs(valueNum - expectedAmt) < 1)) {
-              map[roundKey] = { txHash, timestamp, amount: expectedAmt || valueNum };
+            if (expectedAmt && Math.abs(valueNum - expectedAmt) < 2) {
+              map[roundKey] = {
+                id: roundKey,
+                type: 'holder',
+                roundId: isUnlock1 ? 1 : 2,
+                title: isUnlock1 ? 'Holder Rewards · Unlock 1' : 'Holder Rewards · Unlock 2',
+                txHash,
+                timestamp,
+                amount: expectedAmt
+              };
             }
           } else if (from === ROYALTY_CA_LOWER) {
             const txTime = new Date(timestamp).getTime();
@@ -178,16 +237,27 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
             const sep12 = new Date('2026-09-12T00:00:00Z').getTime();
             
             let royaltyKey = 'vibeclub-1';
+            let roundId = 1;
             let expectedAmt = expRoyalty1;
             if (txTime >= sep1 && txTime < sep12) {
               royaltyKey = 'vibeclub-2';
+              roundId = 2;
               expectedAmt = expRoyalty2;
             } else if (txTime >= sep12) {
               royaltyKey = 'vibeclub-3';
+              roundId = 3;
               expectedAmt = expRoyalty3;
             }
-            if (!map[royaltyKey] || (expectedAmt && Math.abs(valueNum - expectedAmt) < 1)) {
-              map[royaltyKey] = { txHash, timestamp, amount: expectedAmt || valueNum };
+            if (expectedAmt && Math.abs(valueNum - expectedAmt) < 2) {
+              map[royaltyKey] = {
+                id: royaltyKey,
+                type: 'vibeclub',
+                roundId,
+                title: `Vibe Club Royalties · Royalty ${roundId}`,
+                txHash,
+                timestamp,
+                amount: expectedAmt
+              };
             }
           } else if (from === STAKING_CA_LOWER) {
             try {
@@ -445,30 +515,47 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         if (stored) {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed)) {
-            const sanitized = parsed.map(item => {
-              if (item.id === 'vibeclub-3') {
-                const correctAmt = royalty3Data?.claims?.[address.toLowerCase()]?.amount || 18018;
-                return { ...item, amount: correctAmt };
-              }
-              if (item.id === 'vibeclub-2') {
-                const correctAmt = royalty2Data?.claims?.[address.toLowerCase()]?.amount || 17117;
-                const isBadTx = item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa' || (item.amount && item.amount > 500000);
-                return {
-                  ...item,
-                  amount: correctAmt,
-                  txHash: isBadTx ? null : item.txHash
-                };
-              }
-              if (item.id === 'vibeclub-1') {
-                const correctAmt = royalty1Data?.claims?.[address.toLowerCase()]?.amount || 22935;
-                return { ...item, amount: correctAmt };
-              }
-              if (item.id === 'holder-1') {
-                const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
-                return { ...item, amount: Math.round(Number(correctAmt)) };
-              }
-              return { ...item, amount: Math.round(Number(item.amount || 0)) };
-            });
+            const sanitized = parsed
+              .filter(item => {
+                if (!item || !item.id) return false;
+                if (isBadTxHash(item.txHash)) return false;
+                if ((item.type === 'vibeclub' || item.id.startsWith('vibeclub')) && item.amount > 100000) return false;
+                return true;
+              })
+              .map(item => {
+                if (item.id === 'vibeclub-3') {
+                  const correctAmt = royalty3Data?.claims?.[address.toLowerCase()]?.amount || 18018;
+                  return { ...item, roundId: 3, title: 'Vibe Club Royalties · Royalty 3', amount: correctAmt };
+                }
+                if (item.id === 'vibeclub-2') {
+                  const correctAmt = royalty2Data?.claims?.[address.toLowerCase()]?.amount || 17117;
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
+                  return {
+                    ...item,
+                    roundId: 2,
+                    title: 'Vibe Club Royalties · Royalty 2',
+                    amount: correctAmt,
+                    txHash
+                  };
+                }
+                if (item.id === 'vibeclub-1') {
+                  const correctAmt = royalty1Data?.claims?.[address.toLowerCase()]?.amount || 22935;
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
+                  return { ...item, roundId: 1, title: 'Vibe Club Royalties · Royalty 1', amount: correctAmt, txHash };
+                }
+                if (item.id === 'holder-1') {
+                  const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
+                  const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
+                  const fallbackTx = isAdminWallet ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
+                  const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
+                  return { ...item, roundId: 1, title: 'Holder Rewards · Unlock 1', amount: Math.round(Number(correctAmt)), txHash };
+                }
+                return { ...item, amount: Math.round(Number(item.amount || 0)) };
+              });
             setClaimedHistory(getSortedClaimedHistory(sanitized));
           }
         }
@@ -480,33 +567,29 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
           setClaimedHistory(prev => {
             const prevList = Array.isArray(prev) ? prev : [];
             let updated = [...prevList];
-            // 1. Update existing items
+            // 1. Update existing items with verified txHash
             updated = updated.map(item => {
               const info = txMap[item.id];
-              if (info) {
-                const isBadTx = !item.txHash || !item.txHash.startsWith('0x') || item.txHash === '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa';
-                const isBadAmt = !item.amount || (!item.id?.startsWith('staking-') && item.amount > 500000);
-                if (isBadTx || isBadAmt || (info.txHash && info.txHash !== item.txHash) || (info.amount && info.amount !== item.amount)) {
-                  return {
-                    ...item,
-                    txHash: info.txHash || item.txHash,
-                    timestamp: info.timestamp || item.timestamp,
-                    amount: info.amount || item.amount,
-                    link: info.link || item.link
-                  };
-                }
+              if (info && !isBadTxHash(info.txHash)) {
+                return {
+                  ...item,
+                  txHash: info.txHash || item.txHash,
+                  timestamp: info.timestamp || item.timestamp,
+                  amount: info.amount || item.amount,
+                  link: info.link || item.link
+                };
               }
               return item;
             });
-            // 2. Add any new items from txMap (such as staking claims) not yet in list
+            // 2. ONLY add verified staking claims from txMap (holder and royalty claims are strictly gated by on-chain hasClaimed)
             for (const [k, info] of Object.entries(txMap)) {
-              if (!updated.some(item => item && item.id === k)) {
+              if (k.startsWith('staking') && !updated.some(item => item && item.id === k)) {
                 updated.push({
                   id: k,
-                  type: info.type || (k.startsWith('staking') ? 'staking' : (k.startsWith('vibeclub') ? 'vibeclub' : 'holder')),
+                  type: 'staking',
                   roundId: info.roundId || 1,
                   vaultId: info.vaultId,
-                  title: info.title || (k.startsWith('staking') ? `Staking Rewards · Epoch ${info.roundId || 1}` : (k.startsWith('vibeclub') ? `Vibe Club Royalties · Royalty ${info.roundId || 1}` : `Holder Rewards · Unlock 1`)),
+                  title: info.title || `Staking Rewards · Epoch ${info.roundId || 1}`,
                   amount: info.amount,
                   txHash: info.txHash,
                   timestamp: info.timestamp,
@@ -598,9 +681,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const existingItem = existingHistory.find(h => h && h.id === 'holder-1');
       const holderAmount = round1Data?.claims?.[userAddress.toLowerCase()]?.amount || 126127;
       const txInfo = txMap['holder-1'];
-      let txHash = (txInfo?.txHash && txInfo.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa')
+      const isAdminWallet = userAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
+      const defaultAdminTx = isAdminWallet ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
+      let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
-        : ((existingItem?.txHash && existingItem.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') ? existingItem.txHash : null);
+        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : defaultAdminTx);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || '2026-08-26T14:00:00.000Z';
       const amount = holderAmount;
 
@@ -635,9 +720,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       const defaultTime = roundId === 3 ? '2026-09-17T14:00:00.000Z' : (roundId === 2 ? '2026-09-07T14:00:00.000Z' : '2026-08-28T14:00:00.000Z');
       const royaltyAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
       const txInfo = txMap[`vibeclub-${roundId}`];
-      let txHash = (txInfo?.txHash && txInfo.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa')
+      const isAdminWallet = userAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
+      let defaultAdminTx = null;
+      if (isAdminWallet) {
+        if (roundId === 1) defaultAdminTx = '0x0efb6d5e52fcca2e770f4c78db0c8b86f6c919ea53272813ec68816e5a5c0d84';
+        if (roundId === 2) defaultAdminTx = '0x88cde1d5ab45186ef77475ced14e2e4b370636da1e345275ee3a2fb5992880c7';
+      }
+      let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
-        : ((existingItem?.txHash && existingItem.txHash !== '0x87d64cc5b391c51e8235124900d388bdb962aedec731f9f2e97f65ec5cc19caa') ? existingItem.txHash : null);
+        : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : defaultAdminTx);
       const timestamp = txInfo?.timestamp || existingItem?.timestamp || defaultTime;
       const amount = royaltyAmount;
 
@@ -782,21 +873,72 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         } catch (e) {}
       }
 
-      if (results[3]?.status === 'success' && results[3].result === true) {
-        setClaimStatus(prev => ({ ...prev, 'holder-1': 'claimed' }));
-        syncClaimHistory(client, address, txMap);
+      if (results[3]?.status === 'success') {
+        if (results[3].result === true) {
+          setClaimStatus(prev => ({ ...prev, 'holder-1': 'claimed' }));
+          syncClaimHistory(client, address, txMap);
+        } else {
+          setClaimStatus(prev => ({ ...prev, 'holder-1': 'unclaimed' }));
+          setClaimedHistory(prev => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            const filtered = prevList.filter(h => h && h.id !== 'holder-1');
+            if (filtered.length !== prevList.length) {
+              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(filtered));
+            }
+            return filtered;
+          });
+        }
       }
-      if (results[4]?.status === 'success' && results[4].result === true) {
-        setClaimStatus(prev => ({ ...prev, 'vibeclub-1': 'claimed' }));
-        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 1, txMap);
+
+      if (results[4]?.status === 'success') {
+        if (results[4].result === true) {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-1': 'claimed' }));
+          syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 1, txMap);
+        } else {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-1': 'unclaimed' }));
+          setClaimedHistory(prev => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            const filtered = prevList.filter(h => h && h.id !== 'vibeclub-1');
+            if (filtered.length !== prevList.length) {
+              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(filtered));
+            }
+            return filtered;
+          });
+        }
       }
-      if (results[5]?.status === 'success' && results[5].result === true) {
-        setClaimStatus(prev => ({ ...prev, 'vibeclub-2': 'claimed' }));
-        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 2, txMap);
+
+      if (results[5]?.status === 'success') {
+        if (results[5].result === true) {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-2': 'claimed' }));
+          syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 2, txMap);
+        } else {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-2': 'unclaimed' }));
+          setClaimedHistory(prev => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            const filtered = prevList.filter(h => h && h.id !== 'vibeclub-2');
+            if (filtered.length !== prevList.length) {
+              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(filtered));
+            }
+            return filtered;
+          });
+        }
       }
-      if (results[6]?.status === 'success' && results[6].result === true) {
-        setClaimStatus(prev => ({ ...prev, 'vibeclub-3': 'claimed' }));
-        syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 3, txMap);
+
+      if (results[6]?.status === 'success') {
+        if (results[6].result === true) {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-3': 'claimed' }));
+          syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 3, txMap);
+        } else {
+          setClaimStatus(prev => ({ ...prev, 'vibeclub-3': 'unclaimed' }));
+          setClaimedHistory(prev => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            const filtered = prevList.filter(h => h && h.id !== 'vibeclub-3');
+            if (filtered.length !== prevList.length) {
+              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(filtered));
+            }
+            return filtered;
+          });
+        }
       }
 
       // Sync Staking Claims
@@ -1341,7 +1483,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   if (isBaseAppMode) {
     return (
       <section id={isProfileMode ? "profile-section" : "claim-portal"} style={{ padding: '24px 0 60px 0', background: 'transparent' }}>
-        <div className="wrap" style={{ maxWidth: '720px', padding: '0 12px' }}>
+        <div className="wrap" style={{ maxWidth: '1000px', padding: '0 14px' }}>
           {isProfileMode ? (
             <BaseAppProfileView
               address={address}
