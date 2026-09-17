@@ -411,20 +411,61 @@ export function BaseAppClaimView(props) {
                 </div>
 
                 <div
-                  className="claim-box"
+                  className="claim-allocation-banner-wrap"
                   style={{
-                    background: 'rgba(2, 11, 26, 0.8)',
-                    border: '1px solid rgba(0, 245, 255, 0.25)',
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: '16 / 9',
                     borderRadius: '12px',
-                    padding: '12px',
-                    marginBottom: '12px'
+                    overflow: 'hidden',
+                    marginBottom: '12px',
+                    border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                    boxShadow: '0 0 16px rgba(0, 245, 255, 0.2)',
+                    background: '#020b1a',
+                    containerType: 'inline-size'
                   }}
                 >
-                  <div className="claim-box-label" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
-                    YOU'RE ELIGIBLE FOR CLAIM
-                  </div>
-                  <div className="claim-box-amount" style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
-                    +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
+                  <img
+                    src="/allocation-banner.jfif"
+                    alt="Your Allocation"
+                    className="claim-allocation-banner-img"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  />
+                  <div
+                    className="claim-allocation-banner-overlay"
+                    style={{
+                      position: 'absolute',
+                      left: '4.2%',
+                      width: '59.6%',
+                      top: '48%',
+                      height: '38%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      pointerEvents: 'none',
+                      padding: '0 6px'
+                    }}
+                  >
+                    <div
+                      className="claim-allocation-banner-amount"
+                      style={{
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 900,
+                        color: '#00ff88',
+                        textShadow: '0 0 8px rgba(0, 255, 136, 0.8), 0 0 18px rgba(0, 255, 136, 0.45)',
+                        fontSize: 'clamp(7.5px, 4.2cqi, 20px)',
+                        letterSpacing: '0.3px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      +{(holderRewardAmount || 500000).toLocaleString('en-US')} $VIBE
+                    </div>
                   </div>
                 </div>
 
@@ -537,20 +578,61 @@ export function BaseAppClaimView(props) {
                 </div>
 
                 <div
-                  className="claim-box"
+                  className="claim-allocation-banner-wrap"
                   style={{
-                    background: 'rgba(2, 11, 26, 0.8)',
-                    border: '1px solid rgba(0, 245, 255, 0.25)',
+                    position: 'relative',
+                    width: '100%',
+                    aspectRatio: '16 / 9',
                     borderRadius: '12px',
-                    padding: '12px',
-                    marginBottom: '12px'
+                    overflow: 'hidden',
+                    marginBottom: '12px',
+                    border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                    boxShadow: '0 0 16px rgba(0, 245, 255, 0.2)',
+                    background: '#020b1a',
+                    containerType: 'inline-size'
                   }}
                 >
-                  <div className="claim-box-label" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
-                    YOU'RE ELIGIBLE FOR CLAIM
-                  </div>
-                  <div className="claim-box-amount" style={{ fontSize: '13px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, textShadow: '0 0 10px rgba(0, 245, 255, 0.3)' }}>
-                    +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE
+                  <img
+                    src="/allocation-banner.jfif"
+                    alt="Your Allocation"
+                    className="claim-allocation-banner-img"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  />
+                  <div
+                    className="claim-allocation-banner-overlay"
+                    style={{
+                      position: 'absolute',
+                      left: '4.2%',
+                      width: '59.6%',
+                      top: '48%',
+                      height: '38%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      pointerEvents: 'none',
+                      padding: '0 6px'
+                    }}
+                  >
+                    <div
+                      className="claim-allocation-banner-amount"
+                      style={{
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontWeight: 900,
+                        color: '#00ff88',
+                        textShadow: '0 0 8px rgba(0, 255, 136, 0.8), 0 0 18px rgba(0, 255, 136, 0.45)',
+                        fontSize: 'clamp(7.5px, 4.2cqi, 20px)',
+                        letterSpacing: '0.3px',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      +{(vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE
+                    </div>
                   </div>
                 </div>
 
