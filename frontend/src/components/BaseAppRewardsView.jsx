@@ -1171,7 +1171,7 @@ export default function BaseAppRewardsView({
                         <span>ACTIVE VAULT</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
-                        You can stake $VIBE into this vault while the countdown is active. Once the timer reaches 0, the deposit window closes and you will be able to claim your yield and withdraw your tokens.
+                        Stake $VIBE while active. When the countdown ends, claim your yield and withdraw tokens.
                       </div>
                     </div>
                   )}
