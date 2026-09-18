@@ -3108,44 +3108,44 @@ button.admin-action-btn {
 .base-app-pixel-theme .rewards-banner-badge,
 .rewards-banner-badge {
   position: absolute !important;
-  top: 7px !important;
-  left: 7px !important;
+  top: 10px !important;
+  left: 10px !important;
   z-index: 2 !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 4px !important;
-  background: rgba(2, 11, 26, 0.86) !important;
+  gap: 7px !important;
+  background: rgba(2, 11, 26, 0.9) !important;
   backdrop-filter: blur(8px) !important;
   -webkit-backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(0, 245, 255, 0.35) !important;
-  border-radius: 6px !important;
-  padding: 3px 6px !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  border: 1.5px solid rgba(0, 245, 255, 0.45) !important;
+  border-radius: 8px !important;
+  padding: 6px 11px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7) !important;
   pointer-events: none !important;
 }
 
 .base-app-pixel-theme .rewards-banner-card.active .rewards-banner-badge,
 .rewards-banner-card.active .rewards-banner-badge {
-  border-color: rgba(0, 255, 136, 0.6) !important;
-  background: rgba(2, 11, 26, 0.92) !important;
+  border-color: rgba(0, 255, 136, 0.85) !important;
+  background: rgba(2, 11, 26, 0.94) !important;
 }
 
 .base-app-pixel-theme .rewards-banner-dot,
 .rewards-banner-dot {
-  width: 4.5px !important;
-  height: 4.5px !important;
+  width: 6.5px !important;
+  height: 6.5px !important;
   border-radius: 50% !important;
   background: #00ff88 !important;
-  box-shadow: 0 0 6px #00ff88 !important;
+  box-shadow: 0 0 8px #00ff88 !important;
   flex-shrink: 0 !important;
 }
 
 .base-app-pixel-theme .rewards-banner-count,
 .rewards-banner-count {
   font-family: 'Press Start 2P', monospace !important;
-  font-size: 5.5px !important;
+  font-size: 8.5px !important;
   color: #00ff88 !important;
-  letter-spacing: 0.3px !important;
+  letter-spacing: 0.5px !important;
   font-weight: 800 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
@@ -3162,16 +3162,21 @@ button.admin-action-btn {
   .rewards-banner-badge {
     top: 5px !important;
     left: 5px !important;
-    padding: 2.5px 5px !important;
+    padding: 3px 6px !important;
+    border-radius: 6px !important;
+    gap: 4px !important;
+    border-width: 1px !important;
   }
   .base-app-pixel-theme .rewards-banner-dot,
   .rewards-banner-dot {
-    width: 4px !important;
-    height: 4px !important;
+    width: 4.5px !important;
+    height: 4.5px !important;
+    box-shadow: 0 0 6px #00ff88 !important;
   }
   .base-app-pixel-theme .rewards-banner-count,
   .rewards-banner-count {
-    font-size: 5px !important;
+    font-size: 5.5px !important;
+    letter-spacing: 0.3px !important;
   }
 }
 
