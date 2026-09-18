@@ -438,12 +438,70 @@ export function BaseAppProfileView(props) {
                 </div>
               </div>
             </div>
+
+            {/* Desktop Embedded Daily Check-In Strip */}
+            <div className="profile-card-checkin-strip">
+              <div className="profile-card-checkin-left">
+                <div className={`profile-card-checkin-icon-box ${hasCheckedInToday ? 'checked-in' : ''}`}>
+                  {hasCheckedInToday ? (
+                    <CheckCircle2 size={18} color="#00ff88" style={{ filter: 'drop-shadow(0 0 6px rgba(0, 255, 136, 0.9))' }} />
+                  ) : (
+                    <Flame size={20} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 6px rgba(255, 170, 0, 0.9))' }} />
+                  )}
+                </div>
+                <div>
+                  <div className="profile-card-checkin-title-row">
+                    <div className="profile-card-checkin-title">
+                      {!address ? (
+                        <>DAILY <span style={{ color: '#00f5ff' }}>STREAK</span></>
+                      ) : hasCheckedInToday ? (
+                        <>CHECKED IN <span style={{ color: '#00ff88' }}>TODAY</span></>
+                      ) : (
+                        <>KEEP YOUR <span style={{ color: '#ffaa00' }}>STREAK</span></>
+                      )}
+                    </div>
+                    {address && (
+                      <div className="profile-card-checkin-streak-pill">
+                        <Flame size={10} color="#ffaa00" />
+                        <span>{streak} {streak === 1 ? 'DAY' : 'DAYS'}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="profile-card-checkin-sub">
+                    {!address ? (
+                      'Connect wallet to start streak'
+                    ) : hasCheckedInToday ? (
+                      <>Next check-in unlocks in <span style={{ color: '#00f5ff', fontVariantNumeric: 'tabular-nums' }}>{timeUntilNext}</span></>
+                    ) : (
+                      'Check in daily to build your on-chain streak'
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Button on Right */}
+              {!address ? (
+                <button onClick={login} className="profile-card-checkin-btn">
+                  <span>CONNECT</span>
+                </button>
+              ) : hasCheckedInToday ? (
+                <div className="profile-card-checkin-checked" title={`Checked in today! Next reset in ${timeUntilNext}`}>
+                  <CheckCircle2 size={12} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                  <span>NEXT: {timeUntilNext}</span>
+                </div>
+              ) : (
+                <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-card-checkin-btn">
+                  <Flame size={13} color="#020b1a" strokeWidth={2.5} />
+                  <span>{isCheckingIn ? 'CHECKING...' : 'CHECK IN NOW'}</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* ── 3. DAILY CHECK-IN & STREAK ZONE ── */}
-      <div className="profile-checkin-zone" style={{ marginBottom: '24px' }}>
+      {/* ── 3. DAILY CHECK-IN & STREAK ZONE (MOBILE ONLY - EMBEDDED IN USER CARD ON DESKTOP) ── */}
+      <div className="profile-checkin-zone profile-checkin-zone-mobile-only" style={{ marginBottom: '24px' }}>
         <div
           className="profile-section-header"
           style={{
