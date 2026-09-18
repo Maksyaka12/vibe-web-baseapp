@@ -1173,9 +1173,9 @@ export default function BaseAppRewardsView({
                 boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
+              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff' }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredStaking.epoch}</div>
                     <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: featuredStakingStatus === 'active' ? '#00ff88' : featuredStakingStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
@@ -1183,9 +1183,47 @@ export default function BaseAppRewardsView({
                     </div>
                   </div>
                 </div>
-                <div className="rewards-countdown-pill" style={{ background: featuredStakingStatus === 'active' ? 'rgba(0, 255, 136, 0.15)' : 'rgba(0, 245, 255, 0.15)', border: featuredStakingStatus === 'active' ? '1px solid #00ff88' : '1px solid #00f5ff', color: featuredStakingStatus === 'active' ? '#00ff88' : '#00f5ff', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  {featuredStakingStatus === 'active' && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88' }} />}
-                  {featuredStakingStatus === 'active' ? 'ACTIVE VAULT' : featuredStakingStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
+                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
+                  {featuredStakingStatus === 'active' && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTooltip(activeTooltip === 'staking-timer' ? null : 'staking-timer');
+                      }}
+                      onMouseEnter={() => setActiveTooltip('staking-timer')}
+                      onMouseLeave={() => setActiveTooltip(null)}
+                      className="rewards-timer-info-btn"
+                      aria-label="Staking Vault Info"
+                    >
+                      <InfoSvgIcon className="rewards-timer-info-icon" />
+                    </button>
+                  )}
+                  <div className="rewards-countdown-pill" style={{ background: featuredStakingStatus === 'active' ? 'rgba(0, 255, 136, 0.15)' : featuredStakingStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: featuredStakingStatus === 'active' ? '1px solid #00ff88' : featuredStakingStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: featuredStakingStatus === 'active' ? '#00ff88' : featuredStakingStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    {featuredStakingStatus === 'active' && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88' }} />}
+                    {featuredStakingStatus === 'active' ? (
+                      <ActiveClaimCountdown targetDate={featuredStaking.endDateObj} />
+                    ) : featuredStakingStatus === 'ended' ? (
+                      'ENDED'
+                    ) : (
+                      'UPCOMING'
+                    )}
+                  </div>
+
+                  {activeTooltip === 'staking-timer' && (
+                    <div
+                      className="rewards-timer-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="rewards-timer-tooltip-title">
+                        <InfoSvgIcon size={14} color="#00f5ff" />
+                        <span>ACTIVE VAULT</span>
+                      </div>
+                      <div className="rewards-timer-tooltip-desc">
+                        You can stake $VIBE into this vault while the countdown is active. Once the timer reaches 0, the deposit window closes and you will be able to claim your yield and withdraw your tokens.
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1200,11 +1238,11 @@ export default function BaseAppRewardsView({
               {/* Two info pills without Year (only Date and Time) */}
               <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
                 <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>START</div>
+                  <div className="rewards-info-label" style={{ fontSize: '5.5px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>VAULT OPEN</div>
                   <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredStaking.startTime)}</div>
                 </div>
                 <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>END</div>
+                  <div className="rewards-info-label" style={{ fontSize: '5px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>CLAIM YIELD &amp; WITHDRAW</div>
                   <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredStaking.endTime)}</div>
                 </div>
               </div>
