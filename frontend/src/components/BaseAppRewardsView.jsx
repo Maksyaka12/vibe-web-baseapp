@@ -343,86 +343,37 @@ export default function BaseAppRewardsView({
         </div>
       </div>
 
-      {/* ── 2. PREMIUM CYBERPUNK / WEB3 CATEGORY SWITCHER (TURQUOISE OUTLINES) ── */}
-      <div
-        className="rewards-cat-grid"
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-          gap: '6px',
-          background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-          border: '1.5px solid rgba(0, 245, 255, 0.25)',
-          borderRadius: '16px',
-          padding: '6px',
-          marginBottom: '22px',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
-        }}
-      >
+      {/* ── 2. PREMIUM CYBERPUNK / WEB3 CATEGORY SWITCHER (VISUAL BANNER CARDS) ── */}
+      <div className="rewards-cat-grid">
         {[
-          { id: 'holders', label: 'Holders', icon: '💎', count: `${activeHolders.length} LIVE` },
-          { id: 'vibe-club', label: 'Vibe Club', icon: '👑', count: `${activeVibeClubs.length} LIVE` },
-          { id: 'staking', label: 'Staking', icon: '💰', count: `${activeStakings.length} LIVE` },
-          { id: 'giveaways', label: 'Giveaways', icon: '🎁', count: `${activeGiveaways.length} EVENTS` }
+          { id: 'holders', label: 'Holders', image: '/rewards-hub/holders.jfif', count: `${activeHolders.length} LIVE` },
+          { id: 'vibe-club', label: 'Vibe Club', image: '/rewards-hub/vibe-club.jfif', count: `${activeVibeClubs.length} LIVE` },
+          { id: 'staking', label: 'Staking', image: '/rewards-hub/staking.jfif', count: `${activeStakings.length} LIVE` },
+          { id: 'giveaways', label: 'Giveaways', image: '/rewards-hub/giveaways.jfif', count: `${activeGiveaways.length} EVENTS` }
         ].map(tab => {
           const isActive = currentTab === tab.id;
           return (
             <button
               key={tab.id}
               type="button"
-              className={`rewards-cat-btn ${isActive ? 'active' : ''}`}
+              className={`rewards-banner-card ${isActive ? 'active' : ''}`}
               onClick={() => {
                 setCurrentTab(tab.id);
                 setActiveTooltip(null);
               }}
-              style={{
-                background: isActive
-                  ? 'rgba(0, 245, 255, 0.12)'
-                  : 'rgba(255, 255, 255, 0.02)',
-                color: isActive ? '#00f5ff' : '#88aacc',
-                border: isActive
-                  ? '2px solid #00f5ff'
-                  : '1.5px solid rgba(0, 245, 255, 0.25)',
-                borderRadius: '12px',
-                padding: '10px 2px',
-                minHeight: '74px',
-                fontSize: '6.5px',
-                fontFamily: "'Press Start 2P', monospace",
-                cursor: 'pointer',
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '5px',
-                boxShadow: isActive
-                  ? '0 0 20px rgba(0, 245, 255, 0.45), inset 0 0 14px rgba(0, 245, 255, 0.12)'
-                  : 'none',
-                transition: 'all 0.18s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              aria-label={tab.label}
             >
-              <span className="rewards-cat-icon" style={{ fontSize: '13px', filter: isActive ? 'drop-shadow(0 0 8px rgba(0, 245, 255, 0.6))' : 'grayscale(0.2)' }}>
-                {tab.icon}
-              </span>
-              <span className="rewards-cat-label" style={{ whiteSpace: 'nowrap', color: isActive ? '#00f5ff' : '#cbd5e1', fontWeight: 900 }}>
-                {tab.label}
-              </span>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
-                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88', flexShrink: 0 }} />
-                <span
-                  className="rewards-cat-count"
-                  style={{
-                    fontSize: '5px',
-                    color: '#00ff88',
-                    letterSpacing: '0.2px',
-                    fontWeight: 800,
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {tab.count}
-                </span>
+              {/* Top-Left Live Status Badge */}
+              <div className="rewards-banner-badge">
+                <span className="rewards-banner-dot" />
+                <span className="rewards-banner-count">{tab.count}</span>
               </div>
+              <img
+                src={tab.image}
+                alt={tab.label}
+                className="rewards-banner-img"
+                loading="eager"
+              />
             </button>
           );
         })}

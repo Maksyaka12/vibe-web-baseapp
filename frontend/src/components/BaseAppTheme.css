@@ -3035,5 +3035,146 @@ button.admin-action-btn {
   }
 }
 
+/* ── Rewards Hub Visual Category Banner Switcher ── */
+.base-app-pixel-theme .rewards-cat-grid,
+.rewards-cat-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  background: linear-gradient(180deg, rgba(6, 26, 60, 0.85) 0%, rgba(2, 11, 26, 0.95) 100%) !important;
+  border: 1.5px solid rgba(0, 245, 255, 0.25) !important;
+  border-radius: 16px !important;
+  padding: 8px !important;
+  margin-bottom: 22px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card,
+.rewards-banner-card {
+  position: relative !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  background: #040d1e !important;
+  border: 1.5px solid rgba(0, 245, 255, 0.22) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+  display: block !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card:hover,
+.rewards-banner-card:hover {
+  border-color: rgba(0, 245, 255, 0.65) !important;
+  box-shadow: 0 0 16px rgba(0, 245, 255, 0.35), 0 6px 18px rgba(0, 0, 0, 0.7) !important;
+  transform: translateY(-2px) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card.active,
+.rewards-banner-card.active {
+  border: 2px solid #00f5ff !important;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), inset 0 0 14px rgba(0, 245, 255, 0.25), 0 6px 18px rgba(0, 0, 0, 0.8) !important;
+  transform: translateY(-1px) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-img,
+.rewards-banner-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+  transition: transform 0.3s ease, filter 0.22s ease !important;
+  filter: brightness(0.82) contrast(0.98) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card:hover .rewards-banner-img,
+.rewards-banner-card:hover .rewards-banner-img {
+  filter: brightness(0.96) contrast(1) !important;
+  transform: scale(1.02) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card.active .rewards-banner-img,
+.rewards-banner-card.active .rewards-banner-img {
+  filter: brightness(1.05) contrast(1.02) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-badge,
+.rewards-banner-badge {
+  position: absolute !important;
+  top: 7px !important;
+  left: 7px !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  background: rgba(2, 11, 26, 0.86) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(0, 245, 255, 0.35) !important;
+  border-radius: 6px !important;
+  padding: 3px 6px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
+  pointer-events: none !important;
+}
+
+.base-app-pixel-theme .rewards-banner-card.active .rewards-banner-badge,
+.rewards-banner-card.active .rewards-banner-badge {
+  border-color: rgba(0, 255, 136, 0.6) !important;
+  background: rgba(2, 11, 26, 0.92) !important;
+}
+
+.base-app-pixel-theme .rewards-banner-dot,
+.rewards-banner-dot {
+  width: 4.5px !important;
+  height: 4.5px !important;
+  border-radius: 50% !important;
+  background: #00ff88 !important;
+  box-shadow: 0 0 6px #00ff88 !important;
+  flex-shrink: 0 !important;
+}
+
+.base-app-pixel-theme .rewards-banner-count,
+.rewards-banner-count {
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 5.5px !important;
+  color: #00ff88 !important;
+  letter-spacing: 0.3px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px) {
+  .base-app-pixel-theme .rewards-cat-grid,
+  .rewards-cat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    padding: 6px !important;
+  }
+  .base-app-pixel-theme .rewards-banner-badge,
+  .rewards-banner-badge {
+    top: 5px !important;
+    left: 5px !important;
+    padding: 2.5px 5px !important;
+  }
+  .base-app-pixel-theme .rewards-banner-dot,
+  .rewards-banner-dot {
+    width: 4px !important;
+    height: 4px !important;
+  }
+  .base-app-pixel-theme .rewards-banner-count,
+  .rewards-banner-count {
+    font-size: 5px !important;
+  }
+}
+
+
 
 
