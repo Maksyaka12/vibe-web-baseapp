@@ -579,19 +579,7 @@ export function BaseAppClaimView(props) {
                 >
                   <Clock size={11} color="#88aacc" />
                   <span>CLAIM WINDOW ENDS:</span>
-                  <span
-                    className="claim-deadline-pill"
-                    style={{
-                      color: '#00f5ff',
-                      background: 'rgba(0, 245, 255, 0.1)',
-                      border: '1px solid rgba(0, 245, 255, 0.25)',
-                      padding: '2px 5px',
-                      borderRadius: '4px',
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    {formatCountdownLive(upcomingHolderRound?.targetDate || '2026-09-25T14:00:00Z')}
-                  </span>
+                  <span>{formatCountdownLive(upcomingHolderRound?.targetDate || '2026-09-25T14:00:00Z')}</span>
                 </div>
               </div>
             )}
@@ -814,19 +802,7 @@ export function BaseAppClaimView(props) {
                 >
                   <Clock size={11} color="#88aacc" />
                   <span>CLAIM WINDOW ENDS:</span>
-                  <span
-                    className="claim-deadline-pill"
-                    style={{
-                      color: '#00f5ff',
-                      background: 'rgba(0, 245, 255, 0.1)',
-                      border: '1px solid rgba(0, 245, 255, 0.25)',
-                      padding: '2px 5px',
-                      borderRadius: '4px',
-                      letterSpacing: '0.5px'
-                    }}
-                  >
-                    {formatCountdownLive(upcomingVibeClubRound?.targetDate || activeRoyaltyRound?.nextSnapshotDate || '2026-09-17T14:00:00Z')}
-                  </span>
+                  <span>{formatCountdownLive(upcomingVibeClubRound?.targetDate || activeRoyaltyRound?.nextSnapshotDate || '2026-09-17T14:00:00Z')}</span>
                 </div>
               </div>
             )}
