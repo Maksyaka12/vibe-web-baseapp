@@ -311,7 +311,7 @@ export function BaseAppProfileView(props) {
             <div className="profile-card-dashboard-header">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
-                <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+                <h3 className="profile-section-title" style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
                   REWARD DASHBOARD
                 </h3>
               </div>
@@ -325,25 +325,24 @@ export function BaseAppProfileView(props) {
                   background: 'rgba(4, 20, 48, 0.9)',
                   border: '1.5px solid rgba(0, 255, 136, 0.35)',
                   borderRadius: '14px',
-                  padding: '12px 12px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '6px',
+                  gap: '8px',
                   boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className="profile-stat-label" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <span className="profile-stat-label" style={{ color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     TOTAL CLAIMED
                   </span>
-                  <CheckCircle2 size={13} color="#00ff88" className="profile-stat-icon" />
+                  <CheckCircle2 size={16} color="#00ff88" className="profile-stat-icon" />
                 </div>
                 <div>
-                  <div className="profile-stat-val" style={{ fontSize: '10px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+                  <div className="profile-stat-val" style={{ color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
                     +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
                   </div>
-                  <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="profile-stat-sub" style={{ color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                     {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
                   </div>
                 </div>
@@ -356,25 +355,24 @@ export function BaseAppProfileView(props) {
                   background: 'rgba(4, 20, 48, 0.9)',
                   border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1.5px solid rgba(168, 85, 247, 0.35)',
                   borderRadius: '14px',
-                  padding: '12px 12px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '6px',
+                  gap: '8px',
                   boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className="profile-stat-label" style={{ fontSize: '6.5px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <span className="profile-stat-label" style={{ color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     STAKING REWARDS
                   </span>
-                  <Coins size={13} color="#c084fc" className="profile-stat-icon" />
+                  <Coins size={16} color="#c084fc" className="profile-stat-icon" />
                 </div>
                 <div>
-                  <div className="profile-stat-val" style={{ fontSize: '10px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+                  <div className="profile-stat-val" style={{ color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
                     +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
                   </div>
-                  <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="profile-stat-sub" style={{ color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                     {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
                   </div>
                 </div>
@@ -387,25 +385,24 @@ export function BaseAppProfileView(props) {
                   background: 'rgba(4, 20, 48, 0.9)',
                   border: totalAvailableCount > 0 ? '1.5px solid #00f5ff' : '1.5px solid rgba(0, 245, 255, 0.25)',
                   borderRadius: '14px',
-                  padding: '12px 12px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '6px',
+                  gap: '8px',
                   boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className="profile-stat-label" style={{ fontSize: '6.5px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <span className="profile-stat-label" style={{ color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     AVAILABLE NOW
                   </span>
-                  <Gift size={13} color="#00f5ff" className="profile-stat-icon" />
+                  <Gift size={16} color="#00f5ff" className="profile-stat-icon" />
                 </div>
                 <div>
-                  <div className="profile-stat-val" style={{ fontSize: '10px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
+                  <div className="profile-stat-val" style={{ color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
                     +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
                   </div>
-                  <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="profile-stat-sub" style={{ color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                     {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
                   </div>
                 </div>
@@ -418,25 +415,24 @@ export function BaseAppProfileView(props) {
                   background: 'rgba(4, 20, 48, 0.9)',
                   border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1.5px solid rgba(0, 245, 255, 0.2)',
                   borderRadius: '14px',
-                  padding: '12px 12px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  gap: '6px',
+                  gap: '8px',
                   boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span className="profile-stat-label" style={{ fontSize: '6.5px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                  <span className="profile-stat-label" style={{ color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
                     EXPIRED CLAIMS
                   </span>
-                  <Clock size={13} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
+                  <Clock size={16} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
                 </div>
                 <div>
-                  <div className="profile-stat-val" style={{ fontSize: '10px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+                  <div className="profile-stat-val" style={{ color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px' }}>
                     {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
                   </div>
-                  <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <div className="profile-stat-sub" style={{ color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
                     {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
                   </div>
                 </div>
