@@ -848,33 +848,19 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
-                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap', alignItems: 'center' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                    <img
-                      src="/eth-logo.png"
-                      alt="ETH"
-                      style={{ width: '1.15em', height: '1.15em', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
-                    />
-                    ETH PRICE
-                  </span>
+                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>ETH PRICE</span>
                   <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
                     {ethPriceFormatted} ETH
                   </span>
                 </div>
-                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap', alignItems: 'center' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
-                    <img
-                      src="/new-logo-vibe.png"
-                      alt="$VIBE"
-                      style={{ width: '1.15em', height: '1.15em', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
-                    />
-                    $VIBE PRICE
-                  </span>
+                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>$VIBE PRICE</span>
                   <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#ffd700' }}>
                     {formatVibeComma(currentDynamicVibeAmount)}
                   </span>
                 </div>
-                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap', alignItems: 'center' }}>
+                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIMIT</span>
                   <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: '#00ff88' }}>
                     1 NFT PER WALLET
@@ -889,7 +875,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
-                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap', alignItems: 'center' }}>
+                <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>TOTAL MINTED</span>
                   <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
                     {totalMinted} / {maxSupply}
@@ -921,26 +907,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 <div className="vv-nft-wallet-title" style={{ fontSize: '8px', color: '#88aacc', marginBottom: '4px', letterSpacing: '0px', fontWeight: 400, whiteSpace: 'nowrap' }}>
                   YOUR WALLET BALANCES:
                 </div>
-                <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px', whiteSpace: 'nowrap', alignItems: 'center' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    • <img
-                      src="/eth-logo.png"
-                      alt="ETH"
-                      style={{ width: '1.15em', height: '1.15em', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
-                    /> ETH BALANCE:
-                  </span>
+                <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• ETH BALANCE:</span>
                   <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
                     {authenticated ? `${Number(balances?.eth || 0).toFixed(4)} ETH` : 'NOT CONNECTED'}
                   </span>
                 </div>
-                <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap', alignItems: 'center' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                    • <img
-                      src="/new-logo-vibe.png"
-                      alt="$VIBE"
-                      style={{ width: '1.15em', height: '1.15em', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
-                    /> $VIBE BALANCE:
-                  </span>
+                <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• $VIBE BALANCE:</span>
                   <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#ffd700' : '#ff4466' }}>
                     {authenticated ? formatVibeComma(Math.floor(Number(balances?.vibe || 0))) : 'NOT CONNECTED'}
                   </span>
