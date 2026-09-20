@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
 import { parseEther } from 'viem';
 import { useUserBalances } from '../hooks/useUserBalances';
@@ -1130,6 +1131,32 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
                   <span style={{ color: '#00f5ff', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>LIFETIME $VIBE ROYALTIES DISTRIBUTED TO NFT HOLDERS EVERY 10 DAYS</span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#00ff88', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span>ROYALTY POOL SIZE = 15% OF CURRENT COMMUNITY POOL</span>
+                </div>
+
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                  <span style={{ color: '#ffd700', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span>
+                    TRACK & CLAIM ROYALTIES IN{' '}
+                    <Link
+                      to="/hub"
+                      style={{
+                        color: '#00f5ff',
+                        textDecoration: 'underline',
+                        fontWeight: 400,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        letterSpacing: '0px'
+                      }}
+                    >
+                      REWARDS HUB ↗
+                    </Link>
+                  </span>
                 </div>
               </div>
             </div>
