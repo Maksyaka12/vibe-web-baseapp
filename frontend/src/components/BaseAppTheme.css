@@ -1325,12 +1325,14 @@ button.admin-action-btn {
     font-size: 8px !important;
     padding: 6px 12px !important;
     border-radius: 8px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-desktop-contract-link {
     font-size: 7px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     color: #88aacc !important;
     opacity: 0.85 !important;
     font-family: 'Press Start 2P', monospace !important;
@@ -1341,13 +1343,15 @@ button.admin-action-btn {
   }
   .base-app-pixel-theme .vv-nft-ctrl-label {
     font-size: 8px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #88aacc !important;
   }
   .base-app-pixel-theme .vv-nft-ctrl-val {
     font-size: 9px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-progress-bar-wrap {
@@ -1361,54 +1365,79 @@ button.admin-action-btn {
   }
   .base-app-pixel-theme .vv-nft-burned-label {
     font-size: 7px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-burned-val {
     font-size: 8px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-wallet-balances-box {
     padding: 4px 4px !important;
   }
   .base-app-pixel-theme .vv-nft-wallet-title {
-    font-size: 7.5px !important;
+    font-size: 8px !important;
     margin-bottom: 5px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-wallet-label {
     font-size: 8px !important;
-    letter-spacing: 0.2px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #88aacc !important;
   }
   .base-app-pixel-theme .vv-nft-wallet-val {
-    font-size: 8.5px !important;
-    letter-spacing: 0.2px !important;
+    font-size: 8px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
     font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-card-frame {
     border-radius: 18px !important;
+  }
+  .base-app-pixel-theme .vv-nft-phases-schedule-title {
+    font-size: 9px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
+    font-family: 'Press Start 2P', monospace !important;
+    color: #88aacc !important;
+    margin-bottom: 14px !important;
   }
   .base-app-pixel-theme .vv-nft-phase-row {
     padding: 14px 18px !important;
     border-radius: 12px !important;
   }
   .base-app-pixel-theme .vv-nft-phase-text {
-    font-size: 10px !important;
+    font-size: 9px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0px !important;
+    font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-nft-phase-prices {
-    font-size: 10px !important;
+    font-size: 9px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0px !important;
+    font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-mint-btn {
-    font-size: 12px !important;
+    font-size: 11px !important;
     padding: 15px 22px !important;
     border-radius: 14px !important;
+    letter-spacing: 0px !important;
+    font-weight: 400 !important;
   }
   .base-app-pixel-theme .vv-faq-section-title {
     font-size: 14px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0px !important;
+    font-family: 'Press Start 2P', monospace !important;
+    text-shadow: none !important;
     margin-bottom: 18px !important;
   }
   .base-app-pixel-theme .vv-faq-card {
@@ -1416,11 +1445,17 @@ button.admin-action-btn {
     border-radius: 16px !important;
   }
   .base-app-pixel-theme .vv-faq-title {
-    font-size: 11px !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0px !important;
+    font-family: 'Press Start 2P', monospace !important;
   }
   .base-app-pixel-theme .vv-faq-text {
-    font-size: 9.5px !important;
-    line-height: 1.7 !important;
+    font-size: 8px !important;
+    font-weight: 400 !important;
+    letter-spacing: 0px !important;
+    line-height: 1.8 !important;
+    font-family: 'Press Start 2P', monospace !important;
   }
 
   /* ── 4. Desktop User Profile View ── */
