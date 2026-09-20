@@ -801,23 +801,23 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(0, 245, 255, 0.25)',
                 borderRadius: '12px',
-                padding: '10px 14px'
+                padding: '12px 14px'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>ETH PRICE</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '7px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '9.5px', color: '#aaa', fontWeight: 400, letterSpacing: '0px' }}>ETH PRICE</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '11px', color: '#00f5ff', fontWeight: 400, letterSpacing: '0px' }}>
                     {ethPriceFormatted} ETH
                   </span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIVE $VIBE PRICE</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#ffd700' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '7px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '9.5px', color: '#aaa', fontWeight: 400, letterSpacing: '0px' }}>LIVE $VIBE PRICE</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '11px', color: '#ffd700', fontWeight: 400, letterSpacing: '0px' }}>
                     {formatVibeComma(currentDynamicVibeAmount)}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIMIT</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: '#00ff88' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '9.5px', color: '#aaa', fontWeight: 400, letterSpacing: '0px' }}>LIMIT</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9.5px', color: '#00ff88', fontWeight: 400, letterSpacing: '0px' }}>
                     1 NFT PER WALLET
                   </span>
                 </div>
@@ -828,11 +828,11 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(0, 245, 255, 0.25)',
                 borderRadius: '12px',
-                padding: '10px 14px'
+                padding: '12px 14px'
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>TOTAL MINTED</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-ctrl-label" style={{ fontSize: '9.5px', color: '#aaa', fontWeight: 400, letterSpacing: '0px' }}>TOTAL MINTED</span>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '11px', color: '#00f5ff', fontWeight: 400, letterSpacing: '0px' }}>
                     {totalMinted} / {maxSupply}
                   </span>
                 </div>
@@ -847,30 +847,30 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 background: 'rgba(2, 11, 26, 0.7)',
                 border: '1px solid rgba(255, 68, 102, 0.35)',
                 borderRadius: '10px',
-                padding: '7px 10px'
+                padding: '10px 14px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-burned-label" style={{ fontSize: '7px', color: '#ff4466', fontWeight: 400, letterSpacing: '0px' }}>TOTAL BURNED BY MINT</span>
-                  <span className="vv-nft-burned-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', fontWeight: 400, letterSpacing: '0px', color: '#ffffff' }}>
+                  <span className="vv-nft-burned-label" style={{ fontSize: '9px', color: '#ff4466', fontWeight: 400, letterSpacing: '0px' }}>TOTAL BURNED BY MINT</span>
+                  <span className="vv-nft-burned-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '10.5px', fontWeight: 400, letterSpacing: '0px', color: '#ffffff' }}>
                     {formatVibeComma(totalVibeBurnedByContract)}
                   </span>
                 </div>
               </div>
 
               {/* USER WALLET BALANCES */}
-              <div className="vv-nft-wallet-balances-box" style={{ padding: '2px 4px' }}>
-                <div className="vv-nft-wallet-title" style={{ fontSize: '8px', color: '#88aacc', marginBottom: '4px', letterSpacing: '0px', fontWeight: 400, whiteSpace: 'nowrap' }}>
+              <div className="vv-nft-wallet-balances-box" style={{ padding: '4px 4px' }}>
+                <div className="vv-nft-wallet-title" style={{ fontSize: '9.5px', color: '#88aacc', marginBottom: '6px', letterSpacing: '0px', fontWeight: 400, whiteSpace: 'nowrap' }}>
                   YOUR WALLET BALANCES:
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• ETH BALANCE:</span>
-                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', whiteSpace: 'nowrap' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '9.5px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• ETH BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '10.5px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
                     {authenticated ? `${Number(balances?.eth || 0).toFixed(4)} ETH` : 'NOT CONNECTED'}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• $VIBE BALANCE:</span>
-                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#ffd700' : '#ff4466' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '9.5px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• $VIBE BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '10.5px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#ffd700' : '#ff4466' }}>
                     {authenticated ? formatVibeComma(Math.floor(Number(balances?.vibe || 0))) : 'NOT CONNECTED'}
                   </span>
                 </div>
