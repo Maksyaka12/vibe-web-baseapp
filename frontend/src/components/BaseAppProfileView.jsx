@@ -308,8 +308,8 @@ export function BaseAppProfileView(props) {
 
           {/* Desktop Right Column: Reward Dashboard + Daily Check-In with Section Headers */}
           <div className="profile-desktop-dashboard-panel">
-            <div>
-              <div className="profile-card-dashboard-header" style={{ marginBottom: '10px' }}>
+            <div className="profile-card-dashboard-section">
+              <div className="profile-card-dashboard-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
                   <h3 className="profile-section-title" style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
