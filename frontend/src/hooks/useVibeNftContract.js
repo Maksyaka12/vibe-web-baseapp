@@ -34,6 +34,8 @@ const NFT_ABI = parseAbi([
   'function adminMint(address to, uint256 tokenId) external',
   'function adminSwapAndBurn(uint256 ethAmount, bytes customSwapCalldata) external',
   'function setAggregatorRouter(address _newAggregator) external',
+  'function setOverridePrices(uint256 _ethPrice, uint256 _vibePrice) external',
+  'function overrideEthPrice() view returns (uint256)',
   'function withdrawETH() external',
   'function withdrawVIBE() external',
   'function withdrawERC20(address token) external',
@@ -114,14 +116,15 @@ export function useVibeNftContract() {
   // Fetch On-Chain State
   const fetchContractState = useCallback(async () => {
     try {
-      const [minted, remaining, supply, live, ethBal, contractVibeBal, aggRouter] = await Promise.all([
+      const [minted, remaining, supply, live, ethBal, contractVibeBal, aggRouter, onChainEthPrice] = await Promise.all([
         publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'totalMintedCount' }).catch(() => 0),
         publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'getRemainingTokens' }).catch(() => 333),
         publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'MAX_SUPPLY' }).catch(() => 333),
         publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'mintLive' }).catch(() => true),
         publicClient.getBalance({ address: NFT_CONTRACT_ADDRESS }).catch(() => BigInt(0)),
         publicClient.readContract({ address: VIBE_TOKEN_ADDRESS, abi: ERC20_ABI, functionName: 'balanceOf', args: [NFT_CONTRACT_ADDRESS] }).catch(() => BigInt(0)),
-        publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'aggregatorRouter' }).catch(() => '')
+        publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'aggregatorRouter' }).catch(() => ''),
+        publicClient.readContract({ address: NFT_CONTRACT_ADDRESS, abi: NFT_ABI, functionName: 'getCurrentEthPrice' }).catch(() => parseEther('0.005'))
       ]);
 
       const mintedNum = Number(minted);
@@ -139,22 +142,25 @@ export function useVibeNftContract() {
 
       // Automated phase calculation
       let phase = 1;
-      let price = parseEther('0.005');
+      let calculatedPhasePrice = parseEther('0.005');
       if (mintedNum < 103) {
         phase = 1;
-        price = parseEther('0.005');
+        calculatedPhasePrice = parseEther('0.005');
       } else if (mintedNum < 203) {
         phase = 2;
-        price = parseEther('0.015');
+        calculatedPhasePrice = parseEther('0.015');
       } else if (mintedNum < 303) {
         phase = 3;
-        price = parseEther('0.05');
+        calculatedPhasePrice = parseEther('0.05');
       } else {
         phase = 4;
-        price = parseEther('0.1');
+        calculatedPhasePrice = parseEther('0.1');
       }
       setCurrentPhase(phase);
-      setEthPriceWei(price);
+
+      // Set actual on-chain price (or fallback to calculated phase price)
+      const finalPrice = (onChainEthPrice && BigInt(onChainEthPrice) > 0n) ? BigInt(onChainEthPrice) : calculatedPhasePrice;
+      setEthPriceWei(finalPrice);
 
       if (walletAddress) {
         const userCount = await publicClient.readContract({
@@ -817,6 +823,48 @@ export function useVibeNftContract() {
     }
   };
 
+  // 12. Admin Set Override Prices (ETH and VIBE)
+  const [isSettingOverridePrices, setIsSettingOverridePrices] = useState(false);
+  const [setOverridePricesSuccess, setSetOverridePricesSuccess] = useState(false);
+
+  const executeSetOverridePrices = async (newEthPriceEth, newVibePriceVibe = '0') => {
+    if (!authenticated || !walletAddress) {
+      login();
+      return;
+    }
+    setErrorMessage('');
+    setSetOverridePricesSuccess(false);
+    setIsSettingOverridePrices(true);
+    setAdminTxHash('');
+
+    try {
+      const ethWei = parseEther(String(newEthPriceEth));
+      const vibeWei = parseEther(String(newVibePriceVibe));
+
+      const dataHex = encodeFunctionData({
+        abi: NFT_ABI,
+        functionName: 'setOverridePrices',
+        args: [ethWei, vibeWei]
+      });
+
+      const hash = await sendWeb3Transaction(NFT_CONTRACT_ADDRESS, BigInt(0), withBuilderCode(dataHex), '0x7A120');
+      setAdminTxHash(hash);
+
+      const receipt = await publicClient.waitForTransactionReceipt({ hash });
+      if (receipt.status === 'success') {
+        setSetOverridePricesSuccess(true);
+        await fetchContractState();
+      } else {
+        throw new Error('Set Override Prices reverted on Base');
+      }
+    } catch (e) {
+      console.error('Set Override Prices failed:', e);
+      setErrorMessage(e?.shortMessage || e?.message || 'Set Override Prices failed');
+    } finally {
+      setIsSettingOverridePrices(false);
+    }
+  };
+
   return {
     contractAddress: NFT_CONTRACT_ADDRESS,
     totalMinted,
@@ -840,6 +888,8 @@ export function useVibeNftContract() {
     adminTxHash,
     isSettingRouter,
     setRouterSuccess,
+    isSettingOverridePrices,
+    setOverridePricesSuccess,
     isWithdrawingEth,
     withdrawSuccess,
     isWithdrawingVibe,
@@ -861,6 +911,7 @@ export function useVibeNftContract() {
     mintWithVIBE,
     executeAdminSwapAndBurn,
     executeSetAggregatorRouter,
+    executeSetOverridePrices,
     executeWithdrawEth,
     executeWithdrawVibe,
     executeSendVibeToWallet,

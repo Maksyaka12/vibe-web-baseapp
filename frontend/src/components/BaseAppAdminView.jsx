@@ -33,7 +33,8 @@ const DISTRIBUTOR_ABI = parseAbi([
 ]);
 
 const NFT_ABI = parseAbi([
-  'function setAggregatorRouter(address _newAggregator) external'
+  'function setAggregatorRouter(address _newAggregator) external',
+  'function setOverridePrices(uint256 _ethPrice, uint256 _vibePrice) external'
 ]);
 
 const ERC20_ABI = parseAbi([
@@ -133,6 +134,9 @@ export function BaseAppAdminView() {
   const [customRouterInput, setCustomRouterInput] = useState('');
   const [isCustomRouterSaving, setIsCustomRouterSaving] = useState(false);
   const [customRouterSuccess, setCustomRouterSuccess] = useState(false);
+  const [overridePriceInput, setOverridePriceInput] = useState('0.005');
+  const [isOverridePriceSaving, setIsOverridePriceSaving] = useState(false);
+  const [overridePriceSuccess, setOverridePriceSuccess] = useState(false);
 
   // Live $VIBE ratio for dynamic VIBE Mint price
   const [vibePerEthRatio, setVibePerEthRatio] = useState(50000000);
@@ -530,6 +534,38 @@ export function BaseAppAdminView() {
       setErrorMessage(e?.shortMessage || e?.message || 'Set Router failed');
     } finally {
       setIsCustomRouterSaving(false);
+    }
+  };
+
+  // Set Override Mint Price Handler
+  const handleSetOverrideMintPrice = async (customPrice) => {
+    const priceEth = customPrice !== undefined ? customPrice : overridePriceInput;
+    setIsOverridePriceSaving(true);
+    setOverridePriceSuccess(false);
+    setErrorMessage('');
+    setSuccessMessage('');
+    setTxHash('');
+
+    try {
+      const ethWei = parseEther(String(priceEth || '0.005'));
+      const dataHex = encodeFunctionData({
+        abi: NFT_ABI,
+        functionName: 'setOverridePrices',
+        args: [ethWei, 0n]
+      });
+
+      const hash = await sendAdminTx(NFT_CONTRACT_ADDRESS, dataHex);
+      setTxHash(hash);
+      setOverridePriceSuccess(true);
+      setSuccessMessage(Number(priceEth) === 0
+        ? 'Mint price reset to automated 4-phase calculation!'
+        : `Mint price set to ${priceEth} ETH successfully!`);
+      await refetchNftState();
+    } catch (e) {
+      console.error('Set Override Mint Price error:', e);
+      setErrorMessage(e?.shortMessage || e?.message || 'Set Mint Price failed');
+    } finally {
+      setIsOverridePriceSaving(false);
     }
   };
 
@@ -1645,6 +1681,77 @@ export function BaseAppAdminView() {
                 }}
               >
                 {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
+              </button>
+            </div>
+          </div>
+
+          {/* Action 7: Set Mint Price (Override) */}
+          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.3)' }}>
+            <div className="admin-action-header" style={{ color: '#ffd700' }}>
+              7. SET MINT PRICE
+            </div>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
+                <input
+                  type="number"
+                  step="0.001"
+                  min="0"
+                  value={overridePriceInput}
+                  onChange={(e) => setOverridePriceInput(e.target.value)}
+                  placeholder="0.005 (in ETH)"
+                  className="admin-input"
+                  style={{
+                    ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
+                    width: '100%',
+                    paddingRight: '190px'
+                  }}
+                />
+                <div style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '4px' }}>
+                  <button
+                    type="button"
+                    onClick={() => { setOverridePriceInput('0.005'); handleSetOverrideMintPrice('0.005'); }}
+                    className="admin-badge-btn"
+                    style={{
+                      ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                      padding: '0 6px'
+                    }}
+                  >
+                    0.005
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setOverridePriceInput('0.015'); handleSetOverrideMintPrice('0.015'); }}
+                    className="admin-badge-btn"
+                    style={{
+                      ...BADGE_BTN_STYLE('rgba(255, 215, 0, 0.18)', 'rgba(255, 215, 0, 0.45)', '#ffd700'),
+                      padding: '0 6px'
+                    }}
+                  >
+                    0.015
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setOverridePriceInput('0'); handleSetOverrideMintPrice('0'); }}
+                    className="admin-badge-btn"
+                    style={{
+                      ...BADGE_BTN_STYLE('rgba(0, 245, 255, 0.18)', 'rgba(0, 245, 255, 0.45)', '#00f5ff'),
+                      padding: '0 6px'
+                    }}
+                  >
+                    AUTO
+                  </button>
+                </div>
+              </div>
+              <button
+                onClick={() => handleSetOverrideMintPrice(overridePriceInput)}
+                disabled={isOverridePriceSaving}
+                className="admin-action-btn"
+                style={{
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', '#ffd700', '#020b1a'),
+                  cursor: isOverridePriceSaving ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {isOverridePriceSaving ? 'SAVING...' : 'SET PRICE'}
               </button>
             </div>
           </div>

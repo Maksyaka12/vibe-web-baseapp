@@ -213,13 +213,6 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
   const countdownMins = String(Math.floor((totalRemainingSec % 3600) / 60)).padStart(2, '0');
   const countdownSecs = String(totalRemainingSec % 60).padStart(2, '0');
 
-  // 4 Mint Phases definition
-  const phases = [
-    { phase: 'PHASE 1', count: '103 NFT', price: '0.005 ETH', vibePrice: formatVibeComma(Math.floor(0.005 * vibePerEthRatio)), active: currentPhase === 1, done: currentPhase > 1 || totalMinted >= 103 },
-    { phase: 'PHASE 2', count: '100 NFT', price: '0.015 ETH', vibePrice: formatVibeComma(Math.floor(0.015 * vibePerEthRatio)), active: currentPhase === 2, done: currentPhase > 2 || totalMinted >= 203 },
-    { phase: 'PHASE 3', count: '100 NFT', price: '0.05 ETH', vibePrice: formatVibeComma(Math.floor(0.05 * vibePerEthRatio)), active: currentPhase === 3, done: currentPhase > 3 || totalMinted >= 303 },
-    { phase: 'PHASE 4', count: '30 NFT', price: '0.1 ETH', vibePrice: formatVibeComma(Math.floor(0.1 * vibePerEthRatio)), active: currentPhase === 4, done: false },
-  ];
 
   const handleMintWithVibeClick = () => {
     const vibeWei = parseEther(currentDynamicVibeAmount.toString());
@@ -631,7 +624,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               textTransform: 'uppercase',
               whiteSpace: 'nowrap'
             }}>
-              ● PHASE {currentPhase} MINT IS LIVE
+              ● MINT IS LIVE
             </div>
 
             <a
@@ -778,7 +771,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                   textTransform: 'uppercase',
                   whiteSpace: 'nowrap'
                 }}>
-                  ● PHASE {currentPhase} MINT IS LIVE
+                  ● MINT IS LIVE
                 </div>
 
                 <a
@@ -1072,88 +1065,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             </div>
           </div>
 
-          {/* BOTTOM SECTION: 4 MINT PHASES STACKED VERTICALLY */}
-          <div style={{
-            borderTop: '1px solid rgba(0, 245, 255, 0.2)',
-            paddingTop: '20px'
-          }}>
-            <div className="vv-nft-phases-schedule-title" style={{
-              fontFamily: 'var(--vv-pixel)',
-              fontSize: '9px',
-              fontWeight: 400,
-              color: '#88aacc',
-              marginBottom: '14px',
-              letterSpacing: '0px',
-              whiteSpace: 'nowrap'
-            }}>
-              MINT PHASES SCHEDULE:
-            </div>
 
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '10px'
-            }}>
-              {phases.map((p, idx) => (
-                <div
-                  key={idx}
-                  className="vv-nft-phase-row"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '100%',
-                    background: p.active ? 'rgba(0, 245, 255, 0.12)' : 'rgba(2, 11, 26, 0.5)',
-                    border: p.active ? '1.5px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.12)',
-                    borderRadius: '12px',
-                    padding: '14px 18px',
-                    boxShadow: p.active ? '0 0 18px rgba(0, 245, 255, 0.25)' : 'none',
-                    opacity: p.active ? 1 : 0.65,
-                    transition: 'all 0.2s ease'
-                  }}
-                >
-                  {/* LEFT: PHASE TITLE & PULSE DOT */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                    {p.active && <span className="vv-pulse-indicator" />}
-                    <span className="vv-nft-phase-text" style={{
-                      fontFamily: 'var(--vv-pixel)',
-                      fontSize: '9px',
-                      fontWeight: 400,
-                      letterSpacing: '0px',
-                      color: p.active ? '#00ff88' : p.done ? '#ffd700' : '#ffffff',
-                      whiteSpace: 'nowrap'
-                    }}>
-                      {p.phase} ({p.count}) {p.done ? '✓' : ''}
-                    </span>
-                  </div>
-
-                  {/* RIGHT: COLORED PRICES */}
-                  <div className="vv-nft-phase-prices" style={{
-                    fontFamily: 'var(--vv-pixel)',
-                    fontSize: '9px',
-                    fontWeight: 400,
-                    letterSpacing: '0px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    marginLeft: 'auto',
-                    whiteSpace: 'nowrap',
-                    flexShrink: 0
-                  }}>
-                    {p.done ? (
-                      <span style={{ color: '#ffd700', letterSpacing: '0px', fontWeight: 400 }}>{p.phase} COMPLETED</span>
-                    ) : (
-                      <>
-                        <span style={{ color: '#00f5ff', letterSpacing: '0px', fontWeight: 400 }}>{p.price}</span>
-                        <span className="vv-phase-vibe-part" style={{ color: '#88aacc', letterSpacing: '0px', fontWeight: 400 }}>/</span>
-                        <span className="vv-phase-vibe-part" style={{ color: '#ffd700', letterSpacing: '0px', fontWeight: 400 }}>{p.vibePrice}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* ── FAQ & VIBE CLUB BENEFITS SECTION ── */}
@@ -1269,57 +1181,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               </div>
             </div>
 
-            {/* FAQ 3: FCFS & 4-PHASE PROGRESSION */}
-            <div className="vv-faq-card" style={{
-              background: 'rgba(4, 20, 48, 0.75)',
-              border: '1.5px solid rgba(255, 215, 0, 0.35)',
-              borderRadius: '16px',
-              padding: '22px 24px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(12px)'
-            }}>
-              <div className="vv-faq-title" style={{
-                fontFamily: 'var(--vv-pixel)',
-                fontSize: '10px',
-                fontWeight: 400,
-                color: '#ffd700',
-                marginBottom: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                letterSpacing: '0px'
-              }}>
-                <span style={{ fontSize: '13px' }}>⚡</span> FCFS MINT & 4-PHASE PROGRESSION
-              </div>
 
-              <div className="vv-faq-text" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '10px',
-                fontFamily: 'var(--vv-pixel)',
-                fontSize: '8px',
-                fontWeight: 400,
-                color: '#a0b5d0',
-                lineHeight: 1.8,
-                letterSpacing: '0px',
-                textTransform: 'uppercase'
-              }}>
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#ffd700', fontSize: '8px', flexShrink: 0 }}>•</span>
-                  <span>MINT OPERATES ON A STRICT FIRST-COME, FIRST-SERVED (FCFS) BASIS.</span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00ff88', fontSize: '8px', flexShrink: 0 }}>•</span>
-                  <span>THE MINT IS DIVIDED INTO 4 PHASES WITH INCREASING PRICES.</span>
-                </div>
-
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00f5ff', fontSize: '8px', flexShrink: 0 }}>•</span>
-                  <span>AS SOON AS THE SPECIFIED NFT COUNT IN A PHASE IS MINTED OUT, THE NEXT PHASE AUTOMATICALLY BEGINS.</span>
-                </div>
-              </div>
-            </div>
 
             {/* FAQ 4: PRIMARY MINT & OPENSEA TRADING */}
             <div className="vv-faq-card" style={{
