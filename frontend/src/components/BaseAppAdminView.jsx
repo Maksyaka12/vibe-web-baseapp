@@ -23,6 +23,7 @@ export const DISTRIBUTOR_CA = '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089';
 export const ROYALTY_DISTRIBUTOR_CA = '0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1';
 export const NFT_CONTRACT_ADDRESS = '0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886';
 export const DEAD_ADDRESS = '0x000000000000000000000000000000000000dEaD';
+export const COMMUNITY_WALLET = '0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf';
 
 const DISTRIBUTOR_ABI = parseAbi([
   'function setMerkleRoot(uint256 epochId, bytes32 _merkleRoot) external',
@@ -66,11 +67,15 @@ export function BaseAppAdminView() {
   const [holderMerkleRoot, setHolderMerkleRoot] = useState(round1Data?.merkleRoot || '0xac99116798ace01d3ebcb6f4c6e60ccd8c5d464b94da5de34aa04f602cb9115a');
   const [holderWithdrawAmount, setHolderWithdrawAmount] = useState('');
   const [holderBurnAmount, setHolderBurnAmount] = useState('');
+  const [holderCommunityAmount, setHolderCommunityAmount] = useState('');
 
   const [royaltyEpochId, setRoyaltyEpochId] = useState('3');
   const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
   const [royaltyWithdrawAmount, setRoyaltyWithdrawAmount] = useState('');
   const [royaltyBurnAmount, setRoyaltyBurnAmount] = useState('');
+  const [royaltyCommunityAmount, setRoyaltyCommunityAmount] = useState('');
+
+  const [nftCommunityAmount, setNftCommunityAmount] = useState('');
 
   // Multicall Live Metrics
   const [holderMetrics, setHolderMetrics] = useState({
@@ -417,6 +422,83 @@ export function BaseAppAdminView() {
     } catch (e) {
       console.error('Burn tokens error:', e);
       setErrorMessage(e?.shortMessage || e?.message || 'Burn failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWithdrawCommunityTokens = async (type) => {
+    const isHolder = type === 'holder';
+    const isRoyalty = type === 'royalty';
+    const isNft = type === 'nft';
+
+    let amountNum = 0;
+    let contractAddress = '';
+
+    if (isHolder) {
+      contractAddress = DISTRIBUTOR_CA;
+      amountNum = parseFloat(holderCommunityAmount) || holderMetrics.contractBalance;
+    } else if (isRoyalty) {
+      contractAddress = ROYALTY_DISTRIBUTOR_CA;
+      amountNum = parseFloat(royaltyCommunityAmount) || royaltyMetrics.contractBalance;
+    } else if (isNft) {
+      contractAddress = NFT_CONTRACT_ADDRESS;
+      amountNum = parseFloat(nftCommunityAmount) || parseFloat(contractVibeBalance || 0);
+    }
+
+    if (!amountNum || amountNum <= 0) {
+      setErrorMessage('Please specify an amount to withdraw to Community Wallet');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+    setTxHash('');
+
+    try {
+      const amountWei = parseUnits(amountNum.toString(), 18);
+
+      if (isNft) {
+        // Step 1: Withdraw VIBE from NFT contract to Admin wallet
+        const withdrawDataHex = encodeFunctionData({
+          abi: parseAbi(['function withdrawVIBE() external']),
+          functionName: 'withdrawVIBE'
+        });
+        await sendAdminTx(NFT_CONTRACT_ADDRESS, withdrawDataHex);
+      } else {
+        // Step 1: Emergency withdraw from Distributor contract to Admin wallet
+        const withdrawDataHex = encodeFunctionData({
+          abi: DISTRIBUTOR_ABI,
+          functionName: 'emergencyWithdraw',
+          args: [VIBE_TOKEN_CA, amountWei]
+        });
+        await sendAdminTx(contractAddress, withdrawDataHex);
+      }
+
+      // Step 2: Transfer VIBE from Admin wallet to Community wallet (0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf)
+      const transferDataHex = encodeFunctionData({
+        abi: ERC20_ABI,
+        functionName: 'transfer',
+        args: [COMMUNITY_WALLET, amountWei]
+      });
+
+      const hash2 = await sendAdminTx(VIBE_TOKEN_CA, transferDataHex);
+      setTxHash(hash2);
+      setSuccessMessage(`Successfully transferred ${amountNum.toLocaleString()} $VIBE to Community Wallet (${COMMUNITY_WALLET.slice(0, 6)}...${COMMUNITY_WALLET.slice(-4)})!`);
+
+      if (isHolder) setHolderCommunityAmount('');
+      else if (isRoyalty) setRoyaltyCommunityAmount('');
+      else setNftCommunityAmount('');
+
+      if (isNft) {
+        await refetchNftState();
+      } else {
+        setTimeout(() => fetchDistributorMetrics(type), 3000);
+      }
+    } catch (e) {
+      console.error('Withdraw to community error:', e);
+      setErrorMessage(e?.shortMessage || e?.message || 'Withdraw to community failed');
     } finally {
       setLoading(false);
     }
@@ -961,6 +1043,54 @@ export function BaseAppAdminView() {
             </div>
           </div>
 
+          {/* Action 4: Withdraw Community */}
+          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
+            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+              4. WITHDRAW COMMUNITY
+            </div>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
+                <input
+                  type="number"
+                  value={holderCommunityAmount}
+                  onChange={(e) => setHolderCommunityAmount(e.target.value)}
+                  placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
+                  className="admin-input"
+                  style={{
+                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    width: '100%',
+                    paddingRight: '65px'
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setHolderCommunityAmount(holderMetrics.contractBalance.toString())}
+                  className="admin-badge-btn"
+                  style={{
+                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    position: 'absolute',
+                    right: '8px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  MAX
+                </button>
+              </div>
+              <button
+                onClick={() => handleWithdrawCommunityTokens('holder')}
+                disabled={loading || holderMetrics.contractBalance <= 0}
+                className="admin-action-btn"
+                style={{
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #00b8ff 100%)', '#00ff88', '#020b1a'),
+                  cursor: (loading || holderMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
+              </button>
+            </div>
+          </div>
+
         </div>
       )}
 
@@ -1171,6 +1301,54 @@ export function BaseAppAdminView() {
                 }}
               >
                 {loading ? 'PROCESSING...' : 'BURN TOKENS'}
+              </button>
+            </div>
+          </div>
+
+          {/* Action 4: Withdraw Community */}
+          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
+            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+              4. WITHDRAW COMMUNITY
+            </div>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
+                <input
+                  type="number"
+                  value={royaltyCommunityAmount}
+                  onChange={(e) => setRoyaltyCommunityAmount(e.target.value)}
+                  placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
+                  className="admin-input"
+                  style={{
+                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    width: '100%',
+                    paddingRight: '65px'
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setRoyaltyCommunityAmount(royaltyMetrics.contractBalance.toString())}
+                  className="admin-badge-btn"
+                  style={{
+                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    position: 'absolute',
+                    right: '8px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  MAX
+                </button>
+              </div>
+              <button
+                onClick={() => handleWithdrawCommunityTokens('royalty')}
+                disabled={loading || royaltyMetrics.contractBalance <= 0}
+                className="admin-action-btn"
+                style={{
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #a855f7 100%)', '#00ff88', '#020b1a'),
+                  cursor: (loading || royaltyMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
               </button>
             </div>
           </div>
@@ -1419,6 +1597,54 @@ export function BaseAppAdminView() {
                 }}
               >
                 {isCustomRouterSaving ? 'SAVING...' : 'SET ROUTER'}
+              </button>
+            </div>
+          </div>
+
+          {/* Action 6: Withdraw Community */}
+          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
+            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+              6. WITHDRAW COMMUNITY
+            </div>
+            <div className="admin-action-row">
+              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
+                <input
+                  type="number"
+                  value={nftCommunityAmount}
+                  onChange={(e) => setNftCommunityAmount(e.target.value)}
+                  placeholder={`Max: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
+                  className="admin-input"
+                  style={{
+                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    width: '100%',
+                    paddingRight: '65px'
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setNftCommunityAmount(Math.floor(Number(contractVibeBalance || 0)).toString())}
+                  className="admin-badge-btn"
+                  style={{
+                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    position: 'absolute',
+                    right: '8px',
+                    top: '50%',
+                    transform: 'translateY(-50%)'
+                  }}
+                >
+                  MAX
+                </button>
+              </div>
+              <button
+                onClick={() => handleWithdrawCommunityTokens('nft')}
+                disabled={loading || parseFloat(contractVibeBalance || '0') <= 0}
+                className="admin-action-btn"
+                style={{
+                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #ffd700 100%)', '#00ff88', '#020b1a'),
+                  cursor: (loading || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
               </button>
             </div>
           </div>
