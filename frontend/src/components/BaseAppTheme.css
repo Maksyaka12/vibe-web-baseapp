@@ -1672,7 +1672,7 @@ button.admin-action-btn {
     background: linear-gradient(180deg, rgba(6, 26, 60, 0.85) 0%, rgba(3, 14, 34, 0.95) 100%) !important;
     border: 1.5px solid rgba(255, 170, 0, 0.45) !important;
     border-radius: 14px !important;
-    padding: 14px 16px !important;
+    padding: 14px 16px 16px 16px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
@@ -1701,33 +1701,34 @@ button.admin-action-btn {
     flex: 1 !important;
     display: flex !important;
     align-items: center !important;
-    justify-content: flex-start !important;
-    padding: 2px 0 !important;
+    justify-content: center !important;
+    padding: 6px 0 2px 0 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-val {
     display: flex !important;
     align-items: baseline !important;
-    gap: 8px !important;
+    justify-content: center !important;
+    gap: 10px !important;
     line-height: 1 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-num {
-    font-size: 32px !important;
+    font-size: 54px !important;
     font-weight: 900 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #ffaa00 !important;
     line-height: 1 !important;
-    text-shadow: 0 0 16px rgba(255, 170, 0, 0.6) !important;
+    text-shadow: 0 0 24px rgba(255, 170, 0, 0.65) !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-num {
     color: #00ff88 !important;
-    text-shadow: 0 0 16px rgba(0, 255, 136, 0.6) !important;
+    text-shadow: 0 0 24px rgba(0, 255, 136, 0.65) !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-unit {
-    font-size: 9.5px !important;
+    font-size: 11px !important;
     font-weight: 900 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #ffaa00 !important;
@@ -1760,7 +1761,7 @@ button.admin-action-btn {
     background: linear-gradient(135deg, #ffaa00 0%, #ff5500 100%) !important;
     border: 2px solid #ffcc00 !important;
     color: #020b1a !important;
-    font-size: 15px !important;
+    font-size: 18px !important;
     font-weight: 900 !important;
     letter-spacing: 0.8px !important;
     box-shadow: 0 0 24px rgba(255, 170, 0, 0.65), 0 6px 20px rgba(0, 0, 0, 0.6) !important;
@@ -1782,26 +1783,26 @@ button.admin-action-btn {
   .base-app-pixel-theme .profile-checkin-big-btn.checked-mode {
     background: linear-gradient(180deg, rgba(0, 255, 136, 0.12) 0%, rgba(3, 14, 34, 0.95) 100%) !important;
     border: 1.5px solid rgba(0, 255, 136, 0.5) !important;
-    padding: 12px 14px !important;
-    gap: 10px !important;
+    padding: 14px 16px !important;
+    gap: 12px !important;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 255, 136, 0.08) !important;
     cursor: default !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-title {
-    font-size: 13px !important;
+    font-size: 17px !important;
     font-weight: 900 !important;
     color: #00ff88 !important;
     letter-spacing: 0.6px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important;
-    text-shadow: 0 0 12px rgba(0, 255, 136, 0.7) !important;
+    gap: 10px !important;
+    text-shadow: 0 0 14px rgba(0, 255, 136, 0.75) !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-timer {
-    font-size: 9.5px !important;
+    font-size: 11px !important;
     color: #88aacc !important;
     letter-spacing: 0.4px !important;
     font-weight: 800 !important;
@@ -1813,7 +1814,7 @@ button.admin-action-btn {
     background: linear-gradient(135deg, #00f5ff 0%, #0077ff 100%) !important;
     border: 2px solid #00f5ff !important;
     color: #020b1a !important;
-    font-size: 11px !important;
+    font-size: 14px !important;
     font-weight: 900 !important;
     box-shadow: 0 0 20px rgba(0, 245, 255, 0.5) !important;
     cursor: pointer !important;

@@ -482,7 +482,7 @@ export function BaseAppProfileView(props) {
                     title={`Next check-in resets at 00:00 UTC (in ${timeUntilNext})`}
                   >
                     <div className="profile-checkin-big-btn-title">
-                      <CheckCircle2 size={15} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <CheckCircle2 size={22} color="#00ff88" strokeWidth={2.8} style={{ flexShrink: 0 }} />
                       <span>CHECKED IN</span>
                     </div>
                     <div className="profile-checkin-big-btn-timer">NEXT IN {timeUntilNext}</div>
