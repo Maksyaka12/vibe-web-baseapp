@@ -462,7 +462,8 @@ export function BaseAppProfileView(props) {
                   </div>
                   <div className="profile-checkin-streak-val-wrap">
                     <div className="profile-checkin-streak-val">
-                      {streak} {streak === 1 ? 'DAY' : 'DAYS'}
+                      <span className="profile-checkin-streak-num">{streak}</span>
+                      <span className="profile-checkin-streak-unit">{streak === 1 ? 'DAY' : 'DAYS'}</span>
                     </div>
                   </div>
                 </div>
@@ -480,7 +481,10 @@ export function BaseAppProfileView(props) {
                     className="profile-checkin-big-btn checked-mode"
                     title={`Next check-in resets at 00:00 UTC (in ${timeUntilNext})`}
                   >
-                    <div className="profile-checkin-big-btn-title">CHECKED IN</div>
+                    <div className="profile-checkin-big-btn-title">
+                      <CheckCircle2 size={15} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <span>CHECKED IN</span>
+                    </div>
                     <div className="profile-checkin-big-btn-timer">NEXT IN {timeUntilNext}</div>
                   </div>
                 ) : (

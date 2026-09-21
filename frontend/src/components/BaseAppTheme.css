@@ -1571,7 +1571,7 @@ button.admin-action-btn {
     min-width: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    gap: 16px !important;
+    gap: 24px !important;
   }
 
   .base-app-pixel-theme .profile-card-dashboard-section {
@@ -1679,7 +1679,7 @@ button.admin-action-btn {
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 170, 0, 0.06) !important;
     box-sizing: border-box !important;
     height: 100% !important;
-    min-height: 90px !important;
+    min-height: 84px !important;
     transition: all 0.25s ease !important;
   }
 
@@ -1689,7 +1689,7 @@ button.admin-action-btn {
   }
 
   .base-app-pixel-theme .profile-checkin-streak-label {
-    font-size: 8px !important;
+    font-size: 9.5px !important;
     font-weight: 900 !important;
     color: #88aacc !important;
     letter-spacing: 0.4px !important;
@@ -1702,28 +1702,47 @@ button.admin-action-btn {
     display: flex !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    padding: 2px 0 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-val {
-    font-size: 20px !important;
+    display: flex !important;
+    align-items: baseline !important;
+    gap: 8px !important;
+    line-height: 1 !important;
+  }
+
+  .base-app-pixel-theme .profile-checkin-streak-num {
+    font-size: 32px !important;
+    font-weight: 900 !important;
+    font-family: 'Press Start 2P', monospace !important;
+    color: #ffaa00 !important;
+    line-height: 1 !important;
+    text-shadow: 0 0 16px rgba(255, 170, 0, 0.6) !important;
+  }
+
+  .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-num {
+    color: #00ff88 !important;
+    text-shadow: 0 0 16px rgba(0, 255, 136, 0.6) !important;
+  }
+
+  .base-app-pixel-theme .profile-checkin-streak-unit {
+    font-size: 9.5px !important;
     font-weight: 900 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #ffaa00 !important;
     letter-spacing: 0.5px !important;
-    line-height: 1.2 !important;
-    text-shadow: 0 0 16px rgba(255, 170, 0, 0.55) !important;
   }
 
-  .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-val {
+  .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-unit {
     color: #00ff88 !important;
-    text-shadow: 0 0 16px rgba(0, 255, 136, 0.55) !important;
   }
 
   /* Right Action Box (Entire Card is the Button) */
   .base-app-pixel-theme .profile-checkin-big-btn {
     width: 100% !important;
     height: 100% !important;
-    min-height: 90px !important;
+    min-height: 84px !important;
     box-sizing: border-box !important;
     border-radius: 14px !important;
     display: flex !important;
@@ -1763,25 +1782,30 @@ button.admin-action-btn {
   .base-app-pixel-theme .profile-checkin-big-btn.checked-mode {
     background: linear-gradient(180deg, rgba(0, 255, 136, 0.12) 0%, rgba(3, 14, 34, 0.95) 100%) !important;
     border: 1.5px solid rgba(0, 255, 136, 0.5) !important;
-    padding: 14px 12px !important;
-    gap: 8px !important;
+    padding: 12px 14px !important;
+    gap: 10px !important;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 255, 136, 0.08) !important;
     cursor: default !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-title {
-    font-size: 11px !important;
+    font-size: 13px !important;
     font-weight: 900 !important;
     color: #00ff88 !important;
     letter-spacing: 0.6px !important;
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    text-shadow: 0 0 12px rgba(0, 255, 136, 0.7) !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-timer {
-    font-size: 8px !important;
+    font-size: 9.5px !important;
     color: #88aacc !important;
-    letter-spacing: 0.3px !important;
+    letter-spacing: 0.4px !important;
     font-weight: 800 !important;
+    text-align: center !important;
   }
 
   /* Connect Mode */
