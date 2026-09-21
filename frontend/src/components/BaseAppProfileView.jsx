@@ -453,62 +453,45 @@ export function BaseAppProfileView(props) {
               </div>
 
               <div className="profile-dashboard-grid-checkin">
-                {/* Tile 1: Current Streak */}
+                {/* Tile 1: Current Streak (Clean High Web3 Card) */}
                 <div
-                  className={`profile-stat-card profile-checkin-card-streak ${hasCheckedInToday ? 'checked-in' : ''}`}
+                  className={`profile-checkin-streak-box ${hasCheckedInToday ? 'checked-in' : ''}`}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: hasCheckedInToday ? '#00ff88' : '#ffaa00', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      CURRENT STREAK
-                    </span>
-                    <Flame size={16} color={hasCheckedInToday ? '#00ff88' : '#ffaa00'} className="profile-stat-icon" />
+                  <div className="profile-checkin-streak-label">
+                    CURRENT STREAK:
                   </div>
-                  <div>
-                    <div className="profile-stat-val" style={{ color: hasCheckedInToday ? '#00ff88' : '#ffaa00', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: hasCheckedInToday ? '0 0 8px rgba(0, 255, 136, 0.4)' : '0 0 8px rgba(255, 170, 0, 0.4)' }}>
+                  <div className="profile-checkin-streak-val-wrap">
+                    <div className="profile-checkin-streak-val">
                       {streak} {streak === 1 ? 'DAY' : 'DAYS'}
                     </div>
-                    <div className="profile-stat-sub" style={{ color: hasCheckedInToday ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                      {hasCheckedInToday ? 'CHECKED IN TODAY' : (streak > 0 ? 'STREAK ACTIVE' : 'START YOUR STREAK')}
-                    </div>
                   </div>
                 </div>
 
-                {/* Tile 2: Check-In Action Card */}
-                <div
-                  className={`profile-stat-card profile-checkin-card-action ${hasCheckedInToday ? 'checked-in' : ''}`}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: hasCheckedInToday ? '#00ff88' : '#ffaa00', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                      CHECK-IN STATUS
-                    </span>
-                    {hasCheckedInToday ? (
-                      <CheckCircle2 size={16} color="#00ff88" className="profile-stat-icon" />
-                    ) : (
-                      <Flame size={16} color="#ffaa00" className="profile-stat-icon" />
-                    )}
+                {/* Tile 2: Check-In Action Button (Entire Plate is a stylish Web3 Button) */}
+                {!address ? (
+                  <button
+                    onClick={login}
+                    className="profile-checkin-big-btn connect-mode"
+                  >
+                    <span>CONNECT WALLET</span>
+                  </button>
+                ) : hasCheckedInToday ? (
+                  <div
+                    className="profile-checkin-big-btn checked-mode"
+                    title={`Next check-in resets at 00:00 UTC (in ${timeUntilNext})`}
+                  >
+                    <div className="profile-checkin-big-btn-title">CHECKED IN</div>
+                    <div className="profile-checkin-big-btn-timer">NEXT IN {timeUntilNext}</div>
                   </div>
-
-                  <div className="profile-checkin-btn-wrap">
-                    {!address ? (
-                      <button onClick={login} className="profile-checkin-action-btn connect-btn">
-                        <span>CONNECT</span>
-                      </button>
-                    ) : hasCheckedInToday ? (
-                      <div className="profile-checkin-action-btn inactive-btn" title={`Next check-in available at 00:00 UTC (in ${timeUntilNext})`}>
-                        <CheckCircle2 size={12} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                        <span>NEXT IN {timeUntilNext}</span>
-                      </div>
-                    ) : (
-                      <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-checkin-action-btn active-btn">
-                        <Flame size={13} color="#020b1a" strokeWidth={2.5} />
-                        <span>{isCheckingIn ? 'CHECKING...' : 'CHECK-IN'}</span>
-                      </button>
-                    )}
-                    <div className="profile-stat-sub" style={{ color: hasCheckedInToday ? '#88aacc' : '#ffaa00', fontFamily: "'Press Start 2P', monospace", marginTop: '4px' }}>
-                      {hasCheckedInToday ? 'RESETS AT 00:00 UTC' : 'CLICK TO EXTEND STREAK'}
-                    </div>
-                  </div>
-                </div>
+                ) : (
+                  <button
+                    onClick={performCheckIn}
+                    disabled={isCheckingIn}
+                    className="profile-checkin-big-btn active-mode"
+                  >
+                    <span>{isCheckingIn ? 'CHECKING...' : 'CHECK-IN'}</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
