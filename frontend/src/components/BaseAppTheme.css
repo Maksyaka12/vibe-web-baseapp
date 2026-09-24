@@ -1672,7 +1672,7 @@ button.admin-action-btn {
     background: linear-gradient(180deg, rgba(6, 26, 60, 0.85) 0%, rgba(3, 14, 34, 0.95) 100%) !important;
     border: 1.5px solid rgba(255, 170, 0, 0.45) !important;
     border-radius: 14px !important;
-    padding: 14px 16px 16px 16px !important;
+    padding: 14px 16px 14px 16px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
@@ -1689,7 +1689,7 @@ button.admin-action-btn {
   }
 
   .base-app-pixel-theme .profile-checkin-streak-label {
-    font-size: 9.5px !important;
+    font-size: 9px !important;
     font-weight: 900 !important;
     color: #88aacc !important;
     letter-spacing: 0.4px !important;
@@ -1702,24 +1702,26 @@ button.admin-action-btn {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    padding: 6px 0 2px 0 !important;
+    padding: 2px 0 !important;
+    width: 100% !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-val {
-    display: flex !important;
-    align-items: baseline !important;
+    display: inline-flex !important;
+    align-items: center !important;
     justify-content: center !important;
-    gap: 10px !important;
+    gap: 8px !important;
     line-height: 1 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-num {
-    font-size: 54px !important;
+    font-size: 48px !important;
     font-weight: 900 !important;
     font-family: 'Press Start 2P', monospace !important;
     color: #ffaa00 !important;
     line-height: 1 !important;
     text-shadow: 0 0 24px rgba(255, 170, 0, 0.65) !important;
+    margin: 0 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-num {
@@ -1733,6 +1735,8 @@ button.admin-action-btn {
     font-family: 'Press Start 2P', monospace !important;
     color: #ffaa00 !important;
     letter-spacing: 0.5px !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
   }
 
   .base-app-pixel-theme .profile-checkin-streak-box.checked-in .profile-checkin-streak-unit {
@@ -1761,7 +1765,7 @@ button.admin-action-btn {
     background: linear-gradient(135deg, #ffaa00 0%, #ff5500 100%) !important;
     border: 2px solid #ffcc00 !important;
     color: #020b1a !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 900 !important;
     letter-spacing: 0.8px !important;
     box-shadow: 0 0 24px rgba(255, 170, 0, 0.65), 0 6px 20px rgba(0, 0, 0, 0.6) !important;
@@ -1783,30 +1787,34 @@ button.admin-action-btn {
   .base-app-pixel-theme .profile-checkin-big-btn.checked-mode {
     background: linear-gradient(180deg, rgba(0, 255, 136, 0.12) 0%, rgba(3, 14, 34, 0.95) 100%) !important;
     border: 1.5px solid rgba(0, 255, 136, 0.5) !important;
-    padding: 14px 16px !important;
-    gap: 12px !important;
+    padding: 12px 10px !important;
+    gap: 8px !important;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 255, 136, 0.08) !important;
     cursor: default !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-title {
-    font-size: 17px !important;
+    font-size: 10.5px !important;
     font-weight: 900 !important;
     color: #00ff88 !important;
-    letter-spacing: 0.6px !important;
+    letter-spacing: 0.3px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 10px !important;
-    text-shadow: 0 0 14px rgba(0, 255, 136, 0.75) !important;
+    gap: 6px !important;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.6) !important;
+    white-space: nowrap !important;
+    width: 100% !important;
   }
 
   .base-app-pixel-theme .profile-checkin-big-btn-timer {
-    font-size: 11px !important;
+    font-size: 8.5px !important;
     color: #88aacc !important;
-    letter-spacing: 0.4px !important;
+    letter-spacing: 0.3px !important;
     font-weight: 800 !important;
     text-align: center !important;
+    white-space: nowrap !important;
+    width: 100% !important;
   }
 
   /* Connect Mode */
@@ -1814,10 +1822,11 @@ button.admin-action-btn {
     background: linear-gradient(135deg, #00f5ff 0%, #0077ff 100%) !important;
     border: 2px solid #00f5ff !important;
     color: #020b1a !important;
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: 900 !important;
     box-shadow: 0 0 20px rgba(0, 245, 255, 0.5) !important;
     cursor: pointer !important;
+    white-space: nowrap !important;
   }
 
   /* Hide bottom duplicate dashboard and checkin on desktop */
