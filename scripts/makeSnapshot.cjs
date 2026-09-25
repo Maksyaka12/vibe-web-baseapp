@@ -1,9 +1,9 @@
 /**
- * VIBE Tokenomics - Direct On-Chain RPC Snapshot & Merkle Tree Generator
+ * VIBE Tokenomics - Holder Rewards Snapshot & Merkle Tree Generator
  * 
  * Usage:
  *   node scripts/makeSnapshot.cjs [roundNumber]
- *   Example: node scripts/makeSnapshot.cjs 1
+ *   Example: node scripts/makeSnapshot.cjs 2
  */
 
 const fs = require('fs');
@@ -13,18 +13,17 @@ const { base } = require('../frontend/node_modules/viem/chains');
 
 const TOKEN_ADDRESS = '0xb200000000000000000000df24ecb8bf51100a01';
 const VESTING_CONTRACT = '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089';
-const TOKEN_START_BLOCK = 49185761n;
 const MIN_BALANCE = 5000000; // 5,000,000 $VIBE threshold
 const MONTHLY_POOL = 10000000; // 10,000,000 $VIBE per month
-const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap as enforced by smart contract
+const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap per wallet
 
 const SYSTEM_EXCLUSIONS = [
+  '0xb200000000000000000000df24ecb8bf51100a01', // Token CA itself
   '0x498581ff718922c3f8e6a244956af099b2652b2b', // Uniswap V4 PoolManager
   '0x3beea54db87a632a5faf20db6765d3af94c81b31', // VestingVault 100M
+  '0xfce13943c69b8cfe3de795dfe1a8447c8f8a99cb', // Staking Contract
   '0x000000000000000000000000000000000000dead', // Burn Address
   '0x0000000000000000000000000000000000000000', // Zero Address
-  '0x067c66addd3c6d484c1882b68e197b614f7f3ebf', // Buyback Wallet
-  '0x3b277d566b4557a53392712b1dc830da5d13ba91', // Distribution Wallet
   '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089'  // Vesting Distributor
 ].map(a => a.toLowerCase());
 
@@ -87,9 +86,9 @@ function buildMerkleTree(elements) {
 }
 
 async function runSnapshot() {
-  const roundNumber = parseInt(process.argv[2] || '1', 10);
+  const roundNumber = parseInt(process.argv[2] || '2', 10);
   console.log('\n======================================================');
-  console.log('🚀 VIBE Tokenomics - Direct On-Chain Snapshot (Round ' + roundNumber + ')');
+  console.log('🚀 VIBE Tokenomics - Full BaseScan Snapshot (Round ' + roundNumber + ')');
   console.log('======================================================');
   console.log('Token CA:             ' + TOKEN_ADDRESS);
   console.log('Vesting Contract:     ' + VESTING_CONTRACT);
@@ -100,119 +99,117 @@ async function runSnapshot() {
   console.log('-----------------------------------------------------\n');
 
   const tokenAbi = parseAbi([
-    'event Transfer(address indexed from, address indexed to, uint256 value)',
     'function balanceOf(address) view returns (uint256)'
   ]);
 
   const transport = fallback([
-    http('https://mainnet.base.org'),
-    http('https://base.publicnode.com'),
-    http('https://1rpc.io/base')
+    http('https://base.drpc.org'),
+    http('https://base.merkle.io'),
+    http('https://base-mainnet.public.blastapi.io'),
+    http('https://mainnet.base.org')
   ]);
 
   const client = createPublicClient({ chain: base, transport });
   
-  // Find exact historical block on Base at target snapshot time (00:00:00 UTC)
-  const SNAPSHOT_TIMESTAMPS = {
-    1: '2026-08-26T00:00:00Z',
-    2: '2026-09-25T00:00:00Z',
-    3: '2026-10-25T00:00:00Z',
-    4: '2026-11-24T00:00:00Z'
-  };
-  const targetIso = SNAPSHOT_TIMESTAMPS[roundNumber] || '2026-08-26T00:00:00Z';
-  const targetTs = Math.floor(new Date(targetIso).getTime() / 1000);
-
-  console.log(`🔍 Finding exact historical block on Base for ${targetIso} (00:00:00 UTC)...`);
   const latestBlockData = await client.getBlock({ blockTag: 'latest' });
-  let snapshotBlock = latestBlockData.number;
+  const snapshotBlock = latestBlockData.number;
+  const snapshotIso = new Date().toISOString();
 
-  if (Number(latestBlockData.timestamp) > targetTs) {
-    let low = TOKEN_START_BLOCK;
-    let high = latestBlockData.number;
-    while (low <= high) {
-      const mid = (low + high) / 2n;
-      const b = await client.getBlock({ blockNumber: mid });
-      const bTs = Number(b.timestamp);
-      if (bTs <= targetTs) {
-        snapshotBlock = mid;
-        low = mid + 1n;
-      } else {
-        high = mid - 1n;
-      }
+  console.log(`📌 Current Snapshot Block: ${snapshotBlock.toString()}`);
+  console.log(`📌 Block Timestamp:        ${new Date(Number(latestBlockData.timestamp) * 1000).toISOString()}`);
+
+  console.log('\n[1/4] 🔍 Fetching 100% of token holders across all pages on BaseScan & Blockscout...');
+  const addresses = new Set();
+
+  // 1. Scrape all holder pages from BaseScan
+  for (let p = 1; p <= 35; p++) {
+    const url = 'https://basescan.org/token/generic-tokenholders2?a=' + TOKEN_ADDRESS + '&p=' + p;
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+      });
+      if (res.status !== 200) break;
+      const html = await res.text();
+      const matches = html.match(/0x[a-fA-F0-9]{40}/g) || [];
+      if (matches.length === 0 || html.includes('No data found')) break;
+      matches.forEach(m => addresses.add(m.toLowerCase()));
+      await sleep(100);
+    } catch (e) {
+      break;
     }
   }
+  console.log(`BaseScan addresses indexed: ${addresses.size}`);
 
-  const snapshotBlockInfo = await client.getBlock({ blockNumber: snapshotBlock });
-  console.log(`📌 Exact Snapshot Block: ${snapshotBlock.toString()}`);
-  console.log(`📌 Block Timestamp:      ${new Date(Number(snapshotBlockInfo.timestamp) * 1000).toISOString()}`);
-
-  console.log('[1/4] 🔍 Scanning 100% of transfer events directly on Base blockchain (Blocks ' + TOKEN_START_BLOCK + ' -> ' + snapshotBlock + ')...');
-  const addresses = new Set();
-  const chunkSize = 9500n;
-  let totalLogs = 0;
-
-  const ranges = [];
-  for (let from = TOKEN_START_BLOCK; from <= snapshotBlock; from += chunkSize) {
-    const to = from + chunkSize - 1n > snapshotBlock ? snapshotBlock : from + chunkSize - 1n;
-    ranges.push({ from, to });
-  }
-
-  console.log(`Total block ranges to scan: ${ranges.length}`);
-
-  // Fetch in parallel batches of 10
-  const concurrency = 10;
-  for (let i = 0; i < ranges.length; i += concurrency) {
-    const batch = ranges.slice(i, i + concurrency);
-    const results = await Promise.all(batch.map(async ({ from, to }) => {
-      for (let retry = 0; retry < 5; retry++) {
+  // 2. Fetch from Blockscout
+  try {
+    let url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders';
+    while (url) {
+      let data = null;
+      for (let r = 0; r < 5; r++) {
         try {
-          const logs = await client.getLogs({
-            address: TOKEN_ADDRESS,
-            event: tokenAbi[0],
-            fromBlock: from,
-            toBlock: to
-          });
-          return logs;
-        } catch (err) {
-          await sleep(200 * (retry + 1));
+          const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+          if (res.status === 200) {
+            data = await res.json();
+            break;
+          }
+          await sleep(300);
+        } catch (e) {
+          await sleep(300);
         }
       }
-      console.error('Failed to get logs for range:', from.toString(), to.toString());
-      return [];
-    }));
-
-    for (const logs of results) {
-      totalLogs += logs.length;
-      logs.forEach(l => {
-        if (l.args.to) addresses.add(l.args.to.toLowerCase());
-        if (l.args.from) addresses.add(l.args.from.toLowerCase());
+      if (!data || !data.items || data.items.length === 0) break;
+      data.items.forEach(it => {
+        if (it.address?.hash) addresses.add(it.address.hash.toLowerCase());
       });
+      if (data.next_page_params) {
+        url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders?' + new URLSearchParams(data.next_page_params).toString();
+        await sleep(100);
+      } else {
+        url = null;
+      }
     }
-    process.stdout.write(`Scanned ${Math.min(i + concurrency, ranges.length)}/${ranges.length} ranges (${addresses.size} addresses found)...\r`);
-  }
-  console.log(`\nTotal Transfer Events Indexed: ${totalLogs}`);
+  } catch (e) {}
+
+  // 3. Include previous round claims
+  try {
+    const r1 = require('../snapshots/round_1_proofs.json');
+    Object.keys(r1.claims || {}).forEach(a => addresses.add(a.toLowerCase()));
+  } catch (e) {}
+
   console.log(`Total Unique Addresses Discovered on Base: ${addresses.size}`);
 
   const userAddrs = Array.from(addresses).filter(a => !SYSTEM_EXCLUSIONS.includes(a));
-  console.log('[2/4] 🔍 Multicalling historical balanceOf for all ' + userAddrs.length + ' addresses at 00:00 UTC Block (' + snapshotBlock.toString() + ')...');
+  console.log('\n[2/4] 🔍 Multicalling current balanceOf for all ' + userAddrs.length + ' addresses at Block ' + snapshotBlock.toString() + '...');
 
   const eligible = [];
-  const balanceChunkSize = 200;
+  const balanceChunkSize = 50;
   for (let i = 0; i < userAddrs.length; i += balanceChunkSize) {
     const chunk = userAddrs.slice(i, i + balanceChunkSize);
     const calls = chunk.map(a => ({ address: TOKEN_ADDRESS, abi: tokenAbi, functionName: 'balanceOf', args: [a] }));
-    const res = await client.multicall({ contracts: calls, blockNumber: snapshotBlock });
-    for (let j = 0; j < chunk.length; j++) {
-      const balWei = res[j].result || 0n;
-      const bal = Number(formatUnits(balWei, 18));
-      if (bal >= MIN_BALANCE) {
-        eligible.push({ address: chunk[j], balance: bal });
+    let res = null;
+    for (let retry = 0; retry < 5; retry++) {
+      try {
+        res = await client.multicall({ contracts: calls, blockNumber: snapshotBlock });
+        if (res && res.length === chunk.length) break;
+      } catch (err) {
+        await sleep(250 * (retry + 1));
       }
     }
+    if (res) {
+      for (let j = 0; j < chunk.length; j++) {
+        const balWei = res[j]?.result || 0n;
+        const bal = Number(formatUnits(balWei, 18));
+        if (bal >= MIN_BALANCE) {
+          eligible.push({ address: chunk[j], balance: bal });
+        }
+      }
+    }
+    process.stdout.write(`Checked balances: ${Math.min(i + balanceChunkSize, userAddrs.length)}/${userAddrs.length} (${eligible.length} eligible)...\r`);
   }
+  console.log('');
 
   eligible.sort((a, b) => b.balance - a.balance);
-  console.log('=== Found EXACTLY ' + eligible.length + ' Qualified Wallets (>= 5M $VIBE, 100% BaseScan Match) ===');
+  console.log('=== Found EXACTLY ' + eligible.length + ' Qualified Wallets (>= 5M $VIBE) ===');
 
   const totalEligibleSum = eligible.reduce((acc, h) => acc + h.balance, 0);
   console.log('Total Qualified Balance Sum: ' + Math.round(totalEligibleSum).toLocaleString() + ' $VIBE');
@@ -291,7 +288,7 @@ async function runSnapshot() {
     token: TOKEN_ADDRESS,
     vestingContract: VESTING_CONTRACT,
     snapshotBlock: snapshotBlock.toString(),
-    snapshotDate: targetIso,
+    snapshotDate: snapshotIso,
     merkleRoot: root,
     totalHolders: elements.length,
     totalEligibleSupply: totalEligibleSum,
@@ -321,7 +318,7 @@ async function runSnapshot() {
   console.log('3. Audit CSV:   ' + csvFile);
   console.log('4. UI Ready:    ' + path.join(frontendDataDir, 'round_' + roundNumber + '_proofs.json'));
 
-  console.log('\n📋 All ' + elements.length + ' Qualified Allocations (with 500k CAP):');
+  console.log('\n📋 All ' + elements.length + ' Qualified Allocations (>= 5M $VIBE, 500k CAP):');
   console.table(elements.map((e, idx) => ({
     '#': idx + 1,
     'Address': e.address.slice(0, 8) + '...' + e.address.slice(-6),
