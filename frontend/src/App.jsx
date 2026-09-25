@@ -1609,7 +1609,7 @@ function ClaimCountdownButton({ targetDate, href = "/claim" }) {
   );
 }
 
-function Rewards({ isBaseAppMode = false } = {}) {
+function Rewards() {
   const [activeTab, setActiveTab] = useState(null);
   const [stakingFilter, setStakingFilter] = useState('all');
   const [giveawayFilter, setGiveawayFilter] = useState('all');
@@ -1875,22 +1875,22 @@ function Rewards({ isBaseAppMode = false } = {}) {
                   </div>
 
                   {/* Card Body: Left Title, Right Compact Explore Button */}
-                  <div style={{ padding: isBaseAppMode ? '12px 14px' : '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: isBaseAppMode ? 'rgba(4, 20, 48, 0.95)' : '#ffffff', gap: '12px', width: '100%', boxSizing: 'border-box' }}>
-                    <h3 style={{ margin: 0, fontSize: isBaseAppMode ? '9px' : '1.18rem', fontWeight: 900, color: isBaseAppMode ? '#ffffff' : 'var(--ink)', letterSpacing: isBaseAppMode ? '0.3px' : '-0.02em', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
+                  <div style={{ padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#ffffff', gap: '12px', width: '100%', boxSizing: 'border-box' }}>
+                    <h3 style={{ margin: 0, fontSize: '1.18rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                       {cat.label}
                     </h3>
                     <div
                       className="rewards-explore-badge"
                       style={{
-                        background: isBaseAppMode ? 'transparent' : 'var(--blue)',
-                        color: isBaseAppMode ? '#00f5ff' : '#ffffff',
-                        border: isBaseAppMode ? '1.5px solid #00f5ff' : 'none',
-                        boxShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.25)' : '0 3px 12px rgba(0, 82, 255, 0.25)',
-                        padding: isBaseAppMode ? '7px 10px' : '9px 18px',
-                        fontSize: isBaseAppMode ? '7px' : '0.84rem',
-                        fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit',
+                        background: 'var(--blue)',
+                        color: '#ffffff',
+                        border: 'none',
+                        boxShadow: '0 3px 12px rgba(0, 82, 255, 0.25)',
+                        padding: '9px 18px',
+                        fontSize: '0.84rem',
+                        fontFamily: 'inherit',
                         fontWeight: 800,
-                        borderRadius: isBaseAppMode ? '8px' : '10px',
+                        borderRadius: '10px',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '6px',
@@ -1902,7 +1902,7 @@ function Rewards({ isBaseAppMode = false } = {}) {
                         transition: 'all 0.2s'
                       }}
                     >
-                      <span>Explore</span> <ArrowRight size={isBaseAppMode ? 11 : 14} color={isBaseAppMode ? '#00f5ff' : '#ffffff'} strokeWidth={2.5} />
+                      <span>Explore</span> <ArrowRight size={14} color="#ffffff" strokeWidth={2.5} />
                     </div>
                   </div>
                 </div>
@@ -2046,32 +2046,31 @@ function Rewards({ isBaseAppMode = false } = {}) {
           </>
         ) : (
           /* Detail View for Selected Category with Back Button (No switcher on Base App) */
-          <div style={{ marginBottom: isBaseAppMode ? '20px' : '32px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: isBaseAppMode ? '16px' : '24px' }}>
+          <div style={{ marginBottom: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '14px', marginBottom: '24px' }}>
               <button
                 onClick={() => setActiveTab(null)}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  background: isBaseAppMode ? 'rgba(2, 11, 26, 0.85)' : '#ffffff',
-                  border: isBaseAppMode ? '1.5px solid rgba(0, 245, 255, 0.35)' : '1.5px solid rgba(0, 82, 255, 0.25)',
-                  color: isBaseAppMode ? '#00f5ff' : 'var(--blue)',
+                  background: '#ffffff',
+                  border: '1.5px solid rgba(0, 82, 255, 0.25)',
+                  color: 'var(--blue)',
                   fontWeight: 800,
-                  fontSize: isBaseAppMode ? '7.5px' : '0.88rem',
-                  fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'var(--font)',
-                  padding: isBaseAppMode ? '8px 14px' : '10px 20px',
-                  borderRadius: isBaseAppMode ? '10px' : '14px',
+                  fontSize: '0.88rem',
+                  fontFamily: 'var(--font)',
+                  padding: '10px 20px',
+                  borderRadius: '14px',
                   cursor: 'pointer',
-                  boxShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.2)' : '0 2px 8px rgba(0, 82, 255, 0.08)',
+                  boxShadow: '0 2px 8px rgba(0, 82, 255, 0.08)',
                   transition: 'all 0.15s'
                 }}
               >
-                <ArrowRight size={isBaseAppMode ? 12 : 16} style={{ transform: 'rotate(180deg)' }} /> Back to Rewards Hub
+                <ArrowRight size={16} style={{ transform: 'rotate(180deg)' }} /> Back to Rewards Hub
               </button>
 
-              {!isBaseAppMode && (
-                <div style={{ display: 'flex', gap: '6px', background: '#f1f5f9', padding: '4px', borderRadius: '14px', border: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '6px', background: '#f1f5f9', padding: '4px', borderRadius: '14px', border: '1px solid #e2e8f0', flexWrap: 'wrap' }}>
                   {categoryCards.map(c => (
                     <button
                       key={c.id}
@@ -2093,7 +2092,6 @@ function Rewards({ isBaseAppMode = false } = {}) {
                     </button>
                   ))}
                 </div>
-              )}
             </div>
           </div>
         )}
@@ -2171,11 +2169,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
               <div
                 style={{
                   display: 'flex',
-                  gap: isBaseAppMode ? '4px' : '4px',
-                  background: isBaseAppMode ? 'rgba(2, 11, 26, 0.85)' : '#ffffff',
+                  gap: '4px',
+                  background: '#ffffff',
                   padding: '3px 4px',
                   borderRadius: '10px',
-                  border: isBaseAppMode ? '1px solid rgba(0, 245, 255, 0.25)' : '1px solid #e2e8f0',
+                  border: '1px solid #e2e8f0',
                   flexWrap: 'nowrap',
                   overflowX: 'auto',
                   maxWidth: '100%',
@@ -2194,20 +2192,20 @@ function Rewards({ isBaseAppMode = false } = {}) {
                       key={f.id}
                       onClick={() => setStakingFilter(f.id)}
                       style={{
-                        fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'var(--font)',
-                        padding: isBaseAppMode ? '6px 8px' : '4px 10px',
+                        fontFamily: 'var(--font)',
+                        padding: '4px 10px',
                         borderRadius: '8px',
                         border: 'none',
-                        background: isFActive ? (isBaseAppMode ? '#0052ff' : 'var(--blue)') : 'transparent',
-                        color: isFActive ? '#ffffff' : (isBaseAppMode ? '#cbd5e1' : '#64748b'),
+                        background: isFActive ? 'var(--blue)' : 'transparent',
+                        color: isFActive ? '#ffffff' : '#64748b',
                         fontWeight: 800,
-                        fontSize: isBaseAppMode ? '6.5px' : '0.72rem',
+                        fontSize: '0.72rem',
                         letterSpacing: '-0.01em',
                         whiteSpace: 'nowrap',
                         flexShrink: 0,
                         cursor: 'pointer',
                         transition: 'all 0.15s',
-                        boxShadow: isFActive && isBaseAppMode ? '0 0 8px rgba(0, 82, 255, 0.4)' : 'none'
+                        boxShadow: 'none'
                       }}
                     >
                       {f.label}
@@ -2318,11 +2316,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
-                            <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Rewards Pool
+                          <div style={{ fontSize: '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: 'inherit' }}>
+                            <Coins size={12} color={'var(--blue)'} /> Rewards Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
-                            {ep.poolAmount} {ep.poolAmount !== 'TBA' && <span style={{ fontSize: isBaseAppMode ? '7.5px' : '0.88rem', color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>$VIBE</span>}
+                          <div style={{ fontSize: '1.42rem', fontWeight: 900, color: isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: 'inherit', textShadow: 'none' }}>
+                            {ep.poolAmount} {ep.poolAmount !== 'TBA' && <span style={{ fontSize: '0.88rem', color: isActive ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: 'inherit' }}>$VIBE</span>}
                           </div>
                         </div>
 
@@ -2532,11 +2530,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
               <div
                 style={{
                   display: 'flex',
-                  gap: isBaseAppMode ? '4px' : '4px',
-                  background: isBaseAppMode ? 'rgba(2, 11, 26, 0.85)' : '#f1f5f9',
+                  gap: '4px',
+                  background: '#f1f5f9',
                   padding: '3px 4px',
                   borderRadius: '10px',
-                  border: isBaseAppMode ? '1px solid rgba(0, 245, 255, 0.25)' : '1px solid #e2e8f0',
+                  border: '1px solid #e2e8f0',
                   flexWrap: 'nowrap',
                   overflowX: 'auto',
                   maxWidth: '100%',
@@ -2555,19 +2553,19 @@ function Rewards({ isBaseAppMode = false } = {}) {
                       key={f.id}
                       onClick={() => setVibeClubFilter(f.id)}
                       style={{
-                        fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'var(--font)',
-                        background: isFActive ? (isBaseAppMode ? '#0052ff' : 'var(--blue)') : 'transparent',
-                        color: isFActive ? '#ffffff' : (isBaseAppMode ? '#cbd5e1' : '#64748b'),
+                        fontFamily: 'var(--font)',
+                        background: isFActive ? 'var(--blue)' : 'transparent',
+                        color: isFActive ? '#ffffff' : '#64748b',
                         border: 'none',
-                        padding: isBaseAppMode ? '6px 8px' : '4px 10px',
+                        padding: '4px 10px',
                         borderRadius: '8px',
-                        fontSize: isBaseAppMode ? '6.5px' : '0.72rem',
+                        fontSize: '0.72rem',
                         fontWeight: 800,
                         whiteSpace: 'nowrap',
                         flexShrink: 0,
                         cursor: 'pointer',
                         transition: 'all 0.15s',
-                        boxShadow: isFActive && isBaseAppMode ? '0 0 8px rgba(0, 82, 255, 0.4)' : 'none'
+                        boxShadow: 'none'
                       }}
                     >
                       {f.label}
@@ -2690,10 +2688,10 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
-                            <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Royalty Pool
+                          <div style={{ fontSize: '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: 'inherit' }}>
+                            <Coins size={12} color={'var(--blue)'} /> Royalty Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
+                          <div style={{ fontSize: '1.42rem', fontWeight: 900, color: isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: 'inherit', textShadow: 'none' }}>
                             {ep.poolAmount}
                           </div>
                         </div>
@@ -2934,11 +2932,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
               <div
                 style={{
                   display: 'flex',
-                  gap: isBaseAppMode ? '4px' : '4px',
-                  background: isBaseAppMode ? 'rgba(2, 11, 26, 0.85)' : '#f1f5f9',
+                  gap: '4px',
+                  background: '#f1f5f9',
                   padding: '3px 4px',
                   borderRadius: '10px',
-                  border: isBaseAppMode ? '1px solid rgba(0, 245, 255, 0.25)' : '1px solid #e2e8f0',
+                  border: '1px solid #e2e8f0',
                   flexWrap: 'nowrap',
                   overflowX: 'auto',
                   maxWidth: '100%',
@@ -2957,19 +2955,19 @@ function Rewards({ isBaseAppMode = false } = {}) {
                       key={f.id}
                       onClick={() => setHolderFilter(f.id)}
                       style={{
-                        fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'var(--font)',
-                        background: isFActive ? (isBaseAppMode ? '#0052ff' : 'var(--blue)') : 'transparent',
-                        color: isFActive ? '#ffffff' : (isBaseAppMode ? '#cbd5e1' : '#64748b'),
+                        fontFamily: 'var(--font)',
+                        background: isFActive ? 'var(--blue)' : 'transparent',
+                        color: isFActive ? '#ffffff' : '#64748b',
                         border: 'none',
-                        padding: isBaseAppMode ? '6px 8px' : '4px 10px',
+                        padding: '4px 10px',
                         borderRadius: '8px',
-                        fontSize: isBaseAppMode ? '6.5px' : '0.72rem',
+                        fontSize: '0.72rem',
                         fontWeight: 800,
                         whiteSpace: 'nowrap',
                         flexShrink: 0,
                         cursor: 'pointer',
                         transition: 'all 0.15s',
-                        boxShadow: isFActive && isBaseAppMode ? '0 0 8px rgba(0, 82, 255, 0.4)' : 'none'
+                        boxShadow: 'none'
                       }}
                     >
                       {f.label}
@@ -3092,11 +3090,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
-                            <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Rewards Pool
+                          <div style={{ fontSize: '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: 'inherit' }}>
+                            <Coins size={12} color={'var(--blue)'} /> Rewards Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.42rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
-                            {u.poolAmount} <span style={{ fontSize: isBaseAppMode ? '7.5px' : '0.88rem', color: isBaseAppMode ? '#00f5ff' : isActive ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>$VIBE</span>
+                          <div style={{ fontSize: '1.42rem', fontWeight: 900, color: isActive ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px', whiteSpace: 'nowrap', fontFamily: 'inherit', textShadow: 'none' }}>
+                            {u.poolAmount} <span style={{ fontSize: '0.88rem', color: isActive ? 'var(--blue)' : '#94a3b8', fontWeight: 800, fontFamily: 'inherit' }}>$VIBE</span>
                           </div>
                         </div>
 
@@ -3256,11 +3254,11 @@ function Rewards({ isBaseAppMode = false } = {}) {
               <div
                 style={{
                   display: 'flex',
-                  gap: isBaseAppMode ? '4px' : '4px',
-                  background: isBaseAppMode ? 'rgba(2, 11, 26, 0.85)' : '#f1f5f9',
+                  gap: '4px',
+                  background: '#f1f5f9',
                   padding: '3px 4px',
                   borderRadius: '10px',
-                  border: isBaseAppMode ? '1px solid rgba(0, 245, 255, 0.25)' : '1px solid #e2e8f0',
+                  border: '1px solid #e2e8f0',
                   flexWrap: 'nowrap',
                   overflowX: 'auto',
                   maxWidth: '100%',
@@ -3278,19 +3276,19 @@ function Rewards({ isBaseAppMode = false } = {}) {
                       key={f.id}
                       onClick={() => setGiveawayFilter(f.id)}
                       style={{
-                        fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'var(--font)',
-                        background: isFActive ? (isBaseAppMode ? '#0052ff' : 'var(--blue)') : 'transparent',
-                        color: isFActive ? '#ffffff' : (isBaseAppMode ? '#cbd5e1' : '#64748b'),
+                        fontFamily: 'var(--font)',
+                        background: isFActive ? 'var(--blue)' : 'transparent',
+                        color: isFActive ? '#ffffff' : '#64748b',
                         border: 'none',
-                        padding: isBaseAppMode ? '6px 8px' : '4px 10px',
+                        padding: '4px 10px',
                         borderRadius: '8px',
-                        fontSize: isBaseAppMode ? '6.5px' : '0.72rem',
+                        fontSize: '0.72rem',
                         fontWeight: 800,
                         whiteSpace: 'nowrap',
                         flexShrink: 0,
                         cursor: 'pointer',
                         transition: 'all 0.15s',
-                        boxShadow: isFActive && isBaseAppMode ? '0 0 8px rgba(0, 82, 255, 0.4)' : 'none'
+                        boxShadow: 'none'
                       }}
                     >
                       {f.label}
@@ -3411,13 +3409,13 @@ function Rewards({ isBaseAppMode = false } = {}) {
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: isBaseAppMode ? '6.5px' : '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
-                            <Coins size={12} color={isBaseAppMode ? '#00f5ff' : 'var(--blue)'} /> Prize Pool
+                          <div style={{ fontSize: '0.66rem', color: '#88aacc', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', marginBottom: '4px', fontFamily: 'inherit' }}>
+                            <Coins size={12} color={'var(--blue)'} /> Prize Pool
                           </div>
-                          <div style={{ fontSize: isBaseAppMode ? '10px' : '1.38rem', fontWeight: 900, color: isBaseAppMode ? '#00f5ff' : isOngoing ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: isBaseAppMode ? '0.2px' : '-0.02em', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '6px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit', textShadow: isBaseAppMode ? '0 0 10px rgba(0, 245, 255, 0.45)' : 'none' }}>
+                          <div style={{ fontSize: '1.38rem', fontWeight: 900, color: isOngoing ? 'var(--ink)' : '#64748b', marginTop: '2px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '6px', fontFamily: 'inherit', textShadow: 'none' }}>
                             <span>{ev.prizePool}</span>
                             {ev.burnNote && (
-                              <span style={{ fontSize: isBaseAppMode ? '6.5px' : '0.72rem', color: '#ef4444', fontWeight: 800, background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '2px 7px', borderRadius: '99px', display: 'inline-flex', alignItems: 'center', gap: '3px', fontFamily: isBaseAppMode ? "'Press Start 2P', monospace" : 'inherit' }}>
+                              <span style={{ fontSize: '0.72rem', color: '#ef4444', fontWeight: 800, background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '2px 7px', borderRadius: '99px', display: 'inline-flex', alignItems: 'center', gap: '3px', fontFamily: 'inherit' }}>
                                 🔥 {ev.burnNote}
                               </span>
                             )}

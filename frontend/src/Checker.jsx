@@ -1631,94 +1631,92 @@ export default function Checker({ isProfileMode = false } = {}) {
                 </div>
 
                 {/* Right: Wallet Address Pill + Actions */}
-                {!isBaseAppMode && (
-                  <div className="checker-actions-header">
-                    {/* Connected Wallet Address Pill */}
-                    <div
+                <div className="checker-actions-header">
+                  {/* Connected Wallet Address Pill */}
+                  <div
+                    style={{
+                      background: '#ffffff',
+                      border: '1.5px solid rgba(0, 140, 255, 0.2)',
+                      borderRadius: '14px',
+                      padding: '8px 16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)'
+                    }}
+                  >
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981', display: 'inline-block', flexShrink: 0 }} />
+                    <span style={{ fontSize: '0.90rem', color: 'var(--ink)', fontWeight: 600 }}>
+                      {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''}
+                    </span>
+                    <button
+                      onClick={copyAddress}
+                      title="Copy Address"
                       style={{
-                        background: '#ffffff',
-                        border: '1.5px solid rgba(0, 140, 255, 0.2)',
-                        borderRadius: '14px',
-                        padding: '8px 16px',
-                        display: 'flex',
+                        background: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: copied ? '#10b981' : 'var(--blue)',
+                        display: 'inline-flex',
                         alignItems: 'center',
-                        gap: '8px',
-                        boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)'
+                        padding: '3px',
+                        marginLeft: '2px'
                       }}
                     >
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981', display: 'inline-block', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.90rem', color: 'var(--ink)', fontWeight: 600 }}>
-                        {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''}
-                      </span>
-                      <button
-                        onClick={copyAddress}
-                        title="Copy Address"
-                        style={{
-                          background: 'transparent',
-                          border: 'none',
-                          cursor: 'pointer',
-                          color: copied ? '#10b981' : 'var(--blue)',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          padding: '3px',
-                          marginLeft: '2px'
-                        }}
-                      >
-                        {copied ? <Check size={15} strokeWidth={2.5} /> : <Copy size={15} />}
-                      </button>
-                    </div>
-
-                    {/* Action Buttons Row */}
-                    <div className="checker-buttons-row">
-                      {/* Refresh Button */}
-                      <button
-                        onClick={() => {
-                          fetchBalances(true);
-                          if (isAdmin) fetchAdminMetrics();
-                        }}
-                        disabled={loading}
-                        title="Refresh On-Chain Balances"
-                        style={{
-                          background: '#ffffff',
-                          border: '1.5px solid rgba(0, 140, 255, 0.22)',
-                          padding: '10px 14px',
-                          borderRadius: '14px',
-                          cursor: 'pointer',
-                          color: 'var(--blue)',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '6px',
-                          boxShadow: '0 2px 8px rgba(0, 82, 255, 0.04)',
-                          fontSize: '0.84rem',
-                          fontWeight: 700,
-                          transition: 'all 0.15s ease'
-                        }}
-                      >
-                        <RefreshCw size={15} className={loading ? 'spin' : ''} />
-                        <span>{loading ? 'Updating...' : 'Refresh'}</span>
-                      </button>
-
-                      {/* Disconnect Button */}
-                      <button
-                        onClick={logout}
-                        style={{
-                          background: 'rgba(239, 68, 68, 0.06)',
-                          border: '1.5px solid rgba(239, 68, 68, 0.22)',
-                          color: '#ef4444',
-                          fontWeight: 700,
-                          fontSize: '0.86rem',
-                          padding: '10px 18px',
-                          borderRadius: '14px',
-                          cursor: 'pointer',
-                          transition: 'all 0.15s ease'
-                        }}
-                      >
-                        Disconnect
-                      </button>
-                    </div>
+                      {copied ? <Check size={15} strokeWidth={2.5} /> : <Copy size={15} />}
+                    </button>
                   </div>
-                )}
+
+                  {/* Action Buttons Row */}
+                  <div className="checker-buttons-row">
+                    {/* Refresh Button */}
+                    <button
+                      onClick={() => {
+                        fetchBalances(true);
+                        if (isAdmin) fetchAdminMetrics();
+                      }}
+                      disabled={loading}
+                      title="Refresh On-Chain Balances"
+                      style={{
+                        background: '#ffffff',
+                        border: '1.5px solid rgba(0, 140, 255, 0.22)',
+                        padding: '10px 14px',
+                        borderRadius: '14px',
+                        cursor: 'pointer',
+                        color: 'var(--blue)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+                        boxShadow: '0 2px 8px rgba(0, 82, 255, 0.04)',
+                        fontSize: '0.84rem',
+                        fontWeight: 700,
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <RefreshCw size={15} className={loading ? 'spin' : ''} />
+                      <span>{loading ? 'Updating...' : 'Refresh'}</span>
+                    </button>
+
+                    {/* Disconnect Button */}
+                    <button
+                      onClick={logout}
+                      style={{
+                        background: 'rgba(239, 68, 68, 0.06)',
+                        border: '1.5px solid rgba(239, 68, 68, 0.22)',
+                        color: '#ef4444',
+                        fontWeight: 700,
+                        fontSize: '0.86rem',
+                        padding: '10px 18px',
+                        borderRadius: '14px',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      Disconnect
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* Dashboard Metric & Quick-Nav Tiles Grid (5 Columns in Single Row) */}
