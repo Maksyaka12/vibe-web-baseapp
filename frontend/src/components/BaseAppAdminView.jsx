@@ -6,6 +6,7 @@ import { publicClient } from '../config/rpc';
 import { DATA_SUFFIX, appendBuilderSuffix } from '../config/builderCode';
 import { useVibeNftContract } from '../hooks/useVibeNftContract';
 import round1Data from '../data/round_1_proofs.json';
+import round2Data from '../data/round_2_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
 import royalty3Data from '../data/royalty_3_proofs.json';
@@ -64,8 +65,8 @@ export function BaseAppAdminView() {
   // ═════════════════════════════════════════════════════════════════════════
   // 1. HOLDER & ROYALTIES STATES
   // ═════════════════════════════════════════════════════════════════════════
-  const [holderEpochId, setHolderEpochId] = useState('1');
-  const [holderMerkleRoot, setHolderMerkleRoot] = useState(round1Data?.merkleRoot || '0xac99116798ace01d3ebcb6f4c6e60ccd8c5d464b94da5de34aa04f602cb9115a');
+  const [holderEpochId, setHolderEpochId] = useState('2');
+  const [holderMerkleRoot, setHolderMerkleRoot] = useState(round2Data?.merkleRoot || round1Data?.merkleRoot || '');
   const [holderWithdrawAmount, setHolderWithdrawAmount] = useState('');
   const [holderBurnAmount, setHolderBurnAmount] = useState('');
   const [holderCommunityAmount, setHolderCommunityAmount] = useState('');
@@ -234,7 +235,7 @@ export function BaseAppAdminView() {
     try {
       const claims = Object.values(
         isHolder
-          ? (round1Data?.claims || {})
+          ? (epoch === '2' ? (round2Data?.claims || {}) : (round1Data?.claims || {}))
           : (epoch === '3' ? (royalty3Data?.claims || {}) : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {})))
       );
 
@@ -269,7 +270,7 @@ export function BaseAppAdminView() {
         }
       }
 
-      const totalWalletsCount = claims.length || (isHolder ? 42 : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109)));
+      const totalWalletsCount = claims.length || (isHolder ? (epoch === '2' ? Object.keys(round2Data?.claims || {}).length : 42) : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109)));
       const totalPool = isHolder ? 10000000 : (epoch === '3' ? 2000000 : (epoch === '2' ? 1900000 : 2500000));
       const unclaimedTokens = Math.max(0, totalPool - claimedTokens);
 
@@ -944,7 +945,9 @@ export function BaseAppAdminView() {
                   onChange={(e) => {
                     const newEpoch = e.target.value;
                     setHolderEpochId(newEpoch);
-                    if (newEpoch === '1') {
+                    if (newEpoch === '2') {
+                      setHolderMerkleRoot(round2Data?.merkleRoot || '');
+                    } else if (newEpoch === '1') {
                       setHolderMerkleRoot(round1Data?.merkleRoot || '');
                     }
                     fetchDistributorMetrics('holder', newEpoch);

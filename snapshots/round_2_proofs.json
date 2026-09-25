@@ -1,0 +1,38 @@
+{
+  "round": 2,
+  "token": "0xb200000000000000000000df24ecb8bf51100a01",
+  "vestingContract": "0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089",
+  "snapshotBlock": "51752526",
+  "snapshotDate": "2026-09-25T00:00:00Z",
+  "merkleRoot": "0xe6c7a39b04632bb6f7183bb1348da393d24c47d198586b1e4fcedbde36ffe9a7",
+  "totalHolders": 2,
+  "totalEligibleSupply": 10244116.711404689,
+  "monthlyPool": 10000000,
+  "maxAllocationCap": 500000,
+  "claims": {
+    "0x517e74f975f956f36c4fe8bf908525ebeba96f5c": {
+      "address": "0x517e74f975f956f36c4fe8bf908525ebeba96f5c",
+      "balance": 5158982,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0xeafc6acff99a2422ab84283f4c386df3474d3b633ccd2d50ce1d36a4a333b2a7",
+      "proof": [
+        "0x343893f34b07f5334c78ff8104304010cdbcf2cc82224f6e07a9058656b40378"
+      ]
+    },
+    "0xb10d893441b96b9c25231d42591d64cf36484e04": {
+      "address": "0xb10d893441b96b9c25231d42591d64cf36484e04",
+      "balance": 5085135,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x343893f34b07f5334c78ff8104304010cdbcf2cc82224f6e07a9058656b40378",
+      "proof": [
+        "0xeafc6acff99a2422ab84283f4c386df3474d3b633ccd2d50ce1d36a4a333b2a7"
+      ]
+    }
+  }
+}

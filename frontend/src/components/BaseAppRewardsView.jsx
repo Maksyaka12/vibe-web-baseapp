@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
 import { Coins, Lock, ArrowUpRight, ArrowRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check, Lightbulb } from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
+import round2Data from '../data/round_2_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
 import royalty3Data from '../data/royalty_3_proofs.json';
@@ -232,6 +233,9 @@ export default function BaseAppRewardsView({
     if (!authenticated || !userAddress) return false;
     const unlockNum = parseInt(featuredHolder?.unlock?.replace(/\D/g, '') || '1', 10);
     if (unlockNum === 1 && round1Data?.claims?.[userAddress]) {
+      return true;
+    }
+    if (unlockNum === 2 && round2Data?.claims?.[userAddress]) {
       return true;
     }
     if (userBalance >= 5000000) {

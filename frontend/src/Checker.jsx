@@ -26,6 +26,7 @@ import {
   Share2
 } from 'lucide-react';
 import round1Data from './data/round_1_proofs.json';
+import round2Data from './data/round_2_proofs.json';
 import royalty1Data from './data/royalty_1_proofs.json';
 import royalty2Data from './data/royalty_2_proofs.json';
 import royalty3Data from './data/royalty_3_proofs.json';
@@ -91,6 +92,7 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
 
     // Expected allocations for this user if available in proof data
     const expHolder1 = round1Data?.claims?.[lowerUser]?.amount;
+    const expHolder2 = round2Data?.claims?.[lowerUser]?.amount;
     const expRoyalty1 = royalty1Data?.claims?.[lowerUser]?.amount;
     const expRoyalty2 = royalty2Data?.claims?.[lowerUser]?.amount;
     const expRoyalty3 = royalty3Data?.claims?.[lowerUser]?.amount;
@@ -181,7 +183,17 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
               };
             }
           } else if (from === DISTRIBUTOR_CA_LOWER) {
-            if (expHolder1 && Math.abs(valNum - expHolder1) < 2) {
+            if (expHolder2 && Math.abs(valNum - expHolder2) < 2) {
+              map['holder-2'] = {
+                id: 'holder-2',
+                type: 'holder',
+                roundId: 2,
+                title: 'Holder Rewards · Unlock 2',
+                txHash,
+                amount: expHolder2,
+                timestamp: new Date().toISOString()
+              };
+            } else if (expHolder1 && Math.abs(valNum - expHolder1) < 2) {
               map['holder-1'] = {
                 id: 'holder-1',
                 type: 'holder',
@@ -218,9 +230,9 @@ export async function fetchUserClaimTransactions(userAddress, customClient = nul
           if (isBadTxHash(txHash)) continue;
 
           if (from === DISTRIBUTOR_CA_LOWER) {
-            const isUnlock1 = !timestamp || new Date(timestamp).getTime() < new Date('2026-09-20').getTime();
+            const isUnlock1 = !timestamp || new Date(timestamp).getTime() < new Date('2026-09-25T00:00:00Z').getTime();
             const roundKey = isUnlock1 ? 'holder-1' : 'holder-2';
-            const expectedAmt = isUnlock1 ? expHolder1 : null;
+            const expectedAmt = isUnlock1 ? expHolder1 : expHolder2;
             if (expectedAmt && Math.abs(valueNum - expectedAmt) < 2) {
               map[roundKey] = {
                 id: roundKey,
@@ -548,6 +560,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   const txHash = (item.txHash && !isBadTxHash(item.txHash)) ? item.txHash : fallbackTx;
                   return { ...item, roundId: 1, title: 'Vibe Club Royalties · Royalty 1', amount: correctAmt, txHash };
                 }
+                if (item.id === 'holder-2') {
+                  const correctAmt = round2Data?.claims?.[address.toLowerCase()]?.amount || 500000;
+                  return { ...item, roundId: 2, title: 'Holder Rewards · Unlock 2', amount: Math.round(Number(correctAmt)) };
+                }
                 if (item.id === 'holder-1') {
                   const correctAmt = round1Data?.claims?.[address.toLowerCase()]?.amount || 126127;
                   const isAdminWallet = address.toLowerCase() === ADMIN_WALLET.toLowerCase();
@@ -676,25 +692,28 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   };
 
   // Lightweight sync of claimed transaction history for Holder Rewards
-  const syncClaimHistory = async (client, userAddress, txMap = {}) => {
+  const syncClaimHistory = async (client, userAddress, roundId = 1, txMap = {}) => {
     try {
       const existingHistory = JSON.parse(localStorage.getItem(`vibe_claim_history_${userAddress.toLowerCase()}`) || '[]');
-      const existingItem = existingHistory.find(h => h && h.id === 'holder-1');
-      const holderAmount = round1Data?.claims?.[userAddress.toLowerCase()]?.amount || 126127;
-      const txInfo = txMap['holder-1'];
+      const existingItem = existingHistory.find(h => h && h.id === `holder-${roundId}`);
+      const rData = roundId === 2 ? round2Data : round1Data;
+      const defaultAmt = roundId === 2 ? 500000 : 126127;
+      const defaultTime = roundId === 2 ? '2026-09-25T14:00:00.000Z' : '2026-08-26T14:00:00.000Z';
+      const holderAmount = rData?.claims?.[userAddress.toLowerCase()]?.amount || defaultAmt;
+      const txInfo = txMap[`holder-${roundId}`];
       const isAdminWallet = userAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
-      const defaultAdminTx = isAdminWallet ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
+      const defaultAdminTx = (isAdminWallet && roundId === 1) ? '0x46b72eb1941e010a4952bdb396da20769599bceb835fd23af066005c88569e14' : null;
       let txHash = (txInfo?.txHash && !isBadTxHash(txInfo.txHash))
         ? txInfo.txHash
         : ((existingItem?.txHash && !isBadTxHash(existingItem.txHash)) ? existingItem.txHash : defaultAdminTx);
-      const timestamp = txInfo?.timestamp || existingItem?.timestamp || '2026-08-26T14:00:00.000Z';
+      const timestamp = txInfo?.timestamp || existingItem?.timestamp || defaultTime;
       const amount = holderAmount;
 
       const syncedItem = {
-        id: 'holder-1',
+        id: `holder-${roundId}`,
         type: 'holder',
-        roundId: 1,
-        title: 'Holder Rewards · Unlock 1',
+        roundId,
+        title: `Holder Rewards · Unlock ${roundId}`,
         amount,
         txHash,
         timestamp
@@ -702,7 +721,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
       setClaimedHistory(prev => {
         const prevList = Array.isArray(prev) ? prev : [];
-        const updated = getSortedClaimedHistory([syncedItem, ...prevList.filter(h => h && h.id !== 'holder-1')]);
+        const updated = getSortedClaimedHistory([syncedItem, ...prevList.filter(h => h && h.id !== `holder-${roundId}`)]);
         localStorage.setItem(`vibe_claim_history_${userAddress.toLowerCase()}`, JSON.stringify(updated));
         return updated;
       });
@@ -819,6 +838,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
             args: [1n, address]
           },
           {
+            address: DISTRIBUTOR_CA,
+            abi: parseAbi(['function hasClaimed(uint256, address) view returns (bool)']),
+            functionName: 'hasClaimed',
+            args: [2n, address]
+          },
+          {
             address: targetRoyaltyCa,
             abi: parseAbi(['function hasClaimed(uint256, address) view returns (bool)']),
             functionName: 'hasClaimed',
@@ -866,7 +891,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       }
 
       // 4. On-chain claim status checks & Explorer Tx Hash Sync
-      const hasAnyClaim = results[3]?.result === true || results[4]?.result === true || results[5]?.result === true || results[6]?.result === true;
+      const hasAnyClaim = results[3]?.result === true || results[4]?.result === true || results[5]?.result === true || results[6]?.result === true || results[7]?.result === true;
       let txMap = {};
       if (hasAnyClaim) {
         try {
@@ -874,10 +899,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         } catch (e) {}
       }
 
+      // Holder Round 1
       if (results[3]?.status === 'success') {
         if (results[3].result === true) {
           setClaimStatus(prev => ({ ...prev, 'holder-1': 'claimed' }));
-          syncClaimHistory(client, address, txMap);
+          syncClaimHistory(client, address, 1, txMap);
         } else {
           setClaimStatus(prev => ({ ...prev, 'holder-1': 'unclaimed' }));
           setClaimedHistory(prev => {
@@ -891,8 +917,27 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         }
       }
 
+      // Holder Round 2
       if (results[4]?.status === 'success') {
         if (results[4].result === true) {
+          setClaimStatus(prev => ({ ...prev, 'holder-2': 'claimed' }));
+          syncClaimHistory(client, address, 2, txMap);
+        } else {
+          setClaimStatus(prev => ({ ...prev, 'holder-2': 'unclaimed' }));
+          setClaimedHistory(prev => {
+            const prevList = Array.isArray(prev) ? prev : [];
+            const filtered = prevList.filter(h => h && h.id !== 'holder-2');
+            if (filtered.length !== prevList.length) {
+              localStorage.setItem(`vibe_claim_history_${address.toLowerCase()}`, JSON.stringify(filtered));
+            }
+            return filtered;
+          });
+        }
+      }
+
+      // Royalty Round 1
+      if (results[5]?.status === 'success') {
+        if (results[5].result === true) {
           setClaimStatus(prev => ({ ...prev, 'vibeclub-1': 'claimed' }));
           syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 1, txMap);
         } else {
@@ -908,8 +953,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         }
       }
 
-      if (results[5]?.status === 'success') {
-        if (results[5].result === true) {
+      // Royalty Round 2
+      if (results[6]?.status === 'success') {
+        if (results[6].result === true) {
           setClaimStatus(prev => ({ ...prev, 'vibeclub-2': 'claimed' }));
           syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 2, txMap);
         } else {
@@ -925,8 +971,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         }
       }
 
-      if (results[6]?.status === 'success') {
-        if (results[6].result === true) {
+      // Royalty Round 3
+      if (results[7]?.status === 'success') {
+        if (results[7].result === true) {
           setClaimStatus(prev => ({ ...prev, 'vibeclub-3': 'claimed' }));
           syncRoyaltyClaimHistory(client, address, targetRoyaltyCa, 3, txMap);
         } else {
@@ -958,17 +1005,30 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Proof data for Round 1 Holder Rewards
-  const userProofData = (address && round1Data && round1Data.claims) ? round1Data.claims[address.toLowerCase()] : null;
-  const isHolderEligibleLive = (balance !== null && balance >= MIN_HOLDER_BALANCE);
-  const hasConfirmedHolderClaim = !!userProofData;
-  const holderRewardAmount = userProofData ? (userProofData.amount || 0) : (isHolderEligibleLive ? 500000 : 0);
-
   // Check Claim Status for Round 1 Holder
   const isHolderRound1Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'holder-1')) || claimStatus['holder-1'] === 'claimed';
   const isHolderRound1Ended = currentTime >= new Date(HOLDER_ROUNDS[0].nextSnapshotDate || '2026-09-25T00:00:00Z');
   const isHolderRound1Live = currentTime >= new Date(HOLDER_ROUNDS[0].targetDate) && !isHolderRound1Ended;
   const isHolderRound1Available = isHolderRound1Live && !isHolderRound1Claimed;
+
+  // Check Claim Status for Round 2 Holder
+  const isHolderRound2Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'holder-2')) || claimStatus['holder-2'] === 'claimed';
+  const isHolderRound2Ended = currentTime >= new Date(HOLDER_ROUNDS[1].nextSnapshotDate || '2026-10-25T00:00:00Z');
+  const isHolderRound2Live = currentTime >= new Date(HOLDER_ROUNDS[1].targetDate) && !isHolderRound2Ended;
+  const isHolderRound2Available = isHolderRound2Live && !isHolderRound2Claimed;
+
+  // Active Holder Round & Proof Data
+  const activeHolderEpochId = isHolderRound1Ended ? 2 : 1;
+  const activeHolderRound = isHolderRound1Ended ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
+  const activeHolderData = activeHolderEpochId === 2 ? round2Data : round1Data;
+  const userProofData = (address && activeHolderData && activeHolderData.claims) ? activeHolderData.claims[address.toLowerCase()] : null;
+  const isHolderEligibleLive = (balance !== null && balance >= MIN_HOLDER_BALANCE) || !!userProofData;
+  const hasConfirmedHolderClaim = !!userProofData;
+  const holderRewardAmount = userProofData ? (userProofData.amount || 0) : (isHolderEligibleLive ? 500000 : 0);
+
+  const activeHolderClaimed = activeHolderEpochId === 2 ? isHolderRound2Claimed : isHolderRound1Claimed;
+  const activeHolderLive = activeHolderEpochId === 2 ? isHolderRound2Live : isHolderRound1Live;
+  const activeHolderAvailable = activeHolderEpochId === 2 ? isHolderRound2Available : isHolderRound1Available;
 
   // Check Claim Status for Royalty 1 Vibe Club
   const isVibeClubRoyalty1Claimed = (Array.isArray(claimedHistory) && claimedHistory.some(c => c && c.id === 'vibeclub-1')) || claimStatus['vibeclub-1'] === 'claimed';
@@ -1005,12 +1065,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const isAdmin = !!(address && (address.toLowerCase() === ADMIN_WALLET.toLowerCase()));
 
   // Available claim count (where user is eligible and ready to claim)
-  const availableHolderCount = (isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? 1 : 0;
+  const availableHolderCount = (activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? 1 : 0;
   const availableVibeClubCount = (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? 1 : 0;
   const totalAvailableCount = availableHolderCount + availableVibeClubCount;
 
   // Next Upcoming Unlocks to Display
-  const upcomingHolderRound = (isHolderRound1Live || isHolderRound1Ended) ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
+  const upcomingHolderRound = (isHolderRound2Live || isHolderRound2Ended) ? HOLDER_ROUNDS[2] : ((isHolderRound1Live || isHolderRound1Ended) ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0]);
   const upcomingVibeClubRound = isVibeClubRoyalty3Live || isVibeClubRoyalty3Ended
     ? VIBECLUB_ROUNDS[3]
     : (isVibeClubRoyalty2Live || isVibeClubRoyalty2Ended
@@ -1260,14 +1320,16 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
     
     try {
       let txHashResult = null;
-      if (type === 'holder' && userProofData && wallets && wallets.length > 0) {
+      const currentHolderData = roundId === 2 ? round2Data : round1Data;
+      const currentHolderProof = (address && currentHolderData && currentHolderData.claims) ? currentHolderData.claims[address.toLowerCase()] : userProofData;
+      if (type === 'holder' && currentHolderProof && wallets && wallets.length > 0) {
         const activeWallet = wallets.find(w => w.address.toLowerCase() === address?.toLowerCase()) || wallets[0];
         const provider = await activeWallet.getEthereumProvider();
-        const amountWei = parseUnits(userProofData.amount.toString(), 18);
+        const amountWei = parseUnits(currentHolderProof.amount.toString(), 18);
         const calldataRaw = encodeFunctionData({
           abi: DISTRIBUTOR_ABI,
           functionName: 'claim',
-          args: [BigInt(roundId), amountWei, userProofData.proof]
+          args: [BigInt(roundId), amountWei, currentHolderProof.proof]
         });
         // Append Official ERC-8021 Data Suffix for Base Builder Code
         const calldata = appendBuilderSuffix(calldataRaw);
@@ -1502,8 +1564,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               currentTime={currentTime}
               claimedHistory={claimedHistory}
               isHolderEligibleLive={isHolderEligibleLive}
-              totalAvailableCount={(isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive) ? 1 : 0) + (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? 1 : 0)}
-              totalAvailableTokens={((isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? (holderRewardAmount || 500000) : 0) + ((activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? (vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))) : 0)}
+              totalAvailableCount={(activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive) ? 1 : 0) + (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? 1 : 0)}
+              totalAvailableTokens={((activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? (holderRewardAmount || 500000) : 0) + ((activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? (vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))) : 0)}
               totalExpiredCount={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? 1 : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? 1 : 0)}
               totalExpiredTokens={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? (royalty1Data.claims[address.toLowerCase()].amount || 22935) : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? (round1Data.claims[address.toLowerCase()].amount || 126127) : 0)}
             />
@@ -1530,6 +1592,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               hasConfirmedHolderClaim={hasConfirmedHolderClaim}
               isHolderRound1Available={isHolderRound1Available}
               isHolderRound1Claimed={isHolderRound1Claimed}
+              activeHolderEpochId={activeHolderEpochId}
+              activeHolderRound={activeHolderRound}
+              activeHolderAvailable={activeHolderAvailable}
+              activeHolderClaimed={activeHolderClaimed}
               isVibeClubEligible={isVibeClubEligible}
               vibeClubRewardAmount={vibeClubRewardAmount}
               hasConfirmedRoyaltyClaim={hasConfirmedRoyaltyClaim}
@@ -1545,6 +1611,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               HOLDER_ROUNDS={HOLDER_ROUNDS}
               VIBECLUB_ROUNDS={VIBECLUB_ROUNDS}
               round1Data={round1Data}
+              round2Data={round2Data}
               royalty1Data={royalty1Data}
               royalty2Data={royalty2Data}
               royalty3Data={royalty3Data}
@@ -1962,11 +2029,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                   {isAvailableOpen && (
                 <div className="checker-section-panel">
-                  {(isHolderRound1Available || activeRoyaltyAvailable) ? (
+                  {(activeHolderAvailable || activeRoyaltyAvailable) ? (
                     <div className="rewards-grid-2">
                       
                       {/* 1. Holder Rewards Active Claim Card */}
-                      {isHolderRound1Available && (
+                      {activeHolderAvailable && (
                         <div
                           className="checker-reward-card"
                           style={{
@@ -1997,7 +2064,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     Holder Rewards
                                   </h4>
                                   <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'rgba(0, 82, 255, 0.08)', color: 'var(--blue)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
-                                    Unlock 1
+                                    {activeHolderRound?.name || 'Unlock 2'}
                                   </span>
                                 </div>
                               </div>
@@ -2094,7 +2161,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     style={{ width: 70, height: 70, objectFit: 'contain' }}
                                   />
                                   <h5 style={{ fontSize: '1.05rem', color: '#ef4444', margin: 0, fontWeight: 900 }}>
-                                    Not Eligible for Round 1
+                                    Not Eligible for {activeHolderRound?.name || 'Round 2'}
                                   </h5>
                                   <a
                                     href={O1}
@@ -2124,8 +2191,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           <div>
                             {(hasConfirmedHolderClaim || isHolderEligibleLive) ? (
                               <button
-                                onClick={() => handleClaim('holder', 1, holderRewardAmount)}
-                                disabled={claimStatus['holder-1'] === 'claiming'}
+                                onClick={() => handleClaim('holder', activeHolderEpochId, holderRewardAmount)}
+                                disabled={claimStatus[`holder-${activeHolderEpochId}`] === 'claiming'}
                                 className="btn-fill"
                                 style={{
                                   width: '100%',
@@ -2138,7 +2205,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   cursor: 'pointer'
                                 }}
                               >
-                                {claimStatus['holder-1'] === 'claiming' ? (
+                                {claimStatus[`holder-${activeHolderEpochId}`] === 'claiming' ? (
                                   <>
                                     <Loader2 size={16} className="spin" /> Confirming Claim...
                                   </>

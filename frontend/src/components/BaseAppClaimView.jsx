@@ -176,6 +176,12 @@ export function BaseAppClaimView(props) {
     hasConfirmedHolderClaim,
     isHolderRound1Available,
     isHolderRound1Claimed,
+    activeHolderEpochId,
+    activeHolderRound,
+    activeHolderAvailable,
+    activeHolderClaimed,
+    round1Data,
+    round2Data,
     isVibeClubEligible,
     vibeClubRewardAmount,
     hasConfirmedRoyaltyClaim,
@@ -372,8 +378,8 @@ export function BaseAppClaimView(props) {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {/* Holder Unlock 1 Claim Card */}
-            {isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive) && (
+            {/* Holder Rewards Active Claim Card */}
+            {(activeHolderAvailable !== undefined ? activeHolderAvailable : isHolderRound1Available) && (hasConfirmedHolderClaim || isHolderEligibleLive) && (
               <div
                 className="claim-card"
                 style={{
@@ -446,7 +452,7 @@ export function BaseAppClaimView(props) {
                         whiteSpace: 'nowrap'
                       }}
                     >
-                      HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(upcomingHolderRound?.name || 'UNLOCK 1').toUpperCase()}</span>
+                      HOLDER REWARDS <span style={{ color: '#88aacc' }}>·</span> <span style={{ color: '#00f5ff' }}>{(activeHolderRound?.name || 'UNLOCK 2').toUpperCase()}</span>
                     </div>
 
                     <span
@@ -528,8 +534,8 @@ export function BaseAppClaimView(props) {
 
                 <button
                   className="claim-action-btn"
-                  onClick={() => handleClaim('holder', 1, holderRewardAmount || 500000)}
-                  disabled={claimStatus['holder-1'] === 'claiming'}
+                  onClick={() => handleClaim('holder', activeHolderEpochId || 1, holderRewardAmount || 500000)}
+                  disabled={claimStatus[`holder-${activeHolderEpochId || 1}`] === 'claiming'}
                   style={{
                     width: '100%',
                     background: 'rgba(0, 255, 136, 0.18)',
@@ -540,7 +546,7 @@ export function BaseAppClaimView(props) {
                     fontFamily: "'Press Start 2P', monospace",
                     fontSize: '8px',
                     fontWeight: 900,
-                    cursor: claimStatus['holder-1'] === 'claiming' ? 'not-allowed' : 'pointer',
+                    cursor: claimStatus[`holder-${activeHolderEpochId || 1}`] === 'claiming' ? 'not-allowed' : 'pointer',
                     boxShadow: '0 0 16px rgba(0, 255, 136, 0.35)',
                     display: 'flex',
                     alignItems: 'center',
@@ -548,7 +554,7 @@ export function BaseAppClaimView(props) {
                     gap: '7px'
                   }}
                 >
-                  {claimStatus['holder-1'] === 'claiming' ? (
+                  {claimStatus[`holder-${activeHolderEpochId || 1}`] === 'claiming' ? (
                     <>
                       <Loader2 size={13} className="spin" color="#00ff88" />
                       <span style={{ color: '#00ff88' }}>CLAIMING ON BASE...</span>
