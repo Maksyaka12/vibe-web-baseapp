@@ -165,6 +165,15 @@ const stripYear = (str) => {
   return str.replace(/\s\d{4},/, ',');
 };
 
+const formatEpochEndedDate = (d) => {
+  if (!d) return '';
+  const date = d instanceof Date ? d : new Date(d);
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = date.getUTCDate();
+  const month = months[date.getUTCMonth()];
+  return `${day} ${month}, 00:00 UTC`;
+};
+
 const getEpochStatus = (ep, currentTime = new Date()) => {
   const current = currentTime instanceof Date ? currentTime : new Date(currentTime);
   if (ep.endDateObj && current >= ep.endDateObj) {
@@ -223,20 +232,27 @@ export default function BaseAppRewardsView({
   }, [userAddress]);
 
   // Holder calculations
-  const activeHolders = HOLDER_UNLOCKS.filter(u => now >= u.dateObj);
-  const featuredHolder = activeHolders[0] || HOLDER_UNLOCKS[0];
-  const upcomingHolders = HOLDER_UNLOCKS.filter(u => u.unlock !== featuredHolder.unlock);
+  const activeHolders = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'active');
+  const endedHolders = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'ended');
+  const upcomingHolders = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'upcoming');
+
+  const featuredHolder = activeHolders[0] || upcomingHolders[0] || endedHolders[endedHolders.length - 1] || HOLDER_UNLOCKS[0];
+  const featuredHolderStatus = getRewardEpochStatus(featuredHolder, now);
+  const isFeaturedHolderClaimLive = featuredHolderStatus === 'active' && featuredHolder.dateObj && now >= featuredHolder.dateObj;
+
+  const otherUpcomingHolders = upcomingHolders.filter(u => u.unlock !== featuredHolder.unlock);
+  const otherEndedHolders = endedHolders.filter(u => u.unlock !== featuredHolder.unlock);
 
   // Dynamic eligibility calculation for featured/active Holder Reward
-  // (Checks Merkle proof snapshot for Unlock 1, or 5M+ holding balance for active/subsequent unlocks)
+  // (Checks Merkle proof snapshot for Unlock 1/2, or 5M+ holding balance for active/subsequent unlocks)
   const isHolderActiveEligible = (() => {
     if (!authenticated || !userAddress) return false;
     const unlockNum = parseInt(featuredHolder?.unlock?.replace(/\D/g, '') || '1', 10);
-    if (unlockNum === 1 && round1Data?.claims?.[userAddress]) {
-      return true;
+    if (unlockNum === 1) {
+      return Boolean(round1Data?.claims?.[userAddress]);
     }
-    if (unlockNum === 2 && round2Data?.claims?.[userAddress]) {
-      return true;
+    if (unlockNum === 2) {
+      return Boolean(round2Data?.claims?.[userAddress]);
     }
     if (userBalance >= 5000000) {
       return true;
@@ -452,26 +468,38 @@ export default function BaseAppRewardsView({
                   <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
                   <div>
                     <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredHolder.unlock}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>CLAIM IS LIVE</div>
+                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '#00ff88' : featuredHolderStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      {isFeaturedHolderClaimLive ? 'CLAIM IS LIVE' : featuredHolderStatus === 'active' ? 'ACTIVE' : featuredHolderStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
+                    </div>
                   </div>
                 </div>
                 <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveTooltip(activeTooltip === 'holder-timer' ? null : 'holder-timer');
-                    }}
-                    onMouseEnter={() => setActiveTooltip('holder-timer')}
-                    onMouseLeave={() => setActiveTooltip(null)}
-                    className="rewards-timer-info-btn"
-                    aria-label="Claim Window Info"
-                  >
-                    <InfoSvgIcon className="rewards-timer-info-icon" />
-                  </button>
-                  <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                    <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />
-                    <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
+                  {isFeaturedHolderClaimLive && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveTooltip(activeTooltip === 'holder-timer' ? null : 'holder-timer');
+                      }}
+                      onMouseEnter={() => setActiveTooltip('holder-timer')}
+                      onMouseLeave={() => setActiveTooltip(null)}
+                      className="rewards-timer-info-btn"
+                      aria-label="Claim Window Info"
+                    >
+                      <InfoSvgIcon className="rewards-timer-info-icon" />
+                    </button>
+                  )}
+                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredHolderStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '1px solid #00ff88' : featuredHolderStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '#00ff88' : featuredHolderStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    {(isFeaturedHolderClaimLive || featuredHolderStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
+                    {isFeaturedHolderClaimLive ? (
+                      <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
+                    ) : featuredHolderStatus === 'active' ? (
+                      'ACTIVE'
+                    ) : featuredHolderStatus === 'ended' ? (
+                      'ENDED'
+                    ) : (
+                      'UPCOMING'
+                    )}
                   </div>
 
                   {activeTooltip === 'holder-timer' && (
@@ -515,31 +543,77 @@ export default function BaseAppRewardsView({
               </div>
 
               {/* Direct Claim Action Button (Explicit Green text & border) */}
-              <Link
-                to="/claim"
-                className="rewards-claim-btn"
-                style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  textDecoration: 'none',
-                  background: 'rgba(0, 255, 136, 0.12)',
-                  border: '1.5px solid #00ff88',
-                  color: '#00ff88',
-                  borderRadius: '10px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontWeight: 900,
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  textShadow: 'none'
-                }}
-              >
-                <span style={{ color: '#00ff88' }}>CLAIM REWARD</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
-              </Link>
+              {isFeaturedHolderClaimLive ? (
+                <Link
+                  to="/claim"
+                  className="rewards-claim-btn"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    textDecoration: 'none',
+                    background: 'rgba(0, 255, 136, 0.12)',
+                    border: '1.5px solid #00ff88',
+                    color: '#00ff88',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900,
+                    transition: 'all 0.2s',
+                    boxSizing: 'border-box',
+                    textShadow: 'none'
+                  }}
+                >
+                  <span style={{ color: '#00ff88' }}>CLAIM REWARD</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                </Link>
+              ) : featuredHolderStatus === 'active' ? (
+                <BaseAppClaimCountdownButton targetDate={featuredHolder.dateObj} />
+              ) : featuredHolderStatus === 'ended' ? (
+                <button
+                  disabled
+                  className="rewards-claim-btn"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#94a3b8',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900
+                  }}
+                >
+                  CLAIM ENDED
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="rewards-claim-btn"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    fontSize: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    color: '#94a3b8',
+                    borderRadius: '10px',
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontWeight: 900
+                  }}
+                >
+                  LOCKED
+                </button>
+              )}
 
               {/* Dynamic Eligibility Indicator Under Claim Button */}
               {authenticated ? (
@@ -570,17 +644,18 @@ export default function BaseAppRewardsView({
           )}
 
           {/* Upcoming Schedule Timeline List */}
-          <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+          <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: otherEndedHolders.length > 0 ? '20px' : '24px' }}>
             <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>UNLOCK SCHEDULE</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{upcomingHolders.length} ROUNDS</div>
+              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>{otherUpcomingHolders.length} ROUNDS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {upcomingHolders.map(u => {
-                const isTooltipOpen = activeTooltip === u.unlock;
+              {otherUpcomingHolders.map((u, i) => {
+                const roundKey = u.unlock || `holder-unlock-${i}`;
+                const isTooltipOpen = activeTooltip === roundKey;
                 return (
-                  <div key={u.unlock} style={{ position: 'relative' }}>
+                  <div key={roundKey} style={{ position: 'relative' }}>
                     <div
                       className="rewards-schedule-row"
                       style={{
@@ -601,9 +676,9 @@ export default function BaseAppRewardsView({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation();
-                              setActiveTooltip(isTooltipOpen ? null : u.unlock);
+                              setActiveTooltip(isTooltipOpen ? null : roundKey);
                             }}
-                            onMouseEnter={() => setActiveTooltip(u.unlock)}
+                            onMouseEnter={() => setActiveTooltip(roundKey)}
                             onMouseLeave={() => setActiveTooltip(null)}
                             style={{
                               background: isTooltipOpen ? 'rgba(255, 215, 0, 0.25)' : 'rgba(0, 245, 255, 0.15)',
@@ -662,6 +737,50 @@ export default function BaseAppRewardsView({
               })}
             </div>
           </div>
+
+          {/* Previous Unlocks */}
+          {otherEndedHolders.length > 0 && (
+            <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+              <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS UNLOCKS</div>
+                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                  <span>COMPLETED</span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {otherEndedHolders.map((u, i) => (
+                  <div
+                    key={u.unlock || i}
+                    className="rewards-schedule-row"
+                    style={{
+                      background: 'rgba(2, 11, 26, 0.75)',
+                      border: '1px solid rgba(0, 245, 255, 0.2)',
+                      borderRadius: '10px',
+                      padding: '10px 12px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <div>
+                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.unlock}</div>
+                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        ENDED: {u.nextSnapshotDate ? formatEpochEndedDate(u.nextSnapshotDate) : stripYear(u.unlockDate)}
+                      </div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>
+                        {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : `${u.poolAmount} $VIBE`}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
