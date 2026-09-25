@@ -18,6 +18,7 @@ const MONTHLY_POOL = 10000000; // 10,000,000 $VIBE per month
 const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap per wallet
 
 const SYSTEM_EXCLUSIONS = [
+  '0xb200000000000000000000df24ecb8bf51100a01', // Token CA itself
   '0x498581ff718922c3f8e6a244956af099b2652b2b', // Uniswap V4 PoolManager
   '0x3beea54db87a632a5faf20db6765d3af94c81b31', // VestingVault 100M
   '0xfce13943c69b8cfe3de795dfe1a8447c8f8a99cb', // Staking Contract
@@ -87,7 +88,7 @@ function buildMerkleTree(elements) {
 async function runSnapshot() {
   const roundNumber = parseInt(process.argv[2] || '2', 10);
   console.log('\n======================================================');
-  console.log('🚀 VIBE Tokenomics - Current Moment Snapshot (Round ' + roundNumber + ')');
+  console.log('🚀 VIBE Tokenomics - Full BaseScan Snapshot (Round ' + roundNumber + ')');
   console.log('======================================================');
   console.log('Token CA:             ' + TOKEN_ADDRESS);
   console.log('Vesting Contract:     ' + VESTING_CONTRACT);
@@ -117,9 +118,29 @@ async function runSnapshot() {
   console.log(`📌 Current Snapshot Block: ${snapshotBlock.toString()}`);
   console.log(`📌 Block Timestamp:        ${new Date(Number(latestBlockData.timestamp) * 1000).toISOString()}`);
 
-  console.log('\n[1/4] 🔍 Fetching all token holders from BaseScan / Blockscout...');
+  console.log('\n[1/4] 🔍 Fetching 100% of token holders across all pages on BaseScan & Blockscout...');
   const addresses = new Set();
 
+  // 1. Scrape all holder pages from BaseScan
+  for (let p = 1; p <= 35; p++) {
+    const url = 'https://basescan.org/token/generic-tokenholders2?a=' + TOKEN_ADDRESS + '&p=' + p;
+    try {
+      const res = await fetch(url, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+      });
+      if (res.status !== 200) break;
+      const html = await res.text();
+      const matches = html.match(/0x[a-fA-F0-9]{40}/g) || [];
+      if (matches.length === 0 || html.includes('No data found')) break;
+      matches.forEach(m => addresses.add(m.toLowerCase()));
+      await sleep(100);
+    } catch (e) {
+      break;
+    }
+  }
+  console.log(`BaseScan addresses indexed: ${addresses.size}`);
+
+  // 2. Fetch from Blockscout
   try {
     let url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders';
     while (url) {
@@ -131,9 +152,9 @@ async function runSnapshot() {
             data = await res.json();
             break;
           }
-          await sleep(500);
+          await sleep(300);
         } catch (e) {
-          await sleep(500);
+          await sleep(300);
         }
       }
       if (!data || !data.items || data.items.length === 0) break;
@@ -142,16 +163,14 @@ async function runSnapshot() {
       });
       if (data.next_page_params) {
         url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders?' + new URLSearchParams(data.next_page_params).toString();
-        await sleep(150);
+        await sleep(100);
       } else {
         url = null;
       }
     }
-  } catch (e) {
-    console.warn('Note on Blockscout fetch:', e.message);
-  }
+  } catch (e) {}
 
-  // Include previous round claims
+  // 3. Include previous round claims
   try {
     const r1 = require('../snapshots/round_1_proofs.json');
     Object.keys(r1.claims || {}).forEach(a => addresses.add(a.toLowerCase()));
