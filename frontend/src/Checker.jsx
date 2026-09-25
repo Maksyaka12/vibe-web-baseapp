@@ -30,8 +30,6 @@ import royalty1Data from './data/royalty_1_proofs.json';
 import royalty2Data from './data/royalty_2_proofs.json';
 import royalty3Data from './data/royalty_3_proofs.json';
 import nftNames from './data/nftNames.json';
-import { BaseAppClaimView } from './components/BaseAppClaimView';
-import { BaseAppProfileView } from './components/BaseAppProfileView';
 
 const CA = '0xb200000000000000000000df24ecb8bf51100a01';
 const NFT_CA = '0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886';
@@ -395,7 +393,7 @@ function formatCompactBalance(val) {
   return `${num.toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`;
 }
 
-export default function Checker({ isBaseAppMode = false, isProfileMode = false } = {}) {
+export default function Checker({ isProfileMode = false } = {}) {
   const { ready, authenticated, user, login, logout } = usePrivy();
   const { wallets } = useWallets();
   const address = user?.wallet?.address;
@@ -1480,102 +1478,6 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
       setDownloadingBanner(false);
     }
   };
-
-  if (isBaseAppMode) {
-    return (
-      <section id={isProfileMode ? "profile-section" : "claim-portal"} style={{ padding: '24px 0 60px 0', background: 'transparent' }}>
-        <div className="wrap" style={{ maxWidth: '1000px', padding: '0 14px' }}>
-          {isProfileMode ? (
-            <BaseAppProfileView
-              address={address}
-              ready={ready}
-              authenticated={authenticated}
-              login={login}
-              logout={logout}
-              balance={balance}
-              nftCount={nftCount}
-              userNft={userNft}
-              loading={loading}
-              copied={copied}
-              copyAddress={copyAddress}
-              fetchBalances={fetchBalances}
-              currentTime={currentTime}
-              claimedHistory={claimedHistory}
-              isHolderEligibleLive={isHolderEligibleLive}
-              totalAvailableCount={(isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive) ? 1 : 0) + (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? 1 : 0)}
-              totalAvailableTokens={((isHolderRound1Available && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? (holderRewardAmount || 500000) : 0) + ((activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? (vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))) : 0)}
-              totalExpiredCount={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? 1 : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? 1 : 0)}
-              totalExpiredTokens={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? (royalty1Data.claims[address.toLowerCase()].amount || 22935) : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? (round1Data.claims[address.toLowerCase()].amount || 126127) : 0)}
-            />
-          ) : (
-            <BaseAppClaimView
-              address={address}
-              ready={ready}
-              authenticated={authenticated}
-              login={login}
-              logout={logout}
-              balance={balance}
-              nftCount={nftCount}
-              userNft={userNft}
-              loading={loading}
-              copied={copied}
-              copyAddress={copyAddress}
-              fetchBalances={fetchBalances}
-              currentTime={currentTime}
-              claimStatus={claimStatus}
-              claimedHistory={claimedHistory}
-              handleClaim={handleClaim}
-              isHolderEligibleLive={isHolderEligibleLive}
-              holderRewardAmount={holderRewardAmount}
-              hasConfirmedHolderClaim={hasConfirmedHolderClaim}
-              isHolderRound1Available={isHolderRound1Available}
-              isHolderRound1Claimed={isHolderRound1Claimed}
-              isVibeClubEligible={isVibeClubEligible}
-              vibeClubRewardAmount={vibeClubRewardAmount}
-              hasConfirmedRoyaltyClaim={hasConfirmedRoyaltyClaim}
-              isVibeClubRoyalty1Available={isVibeClubRoyalty1Available}
-              isVibeClubRoyalty1Claimed={isVibeClubRoyalty1Claimed}
-              activeRoyaltyEpochId={activeRoyaltyEpochId}
-              activeRoyaltyRound={activeRoyaltyRound}
-              activeRoyaltyAvailable={activeRoyaltyAvailable}
-              activeRoyaltyClaimed={activeRoyaltyClaimed}
-              totalAvailableCount={totalAvailableCount}
-              upcomingHolderRound={upcomingHolderRound}
-              upcomingVibeClubRound={upcomingVibeClubRound}
-              HOLDER_ROUNDS={HOLDER_ROUNDS}
-              VIBECLUB_ROUNDS={VIBECLUB_ROUNDS}
-              round1Data={round1Data}
-              royalty1Data={royalty1Data}
-              royalty2Data={royalty2Data}
-              royalty3Data={royalty3Data}
-              isAdmin={isAdmin}
-              adminMetrics={adminMetrics}
-              adminDistributorType={adminDistributorType}
-              setAdminDistributorType={setAdminDistributorType}
-              adminCustomRoyaltyCa={adminCustomRoyaltyCa}
-              setAdminCustomRoyaltyCa={setAdminCustomRoyaltyCa}
-              adminEpochId={adminEpochId}
-              setAdminEpochId={setAdminEpochId}
-              adminMerkleRoot={adminMerkleRoot}
-              setAdminMerkleRoot={setAdminMerkleRoot}
-              adminWithdrawAmount={adminWithdrawAmount}
-              setAdminWithdrawAmount={setAdminWithdrawAmount}
-              adminBurnAmount={adminBurnAmount}
-              setAdminBurnAmount={setAdminBurnAmount}
-              adminLoading={adminLoading}
-              adminTxHash={adminTxHash}
-              adminError={adminError}
-              adminSuccess={adminSuccess}
-              handleSetMerkleRoot={handleSetMerkleRoot}
-              handleWithdrawTokens={handleWithdrawTokens}
-              handleBurnTokens={handleBurnTokens}
-              fetchAdminMetrics={fetchAdminMetrics}
-            />
-          )}
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="claim-portal" style={{ minHeight: '80vh', padding: '130px 0 100px 0', background: 'var(--bg)' }}>

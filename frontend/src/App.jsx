@@ -9,10 +9,8 @@ import { createPublicClient, http, formatUnits, parseAbiItem, parseAbi } from 'v
 import { base } from 'viem/chains';
 import { publicClient } from './config/rpc';
 import Checker from './Checker';
-import { BaseAppView } from './components/BaseAppView';
 import NftClubPage from './pages/NftClubPage';
 import ContractsPage from './pages/ContractsPage';
-import BaseAppRewardsView from './components/BaseAppRewardsView';
 import './index.css';
 
 const CA      = '0xb200000000000000000000df24ecb8bf51100a01';
@@ -1763,23 +1761,6 @@ function Rewards({ isBaseAppMode = false } = {}) {
     }
     return badges;
   };
-
-  if (isBaseAppMode) {
-    return (
-      <section id="rewards" className="alt" style={{ padding: '24px 0 60px 0' }}>
-        <div className="wrap">
-          <BaseAppRewardsView
-            HOLDER_UNLOCKS={HOLDER_UNLOCKS}
-            VIBECLUB_EPOCHS={VIBECLUB_EPOCHS}
-            STAKING_EPOCHS={STAKING_EPOCHS}
-            GIVEAWAYS_DATA={GIVEAWAYS_DATA}
-            O1_STAKING_VAULT={O1_STAKING_VAULT}
-            now={now}
-          />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="rewards" className="alt" style={{ padding: '140px 0 100px 0' }}>
@@ -3614,106 +3595,42 @@ function VibeClubRedirect() {
 }
 
 function DomainRouter() {
-  const location = useLocation();
-
-  const checkIsBaseApp = () => {
-    if (typeof window === 'undefined') return false;
-    
-    // 1. Inside iframe (Base App Mini-App / Frame container)
-    const isIframe = window.self !== window.top;
-    if (isIframe) return true;
-
-    // 2. Query param (e.g. ?app=base, ?mode=base, ?source=base, ?client=base, ?mode=app)
-    const urlParams = new URLSearchParams(location.search);
-    const isBaseParam = urlParams.get('app') === 'base' || urlParams.get('mode') === 'base' || urlParams.get('source') === 'base' || urlParams.get('client') === 'base' || urlParams.get('mode') === 'app';
-    if (isBaseParam) return true;
-
-    // 3. User-Agent detection (Base App, Coinbase Wallet in-app browser on mobile, Warpcast, Farcaster)
-    const ua = navigator.userAgent || '';
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
-    const isBaseAppUa = /BaseApp|BaseMobile|Warpcast|Farcaster/i.test(ua);
-    const isCoinbaseMobileUa = isMobile && /CoinbaseWallet|CoinbaseBrowser|Toshi|CBW/i.test(ua);
-    if (isBaseAppUa || isCoinbaseMobileUa) return true;
-
-    // 4. Injected provider flags inside mobile in-app browser
-    const isBaseInjected = isMobile && !!(window.ethereum?.isBaseApp || window.ethereum?.isBase || window.ethereum?.isCoinbaseWallet || window.ethereum?.isCoinbaseBrowser);
-    if (isBaseInjected) return true;
-
-    // 5. Explicit route /app or /hub-app
-    if (location.pathname.startsWith('/app') || location.pathname.startsWith('/hub-app')) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const [isBaseApp, setIsBaseApp] = useState(checkIsBaseApp);
-
   useEffect(() => {
-    const updateBase = () => {
-      setIsBaseApp(checkIsBaseApp());
-    };
-    updateBase();
-    window.addEventListener('ethereum#initialized', updateBase);
-    window.addEventListener('resize', updateBase);
-    const t1 = setTimeout(updateBase, 100);
-    const t2 = setTimeout(updateBase, 500);
-    return () => {
-      window.removeEventListener('ethereum#initialized', updateBase);
-      window.removeEventListener('resize', updateBase);
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
-  }, [location.pathname, location.search]);
-
-  useEffect(() => {
-    if (isBaseApp) {
-      document.title = "$VIBE — Vibe Hub";
-    } else {
-      document.title = "$VIBE — The Base Dog";
-    }
-  }, [isBaseApp]);
+    document.title = "$VIBE — The Base Dog";
+  }, []);
 
   return (
     <Routes>
       {/* ── Standalone VIBE Club NFT Mint Page / Redirect ── */}
-      <Route path="/vibeclub" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <VibeClubRedirect />} />
-      <Route path="/vibe-club" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <VibeClubRedirect />} />
-      <Route path="/nft-club" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <VibeClubRedirect />} />
-      <Route path="/nft" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <VibeClubRedirect />} />
-      <Route path="/mint" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <VibeClubRedirect />} />
+      <Route path="/vibeclub" element={<VibeClubRedirect />} />
+      <Route path="/vibe-club" element={<VibeClubRedirect />} />
+      <Route path="/nft-club" element={<VibeClubRedirect />} />
+      <Route path="/nft" element={<VibeClubRedirect />} />
+      <Route path="/mint" element={<VibeClubRedirect />} />
 
-      {/* ── Dedicated Base App / Vibe Hub Routes ── */}
-      <Route path="/app" element={<BaseAppView RewardsComponent={Rewards} />} />
-      <Route path="/app/*" element={<BaseAppView RewardsComponent={Rewards} />} />
-
-      {/* ── Main Routing ── */}
-      <Route
-        path="/"
-        element={
-          isBaseApp
-            ? <BaseAppView RewardsComponent={Rewards} />
-            : <><Nav /><LandingPage /><Footer /></>
-        }
-      />
-      {/* <Route path="/about" element={<StandaloneLayout><About /></StandaloneLayout>} /> */}
-      <Route path="/tokenomics" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Tokenomics /></StandaloneLayout>} />
-      <Route path="/hub" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
-      <Route path="/rewards" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
-      <Route path="/events" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Rewards /></StandaloneLayout>} />
-      {/* <Route path="/roadmap" element={<StandaloneLayout><Roadmap /></StandaloneLayout>} /> */}
+      {/* ── Main Website Routing ── */}
+      <Route path="/" element={<><Nav /><LandingPage /><Footer /></>} />
+      <Route path="/tokenomics" element={<StandaloneLayout><Tokenomics /></StandaloneLayout>} />
+      <Route path="/hub" element={<StandaloneLayout><Rewards /></StandaloneLayout>} />
+      <Route path="/rewards" element={<StandaloneLayout><Rewards /></StandaloneLayout>} />
+      <Route path="/events" element={<StandaloneLayout><Rewards /></StandaloneLayout>} />
       <Route path="/chart" element={<StandaloneLayout><Chart /></StandaloneLayout>} />
-      <Route path="/buy" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Swap /></StandaloneLayout>} />
-      <Route path="/swap" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Swap /></StandaloneLayout>} />
+      <Route path="/buy" element={<StandaloneLayout><Swap /></StandaloneLayout>} />
+      <Route path="/swap" element={<StandaloneLayout><Swap /></StandaloneLayout>} />
       <Route path="/trade" element={<StandaloneLayout><Swap /></StandaloneLayout>} />
-      <Route path="/claim" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker /></StandaloneLayout>} />
-      <Route path="/profile" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><Checker isProfileMode={true} /></StandaloneLayout>} />
-      <Route path="/contracts" element={isBaseApp ? <BaseAppView RewardsComponent={Rewards} /> : <StandaloneLayout><ContractsPage /></StandaloneLayout>} />
+      <Route path="/claim" element={<StandaloneLayout><Checker /></StandaloneLayout>} />
+      <Route path="/profile" element={<StandaloneLayout><Checker isProfileMode={true} /></StandaloneLayout>} />
+      <Route path="/contracts" element={<StandaloneLayout><ContractsPage /></StandaloneLayout>} />
       <Route path="/adresses" element={<Navigate to="/contracts" replace />} />
       <Route path="/addresses" element={<Navigate to="/contracts" replace />} />
       <Route path="/docs" element={<Navigate to="/contracts" replace />} />
       <Route path="/checker" element={<Navigate to="/claim" replace />} />
       <Route path="/portal" element={<Navigate to="/claim" replace />} />
+      <Route path="/app" element={<Navigate to="/" replace />} />
+      <Route path="/app/*" element={<Navigate to="/" replace />} />
+      <Route path="/hub-app" element={<Navigate to="/hub" replace />} />
+      <Route path="/hub-app/*" element={<Navigate to="/hub" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
