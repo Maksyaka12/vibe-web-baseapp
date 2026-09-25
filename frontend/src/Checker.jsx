@@ -1022,9 +1022,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const activeHolderRound = isHolderRound1Ended ? HOLDER_ROUNDS[1] : HOLDER_ROUNDS[0];
   const activeHolderData = activeHolderEpochId === 2 ? round2Data : round1Data;
   const userProofData = (address && activeHolderData && activeHolderData.claims) ? activeHolderData.claims[address.toLowerCase()] : null;
-  const isHolderEligibleLive = (balance !== null && balance >= MIN_HOLDER_BALANCE) || !!userProofData;
+  const isHolderEligibleLive = Boolean(balance !== null && balance >= MIN_HOLDER_BALANCE);
   const hasConfirmedHolderClaim = !!userProofData;
-  const holderRewardAmount = userProofData ? (userProofData.amount || 0) : (isHolderEligibleLive ? 500000 : 0);
+  const holderRewardAmount = userProofData ? (userProofData.amount || 0) : 0;
 
   const activeHolderClaimed = activeHolderEpochId === 2 ? isHolderRound2Claimed : isHolderRound1Claimed;
   const activeHolderLive = activeHolderEpochId === 2 ? isHolderRound2Live : isHolderRound1Live;
@@ -1053,9 +1053,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const activeRoyaltyRound = isVibeClubRoyalty2Ended ? VIBECLUB_ROUNDS[2] : (isVibeClubRoyalty1Ended ? VIBECLUB_ROUNDS[1] : VIBECLUB_ROUNDS[0]);
   const activeRoyaltyData = activeRoyaltyEpochId === 3 ? royalty3Data : (activeRoyaltyEpochId === 2 ? royalty2Data : royalty1Data);
   const userRoyaltyProofData = (address && activeRoyaltyData && activeRoyaltyData.claims) ? activeRoyaltyData.claims[address.toLowerCase()] : null;
-  const isVibeClubEligible = (nftCount !== null && nftCount > 0) || !!userRoyaltyProofData;
+  const isVibeClubEligible = Boolean(nftCount !== null && nftCount > 0);
   const hasConfirmedRoyaltyClaim = !!userRoyaltyProofData;
-  const vibeClubRewardAmount = userRoyaltyProofData ? (userRoyaltyProofData.amount || 0) : (isVibeClubEligible ? (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935)) : 0);
+  const vibeClubRewardAmount = userRoyaltyProofData ? (userRoyaltyProofData.amount || 0) : 0;
 
   const activeRoyaltyClaimed = activeRoyaltyEpochId === 3 ? isVibeClubRoyalty3Claimed : (activeRoyaltyEpochId === 2 ? isVibeClubRoyalty2Claimed : isVibeClubRoyalty1Claimed);
   const activeRoyaltyLive = activeRoyaltyEpochId === 3 ? isVibeClubRoyalty3Live : (activeRoyaltyEpochId === 2 ? isVibeClubRoyalty2Live : isVibeClubRoyalty1Live);
@@ -1065,8 +1065,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
   const isAdmin = !!(address && (address.toLowerCase() === ADMIN_WALLET.toLowerCase()));
 
   // Available claim count (where user is eligible and ready to claim)
-  const availableHolderCount = (activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? 1 : 0;
-  const availableVibeClubCount = (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? 1 : 0;
+  const availableHolderCount = (activeHolderAvailable && hasConfirmedHolderClaim) ? 1 : 0;
+  const availableVibeClubCount = (activeRoyaltyAvailable && hasConfirmedRoyaltyClaim) ? 1 : 0;
   const totalAvailableCount = availableHolderCount + availableVibeClubCount;
 
   // Next Upcoming Unlocks to Display
@@ -1564,8 +1564,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               currentTime={currentTime}
               claimedHistory={claimedHistory}
               isHolderEligibleLive={isHolderEligibleLive}
-              totalAvailableCount={(activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive) ? 1 : 0) + (activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible) ? 1 : 0)}
-              totalAvailableTokens={((activeHolderAvailable && (hasConfirmedHolderClaim || isHolderEligibleLive)) ? (holderRewardAmount || 500000) : 0) + ((activeRoyaltyAvailable && (hasConfirmedRoyaltyClaim || isVibeClubEligible)) ? (vibeClubRewardAmount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))) : 0)}
+              totalAvailableCount={totalAvailableCount}
+              totalAvailableTokens={((activeHolderAvailable && hasConfirmedHolderClaim) ? (holderRewardAmount || 0) : 0) + ((activeRoyaltyAvailable && hasConfirmedRoyaltyClaim) ? (vibeClubRewardAmount || 0) : 0)}
               totalExpiredCount={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? 1 : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? 1 : 0)}
               totalExpiredTokens={(Boolean(address && isVibeClubRoyalty1Ended && !isVibeClubRoyalty1Claimed && royalty1Data?.claims?.[address.toLowerCase()]) ? (royalty1Data.claims[address.toLowerCase()].amount || 22935) : 0) + (Boolean(address && isHolderRound1Ended && !isHolderRound1Claimed && round1Data?.claims?.[address.toLowerCase()]) ? (round1Data.claims[address.toLowerCase()].amount || 126127) : 0)}
             />
@@ -2113,7 +2113,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                             {/* Allocation / Eligibility Box */}
                             <div style={{ marginBottom: '18px' }}>
-                              {(hasConfirmedHolderClaim || isHolderEligibleLive) ? (
+                              {hasConfirmedHolderClaim ? (
                                 <div
                                   style={{
                                     background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
@@ -2189,7 +2189,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                           {/* Action Button */}
                           <div>
-                            {(hasConfirmedHolderClaim || isHolderEligibleLive) ? (
+                            {hasConfirmedHolderClaim ? (
                               <button
                                 onClick={() => handleClaim('holder', activeHolderEpochId, holderRewardAmount)}
                                 disabled={claimStatus[`holder-${activeHolderEpochId}`] === 'claiming'}

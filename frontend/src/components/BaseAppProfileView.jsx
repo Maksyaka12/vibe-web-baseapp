@@ -104,7 +104,7 @@ export function BaseAppProfileView(props) {
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
   // Dynamic achievement unlock calculations
-  const isHolderUnlocked = Boolean(isHolderEligibleLive || (balance && Number(balance) >= 5000000));
+  const isHolderUnlocked = Boolean(balance !== null && Number(balance) >= 5000000);
   const isNftHolderUnlocked = Boolean(hasNft && nftCount > 0);
   const isStakerUnlocked = false; // criteria in progress
   const isClaimerUnlocked = false; // criteria in progress

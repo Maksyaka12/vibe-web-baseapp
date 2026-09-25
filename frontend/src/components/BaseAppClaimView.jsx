@@ -379,7 +379,7 @@ export function BaseAppClaimView(props) {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {/* Holder Rewards Active Claim Card */}
-            {(activeHolderAvailable !== undefined ? activeHolderAvailable : isHolderRound1Available) && (hasConfirmedHolderClaim || isHolderEligibleLive) && (
+            {(activeHolderAvailable !== undefined ? activeHolderAvailable : isHolderRound1Available) && hasConfirmedHolderClaim && (
               <div
                 className="claim-card"
                 style={{
