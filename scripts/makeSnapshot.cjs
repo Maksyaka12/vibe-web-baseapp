@@ -13,7 +13,6 @@ const { base } = require('../frontend/node_modules/viem/chains');
 
 const TOKEN_ADDRESS = '0xb200000000000000000000df24ecb8bf51100a01';
 const VESTING_CONTRACT = '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089';
-const TOKEN_START_BLOCK = 49185761n;
 const MIN_BALANCE = 5000000; // 5,000,000 $VIBE threshold
 const MONTHLY_POOL = 10000000; // 10,000,000 $VIBE per month
 const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap per wallet
@@ -88,7 +87,7 @@ function buildMerkleTree(elements) {
 async function runSnapshot() {
   const roundNumber = parseInt(process.argv[2] || '2', 10);
   console.log('\n======================================================');
-  console.log('🚀 VIBE Tokenomics - Holder Rewards Snapshot (Round ' + roundNumber + ')');
+  console.log('🚀 VIBE Tokenomics - Current Moment Snapshot (Round ' + roundNumber + ')');
   console.log('======================================================');
   console.log('Token CA:             ' + TOKEN_ADDRESS);
   console.log('Vesting Contract:     ' + VESTING_CONTRACT);
@@ -111,44 +110,16 @@ async function runSnapshot() {
 
   const client = createPublicClient({ chain: base, transport });
   
-  // Historical snapshot timestamp mapping
-  const SNAPSHOT_TIMESTAMPS = {
-    1: '2026-08-26T00:00:00Z',
-    2: '2026-09-25T00:00:00Z',
-    3: '2026-10-25T00:00:00Z',
-    4: '2026-11-24T00:00:00Z'
-  };
-  const targetIso = SNAPSHOT_TIMESTAMPS[roundNumber] || '2026-09-25T00:00:00Z';
-  const targetTs = Math.floor(new Date(targetIso).getTime() / 1000);
-
-  console.log(`🔍 Finding exact historical block on Base for ${targetIso} (00:00:00 UTC)...`);
   const latestBlockData = await client.getBlock({ blockTag: 'latest' });
-  let snapshotBlock = latestBlockData.number;
+  const snapshotBlock = latestBlockData.number;
+  const snapshotIso = new Date().toISOString();
 
-  if (Number(latestBlockData.timestamp) > targetTs) {
-    let low = TOKEN_START_BLOCK;
-    let high = latestBlockData.number;
-    while (low <= high) {
-      const mid = (low + high) / 2n;
-      const b = await client.getBlock({ blockNumber: mid });
-      const bTs = Number(b.timestamp);
-      if (bTs <= targetTs) {
-        snapshotBlock = mid;
-        low = mid + 1n;
-      } else {
-        high = mid - 1n;
-      }
-    }
-  }
+  console.log(`📌 Current Snapshot Block: ${snapshotBlock.toString()}`);
+  console.log(`📌 Block Timestamp:        ${new Date(Number(latestBlockData.timestamp) * 1000).toISOString()}`);
 
-  const snapshotBlockInfo = await client.getBlock({ blockNumber: snapshotBlock });
-  console.log(`📌 Exact Snapshot Block: ${snapshotBlock.toString()}`);
-  console.log(`📌 Block Timestamp:      ${new Date(Number(snapshotBlockInfo.timestamp) * 1000).toISOString()}`);
-
-  console.log('\n[1/4] 🔍 Discovering all token holder addresses on Base...');
+  console.log('\n[1/4] 🔍 Fetching all token holders from BaseScan / Blockscout...');
   const addresses = new Set();
 
-  // 1. Fetch complete current list of holders via Blockscout API
   try {
     let url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders';
     while (url) {
@@ -180,7 +151,7 @@ async function runSnapshot() {
     console.warn('Note on Blockscout fetch:', e.message);
   }
 
-  // 2. Include all previous snapshot participants (Round 1)
+  // Include previous round claims
   try {
     const r1 = require('../snapshots/round_1_proofs.json');
     Object.keys(r1.claims || {}).forEach(a => addresses.add(a.toLowerCase()));
@@ -189,7 +160,7 @@ async function runSnapshot() {
   console.log(`Total Unique Addresses Discovered on Base: ${addresses.size}`);
 
   const userAddrs = Array.from(addresses).filter(a => !SYSTEM_EXCLUSIONS.includes(a));
-  console.log('\n[2/4] 🔍 Multicalling exact historical balanceOf for all ' + userAddrs.length + ' addresses at 00:00 UTC Block (' + snapshotBlock.toString() + ')...');
+  console.log('\n[2/4] 🔍 Multicalling current balanceOf for all ' + userAddrs.length + ' addresses at Block ' + snapshotBlock.toString() + '...');
 
   const eligible = [];
   const balanceChunkSize = 50;
@@ -219,7 +190,7 @@ async function runSnapshot() {
   console.log('');
 
   eligible.sort((a, b) => b.balance - a.balance);
-  console.log('=== Found EXACTLY ' + eligible.length + ' Qualified Wallets (>= 5M $VIBE at 00:00 UTC) ===');
+  console.log('=== Found EXACTLY ' + eligible.length + ' Qualified Wallets (>= 5M $VIBE) ===');
 
   const totalEligibleSum = eligible.reduce((acc, h) => acc + h.balance, 0);
   console.log('Total Qualified Balance Sum: ' + Math.round(totalEligibleSum).toLocaleString() + ' $VIBE');
@@ -298,7 +269,7 @@ async function runSnapshot() {
     token: TOKEN_ADDRESS,
     vestingContract: VESTING_CONTRACT,
     snapshotBlock: snapshotBlock.toString(),
-    snapshotDate: targetIso,
+    snapshotDate: snapshotIso,
     merkleRoot: root,
     totalHolders: elements.length,
     totalEligibleSupply: totalEligibleSum,
