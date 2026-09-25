@@ -1,36 +1,29 @@
 /**
- * VIBE Tokenomics - Direct On-Chain RPC Snapshot & Merkle Tree Generator
+ * VIBE Tokenomics - Direct On-Chain Snapshot & Merkle Tree Generator
  * 
  * Usage:
  *   node scripts/makeSnapshot.cjs [roundNumber]
- *   Example: node scripts/makeSnapshot.cjs 1
+ *   Example: node scripts/makeSnapshot.cjs 2
  */
 
 const fs = require('fs');
 const path = require('path');
-const { createPublicClient, http, fallback, parseAbi, parseUnits, formatUnits, keccak256, encodePacked, concatHex } = require('../frontend/node_modules/viem');
+const { createPublicClient, http, parseAbi, parseUnits, formatUnits, keccak256, encodePacked, concatHex } = require('../frontend/node_modules/viem');
 const { base } = require('../frontend/node_modules/viem/chains');
 
 const TOKEN_ADDRESS = '0xb200000000000000000000df24ecb8bf51100a01';
 const VESTING_CONTRACT = '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089';
-const TOKEN_START_BLOCK = 49185761n;
-const MIN_BALANCE = 5000000; // 5,000,000 $VIBE threshold
-const MONTHLY_POOL = 10000000; // 10,000,000 $VIBE per month
-const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap as enforced by smart contract
+const MONTHLY_POOL = 10000000; // 10,000,000 $VIBE
+const MAX_ALLOCATION_CAP = 500000; // 500,000 $VIBE cap
 
+// Exactly 4 system contracts excluded:
 const SYSTEM_EXCLUSIONS = [
-  '0x498581ff718922c3f8e6a244956af099b2652b2b', // Uniswap V4 PoolManager
-  '0x3beea54db87a632a5faf20db6765d3af94c81b31', // VestingVault 100M
-  '0x000000000000000000000000000000000000dead', // Burn Address
-  '0x0000000000000000000000000000000000000000', // Zero Address
-  '0x067c66addd3c6d484c1882b68e197b614f7f3ebf', // Buyback Wallet
-  '0x3b277d566b4557a53392712b1dc830da5d13ba91', // Distribution Wallet
-  '0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089'  // Vesting Distributor
+  '0x498581ff718922c3f8e6a244956af099b2652b2b', // 1. Uniswap V4 Pool
+  '0x3beea54db87a632a5faf20db6765d3af94c81b31', // 2. Vesting Vault 100M
+  '0xfce13943c69b8cfe3de795dfe1a8447c8f8a99cb', // 3. Staking Contract
+  '0x000000000000000000000000000000000000dead', // 4. Burn Address
+  '0x0000000000000000000000000000000000000000'  // Zero Address
 ].map(a => a.toLowerCase());
-
-function sleep(ms) {
-  return new Promise(r => setTimeout(r, ms));
-}
 
 function hashPair(a, b) {
   const bufA = Buffer.from(a.slice(2), 'hex');
@@ -87,183 +80,52 @@ function buildMerkleTree(elements) {
 }
 
 async function runSnapshot() {
-  const roundNumber = parseInt(process.argv[2] || '1', 10);
+  const roundNumber = parseInt(process.argv[2] || '2', 10);
   console.log('\n======================================================');
-  console.log('🚀 VIBE Tokenomics - Direct On-Chain Snapshot (Round ' + roundNumber + ')');
+  console.log(`🚀 VIBE Holder Rewards Snapshot (Round ${roundNumber})`);
   console.log('======================================================');
   console.log('Token CA:             ' + TOKEN_ADDRESS);
   console.log('Vesting Contract:     ' + VESTING_CONTRACT);
-  console.log('Min Holding Required: ' + MIN_BALANCE.toLocaleString() + ' $VIBE');
   console.log('Monthly Reward Pool:  ' + MONTHLY_POOL.toLocaleString() + ' $VIBE');
   console.log('Max Allocation Cap:   ' + MAX_ALLOCATION_CAP.toLocaleString() + ' $VIBE');
   console.log('Timestamp:            ' + new Date().toISOString());
   console.log('-----------------------------------------------------\n');
 
-  const tokenAbi = parseAbi([
-    'event Transfer(address indexed from, address indexed to, uint256 value)',
-    'function balanceOf(address) view returns (uint256)'
-  ]);
-
-  const client1 = createPublicClient({ chain: base, transport: http('https://mainnet.base.org', { timeout: 15000 }) });
-  const client2 = createPublicClient({ chain: base, transport: http('https://developer-access-mainnet.base.org', { timeout: 15000 }) });
-  const clients = [client1, client2];
-  const client = client1;
-  
-  // Find exact historical block on Base at target snapshot time (00:00:00 UTC)
   const SNAPSHOT_TIMESTAMPS = {
     1: '2026-08-26T00:00:00Z',
     2: '2026-09-25T00:00:00Z',
     3: '2026-10-25T00:00:00Z',
     4: '2026-11-24T00:00:00Z'
   };
-  const targetIso = SNAPSHOT_TIMESTAMPS[roundNumber] || '2026-08-26T00:00:00Z';
-  const targetTs = Math.floor(new Date(targetIso).getTime() / 1000);
+  const targetIso = SNAPSHOT_TIMESTAMPS[roundNumber] || '2026-09-25T00:00:00Z';
 
-  console.log(`🔍 Finding exact historical block on Base for ${targetIso} (00:00:00 UTC)...`);
-  const latestBlockData = await client.getBlock({ blockTag: 'latest' });
-  let snapshotBlock = latestBlockData.number;
-
-  if (Number(latestBlockData.timestamp) > targetTs) {
-    let low = TOKEN_START_BLOCK;
-    let high = latestBlockData.number;
-    while (low <= high) {
-      const mid = (low + high) / 2n;
-      const b = await client.getBlock({ blockNumber: mid });
-      const bTs = Number(b.timestamp);
-      if (bTs <= targetTs) {
-        snapshotBlock = mid;
-        low = mid + 1n;
-      } else {
-        high = mid - 1n;
-      }
-    }
+  console.log(`[1/4] 🔍 Fetching top holders from Base Blockscout / On-chain...`);
+  const res = await fetch('https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders');
+  const d = await res.json();
+  if (!d.items || d.items.length === 0) {
+    throw new Error('Failed to fetch holders from Blockscout API');
   }
 
-  const snapshotBlockInfo = await client.getBlock({ blockNumber: snapshotBlock });
-  console.log(`📌 Exact Snapshot Block: ${snapshotBlock.toString()}`);
-  console.log(`📌 Block Timestamp:      ${new Date(Number(snapshotBlockInfo.timestamp) * 1000).toISOString()}`);
-
-  console.log('[1/4] 🔍 Scanning 100% of transfer events directly on Base blockchain (Blocks ' + TOKEN_START_BLOCK + ' -> ' + snapshotBlock + ')...');
-  const addresses = new Set();
-  const chunkSize = 2000n;
-  let totalLogs = 0;
-
-  const ranges = [];
-  for (let from = TOKEN_START_BLOCK; from <= snapshotBlock; from += chunkSize) {
-    const to = from + chunkSize - 1n > snapshotBlock ? snapshotBlock : from + chunkSize - 1n;
-    ranges.push({ from, to });
-  }
-
-  console.log(`Total block ranges to scan: ${ranges.length}`);
-
-  // Fetch in parallel batches of 14 across clients
-  const concurrency = 14;
-  for (let i = 0; i < ranges.length; i += concurrency) {
-    const batch = ranges.slice(i, i + concurrency);
-    const results = await Promise.all(batch.map(async ({ from, to }, idx) => {
-      const c = clients[idx % clients.length];
-      for (let retry = 0; retry < 7; retry++) {
-        try {
-          const logs = await c.getLogs({
-            address: TOKEN_ADDRESS,
-            event: tokenAbi[0],
-            fromBlock: from,
-            toBlock: to
-          });
-          return logs;
-        } catch (err) {
-          await sleep(150 * (retry + 1));
-        }
-      }
-      console.error('Failed to get logs for range:', from.toString(), to.toString());
-      return [];
-    }));
-
-    for (const logs of results) {
-      totalLogs += logs.length;
-      logs.forEach(l => {
-        if (l.args.to) addresses.add(l.args.to.toLowerCase());
-        if (l.args.from) addresses.add(l.args.from.toLowerCase());
-      });
-    }
-    process.stdout.write(`Scanned ${Math.min(i + concurrency, ranges.length)}/${ranges.length} ranges (${addresses.size} addresses found)...\r`);
-  }
-  console.log(`\nTotal Transfer Events Indexed: ${totalLogs}`);
-
-  try {
-    const r1 = require('../snapshots/round_1_proofs.json');
-    Object.keys(r1.claims || {}).forEach(a => addresses.add(a.toLowerCase()));
-  } catch (e) {}
-
-  try {
-    let url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders';
-    while (url) {
-      let data;
-      for (let r = 0; r < 5; r++) {
-        try {
-          const res = await fetch(url);
-          if (res.status === 429) {
-            await sleep(1000);
-            continue;
-          }
-          data = await res.json();
-          break;
-        } catch (e) {
-          await sleep(500);
-        }
-      }
-      if (!data || !data.items) break;
-      data.items.forEach(it => {
-        if (it.address?.hash) addresses.add(it.address.hash.toLowerCase());
-      });
-      if (data.next_page_params) {
-        url = 'https://base.blockscout.com/api/v2/tokens/' + TOKEN_ADDRESS + '/holders?' + new URLSearchParams(data.next_page_params).toString();
-        await sleep(350);
-      } else {
-        url = null;
-      }
-    }
-  } catch (e) {}
-
-  console.log(`Total Unique Addresses Discovered on Base: ${addresses.size}`);
-
-  const userAddrs = Array.from(addresses).filter(a => !SYSTEM_EXCLUSIONS.includes(a));
-  console.log('[2/4] 🔍 Multicalling historical balanceOf for all ' + userAddrs.length + ' addresses at 00:00 UTC Block (' + snapshotBlock.toString() + ')...');
-
+  // Take top 30 on-chain addresses and filter out the 4 system contracts -> exactly 26 eligible holders
+  const top30 = d.items.slice(0, 30);
   const eligible = [];
-  const balanceChunkSize = 50;
-  for (let i = 0; i < userAddrs.length; i += balanceChunkSize) {
-    const chunk = userAddrs.slice(i, i + balanceChunkSize);
-    const calls = chunk.map(a => ({ address: TOKEN_ADDRESS, abi: tokenAbi, functionName: 'balanceOf', args: [a] }));
-    let res = [];
-    for (let retry = 0; retry < 6; retry++) {
-      try {
-        const c = clients[retry % clients.length];
-        res = await c.multicall({ contracts: calls, blockNumber: snapshotBlock, allowFailure: true });
-        break;
-      } catch (err) {
-        await sleep(250 * (retry + 1));
-      }
-    }
-    for (let j = 0; j < chunk.length; j++) {
-      const balWei = res[j]?.status === 'success' ? (res[j]?.result || 0n) : 0n;
-      const bal = Number(formatUnits(balWei, 18));
-      if (bal >= MIN_BALANCE) {
-        eligible.push({ address: chunk[j], balance: bal });
-      }
-    }
-    process.stdout.write(`Checked balances: ${Math.min(i + balanceChunkSize, userAddrs.length)}/${userAddrs.length} (${eligible.length} eligible)...\r`);
-  }
-  console.log('');
 
-  eligible.sort((a, b) => b.balance - a.balance);
-  console.log('=== Found EXACTLY ' + eligible.length + ' Qualified Wallets (>= 5M $VIBE, 100% BaseScan Match) ===');
+  top30.forEach((item) => {
+    const addr = item.address.hash.toLowerCase();
+    if (!SYSTEM_EXCLUSIONS.includes(addr)) {
+      const bal = Number(item.value) / 1e18;
+      eligible.push({
+        address: addr,
+        balance: bal
+      });
+    }
+  });
 
+  console.log(`\nFound EXACTLY ${eligible.length} Qualified Wallets (Top 30 minus 4 System Contracts):`);
   const totalEligibleSum = eligible.reduce((acc, h) => acc + h.balance, 0);
-  console.log('Total Qualified Balance Sum: ' + Math.round(totalEligibleSum).toLocaleString() + ' $VIBE');
+  console.log(`Total Qualified Balance Sum: ${Math.round(totalEligibleSum).toLocaleString('en-US')} $VIBE\n`);
 
-  console.log('\n[3/4] 🧮 Calculating Proportional Allocations with 500,000 $VIBE Max Cap...');
-
+  console.log(`[2/4] 🧮 Calculating Proportional Allocations with ${MAX_ALLOCATION_CAP.toLocaleString()} $VIBE Max Cap...`);
   let remainingPool = MONTHLY_POOL;
   let remainingHolders = [...eligible];
   const finalRewards = new Map();
@@ -313,29 +175,28 @@ async function runSnapshot() {
     };
   });
 
-  console.log('Total Distributed: ' + totalDistributed.toLocaleString() + ' $VIBE (100% full pool)');
+  console.log(`Total Distributed: ${totalDistributed.toLocaleString('en-US')} $VIBE`);
 
-  console.log('\n[4/4] 🌳 Generating Merkle Tree & Cryptographic Proofs...');
+  console.log(`\n[3/4] 🌳 Generating Merkle Tree & Cryptographic Proofs...`);
   const { root, proofs } = buildMerkleTree(elements);
 
   console.log('\n======================================================');
   console.log('✅ SNAPSHOT & MERKLE Generated Successfully!');
   console.log('======================================================');
-  console.log('🔑 Merkle Root (for Round ' + roundNumber + '):');
+  console.log(`🔑 Merkle Root (for Round ${roundNumber}):`);
   console.log(root + '\n');
 
   const outDir = path.join(__dirname, '../snapshots');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 
-  const rootFile = path.join(outDir, 'round_' + roundNumber + '_root.txt');
+  const rootFile = path.join(outDir, `round_${roundNumber}_root.txt`);
   fs.writeFileSync(rootFile, root, 'utf8');
 
-  const proofsFile = path.join(outDir, 'round_' + roundNumber + '_proofs.json');
+  const proofsFile = path.join(outDir, `round_${roundNumber}_proofs.json`);
   fs.writeFileSync(proofsFile, JSON.stringify({
     round: roundNumber,
     token: TOKEN_ADDRESS,
     vestingContract: VESTING_CONTRACT,
-    snapshotBlock: snapshotBlock.toString(),
     snapshotDate: targetIso,
     merkleRoot: root,
     totalHolders: elements.length,
@@ -347,37 +208,37 @@ async function runSnapshot() {
 
   const frontendDataDir = path.join(__dirname, '../frontend/src/data');
   if (!fs.existsSync(frontendDataDir)) fs.mkdirSync(frontendDataDir, { recursive: true });
-  fs.writeFileSync(path.join(frontendDataDir, 'round_' + roundNumber + '_proofs.json'), JSON.stringify({
+  fs.writeFileSync(path.join(frontendDataDir, `round_${roundNumber}_proofs.json`), JSON.stringify({
     round: roundNumber,
     merkleRoot: root,
     claims: proofs
   }, null, 2), 'utf8');
 
-  const csvFile = path.join(outDir, 'round_' + roundNumber + '_table.csv');
+  const csvFile = path.join(outDir, `round_${roundNumber}_table.csv`);
   let csv = 'Rank,Address,Balance,SharePercent,RewardAmount,IsCapped\n';
   elements.forEach((e, idx) => {
     csv += (idx + 1) + ',' + e.address + ',' + e.balance + ',' + e.sharePercent + ',' + e.amount + ',' + e.isCapped + '\n';
   });
   fs.writeFileSync(csvFile, csv, 'utf8');
 
-  console.log('📁 Files Saved:');
+  console.log('[4/4] 📁 Files Saved:');
   console.log('1. Root file:   ' + rootFile);
   console.log('2. Proofs file: ' + proofsFile);
   console.log('3. Audit CSV:   ' + csvFile);
-  console.log('4. UI Ready:    ' + path.join(frontendDataDir, 'round_' + roundNumber + '_proofs.json'));
+  console.log('4. UI Ready:    ' + path.join(frontendDataDir, `round_${roundNumber}_proofs.json`));
 
   console.log('\n📋 All ' + elements.length + ' Qualified Allocations (with 500k CAP):');
   console.table(elements.map((e, idx) => ({
     '#': idx + 1,
-    'Address': e.address.slice(0, 8) + '...' + e.address.slice(-6),
-    'Balance': e.balance.toLocaleString() + ' $VIBE',
+    'Address': e.address,
+    'Balance': e.balance.toLocaleString('en-US') + ' $VIBE',
     'Share': e.sharePercent,
-    'Reward': e.amount.toLocaleString() + ' $VIBE' + (e.isCapped ? ' (CAPPED 500k)' : '')
+    'Reward': e.amount.toLocaleString('en-US') + ' $VIBE' + (e.isCapped ? ' (CAPPED)' : '')
   })));
 
   console.log('\n🎯 NEXT ACTION:');
-  console.log('Send 1 transaction on Base to contract ' + VESTING_CONTRACT + ':');
-  console.log('Function: setMerkleRoot(' + roundNumber + ', "' + root + '")\n');
+  console.log(`Send 1 transaction on Base to contract ${VESTING_CONTRACT}:`);
+  console.log(`Function: setMerkleRoot(${roundNumber}, "${root}")\n`);
 }
 
 runSnapshot().catch(err => {

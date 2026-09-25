@@ -1,29 +1,417 @@
 {
   "round": 2,
-  "merkleRoot": "0xe6c7a39b04632bb6f7183bb1348da393d24c47d198586b1e4fcedbde36ffe9a7",
+  "merkleRoot": "0xc3cf00cc97eba9766702bbf146cd1c5fbda44069152a6e4902c8c0c9c98445c0",
   "claims": {
-    "0x517e74f975f956f36c4fe8bf908525ebeba96f5c": {
-      "address": "0x517e74f975f956f36c4fe8bf908525ebeba96f5c",
-      "balance": 5158982,
+    "0x54f7283cb364178f0872180e9e661c60e6a63c31": {
+      "address": "0x54f7283cb364178f0872180e9e661c60e6a63c31",
+      "balance": 31093376,
       "amount": 500000,
       "amountWei": "500000000000000000000000",
       "sharePercent": "5.00%",
       "isCapped": true,
-      "leaf": "0xeafc6acff99a2422ab84283f4c386df3474d3b633ccd2d50ce1d36a4a333b2a7",
+      "leaf": "0x9d1eaa09d24729d12a9a59f503f15ceb8364e48a393d71df9251a755a97f8fb6",
       "proof": [
-        "0x343893f34b07f5334c78ff8104304010cdbcf2cc82224f6e07a9058656b40378"
+        "0x0d9d5b94f54d6bfe5ea7ea099ebf70f09f63e88f86120a741eb788dd2215887d",
+        "0x89ec4b3b7698be374746dda27bdfe46e7436f2dfa4d3129754635fa500098f5d",
+        "0xb5792334f354975940c7288b1145b8aac06d437de9104591be92569069686d44",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x6f25a9e1e677616c1bf7ab54b470b0c82839adb4": {
+      "address": "0x6f25a9e1e677616c1bf7ab54b470b0c82839adb4",
+      "balance": 30966991,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x0d9d5b94f54d6bfe5ea7ea099ebf70f09f63e88f86120a741eb788dd2215887d",
+      "proof": [
+        "0x9d1eaa09d24729d12a9a59f503f15ceb8364e48a393d71df9251a755a97f8fb6",
+        "0x89ec4b3b7698be374746dda27bdfe46e7436f2dfa4d3129754635fa500098f5d",
+        "0xb5792334f354975940c7288b1145b8aac06d437de9104591be92569069686d44",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x42716e51285a9fafde6ae836bfd8f7f8cc88c7ea": {
+      "address": "0x42716e51285a9fafde6ae836bfd8f7f8cc88c7ea",
+      "balance": 19453463,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x9d68b88f414368b3b8edc71e8a2e245da722f0252a9ee6e35773d60d032c7bf6",
+      "proof": [
+        "0xaabc1f359fe62d351eaa4b9c11cfefacfc5670e7db1cdc407f9953c692a12203",
+        "0xcb11ded99f60058a2c8dc1ff0b2923d00fe23fb6c3fc0fa0de79543802ea39c2",
+        "0xb5792334f354975940c7288b1145b8aac06d437de9104591be92569069686d44",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xb72d088def563c456d6090019d9b5fe72fe7823e": {
+      "address": "0xb72d088def563c456d6090019d9b5fe72fe7823e",
+      "balance": 18544166,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0xaabc1f359fe62d351eaa4b9c11cfefacfc5670e7db1cdc407f9953c692a12203",
+      "proof": [
+        "0x9d68b88f414368b3b8edc71e8a2e245da722f0252a9ee6e35773d60d032c7bf6",
+        "0xcb11ded99f60058a2c8dc1ff0b2923d00fe23fb6c3fc0fa0de79543802ea39c2",
+        "0xb5792334f354975940c7288b1145b8aac06d437de9104591be92569069686d44",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x054528f2e8403bed52461bb61d037fd41fc839f1": {
+      "address": "0x054528f2e8403bed52461bb61d037fd41fc839f1",
+      "balance": 17519822,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x1494d7931b4e600ea3464a7f431a31572adf7517588b163bf0e225964c2ae08b",
+      "proof": [
+        "0x56e33c800178c83665a5a62775d9ed74f02c463f8c391e57a0d1451884f414ff",
+        "0xdba0f8afa5f4ab3a58e40b47c5908861a30ab20e0f2d0a60471d464c567bb83f",
+        "0xeb3ed1e6780249dc9330b7c0849f3382d0c9838589ed2c1fdf0960b8ab0a9224",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xda0c060251d9110c53c3e002494d15d4ee8fde21": {
+      "address": "0xda0c060251d9110c53c3e002494d15d4ee8fde21",
+      "balance": 12650100,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x56e33c800178c83665a5a62775d9ed74f02c463f8c391e57a0d1451884f414ff",
+      "proof": [
+        "0x1494d7931b4e600ea3464a7f431a31572adf7517588b163bf0e225964c2ae08b",
+        "0xdba0f8afa5f4ab3a58e40b47c5908861a30ab20e0f2d0a60471d464c567bb83f",
+        "0xeb3ed1e6780249dc9330b7c0849f3382d0c9838589ed2c1fdf0960b8ab0a9224",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x630cbe9b98a286af4df042674a133dddc0fe9faa": {
+      "address": "0x630cbe9b98a286af4df042674a133dddc0fe9faa",
+      "balance": 11841797,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x12593c196dab7355c3fb6a0c931797568e0341913def61ff212f159c27a97a68",
+      "proof": [
+        "0x87faf26bc26b00bef0600b05f252b003ef8418fe5fe1d0514e896c71ae30efef",
+        "0x8ceb8f208e241f5934760146053faba3b261e3c3bdf3cb8d6d0c07e9f110ef80",
+        "0xeb3ed1e6780249dc9330b7c0849f3382d0c9838589ed2c1fdf0960b8ab0a9224",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xa253a12971d8da188d0a33f4bc699360ff3261fd": {
+      "address": "0xa253a12971d8da188d0a33f4bc699360ff3261fd",
+      "balance": 10773555,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x87faf26bc26b00bef0600b05f252b003ef8418fe5fe1d0514e896c71ae30efef",
+      "proof": [
+        "0x12593c196dab7355c3fb6a0c931797568e0341913def61ff212f159c27a97a68",
+        "0x8ceb8f208e241f5934760146053faba3b261e3c3bdf3cb8d6d0c07e9f110ef80",
+        "0xeb3ed1e6780249dc9330b7c0849f3382d0c9838589ed2c1fdf0960b8ab0a9224",
+        "0x18f4d51030b3ac2fefdb720b96282f34a6efdd7cd0e966c389245083a36467e5",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xe500f613ed3cdcbebb01fee138e294370333cf2c": {
+      "address": "0xe500f613ed3cdcbebb01fee138e294370333cf2c",
+      "balance": 10630046,
+      "amount": 500000,
+      "amountWei": "500000000000000000000000",
+      "sharePercent": "5.00%",
+      "isCapped": true,
+      "leaf": "0x3ccd6e73a265b8cb540e1c7ddeda1aac213881983b7907f15c57262b7279907b",
+      "proof": [
+        "0xdc9ba01ad3eea43ce6f1877675cd8ae552fb6d755d253ee5eaf4beba7e98a5b5",
+        "0x4d1d6eddfe469463aeeb9efb416cf7f4a29ca13c593585adfd9adf2f317da241",
+        "0x70ec94c4c7a57e752514fe42466f811698a9cd1a72722bed7c2a94d441bfc896",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x067c66addd3c6d484c1882b68e197b614f7f3ebf": {
+      "address": "0x067c66addd3c6d484c1882b68e197b614f7f3ebf",
+      "balance": 9294310,
+      "amount": 494634,
+      "amountWei": "494634000000000000000000",
+      "sharePercent": "4.95%",
+      "isCapped": false,
+      "leaf": "0xdc9ba01ad3eea43ce6f1877675cd8ae552fb6d755d253ee5eaf4beba7e98a5b5",
+      "proof": [
+        "0x3ccd6e73a265b8cb540e1c7ddeda1aac213881983b7907f15c57262b7279907b",
+        "0x4d1d6eddfe469463aeeb9efb416cf7f4a29ca13c593585adfd9adf2f317da241",
+        "0x70ec94c4c7a57e752514fe42466f811698a9cd1a72722bed7c2a94d441bfc896",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x8c57a7ad6e18f89a037b6ebe7f0f5df89e6a290a": {
+      "address": "0x8c57a7ad6e18f89a037b6ebe7f0f5df89e6a290a",
+      "balance": 8955303,
+      "amount": 476592,
+      "amountWei": "476592000000000000000000",
+      "sharePercent": "4.77%",
+      "isCapped": false,
+      "leaf": "0x4cfd4edfd6bec6fce3cfeb0f361c3d6fca7776e74b2ed46b2bbacb2a4f78916c",
+      "proof": [
+        "0x8d9b7833e6a784abab336c571af1aa76e914d2a3db80679892f52cf4c4a303ce",
+        "0xd6a31ae7698c813c0336d181f33f485b8bb3451ccdb325c983e1fef624d55279",
+        "0x70ec94c4c7a57e752514fe42466f811698a9cd1a72722bed7c2a94d441bfc896",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x1d78fb87cc62febe02ca05befcc30e71ca04810c": {
+      "address": "0x1d78fb87cc62febe02ca05befcc30e71ca04810c",
+      "balance": 8509307,
+      "amount": 452857,
+      "amountWei": "452857000000000000000000",
+      "sharePercent": "4.53%",
+      "isCapped": false,
+      "leaf": "0x8d9b7833e6a784abab336c571af1aa76e914d2a3db80679892f52cf4c4a303ce",
+      "proof": [
+        "0x4cfd4edfd6bec6fce3cfeb0f361c3d6fca7776e74b2ed46b2bbacb2a4f78916c",
+        "0xd6a31ae7698c813c0336d181f33f485b8bb3451ccdb325c983e1fef624d55279",
+        "0x70ec94c4c7a57e752514fe42466f811698a9cd1a72722bed7c2a94d441bfc896",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x9c347b93dfddd338af24f4bdcba8559623c801f7": {
+      "address": "0x9c347b93dfddd338af24f4bdcba8559623c801f7",
+      "balance": 6826340,
+      "amount": 363291,
+      "amountWei": "363291000000000000000000",
+      "sharePercent": "3.63%",
+      "isCapped": false,
+      "leaf": "0x926341acba2cf161ecf8923cc4dbc785d6fe3993ca1cb55b970ff9e3ac66ddb8",
+      "proof": [
+        "0x19bb84ca8d252219f8ba43cd320e9a024c79f8659272ffa3ec2cf21e6bd5d4ab",
+        "0xcd1fa6c72a3a0bcdbba84574db7899f09ab031f70a393eb9cb37602bd6413082",
+        "0x3a557e4c8aa79bf8c6b314b6dbb87ac30976c0bc365500f896ff6a82ecf4d1a2",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xbdb1bec07df702f5d8a8feecb3cb39b64a441f3f": {
+      "address": "0xbdb1bec07df702f5d8a8feecb3cb39b64a441f3f",
+      "balance": 6389589,
+      "amount": 340047,
+      "amountWei": "340047000000000000000000",
+      "sharePercent": "3.40%",
+      "isCapped": false,
+      "leaf": "0x19bb84ca8d252219f8ba43cd320e9a024c79f8659272ffa3ec2cf21e6bd5d4ab",
+      "proof": [
+        "0x926341acba2cf161ecf8923cc4dbc785d6fe3993ca1cb55b970ff9e3ac66ddb8",
+        "0xcd1fa6c72a3a0bcdbba84574db7899f09ab031f70a393eb9cb37602bd6413082",
+        "0x3a557e4c8aa79bf8c6b314b6dbb87ac30976c0bc365500f896ff6a82ecf4d1a2",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xbf004bff64725914ee36d03b87d6965b0ced4903": {
+      "address": "0xbf004bff64725914ee36d03b87d6965b0ced4903",
+      "balance": 6044141,
+      "amount": 321663,
+      "amountWei": "321663000000000000000000",
+      "sharePercent": "3.22%",
+      "isCapped": false,
+      "leaf": "0x9384b834d416201626d80373ce3ab95509cf98f63877c796efb6f266a0fae61f",
+      "proof": [
+        "0x7a20d0eae81007b2117f64073fccbe0c65908b6b3f2cef7d7699e476346ba625",
+        "0x2aaa04fa5034fb0151a3969051a79a973d367fbc3a8fe767853a35973c87d127",
+        "0x3a557e4c8aa79bf8c6b314b6dbb87ac30976c0bc365500f896ff6a82ecf4d1a2",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0x3c67b9d2da3403efe6a88759a5180995dd33c2a1": {
+      "address": "0x3c67b9d2da3403efe6a88759a5180995dd33c2a1",
+      "balance": 5983789,
+      "amount": 318451,
+      "amountWei": "318451000000000000000000",
+      "sharePercent": "3.18%",
+      "isCapped": false,
+      "leaf": "0x7a20d0eae81007b2117f64073fccbe0c65908b6b3f2cef7d7699e476346ba625",
+      "proof": [
+        "0x9384b834d416201626d80373ce3ab95509cf98f63877c796efb6f266a0fae61f",
+        "0x2aaa04fa5034fb0151a3969051a79a973d367fbc3a8fe767853a35973c87d127",
+        "0x3a557e4c8aa79bf8c6b314b6dbb87ac30976c0bc365500f896ff6a82ecf4d1a2",
+        "0xa175c79561c52c82c3d5c64bf22153621d01bb4800bb509b6331aaca131d7dee",
+        "0x74640c1aaf802ffce82663a8d07c2b4d956964f455740944bc50341a3b671d65"
+      ]
+    },
+    "0xfddc9abdd43270b231a220b058e941da931f2dba": {
+      "address": "0xfddc9abdd43270b231a220b058e941da931f2dba",
+      "balance": 5729609,
+      "amount": 304924,
+      "amountWei": "304924000000000000000000",
+      "sharePercent": "3.05%",
+      "isCapped": false,
+      "leaf": "0xdb24fb059b1dd668f64813df804992fec8680d01ceb3dbba1fcd8a5f86b059a0",
+      "proof": [
+        "0x486018e3da78d45fde938dafe7785f55a8e3ac27713107d93a6e7f1ffb36efda",
+        "0x813686e4e13cd73f86d9d28f0bb2fbbf725ab4d5acd28adcf27c4db84fe42a4b",
+        "0x3dc7d8bc48362a149d051bbbf28a4815363a88e9fbc9b9ee2c38fb494f300402",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0x4c91d3bed372c11795b9ce9a9017dfe447bf050a": {
+      "address": "0x4c91d3bed372c11795b9ce9a9017dfe447bf050a",
+      "balance": 5407734,
+      "amount": 287794,
+      "amountWei": "287794000000000000000000",
+      "sharePercent": "2.88%",
+      "isCapped": false,
+      "leaf": "0x486018e3da78d45fde938dafe7785f55a8e3ac27713107d93a6e7f1ffb36efda",
+      "proof": [
+        "0xdb24fb059b1dd668f64813df804992fec8680d01ceb3dbba1fcd8a5f86b059a0",
+        "0x813686e4e13cd73f86d9d28f0bb2fbbf725ab4d5acd28adcf27c4db84fe42a4b",
+        "0x3dc7d8bc48362a149d051bbbf28a4815363a88e9fbc9b9ee2c38fb494f300402",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0xc56ac3751f741ec25d7f9e27ebcee84f921cedd3": {
+      "address": "0xc56ac3751f741ec25d7f9e27ebcee84f921cedd3",
+      "balance": 5400014,
+      "amount": 287383,
+      "amountWei": "287383000000000000000000",
+      "sharePercent": "2.87%",
+      "isCapped": false,
+      "leaf": "0x2e32cc5f8b3fc1de3e3d7377e3e12eb45b2c623aa3cee5f67b247eb24ca2ad3c",
+      "proof": [
+        "0xe2b5f953bac4a1a21e3e499bbf05dde49ff35dd46d7a28758c11175700caeb7b",
+        "0xdf867b99633912088bbecbcb7782934207135aec1ec9c0e31f18a9b8686b00a1",
+        "0x3dc7d8bc48362a149d051bbbf28a4815363a88e9fbc9b9ee2c38fb494f300402",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0x8b8d77c89d33879e9ad4cf72ed4f4f196358f837": {
+      "address": "0x8b8d77c89d33879e9ad4cf72ed4f4f196358f837",
+      "balance": 5384206,
+      "amount": 286542,
+      "amountWei": "286542000000000000000000",
+      "sharePercent": "2.87%",
+      "isCapped": false,
+      "leaf": "0xe2b5f953bac4a1a21e3e499bbf05dde49ff35dd46d7a28758c11175700caeb7b",
+      "proof": [
+        "0x2e32cc5f8b3fc1de3e3d7377e3e12eb45b2c623aa3cee5f67b247eb24ca2ad3c",
+        "0xdf867b99633912088bbecbcb7782934207135aec1ec9c0e31f18a9b8686b00a1",
+        "0x3dc7d8bc48362a149d051bbbf28a4815363a88e9fbc9b9ee2c38fb494f300402",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0xe712770ff4f685a6ded79abfa6b1cb60dbad471b": {
+      "address": "0xe712770ff4f685a6ded79abfa6b1cb60dbad471b",
+      "balance": 5238801,
+      "amount": 278804,
+      "amountWei": "278804000000000000000000",
+      "sharePercent": "2.79%",
+      "isCapped": false,
+      "leaf": "0xef9d4f84839639d8d44e3e1f72e114b0e8afca1d0d9b8a39473cacefcca5cada",
+      "proof": [
+        "0x2cefd385cacf7771f26ff93a004b02bceb1fb8e7e28a342aa51c83b6c8ddd68d",
+        "0x003c28da4555a359fdd3c42447f39d3f4dd47dac9895953e07959723f844346d",
+        "0xc36aa59d5b8165bf1949ec5c69b13cd2ac83d0437f2fbc399dc171cfd6b54da6",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0xb30b468ee2d604d30dccf7ab464bcfa9ffcfd8f0": {
+      "address": "0xb30b468ee2d604d30dccf7ab464bcfa9ffcfd8f0",
+      "balance": 5195963,
+      "amount": 276524,
+      "amountWei": "276524000000000000000000",
+      "sharePercent": "2.77%",
+      "isCapped": false,
+      "leaf": "0x2cefd385cacf7771f26ff93a004b02bceb1fb8e7e28a342aa51c83b6c8ddd68d",
+      "proof": [
+        "0xef9d4f84839639d8d44e3e1f72e114b0e8afca1d0d9b8a39473cacefcca5cada",
+        "0x003c28da4555a359fdd3c42447f39d3f4dd47dac9895953e07959723f844346d",
+        "0xc36aa59d5b8165bf1949ec5c69b13cd2ac83d0437f2fbc399dc171cfd6b54da6",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
       ]
     },
     "0xb10d893441b96b9c25231d42591d64cf36484e04": {
       "address": "0xb10d893441b96b9c25231d42591d64cf36484e04",
-      "balance": 5085135,
-      "amount": 500000,
-      "amountWei": "500000000000000000000000",
-      "sharePercent": "5.00%",
-      "isCapped": true,
-      "leaf": "0x343893f34b07f5334c78ff8104304010cdbcf2cc82224f6e07a9058656b40378",
+      "balance": 5100000,
+      "amount": 271417,
+      "amountWei": "271417000000000000000000",
+      "sharePercent": "2.71%",
+      "isCapped": false,
+      "leaf": "0xccf9a7e0c9be9c13b77198f2a514186b2a2094bf963f9c2bb513783925095b8e",
       "proof": [
-        "0xeafc6acff99a2422ab84283f4c386df3474d3b633ccd2d50ce1d36a4a333b2a7"
+        "0x6d13699b8cfdd969960710f2e5a68eef36c0b5778dd0bcf5c3a459774bcd3606",
+        "0xe7f64a85bffc36079f321c86e383e684f1ea9b87c7bcb86f5ee85b82b3eede99",
+        "0xc36aa59d5b8165bf1949ec5c69b13cd2ac83d0437f2fbc399dc171cfd6b54da6",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0x8d5362832f9c12ee75b89c41f890d8ed5095ad08": {
+      "address": "0x8d5362832f9c12ee75b89c41f890d8ed5095ad08",
+      "balance": 5009251,
+      "amount": 266587,
+      "amountWei": "266587000000000000000000",
+      "sharePercent": "2.67%",
+      "isCapped": false,
+      "leaf": "0x6d13699b8cfdd969960710f2e5a68eef36c0b5778dd0bcf5c3a459774bcd3606",
+      "proof": [
+        "0xccf9a7e0c9be9c13b77198f2a514186b2a2094bf963f9c2bb513783925095b8e",
+        "0xe7f64a85bffc36079f321c86e383e684f1ea9b87c7bcb86f5ee85b82b3eede99",
+        "0xc36aa59d5b8165bf1949ec5c69b13cd2ac83d0437f2fbc399dc171cfd6b54da6",
+        "0xfb2a0b26b481daaaf7627e458c09c2da1ac366d147423411d177f026192f897c",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0x93dd2388aa3c4d53f7d7a71589363799c5480d89": {
+      "address": "0x93dd2388aa3c4d53f7d7a71589363799c5480d89",
+      "balance": 4827841,
+      "amount": 256933,
+      "amountWei": "256933000000000000000000",
+      "sharePercent": "2.57%",
+      "isCapped": false,
+      "leaf": "0x67c5a060b94c6e72841ba6bb066e1496e16740cae71304e355bbbf34fde33306",
+      "proof": [
+        "0x0d10ce7982b5fa314f7bf6be06965f9417a3a23f078da519d8deb797effd0e93",
+        "0x90f9e6886708710978f31215364d6fdf2971cd1deab21761223f7b84991a9652",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
+      ]
+    },
+    "0x065ebb09996a1ece82e6524215fcd3833aad60e9": {
+      "address": "0x065ebb09996a1ece82e6524215fcd3833aad60e9",
+      "balance": 4050399,
+      "amount": 215558,
+      "amountWei": "215558000000000000000000",
+      "sharePercent": "2.16%",
+      "isCapped": false,
+      "leaf": "0x0d10ce7982b5fa314f7bf6be06965f9417a3a23f078da519d8deb797effd0e93",
+      "proof": [
+        "0x67c5a060b94c6e72841ba6bb066e1496e16740cae71304e355bbbf34fde33306",
+        "0x90f9e6886708710978f31215364d6fdf2971cd1deab21761223f7b84991a9652",
+        "0x7f8ef40f511d59dd6099731e814c982e4e5541f2b4f6aa9060988edb42180502"
       ]
     }
   }
