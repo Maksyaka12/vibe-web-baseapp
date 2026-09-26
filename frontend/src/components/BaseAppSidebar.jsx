@@ -84,12 +84,6 @@ const SOCIAL_ITEMS = [
     shortName: 'X',
     url: 'https://x.com/vibeb20',
     icon: <XIcon />
-  },
-  {
-    name: 'Founder / Developer',
-    shortName: 'Founder',
-    url: 'https://x.com/mksvibe',
-    icon: <XIcon />
   }
 ];
 
