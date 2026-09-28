@@ -16,6 +16,24 @@ function getNftFontSize(name) {
   return '8px';
 }
 
+function InfoSvgIcon({ size = 14, color = '#00f5ff', className = '' }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      style={{ display: 'block', flexShrink: 0 }}
+    >
+      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="rgba(0, 245, 255, 0.15)" />
+      <path d="M12 11v5" stroke={color} strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="12" cy="7.5" r="1.3" fill={color} />
+    </svg>
+  );
+}
+
 export function BaseAppProfileView(props) {
   const {
     address,
@@ -114,6 +132,14 @@ export function BaseAppProfileView(props) {
   // Claimed state management for Active Dog & Dog Staker achievements (persisted per address)
   const [claimedMap, setClaimedMap] = useState({});
   const [claimingId, setClaimingId] = useState(null);
+  const [activeAchievementTooltip, setActiveAchievementTooltip] = useState(null);
+
+  useEffect(() => {
+    if (!activeAchievementTooltip) return;
+    const handleDocClick = () => setActiveAchievementTooltip(null);
+    window.addEventListener('click', handleDocClick);
+    return () => window.removeEventListener('click', handleDocClick);
+  }, [activeAchievementTooltip]);
 
   useEffect(() => {
     if (!address) {
@@ -172,6 +198,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'eligible-holder',
       name: 'ELIGIBLE HOLDER',
+      description: 'Hold at least 5,000,000 $VIBE in your connected wallet.',
       image: '/achievements/holder.jfif',
       conditionMet: isEligibleHolder,
       unlocked: isEligibleHolder,
@@ -180,6 +207,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'nft-holder',
       name: 'VIBE CLUB MEMBER',
+      description: 'Hold at least 1 Vibe Club NFT in your connected wallet.',
       image: '/achievements/nft-holder.jfif',
       conditionMet: isNftHolderUnlocked,
       unlocked: isNftHolderUnlocked,
@@ -191,6 +219,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'starter-dog',
       name: 'STARTER DOG',
+      description: 'Reach a 7-day daily check-in streak.',
       image: '/achievements/active.jfif',
       conditionMet: isStarterDogMet,
       unlocked: Boolean(claimedMap['starter-dog']),
@@ -199,6 +228,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'loyal-dog',
       name: 'LOYAL DOG',
+      description: 'Reach a 14-day daily check-in streak.',
       image: '/achievements/claimer.jfif',
       conditionMet: isLoyalDogMet,
       unlocked: Boolean(claimedMap['loyal-dog']),
@@ -207,6 +237,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'ultra-active-dog',
       name: 'ULTRA-ACTIVE DOG',
+      description: 'Reach a 30-day daily check-in streak.',
       image: '/nft/images/26.png',
       conditionMet: isUltraActiveDogMet,
       unlocked: Boolean(claimedMap['ultra-active-dog']),
@@ -218,6 +249,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'novice-staker',
       name: 'NOVICE STAKER',
+      description: 'Participate in at least 1 staking vault.',
       image: '/achievements/staker.jfif',
       conditionMet: isNoviceStakerMet,
       unlocked: Boolean(claimedMap['novice-staker']),
@@ -226,6 +258,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'confident-banker',
       name: 'CONFIDENT BANKER',
+      description: 'Participate in at least 3 staking vaults.',
       image: '/nft/images/64.png',
       conditionMet: isConfidentBankerMet,
       unlocked: Boolean(claimedMap['confident-banker']),
@@ -234,6 +267,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'wolf-of-wall-street',
       name: 'WOLF OF WALL ST',
+      description: 'Participate in at least 5 staking vaults.',
       image: '/nft/images/24.png',
       conditionMet: isWolfOfWallStreetMet,
       unlocked: Boolean(claimedMap['wolf-of-wall-street']),
@@ -242,6 +276,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'rich-dog',
       name: 'RICH DOG',
+      description: 'Deposit over 3,000,000 $VIBE into any staking vault.',
       image: '/nft/images/27.png',
       conditionMet: isRichDogMet,
       unlocked: Boolean(claimedMap['rich-dog']),
@@ -250,6 +285,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'bank-founder',
       name: 'BANK FOUNDER',
+      description: 'Deposit over 5,000,000 $VIBE into any staking vault.',
       image: '/nft/images/87.png',
       conditionMet: isBankFounderMet,
       unlocked: Boolean(claimedMap['bank-founder']),
@@ -893,8 +929,37 @@ export function BaseAppProfileView(props) {
               {REWARDS_ELIGIBILITY_ACHIEVEMENTS.map((ach) => (
                 <div
                   key={ach.id}
-                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
                 >
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                    }}
+                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                    onMouseLeave={() => setActiveAchievementTooltip(null)}
+                    className="profile-achievement-info-btn"
+                    aria-label={`${ach.name} info`}
+                  >
+                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                  </button>
+
+                  {activeAchievementTooltip === ach.id && (
+                    <div
+                      className="profile-achievement-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="profile-achievement-tooltip-title">
+                        <InfoSvgIcon size={11} color="#00f5ff" />
+                        <span>{ach.name}</span>
+                      </div>
+                      <div className="profile-achievement-tooltip-desc">
+                        {ach.description}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="profile-achievement-img-box">
                     <img
                       src={ach.image}
@@ -925,8 +990,37 @@ export function BaseAppProfileView(props) {
               {ACTIVE_DOG_ACHIEVEMENTS.map((ach) => (
                 <div
                   key={ach.id}
-                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'}`}
+                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
                 >
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                    }}
+                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                    onMouseLeave={() => setActiveAchievementTooltip(null)}
+                    className="profile-achievement-info-btn"
+                    aria-label={`${ach.name} info`}
+                  >
+                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                  </button>
+
+                  {activeAchievementTooltip === ach.id && (
+                    <div
+                      className="profile-achievement-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="profile-achievement-tooltip-title">
+                        <InfoSvgIcon size={11} color="#00f5ff" />
+                        <span>{ach.name}</span>
+                      </div>
+                      <div className="profile-achievement-tooltip-desc">
+                        {ach.description}
+                      </div>
+                    </div>
+                  )}
+
                   <div className="profile-achievement-img-box">
                     <img
                       src={ach.image}
@@ -972,8 +1066,37 @@ export function BaseAppProfileView(props) {
             {DOG_STAKER_ACHIEVEMENTS.map((ach) => (
               <div
                 key={ach.id}
-                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'}`}
+                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
               >
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                  }}
+                  onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                  onMouseLeave={() => setActiveAchievementTooltip(null)}
+                  className="profile-achievement-info-btn"
+                  aria-label={`${ach.name} info`}
+                >
+                  <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                </button>
+
+                {activeAchievementTooltip === ach.id && (
+                  <div
+                    className="profile-achievement-tooltip"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="profile-achievement-tooltip-title">
+                      <InfoSvgIcon size={11} color="#00f5ff" />
+                      <span>{ach.name}</span>
+                    </div>
+                    <div className="profile-achievement-tooltip-desc">
+                      {ach.description}
+                    </div>
+                  </div>
+                )}
+
                 <div className="profile-achievement-img-box">
                   <img
                     src={ach.image}
