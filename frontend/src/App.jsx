@@ -10,7 +10,6 @@ import { base } from 'viem/chains';
 import { publicClient } from './config/rpc';
 import Checker from './Checker';
 import { BaseAppView } from './components/BaseAppView';
-import DarkPixelLandingPage from './components/DarkPixelLandingPage';
 import NftClubPage from './pages/NftClubPage';
 import ContractsPage from './pages/ContractsPage';
 import BaseAppRewardsView from './components/BaseAppRewardsView';
@@ -3603,8 +3602,8 @@ function DomainRouter() {
       <Route path="/app" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/app/*" element={<BaseAppView RewardsComponent={Rewards} />} />
 
-      {/* ── Welcome Landing Page (Full-width standalone) ── */}
-      <Route path="/" element={<DarkPixelLandingPage />} />
+      {/* ── Welcome & Main App Routes (Direct to Unified BaseAppView) ── */}
+      <Route path="/" element={<BaseAppView RewardsComponent={Rewards} />} />
       <Route path="/home" element={<Navigate to="/" replace />} />
 
       {/* ── Main App Routes (Unified BaseAppView with Collapsible Sidebar) ── */}

@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BaseAppHeader } from './BaseAppHeader';
 import { BaseAppSidebar } from './BaseAppSidebar';
 import { BaseAppBottomNav } from './BaseAppBottomNav';
-import DarkPixelLandingPage from './DarkPixelLandingPage';
 import Checker from '../Checker';
 import NftClubPage from '../pages/NftClubPage';
 import DeFiVibePanel from './DeFiVibePanel';
@@ -131,7 +130,7 @@ export function BaseAppView({ RewardsComponent }) {
     const prefix = isAppPrefix ? '/app' : '';
 
     if (tabId === 'home') {
-      navigate('/', { replace: false });
+      navigate(prefix ? '/app/hub' : '/hub', { replace: false });
     } else if (tabId === 'admin') {
       navigate(prefix ? '/app/admin' : '/admin', { replace: false });
     } else if (tabId === 'buy') {
@@ -204,11 +203,9 @@ export function BaseAppView({ RewardsComponent }) {
             activeTab={activeTab}
           />
 
-          {/* View Content: Home, Buy, Claim, Profile, Vibe Club, Tokenomics, Contracts, Rewards Hub */}
+          {/* View Content: Buy, Claim, Profile, Vibe Club, Tokenomics, Contracts, Rewards Hub */}
           <main style={{ flex: 1, paddingBottom: isDesktop ? '40px' : '90px' }}>
-            {activeTab === 'home' ? (
-              <DarkPixelLandingPage onSelectTab={handleSelectTab} />
-            ) : activeTab === 'buy' ? (
+            {activeTab === 'buy' ? (
               <div className="swap-view-container" style={{ padding: '20px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
                 {/* Swap Hero Header */}
                 <div
