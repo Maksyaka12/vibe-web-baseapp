@@ -31,6 +31,12 @@ const CONTRACTS = [
     title: 'NFT Royalty Distributor Contract',
     address: '0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1',
     basescanUrl: 'https://basescan.org/address/0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1'
+  },
+  {
+    id: 'daily-checkin',
+    title: 'Daily Check-In & Streak Contract',
+    address: '0x1938BA215ef556e51eE6AaF909e0970AE0167634',
+    basescanUrl: 'https://basescan.org/address/0x1938BA215ef556e51eE6AaF909e0970AE0167634'
   }
 ];
 
