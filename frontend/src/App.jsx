@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Copy, Check, Menu, X, ArrowRight, ArrowUpRight, ArrowRightCircle, TrendingUp, Clock, Rocket, Globe, Star, Crown, Laptop, Loader2, Flame, Gift, Users, ShieldCheck, Calculator, Calendar, RotateCcw, Gamepad2, Coins, Sparkles, Lock, ChevronDown, HelpCircle, CheckCircle2 } from 'lucide-react';
-import { PrivyProvider } from '@privy-io/react-auth';
+import { PrivyProvider, dataSuffix } from '@privy-io/react-auth';
 import { WagmiProvider as PrivyWagmiProvider } from '@privy-io/wagmi';
 import { privyWagmiConfig } from './config/privyWagmi';
+import { DATA_SUFFIX } from './config/builderCode';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createPublicClient, http, formatUnits, parseAbiItem, parseAbi } from 'viem';
 import { base } from 'viem/chains';
@@ -3639,6 +3640,7 @@ export default function App() {
     <PrivyProvider
       appId="cmrugdvds02q60cl7tegmrnx7"
       config={{
+        plugins: DATA_SUFFIX ? [dataSuffix(DATA_SUFFIX)] : [],
         loginMethods: ['wallet', 'email', 'twitter', 'telegram'],
         defaultChain: base,
         supportedChains: [base],
