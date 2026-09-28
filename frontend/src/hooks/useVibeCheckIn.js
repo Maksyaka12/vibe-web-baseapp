@@ -6,7 +6,7 @@ import { appendBuilderSuffix } from '../config/builderCode';
 
 export const VIBE_CHECKIN_CONTRACT_ADDRESS =
   import.meta.env?.VITE_CHECKIN_CONTRACT_ADDRESS ||
-  '0x0000000000000000000000000000000000000000';
+  '0x64f88d890e9629b871d411d7884051af261a56a2';
 
 export const CHECKIN_ABI = parseAbi([
   'function checkIn() external',
