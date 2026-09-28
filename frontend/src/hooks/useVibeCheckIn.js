@@ -209,7 +209,12 @@ export function useVibeCheckIn(address) {
           throw new Error('Wallet not connected');
         }
 
-        const provider = await activeWallet.getEthereumProvider();
+        let provider;
+        if (typeof window !== 'undefined' && window.ethereum && activeWallet.walletClientType !== 'privy') {
+          provider = window.ethereum;
+        } else {
+          provider = await activeWallet.getEthereumProvider();
+        }
 
         // Encode calldata for checkIn()
         const rawCalldata = encodeFunctionData({
@@ -221,7 +226,7 @@ export function useVibeCheckIn(address) {
         // Attach Base ERC-8021 Builder Code suffix
         const calldataWithSuffix = appendBuilderSuffix(rawCalldata);
 
-        // Send transaction (gas only, 0 ETH)
+        // Send transaction directly to contract (gas only, 0 ETH)
         const hash = await provider.request({
           method: 'eth_sendTransaction',
           params: [
