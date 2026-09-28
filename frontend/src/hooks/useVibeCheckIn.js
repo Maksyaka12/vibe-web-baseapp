@@ -210,12 +210,7 @@ export function useVibeCheckIn(address) {
           throw new Error('Wallet not connected');
         }
 
-        let provider;
-        if (typeof window !== 'undefined' && window.ethereum && activeWallet.walletClientType !== 'privy') {
-          provider = window.ethereum;
-        } else {
-          provider = await activeWallet.getEthereumProvider();
-        }
+        const provider = await activeWallet.getEthereumProvider();
 
         // Encode calldata for checkIn()
         const rawCalldata = encodeFunctionData({
@@ -227,13 +222,25 @@ export function useVibeCheckIn(address) {
         // Attach Base ERC-8021 Builder Code suffix
         const calldataWithSuffix = appendBuilderSuffix(rawCalldata);
 
-        const isSmartAccount =
-          activeWallet.walletClientType === 'coinbase_wallet' ||
-          activeWallet.connectorType === 'coinbase_wallet';
-
         let txHashResult = null;
 
-        if (isSmartAccount) {
+        // Standard direct transaction first (MetaMask, Rabby, Phantom, Injected EOA, etc.)
+        // Direct eth_sendTransaction ensures the tx is sent directly to the contract (appearing under Transactions tab on BaseScan)
+        // and preserves the exact unpadded ERC-8021 builder code suffix at the end of calldata.
+        try {
+          txHashResult = await provider.request({
+            method: 'eth_sendTransaction',
+            params: [
+              {
+                from: address,
+                to: VIBE_CHECKIN_CONTRACT_ADDRESS,
+                data: calldataWithSuffix,
+                value: '0x0'
+              }
+            ]
+          });
+        } catch (sendTxErr) {
+          console.warn('eth_sendTransaction fallback to wallet_sendCalls if supported:', sendTxErr);
           try {
             const callsRes = await provider.request({
               method: 'wallet_sendCalls',
@@ -267,24 +274,9 @@ export function useVibeCheckIn(address) {
                 } catch (e) {}
               }
             }
-          } catch (e) {
-            console.warn('wallet_sendCalls fallback to eth_sendTransaction:', e);
+          } catch (callsErr) {
+            throw sendTxErr || callsErr;
           }
-        }
-
-        // Standard direct EOA transaction (MetaMask, Rabby, Phantom, etc.)
-        if (!txHashResult) {
-          txHashResult = await provider.request({
-            method: 'eth_sendTransaction',
-            params: [
-              {
-                from: address,
-                to: VIBE_CHECKIN_CONTRACT_ADDRESS,
-                data: calldataWithSuffix,
-                value: '0x0'
-              }
-            ]
-          });
         }
 
         if (txHashResult) {
