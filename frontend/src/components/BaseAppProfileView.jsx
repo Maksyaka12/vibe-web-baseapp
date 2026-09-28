@@ -192,12 +192,12 @@ export function BaseAppProfileView(props) {
   const isLoyalDogMet = Boolean(address && Number(streak) >= 14);
   const isUltraActiveDogMet = Boolean(address && Number(streak) >= 30);
 
-  // 3. DOG STAKER (1, 3, 5 vaults, or single deposit > 3M / > 5M VIBE)
+  // 3. DOG STAKER (1, 3, 5 vaults, or single deposit 5M+ / 10M+ VIBE)
   const isNoviceStakerMet = Boolean(address && totalStakingEpochs >= 1);
   const isConfidentBankerMet = Boolean(address && totalStakingEpochs >= 3);
   const isWolfOfWallStreetMet = Boolean(address && totalStakingEpochs >= 5);
-  const isRichDogMet = Boolean(address && maxSingleVaultDeposit > 3000000);
-  const isBankFounderMet = Boolean(address && maxSingleVaultDeposit > 5000000);
+  const isRichDogMet = Boolean(address && maxSingleVaultDeposit >= 5000000);
+  const isBankFounderMet = Boolean(address && maxSingleVaultDeposit >= 10000000);
 
   const REWARDS_ELIGIBILITY_ACHIEVEMENTS = [
     {
@@ -281,7 +281,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'rich-dog',
       name: 'RICH DOG',
-      description: 'Deposit over 3,000,000 $VIBE into any staking vault.',
+      description: 'Deposit at least 5,000,000 $VIBE into any staking vault.',
       image: '/achievements/RICH DOG.jfif',
       conditionMet: isRichDogMet,
       unlocked: Boolean(claimedMap['rich-dog']),
@@ -290,7 +290,7 @@ export function BaseAppProfileView(props) {
     {
       id: 'bank-founder',
       name: 'BANK FOUNDER',
-      description: 'Deposit over 5,000,000 $VIBE into any staking vault.',
+      description: 'Deposit at least 10,000,000 $VIBE into any staking vault.',
       image: '/achievements/BANK FOUNDER.jfif',
       conditionMet: isBankFounderMet,
       unlocked: Boolean(claimedMap['bank-founder']),
