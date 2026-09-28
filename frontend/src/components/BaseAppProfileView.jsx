@@ -623,7 +623,143 @@ export function BaseAppProfileView(props) {
         </div>
       )}
 
-      {/* ── 3. DAILY CHECK-IN & STREAK ZONE (MOBILE ONLY - EMBEDDED IN USER CARD ON DESKTOP) ── */}
+      {/* ── 3. REWARD DASHBOARD ZONE (MOBILE ONLY - ON DESKTOP IT IS IN THE USER CARD) ── */}
+      <div className="profile-dashboard-zone profile-dashboard-zone-mobile-only" style={{ marginBottom: '24px' }}>
+        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+            REWARD DASHBOARD
+          </h3>
+        </div>
+
+        <div className="profile-stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+          {/* Tile 1: Total Claimed (Green) */}
+          <div
+            className="profile-stat-card"
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: '1px solid rgba(0, 255, 136, 0.35)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                TOTAL CLAIMED
+              </span>
+              <CheckCircle2 size={13} color="#00ff88" className="profile-stat-icon" />
+            </div>
+            <div>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+                +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
+          <div
+            className="profile-stat-card"
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1px solid rgba(168, 85, 247, 0.35)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                STAKING REWARDS
+              </span>
+              <Coins size={13} color="#c084fc" className="profile-stat-icon" />
+            </div>
+            <div>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+                +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 3: Available to Claim (Cyan) */}
+          <div
+            className="profile-stat-card"
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalAvailableCount > 0 ? '1.5px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.25)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                AVAILABLE NOW
+              </span>
+              <Gift size={13} color="#00ff88" className="profile-stat-icon" />
+            </div>
+            <div>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 255, 136, 0.35)' : 'none' }}>
+                +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
+              </div>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
+              </div>
+            </div>
+          </div>
+
+          {/* Tile 4: Expired Claims (Red/Muted) */}
+          <div
+            className="profile-stat-card"
+            style={{
+              background: 'rgba(4, 20, 48, 0.9)',
+              border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1px solid rgba(0, 245, 255, 0.2)',
+              borderRadius: '14px',
+              padding: '12px 10px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '6px',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                EXPIRED CLAIMS
+              </span>
+              <Clock size={13} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
+            </div>
+            <div>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+                {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
+              </div>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 4. DAILY CHECK-IN & STREAK ZONE (MOBILE ONLY - EMBEDDED IN USER CARD ON DESKTOP) ── */}
       <div className="profile-checkin-zone profile-checkin-zone-mobile-only" style={{ marginBottom: '24px' }}>
         <div
           className="profile-section-header"
@@ -725,7 +861,7 @@ export function BaseAppProfileView(props) {
         </div>
       </div>
 
-      {/* ── 4. ACHIEVEMENTS SECTION (CATEGORIZED TIERS) ── */}
+      {/* ── 5. ACHIEVEMENTS SECTION (CATEGORIZED TIERS) ── */}
       <div className="profile-achievements-zone" style={{ marginBottom: '24px' }}>
         <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -864,142 +1000,6 @@ export function BaseAppProfileView(props) {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── 5. REWARD DASHBOARD ZONE (MOBILE ONLY - ON DESKTOP IT IS IN THE USER CARD) ── */}
-      <div className="profile-dashboard-zone profile-dashboard-zone-mobile-only" style={{ marginBottom: '24px' }}>
-        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
-            REWARD DASHBOARD
-          </h3>
-        </div>
-
-        <div className="profile-stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          {/* Tile 1: Total Claimed (Green) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: '1px solid rgba(0, 255, 136, 0.35)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                TOTAL CLAIMED
-              </span>
-              <CheckCircle2 size={13} color="#00ff88" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
-                +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1px solid rgba(168, 85, 247, 0.35)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                STAKING REWARDS
-              </span>
-              <Coins size={13} color="#c084fc" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
-                +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 3: Available to Claim (Cyan) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalAvailableCount > 0 ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.25)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                AVAILABLE NOW
-              </span>
-              <Gift size={13} color="#00f5ff" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
-                +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 4: Expired Claims (Red/Muted) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1px solid rgba(0, 245, 255, 0.2)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
-                EXPIRED CLAIMS
-              </span>
-              <Clock size={13} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
-                {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
-                {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
-              </div>
-            </div>
           </div>
         </div>
       </div>
