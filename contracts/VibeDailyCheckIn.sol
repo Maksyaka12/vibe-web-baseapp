@@ -4,8 +4,8 @@ pragma solidity ^0.8.20;
 /**
  * @title VibeDailyCheckIn
  * @notice On-chain Daily Check-In & Streak Contract for Vibe Hub on Base.
- *         Users perform daily check-ins to build on-chain streaks with optional micro-fee.
- *         Includes ownership transfer, fee configuration, ETH withdraw, and operator support.
+ *         Users perform daily check-ins to build on-chain streaks.
+ *         Free for users (gas only). Includes ownership transfer and operator support.
  */
 contract VibeDailyCheckIn {
     // Contract Owner (deployer or transferred admin)
@@ -13,9 +13,6 @@ contract VibeDailyCheckIn {
 
     // Emergency pause state
     bool public paused;
-
-    // Check-in micro fee in ETH (default: 0.000001 ETH / ~0.002 USD, adjustable by owner)
-    uint256 public checkInFee;
 
     // Global Statistics
     uint256 public totalUsers;
@@ -44,19 +41,15 @@ contract VibeDailyCheckIn {
     );
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event OperatorUpdated(address indexed operator, bool authorized);
-    event CheckInFeeUpdated(uint256 oldFee, uint256 newFee);
-    event ETHWithdrawn(address indexed to, uint256 amount);
     event Paused(address account);
     event Unpaused(address account);
 
     // Custom Errors for gas optimization
     error AlreadyCheckedInToday();
-    error InsufficientFee();
     error NotOwner();
     error NotOperator();
     error ContractPaused();
     error InvalidAddress();
-    error TransferFailed();
 
     modifier onlyOwner() {
         if (msg.sender != owner) revert NotOwner();
@@ -75,17 +68,15 @@ contract VibeDailyCheckIn {
 
     constructor() {
         owner = msg.sender;
-        checkInFee = 0.000001 ether; // 0.000001 ETH
         emit OwnershipTransferred(address(0), msg.sender);
     }
 
     /**
      * @notice Performs daily check-in for msg.sender.
-     * @dev Increments streak if consecutive UTC day, resets to 1 if day missed or first time.
-     *      Reverts if already checked in today (UTC) or if sent value is less than checkInFee.
+     * @dev Free transaction (gas only). Increments streak if consecutive UTC day,
+     *      resets to 1 if day missed or first time. Reverts if already checked in today (UTC).
      */
-    function checkIn() external payable whenNotPaused {
-        if (msg.value < checkInFee) revert InsufficientFee();
+    function checkIn() external whenNotPaused {
         _processCheckIn(msg.sender);
     }
 
@@ -93,9 +84,8 @@ contract VibeDailyCheckIn {
      * @notice Check-in on behalf of a user (callable by authorized operator/agent or owner).
      * @param user Target user wallet address.
      */
-    function checkInFor(address user) external payable onlyOperator whenNotPaused {
+    function checkInFor(address user) external onlyOperator whenNotPaused {
         if (user == address(0)) revert InvalidAddress();
-        if (msg.value < checkInFee) revert InsufficientFee();
         _processCheckIn(user);
     }
 
@@ -191,27 +181,6 @@ contract VibeDailyCheckIn {
     // --- Admin Functions ---
 
     /**
-     * @notice Sets the check-in fee in ETH wei. Can be set to 0 for free check-ins.
-     * @param newFee New fee in wei (e.g. 0.000001 ether).
-     */
-    function setCheckInFee(uint256 newFee) external onlyOwner {
-        uint256 oldFee = checkInFee;
-        checkInFee = newFee;
-        emit CheckInFeeUpdated(oldFee, newFee);
-    }
-
-    /**
-     * @notice Withdraws accumulated ETH from check-ins to owner address.
-     */
-    function withdrawETH() external onlyOwner {
-        uint256 balance = address(this).balance;
-        if (balance == 0) revert InsufficientFee();
-        (bool success, ) = owner.call{value: balance}("");
-        if (!success) revert TransferFailed();
-        emit ETHWithdrawn(owner, balance);
-    }
-
-    /**
      * @notice Transfers ownership of the contract to a new address (e.g. Base Smart Wallet admin).
      * @param newOwner Address of the new owner.
      */
@@ -246,7 +215,4 @@ contract VibeDailyCheckIn {
         paused = false;
         emit Unpaused(msg.sender);
     }
-
-    // Allow contract to receive ETH
-    receive() external payable {}
 }
