@@ -1369,89 +1369,46 @@ export function BaseAppClaimView(props) {
       </div>
 
       {/* ── 4. CELEBRATION / SHARE MODAL ── */}
+      {/* ── 4. CELEBRATION / SHARE MODAL ── */}
       {shareModalItem && (
         <div
           onClick={() => setShareModalItem(null)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0, 0, 0, 0.85)',
-            backdropFilter: 'blur(8px)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '16px'
-          }}
+          className="claim-share-modal-overlay"
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{
-              background: 'linear-gradient(180deg, #061a3c 0%, #020b1a 100%)',
-              border: '2px solid #00f5ff',
-              borderRadius: '20px',
-              padding: '24px 18px',
-              maxWidth: '440px',
-              width: '100%',
-              textAlign: 'center',
-              boxShadow: '0 0 30px rgba(0, 245, 255, 0.35)',
-              position: 'relative'
-            }}
+            className="claim-share-modal-card"
           >
             {/* Close button */}
             <button
+              type="button"
               onClick={() => setShareModalItem(null)}
-              style={{
-                position: 'absolute',
-                top: '14px',
-                right: '14px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '50%',
-                width: '28px',
-                height: '28px',
-                color: '#ffffff',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
+              className="claim-share-modal-close"
+              aria-label="Close"
             >
-              <X size={14} />
+              <X size={16} />
             </button>
 
             {/* Checkmark Icon */}
-            <div
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '50%',
-                background: 'rgba(0, 255, 136, 0.15)',
-                border: '2px solid #00ff88',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                margin: '0 auto 12px auto'
-              }}
-            >
-              <Check size={24} color="#00ff88" strokeWidth={3} />
+            <div className="claim-share-modal-badge">
+              <Check size={28} color="#00ff88" strokeWidth={3.2} />
             </div>
 
             {/* Modal Title */}
-            <h3 style={{ fontSize: '11px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0 0 6px 0', fontWeight: 900 }}>
+            <h3 className="claim-share-modal-title">
               CLAIM SUCCESSFUL!
             </h3>
 
-            <p style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, margin: '0 0 16px 0' }}>
+            <p className="claim-share-modal-sub">
               You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 3}`} 🐶🔥
             </p>
 
             {/* Banner Preview */}
-            <div style={{ borderRadius: '14px', overflow: 'hidden', border: '1.5px solid rgba(0, 245, 255, 0.35)', marginBottom: '18px' }}>
+            <div className="claim-share-modal-banner-wrap">
               <img
                 src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3))))}
                 alt="Claim Banner"
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                className="claim-share-modal-banner-img"
                 onError={(e) => {
                   const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3)));
                   if (!e.currentTarget.src.includes('.jpg')) {
@@ -1464,64 +1421,34 @@ export function BaseAppClaimView(props) {
             </div>
 
             {/* 2 Action Steps: Save Image & Share on X */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+            <div className="claim-share-modal-steps-grid">
               {/* Step 1: Save Image */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: '6px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+              <div className="claim-share-modal-step-col">
+                <div className="claim-share-modal-step-label">
                   STEP 1
                 </div>
                 <button
+                  type="button"
                   onClick={handleDownloadBanner}
                   disabled={downloadingBanner}
-                  style={{
-                    width: '100%',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    border: '1.5px solid rgba(255, 255, 255, 0.35)',
-                    borderRadius: '10px',
-                    padding: '10px',
-                    color: '#ffffff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '4px'
-                  }}
+                  className="claim-share-modal-btn save-btn"
                 >
-                  <Download size={14} />
+                  <Download size={16} />
                   <span>SAVE IMAGE</span>
                 </button>
               </div>
 
               {/* Step 2: Share on X */}
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ fontSize: '6px', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", marginBottom: '5px', fontWeight: 900 }}>
+              <div className="claim-share-modal-step-col">
+                <div className="claim-share-modal-step-label cyan">
                   STEP 2
                 </div>
                 <button
+                  type="button"
                   onClick={() => handleShareOnX(shareModalItem)}
-                  style={{
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
-                    border: '1.5px solid #ffffff',
-                    borderRadius: '10px',
-                    padding: '10px',
-                    color: '#ffffff',
-                    fontFamily: "'Press Start 2P', monospace",
-                    fontSize: '6.5px',
-                    fontWeight: 900,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '4px',
-                    boxShadow: '0 0 14px rgba(0, 245, 255, 0.4)'
-                  }}
+                  className="claim-share-modal-btn share-btn"
                 >
-                  <Share2 size={14} />
+                  <Share2 size={16} />
                   <span>SHARE ON 𝕏</span>
                 </button>
               </div>
