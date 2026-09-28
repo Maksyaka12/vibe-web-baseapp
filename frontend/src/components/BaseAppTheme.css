@@ -768,6 +768,13 @@ button.admin-action-btn {
   opacity: 1 !important;
 }
 
+.base-app-pixel-theme .profile-achievement-card.claimable {
+  border: 1.5px solid #00ff88 !important;
+  background: linear-gradient(180deg, rgba(0, 255, 136, 0.12) 0%, rgba(2, 14, 32, 0.95) 100%) !important;
+  box-shadow: 0 0 16px rgba(0, 255, 136, 0.35), inset 0 0 10px rgba(0, 255, 136, 0.08) !important;
+  opacity: 1 !important;
+}
+
 .base-app-pixel-theme .profile-achievement-card.locked {
   border: 1px solid rgba(255, 255, 255, 0.07) !important;
   background: rgba(2, 11, 26, 0.7) !important;
@@ -787,6 +794,53 @@ button.admin-action-btn {
   margin-bottom: 6px !important;
   background: #020b1a !important;
   border: 1px solid rgba(0, 245, 255, 0.15) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-card.unlocked .profile-achievement-img-box {
+  border: 1.5px solid rgba(0, 255, 136, 0.55) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.2) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-card.claimable .profile-achievement-img-box {
+  border: 1.5px solid rgba(0, 255, 136, 0.75) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.4) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-claim-btn {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%) !important;
+  border: 1.5px solid #ffffff !important;
+  color: #020b1a !important;
+  font-family: 'Press Start 2P', monospace !important;
+  font-size: 5.5px !important;
+  font-weight: 900 !important;
+  padding: 4px 7px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  letter-spacing: 0.25px !important;
+  box-shadow: 0 0 14px rgba(0, 255, 136, 0.9), 0 3px 8px rgba(0, 0, 0, 0.8) !important;
+  z-index: 10 !important;
+  white-space: nowrap !important;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-claim-btn:hover {
+  transform: translate(-50%, -50%) scale(1.08) !important;
+  background: linear-gradient(135deg, #44ffaa 0%, #00ff88 100%) !important;
+  box-shadow: 0 0 22px rgba(0, 255, 136, 1), 0 4px 12px rgba(0, 0, 0, 0.9) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-claim-btn:active {
+  transform: translate(-50%, -50%) scale(0.95) !important;
+}
+
+.base-app-pixel-theme .profile-achievement-claim-btn:disabled {
+  opacity: 0.75 !important;
+  cursor: not-allowed !important;
 }
 
 .base-app-pixel-theme .profile-achievement-card.unlocked .profile-achievement-img-box {
@@ -1894,6 +1948,11 @@ button.admin-action-btn {
     font-size: 5.8px !important;
     margin-top: 3px !important;
     margin-bottom: 2px !important;
+  }
+
+  .base-app-pixel-theme .profile-achievement-claim-btn {
+    font-size: 6.2px !important;
+    padding: 5px 8px !important;
   }
   .base-app-pixel-theme .profile-section-header {
     display: flex !important;

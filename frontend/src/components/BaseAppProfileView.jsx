@@ -66,10 +66,12 @@ export function BaseAppProfileView(props) {
                 const totalDeposited = BigInt('0x' + res.data.slice(66, 130));
                 const lotsCount = BigInt('0x' + res.data.slice(130, 194));
                 const hasDeposit = (totalDeposited > 0n || activeStaked > 1n || lotsCount > 0n);
-                return { roundId: v.roundId, hasDeposit };
+                const maxDepositWei = totalDeposited > activeStaked ? totalDeposited : activeStaked;
+                const depositAmount = Number(formatUnits(maxDepositWei, 18));
+                return { roundId: v.roundId, hasDeposit, totalDeposited, activeStaked, depositAmount };
               }
             } catch (e) {}
-            return { roundId: v.roundId, hasDeposit: false };
+            return { roundId: v.roundId, hasDeposit: false, depositAmount: 0 };
           })
         );
 
@@ -96,6 +98,12 @@ export function BaseAppProfileView(props) {
     return Boolean(hasClaim || hasDeposit);
   }).length;
 
+  // Maximum deposit amount into any single vault (in whole VIBE tokens)
+  const maxSingleVaultDeposit = (stakingStats?.participationByVault || []).reduce((max, p) => {
+    const dep = Number(p?.depositAmount) || 0;
+    return dep > max ? dep : max;
+  }, 0);
+
   // Portal Claimed (ONLY Holder Rewards & Vibe Club Royalties, Staking is counted separately in Tile 4)
   const portalClaims = (claimedHistory || []).filter(c => c && c.type !== 'staking' && !c.id?.startsWith('staking-'));
   const totalClaimedCount = portalClaims.length;
@@ -103,35 +111,79 @@ export function BaseAppProfileView(props) {
   const hasNft = Boolean(nftCount && nftCount > 0);
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
+  // Claimed state management for Active Dog & Dog Staker achievements (persisted per address)
+  const [claimedMap, setClaimedMap] = useState({});
+  const [claimingId, setClaimingId] = useState(null);
+
+  useEffect(() => {
+    if (!address) {
+      setClaimedMap({});
+      return;
+    }
+    try {
+      const storageKey = `vibe_claimed_achievements_${address.toLowerCase()}`;
+      const saved = localStorage.getItem(storageKey);
+      if (saved) {
+        setClaimedMap(JSON.parse(saved));
+      } else {
+        setClaimedMap({});
+      }
+    } catch (e) {
+      console.warn('Failed to load claimed achievements', e);
+    }
+  }, [address]);
+
+  const handleClaimAchievement = (achId) => {
+    if (!address) return;
+    setClaimingId(achId);
+    setTimeout(() => {
+      setClaimedMap((prev) => {
+        const next = { ...prev, [achId]: true };
+        try {
+          const storageKey = `vibe_claimed_achievements_${address.toLowerCase()}`;
+          localStorage.setItem(storageKey, JSON.stringify(next));
+        } catch (e) {
+          console.warn('Failed to save claimed achievement', e);
+        }
+        return next;
+      });
+      setClaimingId(null);
+    }, 450);
+  };
+
   // Dynamic achievement unlock calculations
-  // 1. REWARDS ELIGIBILITY (2 items)
+  // 1. REWARDS ELIGIBILITY (Auto-unlocked & auto-highlighted)
   const isEligibleHolder = Boolean(balance !== null && Number(balance) >= 5000000);
   const isNftHolderUnlocked = Boolean(hasNft && nftCount > 0);
 
-  // 2. ACTIVE DOG (3 items)
-  const isStarterDog = Boolean(address && (streak > 0 || hasCheckedInToday));
-  const isLoyalDog = Boolean(address && (streak >= 3 || totalClaimedCount > 0 || (claimedHistory && claimedHistory.length > 0)));
-  const isUltraActiveDog = Boolean(address && (streak >= 7 || totalClaimedCount >= 3 || (claimedHistory && claimedHistory.length >= 3)));
+  // 2. ACTIVE DOG (Streak check-in rules: 7, 14, 30 days)
+  const isStarterDogMet = Boolean(address && Number(streak) >= 7);
+  const isLoyalDogMet = Boolean(address && Number(streak) >= 14);
+  const isUltraActiveDogMet = Boolean(address && Number(streak) >= 30);
 
-  // 3. DOG STAKER (5 items)
-  const isNoviceStaker = Boolean(totalStakingEpochs >= 1);
-  const isConfidentBanker = Boolean(totalStakingEpochs >= 2);
-  const isWolfOfWallStreet = Boolean(totalStakingEarned > 0 || totalStakingEpochs >= 3);
-  const isRichDog = Boolean(totalStakingEarned >= 50000 || totalStakingEpochs >= 4);
-  const isBankFounder = Boolean(totalStakingEpochs >= 5 || totalStakingEarned >= 200000);
+  // 3. DOG STAKER (1, 3, 5 vaults, or single deposit > 3M / > 5M VIBE)
+  const isNoviceStakerMet = Boolean(address && totalStakingEpochs >= 1);
+  const isConfidentBankerMet = Boolean(address && totalStakingEpochs >= 3);
+  const isWolfOfWallStreetMet = Boolean(address && totalStakingEpochs >= 5);
+  const isRichDogMet = Boolean(address && maxSingleVaultDeposit > 3000000);
+  const isBankFounderMet = Boolean(address && maxSingleVaultDeposit > 5000000);
 
   const REWARDS_ELIGIBILITY_ACHIEVEMENTS = [
     {
       id: 'eligible-holder',
       name: 'ELIGIBLE HOLDER',
       image: '/achievements/holder.jfif',
-      unlocked: isEligibleHolder
+      conditionMet: isEligibleHolder,
+      unlocked: isEligibleHolder,
+      isClaimable: false
     },
     {
       id: 'nft-holder',
       name: 'VIBE CLUB MEMBER',
       image: '/achievements/nft-holder.jfif',
-      unlocked: isNftHolderUnlocked
+      conditionMet: isNftHolderUnlocked,
+      unlocked: isNftHolderUnlocked,
+      isClaimable: false
     }
   ];
 
@@ -140,19 +192,25 @@ export function BaseAppProfileView(props) {
       id: 'starter-dog',
       name: 'STARTER DOG',
       image: '/achievements/active.jfif',
-      unlocked: isStarterDog
+      conditionMet: isStarterDogMet,
+      unlocked: Boolean(claimedMap['starter-dog']),
+      isClaimable: Boolean(isStarterDogMet && !claimedMap['starter-dog'])
     },
     {
       id: 'loyal-dog',
       name: 'LOYAL DOG',
       image: '/achievements/claimer.jfif',
-      unlocked: isLoyalDog
+      conditionMet: isLoyalDogMet,
+      unlocked: Boolean(claimedMap['loyal-dog']),
+      isClaimable: Boolean(isLoyalDogMet && !claimedMap['loyal-dog'])
     },
     {
       id: 'ultra-active-dog',
       name: 'ULTRA-ACTIVE DOG',
       image: '/nft/images/26.png',
-      unlocked: isUltraActiveDog
+      conditionMet: isUltraActiveDogMet,
+      unlocked: Boolean(claimedMap['ultra-active-dog']),
+      isClaimable: Boolean(isUltraActiveDogMet && !claimedMap['ultra-active-dog'])
     }
   ];
 
@@ -161,31 +219,41 @@ export function BaseAppProfileView(props) {
       id: 'novice-staker',
       name: 'NOVICE STAKER',
       image: '/achievements/staker.jfif',
-      unlocked: isNoviceStaker
+      conditionMet: isNoviceStakerMet,
+      unlocked: Boolean(claimedMap['novice-staker']),
+      isClaimable: Boolean(isNoviceStakerMet && !claimedMap['novice-staker'])
     },
     {
       id: 'confident-banker',
       name: 'CONFIDENT BANKER',
       image: '/nft/images/64.png',
-      unlocked: isConfidentBanker
+      conditionMet: isConfidentBankerMet,
+      unlocked: Boolean(claimedMap['confident-banker']),
+      isClaimable: Boolean(isConfidentBankerMet && !claimedMap['confident-banker'])
     },
     {
       id: 'wolf-of-wall-street',
       name: 'WOLF OF WALL ST',
       image: '/nft/images/24.png',
-      unlocked: isWolfOfWallStreet
+      conditionMet: isWolfOfWallStreetMet,
+      unlocked: Boolean(claimedMap['wolf-of-wall-street']),
+      isClaimable: Boolean(isWolfOfWallStreetMet && !claimedMap['wolf-of-wall-street'])
     },
     {
       id: 'rich-dog',
       name: 'RICH DOG',
       image: '/nft/images/27.png',
-      unlocked: isRichDog
+      conditionMet: isRichDogMet,
+      unlocked: Boolean(claimedMap['rich-dog']),
+      isClaimable: Boolean(isRichDogMet && !claimedMap['rich-dog'])
     },
     {
       id: 'bank-founder',
       name: 'BANK FOUNDER',
       image: '/nft/images/87.png',
-      unlocked: isBankFounder
+      conditionMet: isBankFounderMet,
+      unlocked: Boolean(claimedMap['bank-founder']),
+      isClaimable: Boolean(isBankFounderMet && !claimedMap['bank-founder'])
     }
   ];
 
@@ -721,7 +789,7 @@ export function BaseAppProfileView(props) {
               {ACTIVE_DOG_ACHIEVEMENTS.map((ach) => (
                 <div
                   key={ach.id}
-                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'}`}
                 >
                   <div className="profile-achievement-img-box">
                     <img
@@ -729,6 +797,20 @@ export function BaseAppProfileView(props) {
                       alt={ach.name}
                       className="profile-achievement-img"
                     />
+                    {ach.isClaimable && (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleClaimAchievement(ach.id);
+                        }}
+                        disabled={claimingId === ach.id}
+                        className="profile-achievement-claim-btn"
+                        title="Claim this achievement"
+                      >
+                        {claimingId === ach.id ? 'CLAIMING...' : 'CLAIM'}
+                      </button>
+                    )}
                   </div>
                   <div className="profile-achievement-name" title={ach.name}>
                     {ach.name}
@@ -754,7 +836,7 @@ export function BaseAppProfileView(props) {
             {DOG_STAKER_ACHIEVEMENTS.map((ach) => (
               <div
                 key={ach.id}
-                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'}`}
               >
                 <div className="profile-achievement-img-box">
                   <img
@@ -762,6 +844,20 @@ export function BaseAppProfileView(props) {
                     alt={ach.name}
                     className="profile-achievement-img"
                   />
+                  {ach.isClaimable && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleClaimAchievement(ach.id);
+                      }}
+                      disabled={claimingId === ach.id}
+                      className="profile-achievement-claim-btn"
+                      title="Claim this achievement"
+                    >
+                      {claimingId === ach.id ? 'CLAIMING...' : 'CLAIM'}
+                    </button>
+                  )}
                 </div>
                 <div className="profile-achievement-name" title={ach.name}>
                   {ach.name}
