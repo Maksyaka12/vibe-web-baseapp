@@ -623,18 +623,7 @@ function Tokenomics() {
                   </div>
                 </div>
 
-                {/* 3. VibeVerse App (30%) */}
-                <div className="who-r">
-                  <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Gamepad2 color="#3b82f6" size={20} />
-                  </div>
-                  <div className="who-t">
-                    VibeVerse App <span style={{ color: '#3b82f6', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(30%)</span>
-                    <span>Rewards pool inside the Vibe Verse App</span>
-                  </div>
-                </div>
-
-                {/* 4. $VIBE Staking (15%) */}
+                {/* 3. $VIBE Staking (15%) */}
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Coins color="#a855f7" size={20} />
@@ -645,29 +634,29 @@ function Tokenomics() {
                   </div>
                 </div>
 
-                {/* 5. Vibe Club NFTs (15%) */}
+                {/* 4. Vibe Club NFTs (15%) */}
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Crown color="#10b981" size={20} />
+                    <Crown color="#f59e0b" size={20} />
                   </div>
                   <div className="who-t">
-                    Vibe Club NFTs <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(15%)</span>
+                    Vibe Club NFTs <span style={{ color: '#f59e0b', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(15%)</span>
                     <span>Direct royalties for holders of the 333 Vibe Club NFTs</span>
                   </div>
                 </div>
 
-                {/* 6. Reserve (40%) */}
+                {/* 5. Reserve (70%) */}
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ShieldCheck color="#f59e0b" size={20} />
+                    <ShieldCheck color="#10b981" size={20} />
                   </div>
                   <div className="who-t">
-                    Reserve <span style={{ color: '#f59e0b', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(40%)</span>
+                    Reserve <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(70%)</span>
                     <span>Buffer for continuous reward refills</span>
                   </div>
                 </div>
 
-                {/* 7. Action Button: Explore Rewards Hub */}
+                {/* 6. Action Button: Explore Rewards Hub */}
                 <Link to="/hub" className="who-r" style={{ textDecoration: 'none', cursor: 'pointer', background: 'var(--blue)' }}>
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Gift color="#fff" size={20} />
@@ -694,10 +683,6 @@ function Tokenomics() {
             <div style={{ position: 'relative', width: '100%', maxWidth: '420px', margin: '16px auto 8px', flexShrink: 0 }}>
               <svg viewBox="0 0 420 280" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
-                  <linearGradient id="commBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#0052ff" />
-                  </linearGradient>
                   <linearGradient id="commPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#a855f7" />
                     <stop offset="100%" stopColor="#7c3aed" />
@@ -711,9 +696,6 @@ function Tokenomics() {
                     <stop offset="100%" stopColor="#f59e0b" />
                   </linearGradient>
 
-                  <filter id="commBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#0052ff" floodOpacity="0.25" />
-                  </filter>
                   <filter id="commPurpleGlow" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#7c3aed" floodOpacity="0.25" />
                   </filter>
@@ -729,45 +711,35 @@ function Tokenomics() {
                   {/* Track Ring */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
 
-                  {/* 1. VibeVerse App 30% (Spans 0 to 30 -> Offset -2, length 26) */}
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commBlueGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="26 100" strokeDashoffset="-2"
-                          transform="rotate(-90)" filter="url(#commBlueGlow)" style={{ transition: 'all 0.5s ease' }} />
-
-                  {/* 2. $VIBE Staking 15% (Spans 30 to 45 -> Offset -32, length 11) */}
+                  {/* 1. $VIBE Staking 15% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commPurpleGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-32"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-2"
                           transform="rotate(-90)" filter="url(#commPurpleGlow)" style={{ transition: 'all 0.5s ease' }} />
 
-                  {/* 3. Vibe Club NFT 15% (Spans 45 to 60 -> Offset -47, length 11) */}
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commGreenGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-47"
-                          transform="rotate(-90)" filter="url(#commGreenGlow)" style={{ transition: 'all 0.5s ease' }} />
-
-                  {/* 4. Reserve & Growth 40% (Spans 60 to 100 -> Offset -62, length 36) */}
+                  {/* 2. Vibe Club NFT 15% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commAmberGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="36 100" strokeDashoffset="-62"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-17"
                           transform="rotate(-90)" filter="url(#commAmberGlow)" style={{ transition: 'all 0.5s ease' }} />
 
-                  {/* Callout 1: VibeVerse 30% (Originates from Blue Arc Center at 54°) */}
-                  <circle cx="65" cy="-47" r="4" fill="#0052ff" />
-                  <polyline points="65,-47 95,-70 125,-70" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="130" y="-64" fill="#0052ff" fontSize="12" fontWeight="800" textAnchor="start">VibeVerse 30%</text>
+                  {/* 3. Reserve 70% */}
+                  <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commGreenGrad)" strokeWidth="18"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="66 100" strokeDashoffset="-32"
+                          transform="rotate(-90)" filter="url(#commGreenGlow)" style={{ transition: 'all 0.5s ease' }} />
 
-                  {/* Callout 2: Staking 15% (Originates from Purple Arc Center at 135°) */}
-                  <circle cx="57" cy="57" r="4" fill="#7c3aed" />
-                  <polyline points="57,57 85,80 115,80" fill="none" stroke="#7c3aed" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="120" y="85" fill="#7c3aed" fontSize="12" fontWeight="800" textAnchor="start">Staking 15%</text>
+                  {/* Callout 1: Staking 15% */}
+                  <circle cx="36" cy="-71" r="4" fill="#7c3aed" />
+                  <polyline points="36,-71 70,-95 110,-95" fill="none" stroke="#7c3aed" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="115" y="-90" fill="#7c3aed" fontSize="12" fontWeight="800" textAnchor="start">Staking 15%</text>
 
-                  {/* Callout 3: NFT Club 15% (Originates from Green Arc Center at 189°) */}
-                  <circle cx="-13" cy="79" r="4" fill="#10b981" />
-                  <polyline points="-13,79 -40,95 -80,95" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-85" y="100" fill="#10b981" fontSize="12" fontWeight="800" textAnchor="end">NFT Club 15%</text>
+                  {/* Callout 2: NFT Club 15% */}
+                  <circle cx="79" cy="-13" r="4" fill="#f59e0b" />
+                  <polyline points="79,-13 110,15 145,15" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="150" y="20" fill="#f59e0b" fontSize="12" fontWeight="800" textAnchor="start">NFT Club 15%</text>
 
-                  {/* Callout 4: Reserve 40% (Originates from Amber Arc Center at 288°) */}
-                  <circle cx="-76" cy="-25" r="4" fill="#f59e0b" />
-                  <polyline points="-76,-25 -105,-55 -135,-55" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-140" y="-49" fill="#f59e0b" fontSize="12" fontWeight="800" textAnchor="end">Reserve 40%</text>
+                  {/* Callout 3: Reserve 70% */}
+                  <circle cx="-65" cy="47" r="4" fill="#10b981" />
+                  <polyline points="-65,47 -100,75 -140,75" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-145" y="80" fill="#10b981" fontSize="12" fontWeight="800" textAnchor="end">Reserve 70%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="28" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
@@ -778,17 +750,14 @@ function Tokenomics() {
 
             {/* Legend Pills */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 82, 255, 0.08)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: 'var(--blue)' }}>
-                <Gamepad2 size={13} /> VibeVerse 30%
-              </div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(124, 58, 237, 0.08)', border: '1px solid rgba(124, 58, 237, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#7c3aed' }}>
                 <Coins size={13} /> Staking 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#10b981' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#f59e0b' }}>
                 <Crown size={13} /> NFT Club 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#f59e0b' }}>
-                <ShieldCheck size={13} /> Reserve 40%
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#10b981' }}>
+                <ShieldCheck size={13} /> Reserve 70%
               </div>
             </div>
           </div>

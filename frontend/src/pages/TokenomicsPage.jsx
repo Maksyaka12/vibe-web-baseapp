@@ -510,21 +510,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
               </div>
 
-              {/* VibeVerse App (Blue) */}
-              <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(59, 130, 246, 0.15)', 'rgba(59, 130, 246, 0.3)')}>
-                  <Gamepad2 color="#3b82f6" size={15} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    VibeVerse App (30%)
-                  </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
-                    Rewards pool inside the Vibe Verse App
-                  </div>
-                </div>
-              </div>
-
               {/* $VIBE Staking (Purple) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
                 <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
@@ -562,7 +547,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
-                    Reserve (40%)
+                    Reserve (70%)
                   </div>
                   <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
                     Buffer for continuous reward refills
@@ -615,10 +600,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             <div style={{ width: '100%', maxWidth: '380px', margin: 'auto' }}>
               <svg viewBox="0 0 420 260" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
-                  <linearGradient id="commBlueGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#0052ff" />
-                  </linearGradient>
                   <linearGradient id="commPurpleGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#c084fc" />
                     <stop offset="100%" stopColor="#9333ea" />
@@ -632,9 +613,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="100%" stopColor="#10b981" />
                   </linearGradient>
 
-                  <filter id="commBlueGlow2" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#0052ff" floodOpacity="0.4" />
-                  </filter>
                   <filter id="commPurpleGlow2" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#7c3aed" floodOpacity="0.4" />
                   </filter>
@@ -649,47 +627,37 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <g transform="translate(210, 130)">
                   <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
 
-                  {/* VibeVerse 30% */}
-                  <circle
-                    cx="0" cy="0" r="68" fill="none" stroke="url(#commBlueGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="26 100" strokeDashoffset="-2"
-                    transform="rotate(-90)" filter="url(#commBlueGlow2)"
-                  />
                   {/* Staking 15% */}
                   <circle
                     cx="0" cy="0" r="68" fill="none" stroke="url(#commPurpleGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-32"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-2"
                     transform="rotate(-90)" filter="url(#commPurpleGlow2)"
                   />
                   {/* NFT Club 15% (Amber/Orange) */}
                   <circle
                     cx="0" cy="0" r="68" fill="none" stroke="url(#commAmberGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-47"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-17"
                     transform="rotate(-90)" filter="url(#commAmberGlow2)"
                   />
-                  {/* Reserve 40% (Green) */}
+                  {/* Reserve 70% (Green) */}
                   <circle
                     cx="0" cy="0" r="68" fill="none" stroke="url(#commGreenGrad2)" strokeWidth="16"
-                    strokeLinecap="round" pathLength="100" strokeDasharray="36 100" strokeDashoffset="-62"
+                    strokeLinecap="round" pathLength="100" strokeDasharray="66 100" strokeDashoffset="-32"
                     transform="rotate(-90)" filter="url(#commGreenGlow2)"
                   />
 
                   {/* Callouts */}
-                  <circle cx="56" cy="-40" r="3.5" fill="#3b82f6" />
-                  <polyline points="56,-40 85,-60 115,-60" fill="none" stroke="#3b82f6" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="120" y="-56" fill="#3b82f6" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">VibeVerse 30%</text>
+                  <circle cx="31" cy="-61" r="3.5" fill="#a855f7" />
+                  <polyline points="31,-61 60,-80 95,-80" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="100" y="-76" fill="#a855f7" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
 
-                  <circle cx="48" cy="48" r="3.5" fill="#a855f7" />
-                  <polyline points="48,48 72,70 100,70" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="73" fill="#a855f7" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
+                  <circle cx="67" cy="-11" r="3.5" fill="#f59e0b" />
+                  <polyline points="67,-11 95,10 125,10" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="130" y="14" fill="#f59e0b" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
 
-                  <circle cx="-11" cy="67" r="3.5" fill="#f59e0b" />
-                  <polyline points="-11,67 -35,82 -70,82" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-76" y="85" fill="#f59e0b" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
-
-                  <circle cx="-65" cy="-21" r="3.5" fill="#10b981" />
-                  <polyline points="-65,-21 -90,-48 -120,-48" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-126" y="-44" fill="#10b981" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 40%</text>
+                  <circle cx="-55" cy="40" r="3.5" fill="#10b981" />
+                  <polyline points="-55,40 -85,60 -115,60" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-120" y="64" fill="#10b981" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 70%</text>
 
                   <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
                   <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">COMMUNITY</text>
@@ -699,9 +667,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
             {/* Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#3b82f6', fontFamily: "'Press Start 2P', monospace" }}>
-                <Gamepad2 size={11} /> VIBEVERSE 30%
-              </div>
               <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
                 <Coins size={11} /> STAKING 15%
               </div>
@@ -709,7 +674,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <Crown size={11} /> NFT CLUB 15%
               </div>
               <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
-                <ShieldCheck size={11} /> RESERVE 40%
+                <ShieldCheck size={11} /> RESERVE 70%
               </div>
             </div>
           </div>
@@ -1350,16 +1315,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Gamepad2 color="#3b82f6" size={20} />
-                  </div>
-                  <div className="who-t">
-                    VibeVerse App <span style={{ color: '#3b82f6', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(30%)</span>
-                    <span>Rewards pool inside the Vibe Verse App</span>
-                  </div>
-                </div>
-
-                <div className="who-r">
-                  <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <Coins color="#a855f7" size={20} />
                   </div>
                   <div className="who-t">
@@ -1383,7 +1338,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <ShieldCheck color="#10b981" size={20} />
                   </div>
                   <div className="who-t">
-                    Reserve <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(40%)</span>
+                    Reserve <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(70%)</span>
                     <span>Buffer for continuous reward refills</span>
                   </div>
                 </div>
@@ -1413,10 +1368,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             <div style={{ position: 'relative', width: '100%', maxWidth: '420px', margin: '16px auto 8px', flexShrink: 0 }}>
               <svg viewBox="0 0 420 280" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
-                  <linearGradient id="commBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#0052ff" />
-                  </linearGradient>
                   <linearGradient id="commPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#a855f7" />
                     <stop offset="100%" stopColor="#7c3aed" />
@@ -1430,9 +1381,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="100%" stopColor="#10b981" />
                   </linearGradient>
 
-                  <filter id="commBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#0052ff" floodOpacity="0.25" />
-                  </filter>
                   <filter id="commPurpleGlow" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#7c3aed" floodOpacity="0.25" />
                   </filter>
@@ -1447,37 +1395,35 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <g transform="translate(210, 140)">
                   <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
 
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commBlueGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="26 100" strokeDashoffset="-2"
-                          transform="rotate(-90)" filter="url(#commBlueGlow)" style={{ transition: 'all 0.5s ease' }} />
-
+                  {/* 1. Staking 15% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commPurpleGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-32"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-2"
                           transform="rotate(-90)" filter="url(#commPurpleGlow)" style={{ transition: 'all 0.5s ease' }} />
 
+                  {/* 2. NFT Club 15% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commAmberGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-47"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="11 100" strokeDashoffset="-17"
                           transform="rotate(-90)" filter="url(#commAmberGlow)" style={{ transition: 'all 0.5s ease' }} />
 
+                  {/* 3. Reserve 70% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commGreenGrad)" strokeWidth="18"
-                          strokeLinecap="round" pathLength="100" strokeDasharray="36 100" strokeDashoffset="-62"
+                          strokeLinecap="round" pathLength="100" strokeDasharray="66 100" strokeDashoffset="-32"
                           transform="rotate(-90)" filter="url(#commGreenGlow)" style={{ transition: 'all 0.5s ease' }} />
 
-                  <circle cx="65" cy="-47" r="4" fill="#0052ff" />
-                  <polyline points="65,-47 95,-70 125,-70" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="130" y="-64" fill="#0052ff" fontSize="12" fontWeight="800" textAnchor="start">VibeVerse 30%</text>
+                  {/* Callout 1: Staking 15% */}
+                  <circle cx="36" cy="-71" r="4" fill="#7c3aed" />
+                  <polyline points="36,-71 70,-95 110,-95" fill="none" stroke="#7c3aed" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="115" y="-90" fill="#7c3aed" fontSize="12" fontWeight="800" textAnchor="start">Staking 15%</text>
 
-                  <circle cx="57" cy="57" r="4" fill="#7c3aed" />
-                  <polyline points="57,57 85,80 115,80" fill="none" stroke="#7c3aed" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="120" y="85" fill="#7c3aed" fontSize="12" fontWeight="800" textAnchor="start">Staking 15%</text>
+                  {/* Callout 2: NFT Club 15% */}
+                  <circle cx="79" cy="-13" r="4" fill="#f59e0b" />
+                  <polyline points="79,-13 110,15 145,15" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="150" y="20" fill="#f59e0b" fontSize="12" fontWeight="800" textAnchor="start">NFT Club 15%</text>
 
-                  <circle cx="-13" cy="79" r="4" fill="#f59e0b" />
-                  <polyline points="-13,79 -40,95 -80,95" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-85" y="100" fill="#f59e0b" fontSize="12" fontWeight="800" textAnchor="end">NFT Club 15%</text>
-
-                  <circle cx="-76" cy="-25" r="4" fill="#10b981" />
-                  <polyline points="-76,-25 -105,-55 -135,-55" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-140" y="-49" fill="#10b981" fontSize="12" fontWeight="800" textAnchor="end">Reserve 40%</text>
+                  {/* Callout 3: Reserve 70% */}
+                  <circle cx="-65" cy="47" r="4" fill="#10b981" />
+                  <polyline points="-65,47 -100,75 -140,75" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-145" y="80" fill="#10b981" fontSize="12" fontWeight="800" textAnchor="end">Reserve 70%</text>
 
                   <text x="0" y="-3" fill="var(--ink)" fontSize="28" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
                   <text x="0" y="16" fill="var(--muted)" fontSize="9" fontWeight="800" textAnchor="middle" letterSpacing="1px">COMMUNITY</text>
@@ -1486,9 +1432,6 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '8px', flexWrap: 'wrap' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 82, 255, 0.08)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: 'var(--blue)' }}>
-                <Gamepad2 size={13} /> VibeVerse 30%
-              </div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(124, 58, 237, 0.08)', border: '1px solid rgba(124, 58, 237, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#7c3aed' }}>
                 <Coins size={13} /> Staking 15%
               </div>
@@ -1496,7 +1439,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                 <Crown size={13} /> NFT Club 15%
               </div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#10b981' }}>
-                <ShieldCheck size={13} /> Reserve 40%
+                <ShieldCheck size={13} /> Reserve 70%
               </div>
             </div>
           </div>
