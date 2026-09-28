@@ -1,4 +1,26 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useWallets } from '@privy-io/react-auth';
+import { parseAbi, encodeFunctionData } from 'viem';
+import { publicClient } from '../config/rpc';
+import { appendBuilderSuffix } from '../config/builderCode';
+
+export const VIBE_CHECKIN_CONTRACT_ADDRESS =
+  import.meta.env?.VITE_CHECKIN_CONTRACT_ADDRESS ||
+  '0x0000000000000000000000000000000000000000';
+
+export const CHECKIN_ABI = parseAbi([
+  'function checkIn() external',
+  'function checkInFor(address user) external',
+  'function getCheckInInfo(address user) view returns (uint256 currentStreak, uint256 longestStreak, uint256 totalCheckIns, uint256 lastCheckInTimestamp, bool canCheckInToday, uint256 secondsUntilNextCheckIn)',
+  'function canCheckIn(address user) view returns (bool)',
+  'function userCheckIns(address) view returns (uint256 currentStreak, uint256 longestStreak, uint256 totalCheckIns, uint256 lastCheckInTimestamp, uint256 lastCheckInDay)',
+  'function totalUsers() view returns (uint256)',
+  'function totalGlobalCheckIns() view returns (uint256)',
+  'function owner() view returns (address)',
+  'function transferOwnership(address newOwner) external',
+  'function paused() view returns (bool)',
+  'event CheckedIn(address indexed user, uint256 currentStreak, uint256 totalCheckIns, uint256 timestamp)'
+]);
 
 const EVENT_NAME = 'vibe_checkin_update';
 
@@ -17,7 +39,7 @@ function isSameUtcDay(date1, date2) {
   );
 }
 
-function getInitialState(address) {
+function getInitialLocalState(address) {
   if (!address) {
     return {
       streak: 0,
@@ -41,10 +63,9 @@ function getInitialState(address) {
       };
     }
   } catch (e) {
-    console.warn('Error reading check-in state:', e);
+    console.warn('Error reading local check-in state:', e);
   }
 
-  // Default initial state for new wallet
   return {
     streak: 0,
     lastCheckIn: null,
@@ -54,13 +75,21 @@ function getInitialState(address) {
 }
 
 export function useVibeCheckIn(address) {
-  const [state, setState] = useState(() => getInitialState(address));
+  const { wallets } = useWallets();
+  const [state, setState] = useState(() => getInitialLocalState(address));
   const [isCheckingIn, setIsCheckingIn] = useState(false);
   const [checkInSuccess, setCheckInSuccess] = useState(false);
+  const [txHash, setTxHash] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [timeUntilNext, setTimeUntilNext] = useState('');
 
-  // Sync state whenever address or custom event changes
-  const syncState = useCallback(() => {
+  const isContractActive = Boolean(
+    VIBE_CHECKIN_CONTRACT_ADDRESS &&
+    VIBE_CHECKIN_CONTRACT_ADDRESS !== '0x0000000000000000000000000000000000000000'
+  );
+
+  // Fetch live on-chain check-in details
+  const fetchOnChainState = useCallback(async () => {
     if (!address) {
       setState({
         streak: 0,
@@ -70,21 +99,71 @@ export function useVibeCheckIn(address) {
       });
       return;
     }
-    const current = getInitialState(address);
-    setState(current);
-  }, [address]);
+
+    if (!isContractActive) {
+      const local = getInitialLocalState(address);
+      setState(local);
+      return;
+    }
+
+    try {
+      const data = await publicClient.readContract({
+        address: VIBE_CHECKIN_CONTRACT_ADDRESS,
+        abi: CHECKIN_ABI,
+        functionName: 'getCheckInInfo',
+        args: [address]
+      });
+
+      if (data) {
+        const [
+          currentStreak,
+          longestStreak,
+          totalCheckIns,
+          lastCheckInTimestamp,
+          canCheckInToday,
+          secondsUntilNextCheckIn
+        ] = data;
+
+        const lastCheckInDate = lastCheckInTimestamp > 0n
+          ? new Date(Number(lastCheckInTimestamp) * 1000).toISOString()
+          : null;
+
+        const newState = {
+          streak: Number(currentStreak),
+          longestStreak: Number(longestStreak),
+          totalCheckIns: Number(totalCheckIns),
+          lastCheckIn: lastCheckInDate,
+          hasCheckedInToday: !canCheckInToday
+        };
+
+        setState(newState);
+
+        // Also persist to local cache
+        const key = getStorageKey(address);
+        if (key) {
+          localStorage.setItem(key, JSON.stringify(newState));
+        }
+      }
+    } catch (err) {
+      console.warn('Error reading on-chain check-in info, using fallback:', err);
+      const local = getInitialLocalState(address);
+      setState(local);
+    }
+  }, [address, isContractActive]);
 
   useEffect(() => {
-    syncState();
-    window.addEventListener(EVENT_NAME, syncState);
-    window.addEventListener('storage', syncState);
+    fetchOnChainState();
+    window.addEventListener(EVENT_NAME, fetchOnChainState);
+    window.addEventListener('storage', fetchOnChainState);
+    const interval = setInterval(fetchOnChainState, 20000);
     return () => {
-      window.removeEventListener(EVENT_NAME, syncState);
-      window.removeEventListener('storage', syncState);
+      window.removeEventListener(EVENT_NAME, fetchOnChainState);
+      window.removeEventListener('storage', fetchOnChainState);
+      clearInterval(interval);
     };
-  }, [syncState]);
+  }, [fetchOnChainState]);
 
-  // Next UTC reset countdown
+  // Next UTC reset countdown timer
   useEffect(() => {
     const updateTimer = () => {
       const now = new Date();
@@ -116,32 +195,80 @@ export function useVibeCheckIn(address) {
 
     setIsCheckingIn(true);
     setCheckInSuccess(false);
+    setErrorMessage('');
+    setTxHash(null);
 
     try {
-      // Brief simulated delay (will be replaced by smart contract call)
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      if (isContractActive) {
+        // Find connected wallet
+        const activeWallet = wallets.find(
+          (w) => w.address?.toLowerCase() === address.toLowerCase()
+        ) || wallets[0];
 
-      const nowIso = new Date().toISOString();
-      const newStreak = (state.streak || 0) + 1;
-      const newTotal = (state.totalCheckIns || 0) + 1;
+        if (!activeWallet) {
+          throw new Error('Wallet not connected');
+        }
 
-      const newState = {
-        streak: newStreak,
-        lastCheckIn: nowIso,
-        totalCheckIns: newTotal,
-        hasCheckedInToday: true
-      };
+        const provider = await activeWallet.getEthereumProvider();
 
-      const key = getStorageKey(address);
-      if (key) {
-        localStorage.setItem(key, JSON.stringify(newState));
+        // Encode calldata for checkIn()
+        const rawCalldata = encodeFunctionData({
+          abi: CHECKIN_ABI,
+          functionName: 'checkIn',
+          args: []
+        });
+
+        // Attach Base ERC-8021 Builder Code suffix
+        const calldataWithSuffix = appendBuilderSuffix(rawCalldata);
+
+        // Send transaction (gas only, 0 ETH)
+        const hash = await provider.request({
+          method: 'eth_sendTransaction',
+          params: [
+            {
+              from: address,
+              to: VIBE_CHECKIN_CONTRACT_ADDRESS,
+              data: calldataWithSuffix,
+              value: '0x0'
+            }
+          ]
+        });
+
+        setTxHash(hash);
+
+        // Wait for on-chain receipt confirmation
+        await publicClient.waitForTransactionReceipt({ hash });
+
+        // Refresh on-chain state
+        await fetchOnChainState();
+      } else {
+        // Local simulation fallback
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        const nowIso = new Date().toISOString();
+        const newStreak = (state.streak || 0) + 1;
+        const newTotal = (state.totalCheckIns || 0) + 1;
+
+        const newState = {
+          streak: newStreak,
+          lastCheckIn: nowIso,
+          totalCheckIns: newTotal,
+          hasCheckedInToday: true
+        };
+
+        const key = getStorageKey(address);
+        if (key) {
+          localStorage.setItem(key, JSON.stringify(newState));
+        }
+
+        setState(newState);
       }
 
-      setState(newState);
       setCheckInSuccess(true);
       window.dispatchEvent(new Event(EVENT_NAME));
     } catch (err) {
       console.error('Check-in error:', err);
+      setErrorMessage(err?.message || 'Check-in transaction failed');
     } finally {
       setIsCheckingIn(false);
     }
@@ -155,7 +282,11 @@ export function useVibeCheckIn(address) {
     canCheckInToday: !state.hasCheckedInToday && Boolean(address),
     isCheckingIn,
     checkInSuccess,
+    txHash,
+    errorMessage,
     timeUntilNext,
-    performCheckIn
+    performCheckIn,
+    refetch: fetchOnChainState,
+    isContractActive
   };
 }
