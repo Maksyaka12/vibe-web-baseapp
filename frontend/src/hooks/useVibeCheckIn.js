@@ -210,7 +210,12 @@ export function useVibeCheckIn(address) {
           throw new Error('Wallet not connected');
         }
 
-        const provider = await activeWallet.getEthereumProvider();
+        let provider;
+        if (typeof window !== 'undefined' && window.ethereum && activeWallet.walletClientType !== 'privy') {
+          provider = window.ethereum;
+        } else {
+          provider = await activeWallet.getEthereumProvider();
+        }
 
         // Encode calldata for checkIn()
         const rawCalldata = encodeFunctionData({
@@ -222,44 +227,63 @@ export function useVibeCheckIn(address) {
         // Attach Base ERC-8021 Builder Code suffix
         const calldataWithSuffix = appendBuilderSuffix(rawCalldata);
 
-        let txHashResult = null;
-        try {
-          const callsRes = await provider.request({
-            method: 'wallet_sendCalls',
-            params: [{
-              version: '1.0',
-              chainId: '0x2105',
-              from: address,
-              calls: [{ to: VIBE_CHECKIN_CONTRACT_ADDRESS, value: '0x0', data: calldataWithSuffix }],
-              capabilities: DATA_SUFFIX ? {
-                dataSuffix: {
-                  value: DATA_SUFFIX,
-                  optional: true
-                }
-              } : undefined
-            }]
-          });
+        const isSmartAccount =
+          activeWallet.walletClientType === 'coinbase_wallet' ||
+          activeWallet.connectorType === 'coinbase_wallet';
 
-          if (callsRes) {
-            const callId = typeof callsRes === 'object' ? (callsRes.id || callsRes) : callsRes;
-            for (let i = 0; i < 20; i++) {
-              await new Promise(r => setTimeout(r, 1000));
-              try {
-                const status = await provider.request({
-                  method: 'wallet_getCallsStatus',
-                  params: [callId]
-                });
-                if (status?.receipts?.[0]?.transactionHash) {
-                  txHashResult = status.receipts[0].transactionHash;
-                  break;
-                }
-              } catch (e) {}
+        let txHashResult = null;
+
+        if (isSmartAccount) {
+          try {
+            const callsRes = await provider.request({
+              method: 'wallet_sendCalls',
+              params: [{
+                version: '1.0',
+                chainId: '0x2105',
+                from: address,
+                calls: [{ to: VIBE_CHECKIN_CONTRACT_ADDRESS, value: '0x0', data: calldataWithSuffix }],
+                capabilities: DATA_SUFFIX ? {
+                  dataSuffix: {
+                    value: DATA_SUFFIX,
+                    optional: true
+                  }
+                } : undefined
+              }]
+            });
+
+            if (callsRes) {
+              const callId = typeof callsRes === 'object' ? (callsRes.id || callsRes) : callsRes;
+              for (let i = 0; i < 20; i++) {
+                await new Promise(r => setTimeout(r, 1000));
+                try {
+                  const status = await provider.request({
+                    method: 'wallet_getCallsStatus',
+                    params: [callId]
+                  });
+                  if (status?.receipts?.[0]?.transactionHash) {
+                    txHashResult = status.receipts[0].transactionHash;
+                    break;
+                  }
+                } catch (e) {}
+              }
             }
+          } catch (e) {
+            console.warn('wallet_sendCalls fallback to eth_sendTransaction:', e);
           }
-        } catch (e) {
+        }
+
+        // Standard direct EOA transaction (MetaMask, Rabby, Phantom, etc.)
+        if (!txHashResult) {
           txHashResult = await provider.request({
             method: 'eth_sendTransaction',
-            params: [{ from: address, to: VIBE_CHECKIN_CONTRACT_ADDRESS, data: calldataWithSuffix, value: '0x0' }]
+            params: [
+              {
+                from: address,
+                to: VIBE_CHECKIN_CONTRACT_ADDRESS,
+                data: calldataWithSuffix,
+                value: '0x0'
+              }
+            ]
           });
         }
 
