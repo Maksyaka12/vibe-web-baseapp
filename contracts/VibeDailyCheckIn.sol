@@ -7,67 +7,8 @@ pragma solidity ^0.8.20;
  *         Users perform daily on-chain check-ins to build streaks, participate in leaderboards,
  *         and earn on-chain verifiable activity with ERC-8021 Base Builder Code attribution.
  */
-
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
-abstract contract Ownable is Context {
-    address private _owner;
-
-    error OwnableUnauthorizedAccount(address account);
-    error OwnableInvalidOwner(address owner);
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    constructor(address initialOwner) {
-        if (initialOwner == address(0)) {
-            revert OwnableInvalidOwner(address(0));
-        }
-        _transferOwnership(initialOwner);
-    }
-
-    modifier onlyOwner() {
-        _checkOwner();
-        _;
-    }
-
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    function _checkOwner() internal view virtual {
-        if (owner() != _msgSender()) {
-            revert OwnableUnauthorizedAccount(_msgSender());
-        }
-    }
-
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        if (newOwner == address(0)) {
-            revert OwnableInvalidOwner(address(0));
-        }
-        _transferOwnership(newOwner);
-    }
-
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-}
-
-contract VibeDailyCheckIn is Ownable {
-    // Contract pause state for emergency maintenance
+contract VibeDailyCheckIn {
+    address public owner;
     bool public paused;
 
     // Global Statistics
@@ -95,6 +36,7 @@ contract VibeDailyCheckIn is Ownable {
         uint256 totalCheckIns,
         uint256 timestamp
     );
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event OperatorUpdated(address indexed operator, bool authorized);
     event Paused(address indexed account);
     event Unpaused(address indexed account);
@@ -103,19 +45,28 @@ contract VibeDailyCheckIn is Ownable {
     error AlreadyCheckedInToday();
     error ContractPaused();
     error InvalidAddress();
+    error NotOwner();
     error NotOperator();
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    modifier onlyOperator() {
+        if (!operators[msg.sender] && msg.sender != owner) revert NotOperator();
+        _;
+    }
 
     modifier whenNotPaused() {
         if (paused) revert ContractPaused();
         _;
     }
 
-    modifier onlyOperator() {
-        if (!operators[msg.sender] && msg.sender != owner()) revert NotOperator();
-        _;
+    constructor() {
+        owner = msg.sender;
+        emit OwnershipTransferred(address(0), msg.sender);
     }
-
-    constructor() Ownable(msg.sender) {}
 
     /**
      * @notice Performs the daily on-chain check-in for the caller.
@@ -231,6 +182,17 @@ contract VibeDailyCheckIn is Ownable {
     }
 
     // --- Admin Functions ---
+
+    /**
+     * @notice Transfers ownership of the contract to a new address.
+     * @param newOwner Address of the new owner.
+     */
+    function transferOwnership(address newOwner) external onlyOwner {
+        if (newOwner == address(0)) revert InvalidAddress();
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
 
     /**
      * @notice Authorizes or revokes an operator address (e.g. backend relayer).
