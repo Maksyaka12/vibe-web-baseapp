@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useWallets } from '@privy-io/react-auth';
 import { parseAbi, encodeFunctionData } from 'viem';
 import { publicClient } from '../config/rpc';
-import { appendBuilderSuffix } from '../config/builderCode';
+import { appendBuilderSuffix, DATA_SUFFIX } from '../config/builderCode';
 
 export const VIBE_CHECKIN_CONTRACT_ADDRESS =
   import.meta.env?.VITE_CHECKIN_CONTRACT_ADDRESS ||
@@ -10,6 +10,7 @@ export const VIBE_CHECKIN_CONTRACT_ADDRESS =
 
 export const CHECKIN_ABI = parseAbi([
   'function checkIn() external',
+  'function claimCheckIn() external',
   'function checkInFor(address user) external',
   'function getCheckInInfo(address user) view returns (uint256 currentStreak, uint256 longestStreak, uint256 totalCheckIns, uint256 lastCheckInTimestamp, bool canCheckInToday, uint256 secondsUntilNextCheckIn)',
   'function canCheckIn(address user) view returns (bool)',
@@ -221,23 +222,55 @@ export function useVibeCheckIn(address) {
         // Attach Base ERC-8021 Builder Code suffix
         const calldataWithSuffix = appendBuilderSuffix(rawCalldata);
 
-        // Send transaction (gas only, 0 ETH)
-        const hash = await provider.request({
-          method: 'eth_sendTransaction',
-          params: [
-            {
+        let txHashResult = null;
+        try {
+          const callsRes = await provider.request({
+            method: 'wallet_sendCalls',
+            params: [{
+              version: '1.0',
+              chainId: '0x2105',
               from: address,
-              to: VIBE_CHECKIN_CONTRACT_ADDRESS,
-              data: calldataWithSuffix,
-              value: '0x0'
+              calls: [{ to: VIBE_CHECKIN_CONTRACT_ADDRESS, value: '0x0', data: calldataWithSuffix }],
+              capabilities: DATA_SUFFIX ? {
+                dataSuffix: {
+                  value: DATA_SUFFIX,
+                  optional: true
+                }
+              } : undefined
+            }]
+          });
+
+          if (callsRes) {
+            const callId = typeof callsRes === 'object' ? (callsRes.id || callsRes) : callsRes;
+            for (let i = 0; i < 20; i++) {
+              await new Promise(r => setTimeout(r, 1000));
+              try {
+                const status = await provider.request({
+                  method: 'wallet_getCallsStatus',
+                  params: [callId]
+                });
+                if (status?.receipts?.[0]?.transactionHash) {
+                  txHashResult = status.receipts[0].transactionHash;
+                  break;
+                }
+              } catch (e) {}
             }
-          ]
-        });
+          }
+        } catch (e) {
+          txHashResult = await provider.request({
+            method: 'eth_sendTransaction',
+            params: [{ from: address, to: VIBE_CHECKIN_CONTRACT_ADDRESS, data: calldataWithSuffix, value: '0x0' }]
+          });
+        }
 
-        setTxHash(hash);
-
-        // Wait for on-chain receipt confirmation
-        await publicClient.waitForTransactionReceipt({ hash });
+        if (txHashResult) {
+          setTxHash(txHashResult);
+          try {
+            await publicClient.waitForTransactionReceipt({ hash: txHashResult });
+          } catch (e) {
+            console.warn('Waiting for receipt warning:', e);
+          }
+        }
 
         // Refresh on-chain state
         await fetchOnChainState();
