@@ -104,46 +104,99 @@ export function BaseAppProfileView(props) {
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
   // Dynamic achievement unlock calculations
-  const isHolderUnlocked = Boolean(balance !== null && Number(balance) >= 5000000);
+  // 1. REWARDS ELIGIBILITY (2 items)
+  const isEligibleHolder = Boolean(balance !== null && Number(balance) >= 5000000);
   const isNftHolderUnlocked = Boolean(hasNft && nftCount > 0);
-  const isStakerUnlocked = false; // criteria in progress
-  const isClaimerUnlocked = false; // criteria in progress
-  const isActiveUnlocked = false; // criteria in progress
 
-  const ACHIEVEMENTS_LIST = [
+  // 2. ACTIVE DOG (3 items)
+  const isStarterDog = Boolean(address && (streak > 0 || hasCheckedInToday));
+  const isLoyalDog = Boolean(address && (streak >= 3 || totalClaimedCount > 0 || (claimedHistory && claimedHistory.length > 0)));
+  const isUltraActiveDog = Boolean(address && (streak >= 7 || totalClaimedCount >= 3 || (claimedHistory && claimedHistory.length >= 3)));
+
+  // 3. DOG STAKER (5 items)
+  const isNoviceStaker = Boolean(totalStakingEpochs >= 1);
+  const isConfidentBanker = Boolean(totalStakingEpochs >= 2);
+  const isWolfOfWallStreet = Boolean(totalStakingEarned > 0 || totalStakingEpochs >= 3);
+  const isRichDog = Boolean(totalStakingEarned >= 50000 || totalStakingEpochs >= 4);
+  const isBankFounder = Boolean(totalStakingEpochs >= 5 || totalStakingEarned >= 200000);
+
+  const REWARDS_ELIGIBILITY_ACHIEVEMENTS = [
     {
-      id: 'holder',
-      name: '5M+ HOLDER',
+      id: 'eligible-holder',
+      name: 'ELIGIBLE HOLDER',
       image: '/achievements/holder.jfif',
-      unlocked: isHolderUnlocked
+      unlocked: isEligibleHolder
     },
     {
       id: 'nft-holder',
       name: 'VIBE CLUB MEMBER',
       image: '/achievements/nft-holder.jfif',
       unlocked: isNftHolderUnlocked
-    },
-    {
-      id: 'staker',
-      name: 'STAKING EXPERT',
-      image: '/achievements/staker.jfif',
-      unlocked: isStakerUnlocked
-    },
-    {
-      id: 'claimer',
-      name: 'RICH DOG',
-      image: '/achievements/claimer.jfif',
-      unlocked: isClaimerUnlocked
-    },
-    {
-      id: 'active',
-      name: 'ACTIVE DOG',
-      image: '/achievements/active.jfif',
-      unlocked: isActiveUnlocked
     }
   ];
 
-  const unlockedCount = ACHIEVEMENTS_LIST.filter(a => a.unlocked).length;
+  const ACTIVE_DOG_ACHIEVEMENTS = [
+    {
+      id: 'starter-dog',
+      name: 'STARTER DOG',
+      image: '/achievements/active.jfif',
+      unlocked: isStarterDog
+    },
+    {
+      id: 'loyal-dog',
+      name: 'LOYAL DOG',
+      image: '/achievements/claimer.jfif',
+      unlocked: isLoyalDog
+    },
+    {
+      id: 'ultra-active-dog',
+      name: 'ULTRA-ACTIVE DOG',
+      image: '/nft/images/26.png',
+      unlocked: isUltraActiveDog
+    }
+  ];
+
+  const DOG_STAKER_ACHIEVEMENTS = [
+    {
+      id: 'novice-staker',
+      name: 'NOVICE STAKER',
+      image: '/achievements/staker.jfif',
+      unlocked: isNoviceStaker
+    },
+    {
+      id: 'confident-banker',
+      name: 'CONFIDENT BANKER',
+      image: '/nft/images/64.png',
+      unlocked: isConfidentBanker
+    },
+    {
+      id: 'wolf-of-wall-street',
+      name: 'WOLF OF WALL ST',
+      image: '/nft/images/24.png',
+      unlocked: isWolfOfWallStreet
+    },
+    {
+      id: 'rich-dog',
+      name: 'RICH DOG',
+      image: '/nft/images/27.png',
+      unlocked: isRichDog
+    },
+    {
+      id: 'bank-founder',
+      name: 'BANK FOUNDER',
+      image: '/nft/images/87.png',
+      unlocked: isBankFounder
+    }
+  ];
+
+  const allAchievements = [
+    ...REWARDS_ELIGIBILITY_ACHIEVEMENTS,
+    ...ACTIVE_DOG_ACHIEVEMENTS,
+    ...DOG_STAKER_ACHIEVEMENTS
+  ];
+
+  const unlockedCount = allAchievements.filter(a => a.unlocked).length;
+  const totalAchievementsCount = allAchievements.length;
 
   const getLinkPath = (path) => {
     if (typeof window !== 'undefined' && window.location.pathname.startsWith('/app')) {
@@ -604,9 +657,9 @@ export function BaseAppProfileView(props) {
         </div>
       </div>
 
-      {/* ── 4. ACHIEVEMENTS SECTION (DEDICATED FULL BLOCK) ── */}
+      {/* ── 4. ACHIEVEMENTS SECTION (CATEGORIZED TIERS) ── */}
       <div className="profile-achievements-zone" style={{ marginBottom: '24px' }}>
-        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0, display: 'inline-block' }} />
             <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
@@ -615,51 +668,106 @@ export function BaseAppProfileView(props) {
           </div>
           <div className="profile-achievements-tracker" style={{ background: 'rgba(0, 255, 136, 0.12)', border: '1px solid rgba(0, 255, 136, 0.4)', borderRadius: '8px', padding: '5px 10px', fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88' }} />
-            <span>{unlockedCount}/5 UNLOCKED</span>
+            <span>{unlockedCount}/{totalAchievementsCount} UNLOCKED</span>
           </div>
         </div>
 
-        <div className="profile-achievements-grid">
-          {ACHIEVEMENTS_LIST.map((ach) => (
-            <div
-              key={ach.id}
-              className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
-            >
-              <div className="profile-achievement-img-box">
-                <img
-                  src={ach.image}
-                  alt={ach.name}
-                  className="profile-achievement-img"
-                />
-                <div className="profile-achievement-badge">
-                  {ach.unlocked ? (
-                    <>
-                      <span className="profile-achievement-badge-dot" />
-                      <span>UNLOCKED</span>
-                    </>
-                  ) : (
-                    <>
-                      <Lock size={9} strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                      <span>LOCKED</span>
-                    </>
-                  )}
+        {/* Top Container: 2 Sub-categories (Side-by-side on desktop) */}
+        <div className="profile-achievements-top-row">
+          {/* Sub-category 1: REWARDS ELIGIBILITY */}
+          <div className="profile-achievements-subgroup">
+            <div className="profile-achievements-subgroup-header">
+              <div className="profile-achievements-subgroup-title">
+                <span className="profile-subgroup-dot" />
+                <span>REWARDS ELIGIBILITY</span>
+              </div>
+              <div className="profile-achievements-subgroup-count">
+                {REWARDS_ELIGIBILITY_ACHIEVEMENTS.filter(a => a.unlocked).length}/{REWARDS_ELIGIBILITY_ACHIEVEMENTS.length}
+              </div>
+            </div>
+            <div className="profile-achievements-subgrid profile-grid-2-col">
+              {REWARDS_ELIGIBILITY_ACHIEVEMENTS.map((ach) => (
+                <div
+                  key={ach.id}
+                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+                >
+                  <div className="profile-achievement-img-box">
+                    <img
+                      src={ach.image}
+                      alt={ach.name}
+                      className="profile-achievement-img"
+                    />
+                  </div>
+                  <div className="profile-achievement-name" title={ach.name}>
+                    {ach.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Sub-category 2: ACTIVE DOG */}
+          <div className="profile-achievements-subgroup">
+            <div className="profile-achievements-subgroup-header">
+              <div className="profile-achievements-subgroup-title">
+                <span className="profile-subgroup-dot" />
+                <span>ACTIVE DOG</span>
+              </div>
+              <div className="profile-achievements-subgroup-count">
+                {ACTIVE_DOG_ACHIEVEMENTS.filter(a => a.unlocked).length}/{ACTIVE_DOG_ACHIEVEMENTS.length}
+              </div>
+            </div>
+            <div className="profile-achievements-subgrid profile-grid-3-col">
+              {ACTIVE_DOG_ACHIEVEMENTS.map((ach) => (
+                <div
+                  key={ach.id}
+                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+                >
+                  <div className="profile-achievement-img-box">
+                    <img
+                      src={ach.image}
+                      alt={ach.name}
+                      className="profile-achievement-img"
+                    />
+                  </div>
+                  <div className="profile-achievement-name" title={ach.name}>
+                    {ach.name}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Container: DOG STAKER (Full Width, 5 items) */}
+        <div className="profile-achievements-subgroup profile-achievements-staker-group">
+          <div className="profile-achievements-subgroup-header">
+            <div className="profile-achievements-subgroup-title">
+              <span className="profile-subgroup-dot" />
+              <span>DOG STAKER</span>
+            </div>
+            <div className="profile-achievements-subgroup-count">
+              {DOG_STAKER_ACHIEVEMENTS.filter(a => a.unlocked).length}/{DOG_STAKER_ACHIEVEMENTS.length}
+            </div>
+          </div>
+          <div className="profile-achievements-subgrid profile-grid-5-col">
+            {DOG_STAKER_ACHIEVEMENTS.map((ach) => (
+              <div
+                key={ach.id}
+                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'}`}
+              >
+                <div className="profile-achievement-img-box">
+                  <img
+                    src={ach.image}
+                    alt={ach.name}
+                    className="profile-achievement-img"
+                  />
+                </div>
+                <div className="profile-achievement-name" title={ach.name}>
+                  {ach.name}
                 </div>
               </div>
-              <div className="profile-achievement-name" title={ach.name}>
-                {ach.name}
-              </div>
-            </div>
-          ))}
-
-          {/* 6th Slot: More Achievements Coming Soon */}
-          <div className="profile-achievement-card profile-achievement-placeholder">
-            <div className="profile-placeholder-icon-box">
-              <Sparkles size={20} color="#00f5ff" />
-            </div>
-            <div className="profile-placeholder-text-box">
-              <div className="profile-placeholder-title">MORE COMING</div>
-              <div className="profile-placeholder-sub">NEW ACHIEVEMENTS SOON</div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
