@@ -920,13 +920,17 @@ button.admin-action-btn {
   z-index: 50 !important;
 }
 
-.base-app-pixel-theme .profile-achievement-info-btn {
+.base-app-pixel-theme .profile-achievement-info-wrap {
   position: absolute !important;
   top: 5px !important;
   right: 5px !important;
-  z-index: 15 !important;
-  background: rgba(2, 11, 26, 0.82) !important;
-  border: 1px solid rgba(0, 245, 255, 0.4) !important;
+  z-index: 25 !important;
+  display: inline-flex !important;
+}
+
+.base-app-pixel-theme .profile-achievement-info-btn {
+  background: rgba(2, 11, 26, 0.85) !important;
+  border: 1px solid rgba(0, 245, 255, 0.45) !important;
   border-radius: 50% !important;
   width: 17px !important;
   height: 17px !important;
@@ -956,10 +960,9 @@ button.admin-action-btn {
 .base-app-pixel-theme .profile-achievement-tooltip {
   position: absolute !important;
   top: calc(100% + 6px) !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  min-width: 175px !important;
-  max-width: 220px !important;
+  right: 0 !important;
+  min-width: 180px !important;
+  max-width: 225px !important;
   background: rgba(0, 18, 36, 0.98) !important;
   border: 1.5px solid #00f5ff !important;
   border-radius: 10px !important;
@@ -994,21 +997,16 @@ button.admin-action-btn {
 
 /* Mobile 3-Column Tooltip Edge Alignment */
 .base-app-pixel-theme .profile-achievements-subgrid .profile-achievement-card:nth-child(3n+1) .profile-achievement-tooltip {
-  left: 0 !important;
+  left: -4px !important;
   right: auto !important;
   transform: none !important;
 }
 
-.base-app-pixel-theme .profile-achievements-subgrid .profile-achievement-card:nth-child(3n) .profile-achievement-tooltip {
+.base-app-pixel-theme .profile-achievements-subgrid .profile-achievement-card:nth-child(3n) .profile-achievement-tooltip,
+.base-app-pixel-theme .profile-achievements-subgrid .profile-achievement-card:nth-child(3n+2) .profile-achievement-tooltip {
   right: 0 !important;
   left: auto !important;
   transform: none !important;
-}
-
-.base-app-pixel-theme .profile-achievements-subgrid .profile-achievement-card:nth-child(3n+2) .profile-achievement-tooltip {
-  left: 50% !important;
-  right: auto !important;
-  transform: translateX(-50%) !important;
 }
 
 /* ── Mobile Tokenomics Revenue Grid ── */
@@ -2119,7 +2117,7 @@ button.admin-action-btn {
 
   /* 2-col desktop grid tooltip alignment */
   .base-app-pixel-theme .profile-grid-2-col .profile-achievement-card:nth-child(1) .profile-achievement-tooltip {
-    left: 0 !important;
+    left: -4px !important;
     right: auto !important;
     transform: none !important;
   }
@@ -2131,15 +2129,11 @@ button.admin-action-btn {
 
   /* 3-col desktop grid tooltip alignment */
   .base-app-pixel-theme .profile-grid-3-col .profile-achievement-card:nth-child(1) .profile-achievement-tooltip {
-    left: 0 !important;
+    left: -4px !important;
     right: auto !important;
     transform: none !important;
   }
-  .base-app-pixel-theme .profile-grid-3-col .profile-achievement-card:nth-child(2) .profile-achievement-tooltip {
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-  }
+  .base-app-pixel-theme .profile-grid-3-col .profile-achievement-card:nth-child(2) .profile-achievement-tooltip,
   .base-app-pixel-theme .profile-grid-3-col .profile-achievement-card:nth-child(3) .profile-achievement-tooltip {
     right: 0 !important;
     left: auto !important;
@@ -2147,18 +2141,14 @@ button.admin-action-btn {
   }
 
   /* 5-col desktop grid tooltip alignment */
-  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(1) .profile-achievement-tooltip {
-    left: 0 !important;
+  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(1) .profile-achievement-tooltip,
+  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(2) .profile-achievement-tooltip {
+    left: -4px !important;
     right: auto !important;
     transform: none !important;
   }
-  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(2) .profile-achievement-tooltip,
   .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(3) .profile-achievement-tooltip,
-  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(4) .profile-achievement-tooltip {
-    left: 50% !important;
-    right: auto !important;
-    transform: translateX(-50%) !important;
-  }
+  .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(4) .profile-achievement-tooltip,
   .base-app-pixel-theme .profile-grid-5-col .profile-achievement-card:nth-child(5) .profile-achievement-tooltip {
     right: 0 !important;
     left: auto !important;

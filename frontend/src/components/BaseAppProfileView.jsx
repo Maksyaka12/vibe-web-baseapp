@@ -28,8 +28,13 @@ function InfoSvgIcon({ size = 14, color = '#00f5ff', className = '' }) {
       style={{ display: 'block', flexShrink: 0 }}
     >
       <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="rgba(0, 245, 255, 0.15)" />
-      <path d="M12 11v5" stroke={color} strokeWidth="2.4" strokeLinecap="round" />
-      <circle cx="12" cy="7.5" r="1.3" fill={color} />
+      <path
+        d="M9.6 9a2.4 2.4 0 0 1 4.8 0c0 1.5-2.4 2-2.4 3.5"
+        stroke={color}
+        strokeWidth="2.3"
+        strokeLinecap="round"
+      />
+      <circle cx="12" cy="16.5" r="1.3" fill={color} />
     </svg>
   );
 }
@@ -931,34 +936,36 @@ export function BaseAppProfileView(props) {
                   key={ach.id}
                   className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                    }}
-                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                    onMouseLeave={() => setActiveAchievementTooltip(null)}
-                    className="profile-achievement-info-btn"
-                    aria-label={`${ach.name} info`}
-                  >
-                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                  </button>
-
-                  {activeAchievementTooltip === ach.id && (
-                    <div
-                      className="profile-achievement-tooltip"
-                      onClick={(e) => e.stopPropagation()}
+                  <div className="profile-achievement-info-wrap">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                      }}
+                      onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                      onMouseLeave={() => setActiveAchievementTooltip(null)}
+                      className="profile-achievement-info-btn"
+                      aria-label={`${ach.name} info`}
                     >
-                      <div className="profile-achievement-tooltip-title">
-                        <InfoSvgIcon size={11} color="#00f5ff" />
-                        <span>{ach.name}</span>
+                      <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                    </button>
+
+                    {activeAchievementTooltip === ach.id && (
+                      <div
+                        className="profile-achievement-tooltip"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="profile-achievement-tooltip-title">
+                          <InfoSvgIcon size={11} color="#00f5ff" />
+                          <span>{ach.name}</span>
+                        </div>
+                        <div className="profile-achievement-tooltip-desc">
+                          {ach.description}
+                        </div>
                       </div>
-                      <div className="profile-achievement-tooltip-desc">
-                        {ach.description}
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   <div className="profile-achievement-img-box">
                     <img
@@ -992,34 +999,36 @@ export function BaseAppProfileView(props) {
                   key={ach.id}
                   className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
                 >
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                    }}
-                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                    onMouseLeave={() => setActiveAchievementTooltip(null)}
-                    className="profile-achievement-info-btn"
-                    aria-label={`${ach.name} info`}
-                  >
-                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                  </button>
-
-                  {activeAchievementTooltip === ach.id && (
-                    <div
-                      className="profile-achievement-tooltip"
-                      onClick={(e) => e.stopPropagation()}
+                  <div className="profile-achievement-info-wrap">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                      }}
+                      onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                      onMouseLeave={() => setActiveAchievementTooltip(null)}
+                      className="profile-achievement-info-btn"
+                      aria-label={`${ach.name} info`}
                     >
-                      <div className="profile-achievement-tooltip-title">
-                        <InfoSvgIcon size={11} color="#00f5ff" />
-                        <span>{ach.name}</span>
+                      <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                    </button>
+
+                    {activeAchievementTooltip === ach.id && (
+                      <div
+                        className="profile-achievement-tooltip"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="profile-achievement-tooltip-title">
+                          <InfoSvgIcon size={11} color="#00f5ff" />
+                          <span>{ach.name}</span>
+                        </div>
+                        <div className="profile-achievement-tooltip-desc">
+                          {ach.description}
+                        </div>
                       </div>
-                      <div className="profile-achievement-tooltip-desc">
-                        {ach.description}
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   <div className="profile-achievement-img-box">
                     <img
@@ -1068,34 +1077,36 @@ export function BaseAppProfileView(props) {
                 key={ach.id}
                 className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
               >
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                  }}
-                  onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                  onMouseLeave={() => setActiveAchievementTooltip(null)}
-                  className="profile-achievement-info-btn"
-                  aria-label={`${ach.name} info`}
-                >
-                  <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                </button>
-
-                {activeAchievementTooltip === ach.id && (
-                  <div
-                    className="profile-achievement-tooltip"
-                    onClick={(e) => e.stopPropagation()}
+                <div className="profile-achievement-info-wrap">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
+                    }}
+                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
+                    onMouseLeave={() => setActiveAchievementTooltip(null)}
+                    className="profile-achievement-info-btn"
+                    aria-label={`${ach.name} info`}
                   >
-                    <div className="profile-achievement-tooltip-title">
-                      <InfoSvgIcon size={11} color="#00f5ff" />
-                      <span>{ach.name}</span>
+                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
+                  </button>
+
+                  {activeAchievementTooltip === ach.id && (
+                    <div
+                      className="profile-achievement-tooltip"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="profile-achievement-tooltip-title">
+                        <InfoSvgIcon size={11} color="#00f5ff" />
+                        <span>{ach.name}</span>
+                      </div>
+                      <div className="profile-achievement-tooltip-desc">
+                        {ach.description}
+                      </div>
                     </div>
-                    <div className="profile-achievement-tooltip-desc">
-                      {ach.description}
-                    </div>
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div className="profile-achievement-img-box">
                   <img
