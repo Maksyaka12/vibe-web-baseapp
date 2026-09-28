@@ -225,7 +225,7 @@ export function BaseAppProfileView(props) {
       id: 'starter-dog',
       name: 'STARTER DOG',
       description: 'Reach a 7-day daily check-in streak.',
-      image: '/achievements/active.jfif',
+      image: '/achievements/STARTER DOG.jfif',
       conditionMet: isStarterDogMet,
       unlocked: Boolean(claimedMap['starter-dog']),
       isClaimable: Boolean(isStarterDogMet && !claimedMap['starter-dog'])
@@ -234,7 +234,7 @@ export function BaseAppProfileView(props) {
       id: 'loyal-dog',
       name: 'LOYAL DOG',
       description: 'Reach a 14-day daily check-in streak.',
-      image: '/achievements/claimer.jfif',
+      image: '/achievements/LOYAL DOG.jfif',
       conditionMet: isLoyalDogMet,
       unlocked: Boolean(claimedMap['loyal-dog']),
       isClaimable: Boolean(isLoyalDogMet && !claimedMap['loyal-dog'])
@@ -243,7 +243,7 @@ export function BaseAppProfileView(props) {
       id: 'ultra-active-dog',
       name: 'ULTRA-ACTIVE DOG',
       description: 'Reach a 30-day daily check-in streak.',
-      image: '/nft/images/26.png',
+      image: '/achievements/ULTRA-ACTIVE DOG.jfif',
       conditionMet: isUltraActiveDogMet,
       unlocked: Boolean(claimedMap['ultra-active-dog']),
       isClaimable: Boolean(isUltraActiveDogMet && !claimedMap['ultra-active-dog'])
@@ -255,7 +255,7 @@ export function BaseAppProfileView(props) {
       id: 'novice-staker',
       name: 'NOVICE STAKER',
       description: 'Participate in at least 1 staking vault.',
-      image: '/achievements/staker.jfif',
+      image: '/achievements/NOVICE STAKER.jfif',
       conditionMet: isNoviceStakerMet,
       unlocked: Boolean(claimedMap['novice-staker']),
       isClaimable: Boolean(isNoviceStakerMet && !claimedMap['novice-staker'])
@@ -264,7 +264,7 @@ export function BaseAppProfileView(props) {
       id: 'confident-banker',
       name: 'CONFIDENT BANKER',
       description: 'Participate in at least 3 staking vaults.',
-      image: '/nft/images/64.png',
+      image: '/achievements/CONFIDENT BANKER.jfif',
       conditionMet: isConfidentBankerMet,
       unlocked: Boolean(claimedMap['confident-banker']),
       isClaimable: Boolean(isConfidentBankerMet && !claimedMap['confident-banker'])
@@ -273,7 +273,7 @@ export function BaseAppProfileView(props) {
       id: 'wolf-of-wall-street',
       name: 'WOLF OF WALL ST',
       description: 'Participate in at least 5 staking vaults.',
-      image: '/nft/images/24.png',
+      image: '/achievements/WOLF OF WALL ST.jfif',
       conditionMet: isWolfOfWallStreetMet,
       unlocked: Boolean(claimedMap['wolf-of-wall-street']),
       isClaimable: Boolean(isWolfOfWallStreetMet && !claimedMap['wolf-of-wall-street'])
@@ -282,7 +282,7 @@ export function BaseAppProfileView(props) {
       id: 'rich-dog',
       name: 'RICH DOG',
       description: 'Deposit over 3,000,000 $VIBE into any staking vault.',
-      image: '/nft/images/27.png',
+      image: '/achievements/RICH DOG.jfif',
       conditionMet: isRichDogMet,
       unlocked: Boolean(claimedMap['rich-dog']),
       isClaimable: Boolean(isRichDogMet && !claimedMap['rich-dog'])
@@ -291,7 +291,7 @@ export function BaseAppProfileView(props) {
       id: 'bank-founder',
       name: 'BANK FOUNDER',
       description: 'Deposit over 5,000,000 $VIBE into any staking vault.',
-      image: '/nft/images/87.png',
+      image: '/achievements/BANK FOUNDER.jfif',
       conditionMet: isBankFounderMet,
       unlocked: Boolean(claimedMap['bank-founder']),
       isClaimable: Boolean(isBankFounderMet && !claimedMap['bank-founder'])
