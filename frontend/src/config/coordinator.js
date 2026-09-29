@@ -2,7 +2,7 @@ import { parseAbi } from 'viem';
 
 export const VIBE_COORDINATOR_CONTRACT_ADDRESS =
   import.meta.env?.VITE_COORDINATOR_CONTRACT_ADDRESS ||
-  '0x0000000000000000000000000000000000000000';
+  '0x5c48Ed8E0619d3eD29BdDcE62d2e7746E18d1469';
 
 export const COORDINATOR_ABI = parseAbi([
   'function name() view returns (string)',

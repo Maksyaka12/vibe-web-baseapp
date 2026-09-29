@@ -47,8 +47,8 @@ const CONTRACTS = [
   {
     id: 'coordinator',
     title: 'Master AI Agent Coordinator & Registry',
-    address: '0x0000000000000000000000000000000000000000',
-    basescanUrl: 'https://basescan.org/address/0x0000000000000000000000000000000000000000'
+    address: '0x5c48Ed8E0619d3eD29BdDcE62d2e7746E18d1469',
+    basescanUrl: 'https://basescan.org/address/0x5c48Ed8E0619d3eD29BdDcE62d2e7746E18d1469'
   }
 ];
 
