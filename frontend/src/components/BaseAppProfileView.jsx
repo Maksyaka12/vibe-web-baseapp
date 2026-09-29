@@ -5,6 +5,7 @@ import { formatUnits } from 'viem';
 import { getPublicClient } from '../config/rpc';
 import { STAKING_CONTRACT, STAKING_VAULTS_INFO } from '../Checker';
 import { useVibeCheckIn } from '../hooks/useVibeCheckIn';
+import { useVibeAchievements } from '../hooks/useVibeAchievements';
 
 function getNftFontSize(name) {
   if (!name) return '13px';
@@ -134,9 +135,12 @@ export function BaseAppProfileView(props) {
   const hasNft = Boolean(nftCount && nftCount > 0);
   const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
-  // Claimed state management for Active Dog & Dog Staker achievements (persisted per address)
-  const [claimedMap, setClaimedMap] = useState({});
-  const [claimingId, setClaimingId] = useState(null);
+  // On-Chain Claimed state management for Active Dog & Dog Staker achievements (SBT)
+  const {
+    claimedMap,
+    claimingId,
+    claimAchievement: handleClaimAchievement
+  } = useVibeAchievements(address);
   const [activeAchievementTooltip, setActiveAchievementTooltip] = useState(null);
 
   useEffect(() => {
@@ -145,42 +149,6 @@ export function BaseAppProfileView(props) {
     window.addEventListener('click', handleDocClick);
     return () => window.removeEventListener('click', handleDocClick);
   }, [activeAchievementTooltip]);
-
-  useEffect(() => {
-    if (!address) {
-      setClaimedMap({});
-      return;
-    }
-    try {
-      const storageKey = `vibe_claimed_achievements_${address.toLowerCase()}`;
-      const saved = localStorage.getItem(storageKey);
-      if (saved) {
-        setClaimedMap(JSON.parse(saved));
-      } else {
-        setClaimedMap({});
-      }
-    } catch (e) {
-      console.warn('Failed to load claimed achievements', e);
-    }
-  }, [address]);
-
-  const handleClaimAchievement = (achId) => {
-    if (!address) return;
-    setClaimingId(achId);
-    setTimeout(() => {
-      setClaimedMap((prev) => {
-        const next = { ...prev, [achId]: true };
-        try {
-          const storageKey = `vibe_claimed_achievements_${address.toLowerCase()}`;
-          localStorage.setItem(storageKey, JSON.stringify(next));
-        } catch (e) {
-          console.warn('Failed to save claimed achievement', e);
-        }
-        return next;
-      });
-      setClaimingId(null);
-    }, 450);
-  };
 
   // Dynamic achievement unlock calculations
   // 1. REWARDS ELIGIBILITY (Auto-unlocked & auto-highlighted)

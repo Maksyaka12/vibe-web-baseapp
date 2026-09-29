@@ -37,6 +37,12 @@ const CONTRACTS = [
     title: 'Daily Check-In & Streak Contract',
     address: '0x1938BA215ef556e51eE6AaF909e0970AE0167634',
     basescanUrl: 'https://basescan.org/address/0x1938BA215ef556e51eE6AaF909e0970AE0167634'
+  },
+  {
+    id: 'achievements',
+    title: 'Achievements & SBT Badges Contract',
+    address: '0x0000000000000000000000000000000000000000',
+    basescanUrl: 'https://basescan.org/address/0x0000000000000000000000000000000000000000'
   }
 ];
 
