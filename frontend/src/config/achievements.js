@@ -9,7 +9,7 @@ export const ACHIEVEMENTS_ABI = parseAbi([
   'function claimAchievements(uint256[] calldata achievementIds) external',
   'function hasUserClaimed(address user, uint256 achievementId) view returns (bool)',
   'function getUserAchievements(address user, uint256[] calldata ids) view returns (bool[])',
-  'function getAchievement(uint256 achievementId) view returns (tuple(uint256 id, string name, string category, string uri, bool isActive, uint256 totalClaimed))',
+  'function getAchievement(uint256 achievementId) view returns ((uint256 id, string name, string category, string uri, bool isActive, uint256 totalClaimed))',
   'function totalAchievements() view returns (uint256)',
   'function totalGlobalClaims() view returns (uint256)',
   'function balanceOf(address account, uint256 id) view returns (uint256)',
