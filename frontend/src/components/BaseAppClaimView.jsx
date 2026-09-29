@@ -952,12 +952,14 @@ export function BaseAppClaimView(props) {
                           background: 'rgba(255, 68, 102, 0.08)',
                           border: '1px solid rgba(255, 68, 102, 0.3)',
                           borderRadius: '10px',
-                          padding: '8px 10px'
+                          padding: '8px 10px',
+                          width: '100%',
+                          boxSizing: 'border-box'
                         }}
                       >
                         <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                          Unfortunately, you are not eligible for this unlock distribution! You didn't hold 5M+ $VIBE at snapshot
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, wordBreak: 'break-word' }}>
+                          Not eligible for this unlock. Complete requirement for the next unlock.
                         </span>
                       </div>
                     )}
@@ -1150,12 +1152,14 @@ export function BaseAppClaimView(props) {
                           background: 'rgba(255, 68, 102, 0.08)',
                           border: '1px solid rgba(255, 68, 102, 0.3)',
                           borderRadius: '10px',
-                          padding: '8px 10px'
+                          padding: '8px 10px',
+                          width: '100%',
+                          boxSizing: 'border-box'
                         }}
                       >
                         <X size={12} color="#ff4466" style={{ flexShrink: 0 }} />
-                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, whiteSpace: 'nowrap' }}>
-                          Unfortunately, you are not eligible for this royalty payout! You didn't hold a Vibe Club NFT at snapshot
+                        <span style={{ fontSize: '5.5px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.5, wordBreak: 'break-word' }}>
+                          Not eligible for this payout. Complete requirement for the next payout.
                         </span>
                       </div>
                     )}

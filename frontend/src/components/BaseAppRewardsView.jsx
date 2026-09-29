@@ -629,10 +629,10 @@ export default function BaseAppRewardsView({
                     </span>
                   </div>
                 ) : (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center' }}>
+                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                     <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.4 }}>
-                      Unfortunately, you are not eligible for this unlock distribution! You didn't hold 5M+ $VIBE at snapshot
+                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
+                      Not eligible for this unlock. Complete requirement for the next unlock.
                     </span>
                   </div>
                 )
@@ -1012,10 +1012,10 @@ export default function BaseAppRewardsView({
                     </span>
                   </div>
                 ) : (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center' }}>
+                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
                     <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.4 }}>
-                      Unfortunately, you are not eligible for this royalty payout! You didn't hold a Vibe Club NFT at snapshot
+                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
+                      Not eligible for this payout. Complete requirement for the next payout.
                     </span>
                   </div>
                 )
