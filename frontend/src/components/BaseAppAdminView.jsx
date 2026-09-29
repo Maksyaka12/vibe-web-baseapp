@@ -16,8 +16,7 @@ import {
   Crown,
   Sparkles,
   AlertTriangle,
-  RefreshCw,
-  Bot
+  RefreshCw
 } from 'lucide-react';
 
 export const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
@@ -27,9 +26,6 @@ export const ROYALTY_DISTRIBUTOR_CA = '0x3753EE7fa9538087f901aa5E4afc12dBA57B97c
 export const NFT_CONTRACT_ADDRESS = '0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886';
 export const DEAD_ADDRESS = '0x000000000000000000000000000000000000dEaD';
 export const COMMUNITY_WALLET = '0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf';
-export const CHECKIN_CONTRACT_ADDRESS = '0x1938BA215ef556e51eE6AaF909e0970AE0167634';
-export const ACHIEVEMENTS_CONTRACT_ADDRESS = '0x10667fF580e6fc2edfFC35991fACb05C2681E757';
-export const COORDINATOR_CONTRACT_ADDRESS = '0x5c48Ed8E0619d3eD29BdDcE62d2e7746E18d1469';
 
 const DISTRIBUTOR_ABI = parseAbi([
   'function setMerkleRoot(uint256 epochId, bytes32 _merkleRoot) external',
@@ -223,71 +219,6 @@ export function BaseAppAdminView() {
         method: 'eth_sendTransaction',
         params: [{ from: activeAddress, to, data: calldata, value }]
       });
-    }
-  };
-
-  // ═════════════════════════════════════════════════════════════════════════
-  // COORDINATOR / OPERATOR LOGIC
-  // ═════════════════════════════════════════════════════════════════════════
-  const [checkInOperatorActive, setCheckInOperatorActive] = useState(false);
-  const [achievementsOperatorActive, setAchievementsOperatorActive] = useState(false);
-  const [operatorLoading, setOperatorLoading] = useState(false);
-
-  const fetchOperatorStatuses = useCallback(async () => {
-    setOperatorLoading(true);
-    try {
-      const [isCheckInOp, isAchOp] = await Promise.all([
-        publicClient.readContract({
-          address: CHECKIN_CONTRACT_ADDRESS,
-          abi: parseAbi(['function operators(address) view returns (bool)']),
-          functionName: 'operators',
-          args: [COORDINATOR_CONTRACT_ADDRESS]
-        }).catch(() => false),
-        publicClient.readContract({
-          address: ACHIEVEMENTS_CONTRACT_ADDRESS,
-          abi: parseAbi(['function operators(address) view returns (bool)']),
-          functionName: 'operators',
-          args: [COORDINATOR_CONTRACT_ADDRESS]
-        }).catch(() => false)
-      ]);
-      setCheckInOperatorActive(!!isCheckInOp);
-      setAchievementsOperatorActive(!!isAchOp);
-    } catch (e) {
-      console.error('Error fetching operator statuses:', e);
-    } finally {
-      setOperatorLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchOperatorStatuses();
-  }, [fetchOperatorStatuses]);
-
-  const handleSetOperator = async (targetContractName) => {
-    setLoading(true);
-    setErrorMessage('');
-    setSuccessMessage('');
-    setTxHash('');
-
-    try {
-      const targetAddress = targetContractName === 'checkIn' ? CHECKIN_CONTRACT_ADDRESS : ACHIEVEMENTS_CONTRACT_ADDRESS;
-      const data = encodeFunctionData({
-        abi: parseAbi(['function setOperator(address operator, bool authorized) external']),
-        functionName: 'setOperator',
-        args: [COORDINATOR_CONTRACT_ADDRESS, true]
-      });
-
-      const hash = await sendAdminTx(targetAddress, data);
-      setTxHash(hash);
-      setSuccessMessage(`Successfully authorized VibeCoordinator on ${targetContractName === 'checkIn' ? 'Daily Check-In' : 'Achievements'}!`);
-      setTimeout(() => {
-        fetchOperatorStatuses();
-      }, 2500);
-    } catch (err) {
-      console.error(err);
-      setErrorMessage(err?.message || 'Failed to authorize operator');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -853,11 +784,11 @@ export function BaseAppAdminView() {
         </div>
       )}
 
-      {/* 4 Main Module Tabs */}
+      {/* 3 Main Module Tabs */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '8px',
           background: 'rgba(4, 14, 36, 0.8)',
           border: '1.5px solid rgba(0, 245, 255, 0.25)',
@@ -869,13 +800,13 @@ export function BaseAppAdminView() {
         <button
           onClick={() => setActiveTab('holder')}
           style={{
-            padding: '12px 6px',
+            padding: '12px 8px',
             borderRadius: '10px',
             border: activeTab === 'holder' ? '1.5px solid #00f5ff' : '1px solid transparent',
             background: activeTab === 'holder' ? 'linear-gradient(135deg, rgba(0, 245, 255, 0.25) 0%, rgba(0, 184, 255, 0.15) 100%)' : 'transparent',
             color: activeTab === 'holder' ? '#00f5ff' : '#88aacc',
             fontFamily: "'Press Start 2P', monospace",
-            fontSize: '7.5px',
+            fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
@@ -893,13 +824,13 @@ export function BaseAppAdminView() {
         <button
           onClick={() => setActiveTab('royalty')}
           style={{
-            padding: '12px 6px',
+            padding: '12px 8px',
             borderRadius: '10px',
             border: activeTab === 'royalty' ? '1.5px solid #c084fc' : '1px solid transparent',
             background: activeTab === 'royalty' ? 'linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(192, 132, 252, 0.15) 100%)' : 'transparent',
             color: activeTab === 'royalty' ? '#c084fc' : '#88aacc',
             fontFamily: "'Press Start 2P', monospace",
-            fontSize: '7.5px',
+            fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
@@ -917,13 +848,13 @@ export function BaseAppAdminView() {
         <button
           onClick={() => setActiveTab('nft')}
           style={{
-            padding: '12px 6px',
+            padding: '12px 8px',
             borderRadius: '10px',
             border: activeTab === 'nft' ? '1.5px solid #ffd700' : '1px solid transparent',
             background: activeTab === 'nft' ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 170, 0, 0.15) 100%)' : 'transparent',
             color: activeTab === 'nft' ? '#ffd700' : '#88aacc',
             fontFamily: "'Press Start 2P', monospace",
-            fontSize: '7.5px',
+            fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
@@ -936,30 +867,6 @@ export function BaseAppAdminView() {
         >
           <Sparkles size={16} color={activeTab === 'nft' ? '#ffd700' : '#88aacc'} />
           <span>VIBE CLUB</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('coordinator')}
-          style={{
-            padding: '12px 6px',
-            borderRadius: '10px',
-            border: activeTab === 'coordinator' ? '1.5px solid #00ff88' : '1px solid transparent',
-            background: activeTab === 'coordinator' ? 'linear-gradient(135deg, rgba(0, 255, 136, 0.25) 0%, rgba(0, 245, 255, 0.15) 100%)' : 'transparent',
-            color: activeTab === 'coordinator' ? '#00ff88' : '#88aacc',
-            fontFamily: "'Press Start 2P', monospace",
-            fontSize: '7.5px',
-            fontWeight: 900,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-            textAlign: 'center'
-          }}
-        >
-          <Bot size={16} color={activeTab === 'coordinator' ? '#00ff88' : '#88aacc'} />
-          <span>OPERATOR</span>
         </button>
       </div>
 
@@ -1852,108 +1759,6 @@ export function BaseAppAdminView() {
                 {isOverridePriceSaving ? 'SAVING...' : 'SET PRICE'}
               </button>
             </div>
-          </div>
-
-        </div>
-      )}
-
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* TAB 4: COORDINATOR / AI AGENT OPERATORS                             */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {activeTab === 'coordinator' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          
-          {/* Header & Contract Link */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88' }} />
-              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
-                AI OPERATOR CONTROLS
-              </h3>
-            </div>
-            <a
-              href="https://basescan.org/address/0x5c48Ed8E0619d3eD29BdDcE62d2e7746E18d1469"
-              target="_blank"
-              rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#00ff88', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
-            >
-              COORDINATOR: 0x5c48...1469 ↗
-            </a>
-          </div>
-
-          {/* 2 Status Cards */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '12px' }}>
-            <div className="admin-metric-card" style={{ border: `1.5px solid ${checkInOperatorActive ? '#00ff88' : 'rgba(255, 68, 102, 0.45)'}` }}>
-              <div className="admin-metric-label">
-                DAILY CHECK-IN OPERATOR
-              </div>
-              <div className="admin-metric-value" style={{ color: checkInOperatorActive ? '#00ff88' : '#ff4466' }}>
-                {operatorLoading ? 'CHECKING...' : (checkInOperatorActive ? 'AUTHORIZED ✓' : 'NOT AUTHORIZED ✗')}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: `1.5px solid ${achievementsOperatorActive ? '#00ff88' : 'rgba(255, 68, 102, 0.45)'}` }}>
-              <div className="admin-metric-label">
-                ACHIEVEMENTS SBT OPERATOR
-              </div>
-              <div className="admin-metric-value" style={{ color: achievementsOperatorActive ? '#00ff88' : '#ff4466' }}>
-                {operatorLoading ? 'CHECKING...' : (achievementsOperatorActive ? 'AUTHORIZED ✓' : 'NOT AUTHORIZED ✗')}
-              </div>
-            </div>
-          </div>
-
-          {/* Action 1: Authorize Check-In Operator */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00f5ff' }}>
-              1. AUTHORIZE COORDINATOR ON DAILY CHECK-IN
-            </div>
-            <p style={{ fontSize: '11px', color: '#88aacc', margin: '0 0 14px 0', lineHeight: '1.5' }}>
-              Contract: <code>0x1938BA215ef556e51eE6AaF909e0970AE0167634</code>.<br />
-              Enables autonomous AI agents to execute <code>checkInFor(user)</code> via coordinator without user gas.
-            </p>
-            <button
-              onClick={() => handleSetOperator('checkIn')}
-              disabled={loading || checkInOperatorActive}
-              className="admin-action-btn"
-              style={{
-                ...ACTION_BTN_STYLE(
-                  checkInOperatorActive ? 'rgba(0, 255, 136, 0.2)' : 'linear-gradient(135deg, #00f5ff 0%, #00ff88 100%)',
-                  checkInOperatorActive ? '#00ff88' : '#00f5ff',
-                  '#020b1a'
-                ),
-                width: '100%',
-                cursor: (loading || checkInOperatorActive) ? 'not-allowed' : 'pointer'
-              }}
-            >
-              {loading ? 'PROCESSING...' : (checkInOperatorActive ? 'ALREADY AUTHORIZED' : 'APPROVE CHECK-IN OPERATOR')}
-            </button>
-          </div>
-
-          {/* Action 2: Authorize Achievements Operator */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#c084fc' }}>
-              2. AUTHORIZE COORDINATOR ON ACHIEVEMENTS SBT
-            </div>
-            <p style={{ fontSize: '11px', color: '#88aacc', margin: '0 0 14px 0', lineHeight: '1.5' }}>
-              Contract: <code>0x10667fF580e6fc2edfFC35991fACb05C2681E757</code>.<br />
-              Enables autonomous AI agents to execute <code>claimAchievementFor(user, id)</code> via coordinator.
-            </p>
-            <button
-              onClick={() => handleSetOperator('achievements')}
-              disabled={loading || achievementsOperatorActive}
-              className="admin-action-btn"
-              style={{
-                ...ACTION_BTN_STYLE(
-                  achievementsOperatorActive ? 'rgba(0, 255, 136, 0.2)' : 'linear-gradient(135deg, #c084fc 0%, #00ff88 100%)',
-                  achievementsOperatorActive ? '#00ff88' : '#c084fc',
-                  '#020b1a'
-                ),
-                width: '100%',
-                cursor: (loading || achievementsOperatorActive) ? 'not-allowed' : 'pointer'
-              }}
-            >
-              {loading ? 'PROCESSING...' : (achievementsOperatorActive ? 'ALREADY AUTHORIZED' : 'APPROVE ACHIEVEMENTS OPERATOR')}
-            </button>
           </div>
 
         </div>
