@@ -2,155 +2,22 @@
 pragma solidity ^0.8.20;
 
 /**
- * @dev Interface of the ERC165 standard, as defined in the
- * https://eips.ethereum.org/EIPS/eip-165[EIP].
- */
-interface IERC165 {
-    function supportsInterface(bytes4 interfaceId) external view returns (bool);
-}
-
-/**
- * @dev Implementation of the {IERC165} interface.
- */
-abstract contract ERC165 is IERC165 {
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-        return interfaceId == type(IERC165).interfaceId;
-    }
-}
-
-/**
- * @dev Required interface of an ERC1155 compliant contract, as defined in the
- * https://eips.ethereum.org/EIPS/eip-1155[EIP].
- */
-interface IERC1155 is IERC165 {
-    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
-    event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
-    event ApprovalForAll(address indexed account, address indexed operator, bool approved);
-    event URI(string value, uint256 indexed id);
-
-    function balanceOf(address account, uint256 id) external view returns (uint256);
-    function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids) external view returns (uint256[] memory);
-    function setApprovalForAll(address operator, bool approved) external;
-    function isApprovedForAll(address account, address operator) external view returns (bool);
-    function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) external;
-    function safeBatchTransferFrom(address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) external;
-}
-
-/**
- * @dev Interface for the optional metadata functions in {IERC1155}.
- */
-interface IERC1155MetadataURI is IERC1155 {
-    function uri(uint256 id) external view returns (string memory);
-}
-
-/**
- * @dev Handles the receipt of ERC1155 token types.
- */
-interface IERC1155Receiver is IERC165 {
-    function onERC1155Received(
-        address operator,
-        address from,
-        uint256 id,
-        uint256 value,
-        bytes calldata data
-    ) external returns (bytes4);
-
-    function onERC1155BatchReceived(
-        address operator,
-        address from,
-        uint256[] calldata ids,
-        uint256[] calldata values,
-        bytes calldata data
-    ) external returns (bytes4);
-}
-
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- */
-abstract contract Ownable is Context {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    error OwnableUnauthorizedAccount(address account);
-    error OwnableInvalidOwner(address owner);
-
-    constructor() {
-        _transferOwnership(_msgSender());
-    }
-
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    modifier onlyOwner() {
-        _checkOwner();
-        _;
-    }
-
-    function _checkOwner() internal view virtual {
-        if (owner() != _msgSender()) {
-            revert OwnableUnauthorizedAccount(_msgSender());
-        }
-    }
-
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        if (newOwner == address(0)) {
-            revert OwnableInvalidOwner(address(0));
-        }
-        _transferOwnership(newOwner);
-    }
-
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-}
-
-/**
  * @title VibeAchievements
  * @notice Official Soulbound Token (SBT) Achievement Badge Contract for Vibe Hub on Base.
- *         Users earn verifiable on-chain badges by completing in-app milestones
- *         (check-in streaks, staking vaults, liquidity, etc.).
+ *         Users earn verifiable on-chain badges by completing in-app milestones.
  *         Badges are non-transferable (Soulbound) to guarantee authenticity.
  */
-contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Ownable {
-
+contract VibeAchievements {
     string public constant name = "Vibe Hub Achievements";
     string public constant symbol = "VIBE_ACHIEVE";
 
-    // Global Pause
+    address public owner;
     bool public paused;
 
-    // Base URI for token metadata
     string public baseURI;
-    // Contract-level metadata URI (OpenSea / Block explorers)
     string public contractURI;
 
-    // Total unique achievements registered
     uint256 public totalAchievementsCount;
-    // Total global achievement badges minted
     uint256 public totalGlobalClaims;
 
     struct Achievement {
@@ -165,37 +32,29 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
     // Mapping: achievementId => Achievement details
     mapping(uint256 => Achievement) public achievements;
 
-    // Mapping: achievementId => list of all achievement IDs for enumeration
+    // List of achievement IDs for enumeration
     uint256[] public achievementIdsList;
 
     // Mapping: user => (achievementId => claimed status)
     mapping(address => mapping(uint256 => bool)) public hasClaimed;
 
-    // Mapping: token balance mapping (user => (achievementId => balance))
+    // Mapping: user => (achievementId => balance)
     mapping(address => mapping(uint256 => uint256)) private _balances;
 
-    // Authorized operators / relayers
+    // Authorized operators
     mapping(address => bool) public operators;
 
-    // Events
-    event AchievementClaimed(
-        address indexed user,
-        uint256 indexed achievementId,
-        uint256 timestamp
-    );
-    event AchievementCreated(
-        uint256 indexed achievementId,
-        string name,
-        string category,
-        string uri
-    );
-    event AchievementUpdated(
-        uint256 indexed achievementId,
-        string name,
-        string category,
-        string uri,
-        bool isActive
-    );
+    // ERC-1155 Events
+    event TransferSingle(address indexed operator, address indexed from, address indexed to, uint256 id, uint256 value);
+    event TransferBatch(address indexed operator, address indexed from, address indexed to, uint256[] ids, uint256[] values);
+    event ApprovalForAll(address indexed account, address indexed operator, bool approved);
+    event URI(string value, uint256 indexed id);
+
+    // Custom Events
+    event AchievementClaimed(address indexed user, uint256 indexed achievementId, uint256 timestamp);
+    event AchievementCreated(uint256 indexed achievementId, string name, string category, string uri);
+    event AchievementUpdated(uint256 indexed achievementId, string name, string category, string uri, bool isActive);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
     event OperatorUpdated(address indexed operator, bool authorized);
     event Paused(address indexed account);
     event Unpaused(address indexed account);
@@ -208,19 +67,28 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
     error ContractPaused();
     error InvalidAddress();
     error ArrayLengthMismatch();
+    error NotOwner();
     error NotOperator();
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner();
+        _;
+    }
+
+    modifier onlyOperator() {
+        if (!operators[msg.sender] && msg.sender != owner) revert NotOperator();
+        _;
+    }
 
     modifier whenNotPaused() {
         if (paused) revert ContractPaused();
         _;
     }
 
-    modifier onlyOperator() {
-        if (!operators[_msgSender()] && _msgSender() != owner()) revert NotOperator();
-        _;
-    }
-
     constructor() {
+        owner = msg.sender;
+        emit OwnershipTransferred(address(0), msg.sender);
+
         baseURI = "https://vibeverse.dog/api/achievements/";
         contractURI = "https://vibeverse.dog/api/achievements/contract.json";
 
@@ -235,27 +103,24 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
         _createAchievement(8, "BANK FOUNDER", "Dog Staker", "https://vibeverse.dog/api/achievements/8.json", true);
     }
 
-    // ── 1. ERC165 SUPPORT ──
-
-    function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
+    // ── ERC165 ──
+    function supportsInterface(bytes4 interfaceId) external pure returns (bool) {
         return
-            interfaceId == type(IERC1155).interfaceId ||
-            interfaceId == type(IERC1155MetadataURI).interfaceId ||
-            super.supportsInterface(interfaceId);
+            interfaceId == 0x01ffc9a7 || // ERC165 Interface ID
+            interfaceId == 0xd9b67a26 || // ERC1155 Interface ID
+            interfaceId == 0x0e89341c;   // ERC1155MetadataURI Interface ID
     }
 
-    // ── 2. METADATA ──
-
-    function uri(uint256 id) public view virtual override returns (string memory) {
+    // ── METADATA ──
+    function uri(uint256 id) external view returns (string memory) {
         if (bytes(achievements[id].uri).length > 0) {
             return achievements[id].uri;
         }
         return string(abi.encodePacked(baseURI, _toString(id), ".json"));
     }
 
-    // ── 3. SOULBOUND BALANCE & TOKEN FUNCTIONS ──
-
-    function balanceOf(address account, uint256 id) public view virtual override returns (uint256) {
+    // ── ERC1155 SOULBOUND BALANCES & TRANSFERS ──
+    function balanceOf(address account, uint256 id) external view returns (uint256) {
         if (account == address(0)) revert InvalidAddress();
         return _balances[account][id];
     }
@@ -263,34 +128,31 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
     function balanceOfBatch(
         address[] calldata accounts,
         uint256[] calldata ids
-    ) public view virtual override returns (uint256[] memory) {
+    ) external view returns (uint256[] memory) {
         if (accounts.length != ids.length) revert ArrayLengthMismatch();
         uint256[] memory batchBalances = new uint256[](accounts.length);
         for (uint256 i = 0; i < accounts.length; ++i) {
-            batchBalances[i] = balanceOf(accounts[i], ids[i]);
+            if (accounts[i] == address(0)) revert InvalidAddress();
+            batchBalances[i] = _balances[accounts[i]][ids[i]];
         }
         return batchBalances;
     }
 
-    function setApprovalForAll(address, bool) public virtual override {
-        // Soulbound token: approvals are disabled
+    function setApprovalForAll(address, bool) external pure {
         revert SoulboundTokenCannotBeTransferred();
     }
 
-    function isApprovedForAll(address, address) public view virtual override returns (bool) {
+    function isApprovedForAll(address, address) external pure returns (bool) {
         return false;
     }
 
-    /**
-     * @dev Block user-to-user transfers.
-     */
     function safeTransferFrom(
         address from,
         address to,
         uint256 id,
         uint256 amount,
         bytes calldata data
-    ) public virtual override {
+    ) external {
         if (from != address(0)) {
             revert SoulboundTokenCannotBeTransferred();
         }
@@ -303,38 +165,24 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
         uint256[] calldata ids,
         uint256[] calldata amounts,
         bytes calldata data
-    ) public virtual override {
+    ) external {
         if (from != address(0)) {
             revert SoulboundTokenCannotBeTransferred();
         }
         _mintBatch(to, ids, amounts, data);
     }
 
-    // ── 4. CLAIM FUNCTIONS ──
-
-    /**
-     * @notice Claims a single earned achievement badge.
-     * @param achievementId ID of the achievement to claim.
-     */
+    // ── CLAIM FUNCTIONS ──
     function claimAchievement(uint256 achievementId) external whenNotPaused {
-        _processClaim(_msgSender(), achievementId);
+        _processClaim(msg.sender, achievementId);
     }
 
-    /**
-     * @notice Claims multiple earned achievement badges in a single transaction.
-     * @param achievementIds Array of achievement IDs to claim.
-     */
     function claimAchievements(uint256[] calldata achievementIds) external whenNotPaused {
         for (uint256 i = 0; i < achievementIds.length; ++i) {
-            _processClaim(_msgSender(), achievementIds[i]);
+            _processClaim(msg.sender, achievementIds[i]);
         }
     }
 
-    /**
-     * @notice Claims an achievement on behalf of a user (authorized operator/agent only).
-     * @param user Target user address.
-     * @param achievementId ID of the achievement.
-     */
     function claimAchievementFor(address user, uint256 achievementId) external onlyOperator whenNotPaused {
         if (user == address(0)) revert InvalidAddress();
         _processClaim(user, achievementId);
@@ -355,16 +203,12 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
         emit AchievementClaimed(user, achievementId, block.timestamp);
     }
 
-    // ── 5. INTERNAL MINTER ──
-
     function _mint(address to, uint256 id, uint256 amount, bytes memory data) internal {
         if (to == address(0)) revert InvalidAddress();
 
         _balances[to][id] += amount;
 
-        emit TransferSingle(_msgSender(), address(0), to, id, amount);
-
-        _doSafeTransferAcceptanceCheck(_msgSender(), address(0), to, id, amount, data);
+        emit TransferSingle(msg.sender, address(0), to, id, amount);
     }
 
     function _mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal {
@@ -375,57 +219,10 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
             _balances[to][ids[i]] += amounts[i];
         }
 
-        emit TransferBatch(_msgSender(), address(0), to, ids, amounts);
-
-        _doSafeBatchTransferAcceptanceCheck(_msgSender(), address(0), to, ids, amounts, data);
+        emit TransferBatch(msg.sender, address(0), to, ids, amounts);
     }
 
-    function _doSafeTransferAcceptanceCheck(
-        address operator,
-        address from,
-        address to,
-        uint256 id,
-        uint256 amount,
-        bytes memory data
-    ) private {
-        if (to.code.length > 0) {
-            try IERC1155Receiver(to).onERC1155Received(operator, from, id, amount, data) returns (bytes4 response) {
-                if (response != IERC1155Receiver.onERC1155Received.selector) {
-                    revert("ERC1155: ERC1155Receiver rejected tokens");
-                }
-            } catch Error(string memory reason) {
-                revert(reason);
-            } catch {
-                revert("ERC1155: transfer to non-ERC1155Receiver implementer");
-            }
-        }
-    }
-
-    function _doSafeBatchTransferAcceptanceCheck(
-        address operator,
-        address from,
-        address to,
-        uint256[] memory ids,
-        uint256[] memory amounts,
-        bytes memory data
-    ) private {
-        if (to.code.length > 0) {
-            try IERC1155Receiver(to).onERC1155BatchReceived(operator, from, ids, amounts, data) returns (
-                bytes4 response
-            ) {
-                if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
-                    revert("ERC1155: ERC1155Receiver rejected tokens");
-                }
-            } catch Error(string memory reason) {
-                revert(reason);
-            } catch {
-                revert("ERC1155: transfer to non-ERC1155Receiver implementer");
-            }
-        }
-    }
-
-    // ── 6. VIEW HELPERS ──
-
+    // ── VIEW HELPERS ──
     function hasUserClaimed(address user, uint256 achievementId) external view returns (bool) {
         return hasClaimed[user][achievementId];
     }
@@ -458,8 +255,7 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
         return totalAchievementsCount;
     }
 
-    // ── 7. ADMIN FUNCTIONS (onlyOwner) ──
-
+    // ── ADMIN FUNCTIONS ──
     function createAchievement(
         uint256 achievementId,
         string memory achName,
@@ -523,12 +319,19 @@ contract VibeAchievements is Context, ERC165, IERC1155, IERC1155MetadataURI, Own
 
     function pause() external onlyOwner {
         paused = true;
-        emit Paused(_msgSender());
+        emit Paused(msg.sender);
     }
 
     function unpause() external onlyOwner {
         paused = false;
-        emit Unpaused(_msgSender());
+        emit Unpaused(msg.sender);
+    }
+
+    function transferOwnership(address newOwner) external onlyOwner {
+        if (newOwner == address(0)) revert InvalidAddress();
+        address oldOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
     }
 
     function _createAchievement(
