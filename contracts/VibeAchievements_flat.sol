@@ -151,12 +151,12 @@ contract VibeAchievements {
         address to,
         uint256 id,
         uint256 amount,
-        bytes calldata data
+        bytes calldata
     ) external {
         if (from != address(0)) {
             revert SoulboundTokenCannotBeTransferred();
         }
-        _mint(to, id, amount, data);
+        _mint(to, id, amount);
     }
 
     function safeBatchTransferFrom(
@@ -164,12 +164,12 @@ contract VibeAchievements {
         address to,
         uint256[] calldata ids,
         uint256[] calldata amounts,
-        bytes calldata data
+        bytes calldata
     ) external {
         if (from != address(0)) {
             revert SoulboundTokenCannotBeTransferred();
         }
-        _mintBatch(to, ids, amounts, data);
+        _mintBatch(to, ids, amounts);
     }
 
     // ── CLAIM FUNCTIONS ──
@@ -198,12 +198,12 @@ contract VibeAchievements {
         ach.totalClaimed += 1;
         totalGlobalClaims += 1;
 
-        _mint(user, achievementId, 1, "");
+        _mint(user, achievementId, 1);
 
         emit AchievementClaimed(user, achievementId, block.timestamp);
     }
 
-    function _mint(address to, uint256 id, uint256 amount, bytes memory data) internal {
+    function _mint(address to, uint256 id, uint256 amount) internal {
         if (to == address(0)) revert InvalidAddress();
 
         _balances[to][id] += amount;
@@ -211,7 +211,7 @@ contract VibeAchievements {
         emit TransferSingle(msg.sender, address(0), to, id, amount);
     }
 
-    function _mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) internal {
+    function _mintBatch(address to, uint256[] memory ids, uint256[] memory amounts) internal {
         if (to == address(0)) revert InvalidAddress();
         if (ids.length != amounts.length) revert ArrayLengthMismatch();
 
