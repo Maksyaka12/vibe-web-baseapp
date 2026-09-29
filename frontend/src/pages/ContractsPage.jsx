@@ -43,6 +43,12 @@ const CONTRACTS = [
     title: 'Achievements & SBT Badges Contract',
     address: '0x10667fF580e6fc2edfFC35991fACb05C2681E757',
     basescanUrl: 'https://basescan.org/address/0x10667fF580e6fc2edfFC35991fACb05C2681E757'
+  },
+  {
+    id: 'coordinator',
+    title: 'Master AI Agent Coordinator & Registry',
+    address: '0x0000000000000000000000000000000000000000',
+    basescanUrl: 'https://basescan.org/address/0x0000000000000000000000000000000000000000'
   }
 ];
 
