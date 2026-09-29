@@ -134,10 +134,10 @@ contract VibeCoordinator {
         emit OwnershipTransferred(address(0), msg.sender);
 
         // Official Initial Contract Addresses on Base
-        tokenVibe = 0xb200000000000000000000df24ecb8bf51100a01;
+        tokenVibe = 0xb200000000000000000000DF24eCb8bF51100a01;
         vibeClubNft = 0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886;
         stakingContract = 0x6f25a9e1e677616c1bF7ab54b470b0c82839Adb4;
-        holderDistributor = 0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089;
+        holderDistributor = 0x77e04DD8c45725D2b2B3C8eebAc2f3F1708Fd089;
         royaltyDistributor = 0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1;
         dailyCheckIn = 0x1938BA215ef556e51eE6AaF909e0970AE0167634;
         achievements = 0x10667fF580e6fc2edfFC35991fACb05C2681E757;
