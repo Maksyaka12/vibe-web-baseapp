@@ -41,8 +41,8 @@ const CONTRACTS = [
   {
     id: 'achievements',
     title: 'Achievements & SBT Badges Contract',
-    address: '0x0000000000000000000000000000000000000000',
-    basescanUrl: 'https://basescan.org/address/0x0000000000000000000000000000000000000000'
+    address: '0x10667fF580e6fc2edfFC35991fACb05C2681E757',
+    basescanUrl: 'https://basescan.org/address/0x10667fF580e6fc2edfFC35991fACb05C2681E757'
   }
 ];
 

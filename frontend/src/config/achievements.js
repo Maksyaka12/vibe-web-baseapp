@@ -2,7 +2,7 @@ import { parseAbi } from 'viem';
 
 export const VIBE_ACHIEVEMENTS_CONTRACT_ADDRESS =
   import.meta.env?.VITE_ACHIEVEMENTS_CONTRACT_ADDRESS ||
-  '0x0000000000000000000000000000000000000000';
+  '0x10667fF580e6fc2edfFC35991fACb05C2681E757';
 
 export const ACHIEVEMENTS_ABI = parseAbi([
   'function claimAchievement(uint256 achievementId) external',
