@@ -1277,9 +1277,9 @@ const STAKING_EPOCHS = [
     duration: '10 Days',
     poolAmount: '1,800,000',
     startTime: '20 Sep, 15:00 UTC',
-    endTime: '30 Sep, 18:00 UTC',
+    endTime: '30 Sep, 15:00 UTC',
     startDateObj: new Date('2026-09-20T15:00:00Z'),
-    endDateObj: new Date('2026-09-30T18:00:00Z'),
+    endDateObj: new Date('2026-09-30T15:00:00Z'),
     link: O1_STAKING_VAULT_EPOCH_4
   },
   {

@@ -301,7 +301,7 @@ export default function BaseAppRewardsView({
   const endedStakings = STAKING_EPOCHS.filter(e => getEpochStatus(e, now) === 'ended');
   const upcomingStakings = STAKING_EPOCHS.filter(e => getEpochStatus(e, now) === 'upcoming');
 
-  const featuredStaking = activeStakings[0] || upcomingStakings[0] || endedStakings[endedStakings.length - 1] || STAKING_EPOCHS[0];
+  const featuredStaking = activeStakings[activeStakings.length - 1] || upcomingStakings[0] || endedStakings[endedStakings.length - 1] || STAKING_EPOCHS[0];
   const featuredStakingStatus = getEpochStatus(featuredStaking, now);
 
   const otherUpcomingStakings = upcomingStakings.filter(e => e.epoch !== featuredStaking.epoch);
