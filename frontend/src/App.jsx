@@ -23,6 +23,7 @@ const O1_STAKING_VAULT_EPOCH_1 = 'https://launch.o1.exchange/staking/vaults/0xaf
 const O1_STAKING_VAULT_EPOCH_2 = 'https://launch.o1.exchange/staking/vaults/0x5dcabfeb83e84ad87572c531dfa8de915e0b5d8c11e4ca39598a3c6b4fc1e446?chain=8453';
 const O1_STAKING_VAULT_EPOCH_3 = 'https://launch.o1.exchange/staking/vaults/0x5a0d6075197085da4e2b9a790f3be8c297d08effcfca677992489668ebcf8b0c?chain=8453';
 const O1_STAKING_VAULT_EPOCH_4 = 'https://launch.o1.exchange/staking/vaults/0xdd9b4d063653fcc4d8b64d42edfe156002e863b15297d059463554182fa50dd9?chain=8453';
+const O1_STAKING_VAULT_EPOCH_5 = 'https://launch.o1.exchange/staking/vaults/0x795d393bdf9582ac8678aceb6f2228118ae2456406da38a8cb35967c033c0713?chain=8453';
 const DEX     = 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5';
 const DEX_EMB = 'https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5?embed=1&theme=dark&activeTab=chart';
 
@@ -1284,12 +1285,12 @@ const STAKING_EPOCHS = [
   {
     epoch: 'Epoch 5',
     duration: '10 Days',
-    poolAmount: 'TBA',
+    poolAmount: '1,100,000',
     startTime: '30 Sep, 15:00 UTC',
     endTime: '10 Oct, 15:00 UTC',
     startDateObj: new Date('2026-09-30T15:00:00Z'),
     endDateObj: new Date('2026-10-10T15:00:00Z'),
-    link: O1_STAKING_VAULT
+    link: O1_STAKING_VAULT_EPOCH_5
   },
   {
     epoch: 'Epoch 6',
