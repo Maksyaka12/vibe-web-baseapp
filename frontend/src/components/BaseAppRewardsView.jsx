@@ -367,121 +367,40 @@ export default function BaseAppRewardsView({
         </div>
       </div>
 
-      {/* ── 2. PREMIUM CYBERPUNK / WEB3 REWARD CATEGORY NAVIGATION DECK ── */}
-      <div className="rewards-nav-deck">
-        {/* Navigation Deck Header */}
-        <div className="rewards-deck-header">
-          <div className="rewards-deck-title-wrap">
-            <span className="rewards-deck-dot" />
-            <span className="rewards-deck-title">REWARD CATEGORIES</span>
-            <span className="rewards-deck-count-pill">{activeHolders.length + activeVibeClubs.length + activeStakings.length + activeGiveaways.length} ACTIVE</span>
-          </div>
-          <div className="rewards-deck-instruction">
-            SWITCH CATEGORY TO EXPLORE
-          </div>
-        </div>
-
-        {/* 4 Category Cards Grid */}
-        <div className="rewards-cat-grid">
-          {[
-            {
-              id: 'holders',
-              num: '01',
-              label: 'HOLDER REWARDS',
-              sub: '5M+ $VIBE Pool',
-              image: '/rewards-hub/holders.jfif',
-              count: `${activeHolders.length} LIVE`
-            },
-            {
-              id: 'vibe-club',
-              num: '02',
-              label: 'VIBE CLUB ROYALTIES',
-              sub: 'NFT Royalty Pool',
-              image: '/rewards-hub/vibe-club.jfif',
-              count: `${activeVibeClubs.length} LIVE`
-            },
-            {
-              id: 'staking',
-              num: '03',
-              label: 'STAKING REWARDS',
-              sub: 'O1 Staking Vaults',
-              image: '/rewards-hub/staking.jfif',
-              count: `${activeStakings.length} LIVE`
-            },
-            {
-              id: 'giveaways',
-              num: '04',
-              label: 'COMMUNITY GIVEAWAYS',
-              sub: 'Community Events',
-              image: '/rewards-hub/giveaways.jfif',
-              count: `${activeGiveaways.length} EVENTS`
-            }
-          ].map(tab => {
-            const isActive = currentTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                className={`rewards-banner-card ${isActive ? 'active' : ''}`}
-                onClick={() => {
-                  setCurrentTab(tab.id);
-                  setActiveTooltip(null);
-                }}
-                aria-label={tab.label}
-              >
-                {/* Top Status Bar with Live Badge & Active Tag */}
-                <div className="rewards-banner-top-bar">
-                  <div className="rewards-banner-badge">
-                    <span className="rewards-banner-dot" />
-                    <span className="rewards-banner-count">{tab.count}</span>
-                  </div>
-                  {isActive ? (
-                    <div className="rewards-banner-status-tag active-tag">
-                      <span className="rewards-banner-active-pulse" />
-                      <span>SELECTED</span>
-                    </div>
-                  ) : (
-                    <div className="rewards-banner-status-tag hover-tag">
-                      <span>SELECT ↗</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Banner Thumbnail Image with Gradient Shade */}
-                <div className="rewards-banner-img-wrap">
-                  <img
-                    src={tab.image}
-                    alt={tab.label}
-                    className="rewards-banner-img"
-                    loading="eager"
-                  />
-                  <div className="rewards-banner-gradient-shade" />
-                </div>
-
-                {/* Bottom Interactive Category Bar / Footer */}
-                <div className="rewards-banner-footer">
-                  <div className="rewards-banner-footer-left">
-                    <span className="rewards-banner-idx">{tab.num}</span>
-                    <div className="rewards-banner-text-wrap">
-                      <span className="rewards-banner-title">{tab.label}</span>
-                      <span className="rewards-banner-sub">{tab.sub}</span>
-                    </div>
-                  </div>
-                  <div className="rewards-banner-footer-right">
-                    {isActive ? (
-                      <span className="rewards-banner-active-arrow">▼</span>
-                    ) : (
-                      <ArrowRight size={11} className="rewards-banner-arrow" />
-                    )}
-                  </div>
-                </div>
-
-                {/* Active Underline Glow Indicator */}
-                {isActive && <div className="rewards-banner-active-glow-bar" />}
-              </button>
-            );
-          })}
-        </div>
+      {/* ── 2. PREMIUM CYBERPUNK / WEB3 CATEGORY SWITCHER (VISUAL BANNER CARDS) ── */}
+      <div className="rewards-cat-grid">
+        {[
+          { id: 'holders', label: 'Holders', image: '/rewards-hub/holders.jfif', count: `${activeHolders.length} LIVE` },
+          { id: 'vibe-club', label: 'Vibe Club', image: '/rewards-hub/vibe-club.jfif', count: `${activeVibeClubs.length} LIVE` },
+          { id: 'staking', label: 'Staking', image: '/rewards-hub/staking.jfif', count: `${activeStakings.length} LIVE` },
+          { id: 'giveaways', label: 'Giveaways', image: '/rewards-hub/giveaways.jfif', count: `${activeGiveaways.length} EVENTS` }
+        ].map(tab => {
+          const isActive = currentTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              className={`rewards-banner-card ${isActive ? 'active' : ''}`}
+              onClick={() => {
+                setCurrentTab(tab.id);
+                setActiveTooltip(null);
+              }}
+              aria-label={tab.label}
+            >
+              {/* Top-Left Live Status Badge */}
+              <div className="rewards-banner-badge">
+                <span className="rewards-banner-dot" />
+                <span className="rewards-banner-count">{tab.count}</span>
+              </div>
+              <img
+                src={tab.image}
+                alt={tab.label}
+                className="rewards-banner-img"
+                loading="eager"
+              />
+            </button>
+          );
+        })}
       </div>
 
       {/* ── 3. CATEGORY VIEW: 💎 HOLDER REWARDS ── */}
