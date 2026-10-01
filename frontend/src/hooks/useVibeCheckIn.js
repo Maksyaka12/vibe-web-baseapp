@@ -44,6 +44,7 @@ function getInitialLocalState(address) {
   if (!address) {
     return {
       streak: 0,
+      longestStreak: 0,
       lastCheckIn: null,
       totalCheckIns: 0,
       hasCheckedInToday: false
@@ -58,6 +59,7 @@ function getInitialLocalState(address) {
       const checkedToday = isSameUtcDay(parsed.lastCheckIn, new Date());
       return {
         streak: Number(parsed.streak) || 0,
+        longestStreak: Number(parsed.longestStreak) || Number(parsed.streak) || 0,
         lastCheckIn: parsed.lastCheckIn || null,
         totalCheckIns: Number(parsed.totalCheckIns) || 0,
         hasCheckedInToday: checkedToday
@@ -69,6 +71,7 @@ function getInitialLocalState(address) {
 
   return {
     streak: 0,
+    longestStreak: 0,
     lastCheckIn: null,
     totalCheckIns: 0,
     hasCheckedInToday: false
@@ -325,6 +328,7 @@ export function useVibeCheckIn(address) {
 
   return {
     streak: state.streak,
+    longestStreak: state.longestStreak || state.streak || 0,
     lastCheckIn: state.lastCheckIn,
     totalCheckIns: state.totalCheckIns,
     hasCheckedInToday: state.hasCheckedInToday,
