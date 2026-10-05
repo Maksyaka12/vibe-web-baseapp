@@ -311,6 +311,14 @@ export default function BaseAppRewardsView({
   const activeGiveaways = GIVEAWAYS_DATA.filter(e => e.status === 'ongoing');
   const pastGiveaways = GIVEAWAYS_DATA.filter(e => e.status === 'ended');
 
+  const tabIndexMap = {
+    'holders': 0,
+    'vibe-club': 1,
+    'staking': 2,
+    'giveaways': 3
+  };
+  const activeTabIndex = tabIndexMap[currentTab] ?? 0;
+
   return (
     <div style={{ width: '100%', boxSizing: 'border-box' }}>
       {/* ── 1. MODERN REWARDS HERO HEADER (CENTERED & LARGER) ── */}
@@ -401,6 +409,24 @@ export default function BaseAppRewardsView({
             </button>
           );
         })}
+
+        {/* ── DESKTOP ONLY: INTERACTIVE SECTION SLIDER INDICATOR ── */}
+        <div className="rewards-desktop-slider-wrap" aria-hidden="true">
+          <div className="rewards-desktop-slider-track">
+            <div
+              className="rewards-desktop-slider-runner"
+              style={{
+                transform: `translateX(calc(${activeTabIndex} * (100% + 10px)))`
+              }}
+            >
+              <div className="rewards-desktop-slider-notch" />
+              <div className="rewards-desktop-slider-thumb">
+                <span className="rewards-desktop-slider-glow-bar" />
+                <span className="rewards-desktop-slider-center-dot" />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* ── 3. CATEGORY VIEW: 💎 HOLDER REWARDS ── */}
