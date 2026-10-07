@@ -1,0 +1,2215 @@
+{
+  "epoch": 5,
+  "poolAmount": 800000,
+  "totalHolders": 111,
+  "snapshotBlock": "51838927",
+  "snapshotTime": "Sun, 27 Sep 2026 00:00:01 GMT",
+  "merkleRoot": "0xf9b9bfb3b409ed97ed3923b0d8c506a057ec659feb2d9199831369373c7d3903",
+  "claims": {
+    "0x07eba7dff730f58e932c5730bad48e757e188fc3": {
+      "address": "0x07eba7dff730f58e932c5730bad48e757e188fc3",
+      "nftCount": 2,
+      "tokenIds": [
+        189,
+        310
+      ],
+      "amount": 7230,
+      "amountWei": "7230000000000000000000",
+      "sharePercent": "0.9038%",
+      "leaf": "0xd609bf5265d9386171a4b3adcefb511869aac8556b0e005d75e52497e7a2320a",
+      "proof": [
+        "0x913b3fc9e20b680b830a1ef6a88a2a9539d1787ceafac1ec19f5b9e81a9101e6",
+        "0x135985c279493c21cc15a9a1d6bf3c5056d81dceffd3b715528029188be3022d",
+        "0x9797dfb80fe47316885403b2e297d6c15218fb32360d5ea67b9ef12fd3017c7a",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x000596b446392533eac8fff0773c66ae57bc1d3f": {
+      "address": "0x000596b446392533eac8fff0773c66ae57bc1d3f",
+      "nftCount": 1,
+      "tokenIds": [
+        137
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x913b3fc9e20b680b830a1ef6a88a2a9539d1787ceafac1ec19f5b9e81a9101e6",
+      "proof": [
+        "0xd609bf5265d9386171a4b3adcefb511869aac8556b0e005d75e52497e7a2320a",
+        "0x135985c279493c21cc15a9a1d6bf3c5056d81dceffd3b715528029188be3022d",
+        "0x9797dfb80fe47316885403b2e297d6c15218fb32360d5ea67b9ef12fd3017c7a",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x012c0bce561fbcb733f321e007c9b6d1e27785ed": {
+      "address": "0x012c0bce561fbcb733f321e007c9b6d1e27785ed",
+      "nftCount": 1,
+      "tokenIds": [
+        260
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3529382c5c41570d026bb825f7d583bd1c888cc36aca19cf44bd2b9703014a93",
+      "proof": [
+        "0x36161a5292fa2bfec81631e2a635cc4aae893a01b4210a56f09d8ec7722d61fb",
+        "0xca56886c5670e1d0684e49d56dbbbcb42697c0dca6ff08f77578a8d5ab1fac03",
+        "0x9797dfb80fe47316885403b2e297d6c15218fb32360d5ea67b9ef12fd3017c7a",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x01fb3dfbd0661aa7ad086c01d3d7c9931b9d3dbe": {
+      "address": "0x01fb3dfbd0661aa7ad086c01d3d7c9931b9d3dbe",
+      "nftCount": 1,
+      "tokenIds": [
+        320
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x36161a5292fa2bfec81631e2a635cc4aae893a01b4210a56f09d8ec7722d61fb",
+      "proof": [
+        "0x3529382c5c41570d026bb825f7d583bd1c888cc36aca19cf44bd2b9703014a93",
+        "0xca56886c5670e1d0684e49d56dbbbcb42697c0dca6ff08f77578a8d5ab1fac03",
+        "0x9797dfb80fe47316885403b2e297d6c15218fb32360d5ea67b9ef12fd3017c7a",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x09ed7f2f6dd73c90953bece6bca50c6ad9c4c374": {
+      "address": "0x09ed7f2f6dd73c90953bece6bca50c6ad9c4c374",
+      "nftCount": 1,
+      "tokenIds": [
+        293
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x25cb26bd8df7265eb08c9807c5b10321e0b2e375adc52a03efd837a820c38756",
+      "proof": [
+        "0x921303b398438b30228297d65cc48757635ac4f1de4401d78a99114352d500ff",
+        "0x243936c09a7823b710ba58f157e57da22b0c23cb27031695d4a056a80c1f03ad",
+        "0xf0884e7eb2900c2a0252f823f1aaf2040c0b003f1b17c9ea1452e2391e4bf8a7",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x0aba8264321660d2c170bc77808d1f142881bac1": {
+      "address": "0x0aba8264321660d2c170bc77808d1f142881bac1",
+      "nftCount": 1,
+      "tokenIds": [
+        205
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x921303b398438b30228297d65cc48757635ac4f1de4401d78a99114352d500ff",
+      "proof": [
+        "0x25cb26bd8df7265eb08c9807c5b10321e0b2e375adc52a03efd837a820c38756",
+        "0x243936c09a7823b710ba58f157e57da22b0c23cb27031695d4a056a80c1f03ad",
+        "0xf0884e7eb2900c2a0252f823f1aaf2040c0b003f1b17c9ea1452e2391e4bf8a7",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1761042b43590a755478d1325b6424885e6ab8b5": {
+      "address": "0x1761042b43590a755478d1325b6424885e6ab8b5",
+      "nftCount": 1,
+      "tokenIds": [
+        294
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xbad8793b74399de8d237602b49bc080cfbe928ea84555e834562714e5048f9dd",
+      "proof": [
+        "0xfda2b888e967d81223af884ee172c26bafa7040fbbb5d61923d593817c45b44c",
+        "0xf3184ac8ad0905ce1fe77af0299318f0c2ef1c270e2eb17b18a2f82693e07fd2",
+        "0xf0884e7eb2900c2a0252f823f1aaf2040c0b003f1b17c9ea1452e2391e4bf8a7",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1b64e3f93397eeeb076defb5b922b97dee4d6996": {
+      "address": "0x1b64e3f93397eeeb076defb5b922b97dee4d6996",
+      "nftCount": 1,
+      "tokenIds": [
+        299
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xfda2b888e967d81223af884ee172c26bafa7040fbbb5d61923d593817c45b44c",
+      "proof": [
+        "0xbad8793b74399de8d237602b49bc080cfbe928ea84555e834562714e5048f9dd",
+        "0xf3184ac8ad0905ce1fe77af0299318f0c2ef1c270e2eb17b18a2f82693e07fd2",
+        "0xf0884e7eb2900c2a0252f823f1aaf2040c0b003f1b17c9ea1452e2391e4bf8a7",
+        "0xf36a2fefcb0e2780ba8867d76d063ca6d462fbd1664bc728bebef3535ec6ccd2",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1d741c45ec79162b5ed5ac81c0950dd80f83f300": {
+      "address": "0x1d741c45ec79162b5ed5ac81c0950dd80f83f300",
+      "nftCount": 1,
+      "tokenIds": [
+        331
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xe73966526aaf1295e42df9587b8f90437597310110ea4fe6fb8b63286e4149a3",
+      "proof": [
+        "0x646966dc2dc320fcbc541da92b662736212d4bd04310e71d400296e7bc34678e",
+        "0x465262b99ca12fea02fa42c34bc231fbc9687e4d2f733df737b617f6c0b7932a",
+        "0xae5207827cbab627e3ff8696de90e59f986fef86ed51d6b3e5eba476fa4fdb88",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1e75bbbd34ecf784b5cfacd484ebb30ce01cfaf4": {
+      "address": "0x1e75bbbd34ecf784b5cfacd484ebb30ce01cfaf4",
+      "nftCount": 1,
+      "tokenIds": [
+        314
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x646966dc2dc320fcbc541da92b662736212d4bd04310e71d400296e7bc34678e",
+      "proof": [
+        "0xe73966526aaf1295e42df9587b8f90437597310110ea4fe6fb8b63286e4149a3",
+        "0x465262b99ca12fea02fa42c34bc231fbc9687e4d2f733df737b617f6c0b7932a",
+        "0xae5207827cbab627e3ff8696de90e59f986fef86ed51d6b3e5eba476fa4fdb88",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1f1ec548b66a911e7d56422a729bb47a089fb927": {
+      "address": "0x1f1ec548b66a911e7d56422a729bb47a089fb927",
+      "nftCount": 1,
+      "tokenIds": [
+        87
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3aa7c44d40a85e526c4ffb517deb6cea07f8ffcb07dea87d3a2d751355607d1c",
+      "proof": [
+        "0x237aa4229610531311b9e66338e7d856a9870321a5d3695e5041573a9df567eb",
+        "0x6b206519a1a5bde87dd13872eda653a11110954a673efe4dc35a564c0d4c1b02",
+        "0xae5207827cbab627e3ff8696de90e59f986fef86ed51d6b3e5eba476fa4fdb88",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x1fbdfbb325336a2058cffe82fef86d9ac7e9f438": {
+      "address": "0x1fbdfbb325336a2058cffe82fef86d9ac7e9f438",
+      "nftCount": 1,
+      "tokenIds": [
+        177
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x237aa4229610531311b9e66338e7d856a9870321a5d3695e5041573a9df567eb",
+      "proof": [
+        "0x3aa7c44d40a85e526c4ffb517deb6cea07f8ffcb07dea87d3a2d751355607d1c",
+        "0x6b206519a1a5bde87dd13872eda653a11110954a673efe4dc35a564c0d4c1b02",
+        "0xae5207827cbab627e3ff8696de90e59f986fef86ed51d6b3e5eba476fa4fdb88",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2211d1d0020daea8039e46cf1367962070d77da9": {
+      "address": "0x2211d1d0020daea8039e46cf1367962070d77da9",
+      "nftCount": 1,
+      "tokenIds": [
+        4
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x7c5661618c8f741fea692c35cabb97b360e4b9ec392e9c7b7aa148c3c364a758",
+      "proof": [
+        "0xb0a8d2d35754f9f83a15c3ee0eb0a81a496826b6a1012c5ea4905b7ef84dd654",
+        "0x238123faab24c3fba9c7aefaf53615e84fbfa5dbc5d5deb8b617f4a605e62efe",
+        "0x8adf82f9f9a71300352e0ee35fea78928e0642a909a0f3072cdc13695dc5f5a8",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x29270c3ca483433e0a6d070db6ead349654b542d": {
+      "address": "0x29270c3ca483433e0a6d070db6ead349654b542d",
+      "nftCount": 1,
+      "tokenIds": [
+        158
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xb0a8d2d35754f9f83a15c3ee0eb0a81a496826b6a1012c5ea4905b7ef84dd654",
+      "proof": [
+        "0x7c5661618c8f741fea692c35cabb97b360e4b9ec392e9c7b7aa148c3c364a758",
+        "0x238123faab24c3fba9c7aefaf53615e84fbfa5dbc5d5deb8b617f4a605e62efe",
+        "0x8adf82f9f9a71300352e0ee35fea78928e0642a909a0f3072cdc13695dc5f5a8",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2975f2a48b62266ed835b6003f5bb37482479c1a": {
+      "address": "0x2975f2a48b62266ed835b6003f5bb37482479c1a",
+      "nftCount": 1,
+      "tokenIds": [
+        65
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x0ba537aaf3eb56128978ff3fb1ea22b081a1c282428a4a2cfd448fad435e7b03",
+      "proof": [
+        "0xab2dc3f991a7fc10562a6c8fa7d0c337d1df43c662390d9bb962e49b9fa5bd30",
+        "0xe3179b1593f52fbf85c470d8b87b574b7c915b806e2635d877e642c62da36c1a",
+        "0x8adf82f9f9a71300352e0ee35fea78928e0642a909a0f3072cdc13695dc5f5a8",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2c5a2f9996e12af263f4087ef613f4a4bec0b84f": {
+      "address": "0x2c5a2f9996e12af263f4087ef613f4a4bec0b84f",
+      "nftCount": 1,
+      "tokenIds": [
+        285
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xab2dc3f991a7fc10562a6c8fa7d0c337d1df43c662390d9bb962e49b9fa5bd30",
+      "proof": [
+        "0x0ba537aaf3eb56128978ff3fb1ea22b081a1c282428a4a2cfd448fad435e7b03",
+        "0xe3179b1593f52fbf85c470d8b87b574b7c915b806e2635d877e642c62da36c1a",
+        "0x8adf82f9f9a71300352e0ee35fea78928e0642a909a0f3072cdc13695dc5f5a8",
+        "0x82d81526c0eea621e82a7482fa67b8a044c9f295b408fa3a1a4add88dd648b08",
+        "0xe58d1d33cef2f6321c22b5e9a0b65bf2869700e193e409311e422f56fd5b15c1",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2d4e1095a876afacfe1b84bc052758360641aae0": {
+      "address": "0x2d4e1095a876afacfe1b84bc052758360641aae0",
+      "nftCount": 1,
+      "tokenIds": [
+        210
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x5032c0f6f49acfddccebdb696f6e13e3547e6e807e3719573ab1ac8d0c8558cd",
+      "proof": [
+        "0xe462ece52bac2e0cca1f61dbe08a030c9846dee2bae2ea9855a202143fc85137",
+        "0x551d09ecf412a5c2f8760b2524af2906f811011e100aee51d4ef6de6b290baa7",
+        "0x9af1bf9cb456e4434bae9237c54940277930492b656f0ace8737bb5b5b8b25fc",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2d8077c1673ce8b66eaa2f234ff68d99573b8891": {
+      "address": "0x2d8077c1673ce8b66eaa2f234ff68d99573b8891",
+      "nftCount": 1,
+      "tokenIds": [
+        165
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xe462ece52bac2e0cca1f61dbe08a030c9846dee2bae2ea9855a202143fc85137",
+      "proof": [
+        "0x5032c0f6f49acfddccebdb696f6e13e3547e6e807e3719573ab1ac8d0c8558cd",
+        "0x551d09ecf412a5c2f8760b2524af2906f811011e100aee51d4ef6de6b290baa7",
+        "0x9af1bf9cb456e4434bae9237c54940277930492b656f0ace8737bb5b5b8b25fc",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x2ed27928f116323742dfa0af99dacd680cd7c495": {
+      "address": "0x2ed27928f116323742dfa0af99dacd680cd7c495",
+      "nftCount": 1,
+      "tokenIds": [
+        287
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xf8977d0c72df6b2d0c4cd7f79ebd51bf1193cee5f8f30c0accc7ecc2ff7d0c0a",
+      "proof": [
+        "0x71a8c5fdc60dc764a38151617a5b5181799c89c9d4f7648dfa80feff47a4ca24",
+        "0x578bf723698494ead2e4affdba0f02aaf7a6cbea8652ed22426393ceccca9f0f",
+        "0x9af1bf9cb456e4434bae9237c54940277930492b656f0ace8737bb5b5b8b25fc",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x309a986f7cde387e48b5b11ac30c896aba173e54": {
+      "address": "0x309a986f7cde387e48b5b11ac30c896aba173e54",
+      "nftCount": 1,
+      "tokenIds": [
+        157
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x71a8c5fdc60dc764a38151617a5b5181799c89c9d4f7648dfa80feff47a4ca24",
+      "proof": [
+        "0xf8977d0c72df6b2d0c4cd7f79ebd51bf1193cee5f8f30c0accc7ecc2ff7d0c0a",
+        "0x578bf723698494ead2e4affdba0f02aaf7a6cbea8652ed22426393ceccca9f0f",
+        "0x9af1bf9cb456e4434bae9237c54940277930492b656f0ace8737bb5b5b8b25fc",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x341322640a06925b554c71da4efb8dd38dc621bf": {
+      "address": "0x341322640a06925b554c71da4efb8dd38dc621bf",
+      "nftCount": 1,
+      "tokenIds": [
+        80
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x4595f65a5d569edd16daea5db5ac65ce5acbb2875472d46dd79fb3d27e28654f",
+      "proof": [
+        "0x6fea3f50d7e079055f0de38ef7a3dacc9b402229ebccc8404006e052b4289893",
+        "0xec294843147d9b6e099488a4e742f3ccf16ba9a6d4b1e838560cef2131af5f91",
+        "0xf13ee32c17f70981c16515519d0157892efea3ebb1f061a9436d822fb2f67b33",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x35ae6af9677676e8425a298dc45571f4b78bb047": {
+      "address": "0x35ae6af9677676e8425a298dc45571f4b78bb047",
+      "nftCount": 1,
+      "tokenIds": [
+        273
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x6fea3f50d7e079055f0de38ef7a3dacc9b402229ebccc8404006e052b4289893",
+      "proof": [
+        "0x4595f65a5d569edd16daea5db5ac65ce5acbb2875472d46dd79fb3d27e28654f",
+        "0xec294843147d9b6e099488a4e742f3ccf16ba9a6d4b1e838560cef2131af5f91",
+        "0xf13ee32c17f70981c16515519d0157892efea3ebb1f061a9436d822fb2f67b33",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x35f4b9acd41584df18e88cc7ebfbd2ea1e270f62": {
+      "address": "0x35f4b9acd41584df18e88cc7ebfbd2ea1e270f62",
+      "nftCount": 1,
+      "tokenIds": [
+        40
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xfc79ce7e79df5de48fa36d04ea288dd95e3cfd19a34b28215cbade69087cf26e",
+      "proof": [
+        "0x14037b9f990953db40a9d76f6f1f91311b2965bde7bdf16646dcc944b971e0d6",
+        "0xd9c69a8ecd53562e5fb9ea3a8b89cd1146f79171648e9c56067fdce0439a1dcf",
+        "0xf13ee32c17f70981c16515519d0157892efea3ebb1f061a9436d822fb2f67b33",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x3e76041b5c75fd663da02651e1ebfa46184d2bdf": {
+      "address": "0x3e76041b5c75fd663da02651e1ebfa46184d2bdf",
+      "nftCount": 1,
+      "tokenIds": [
+        164
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x14037b9f990953db40a9d76f6f1f91311b2965bde7bdf16646dcc944b971e0d6",
+      "proof": [
+        "0xfc79ce7e79df5de48fa36d04ea288dd95e3cfd19a34b28215cbade69087cf26e",
+        "0xd9c69a8ecd53562e5fb9ea3a8b89cd1146f79171648e9c56067fdce0439a1dcf",
+        "0xf13ee32c17f70981c16515519d0157892efea3ebb1f061a9436d822fb2f67b33",
+        "0xdc86465b2eb50d1934be31003966d27a319927277395a84afedee36ea10ac8f3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x40abdef6189e5a0a581027c52fb957ca14defe39": {
+      "address": "0x40abdef6189e5a0a581027c52fb957ca14defe39",
+      "nftCount": 1,
+      "tokenIds": [
+        92
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x7a25b58a2100aea2ab2548557b001c03f8840b069be7bc4f3a786748d99a60d0",
+      "proof": [
+        "0x089d653e71a613016ab7198e2facad0eb6c1783d5c8950f4fa36cb699789350b",
+        "0xc163db9f6de571231523005fef74390cac722b331d07e93d29a50378185df1ae",
+        "0x1ceb1aaff9e321a073713f176e08205586d460f7db09976bcd1a9e6c03c7b79b",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x40c20369917f9098367007a173b031ccdea2a17d": {
+      "address": "0x40c20369917f9098367007a173b031ccdea2a17d",
+      "nftCount": 1,
+      "tokenIds": [
+        199
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x089d653e71a613016ab7198e2facad0eb6c1783d5c8950f4fa36cb699789350b",
+      "proof": [
+        "0x7a25b58a2100aea2ab2548557b001c03f8840b069be7bc4f3a786748d99a60d0",
+        "0xc163db9f6de571231523005fef74390cac722b331d07e93d29a50378185df1ae",
+        "0x1ceb1aaff9e321a073713f176e08205586d460f7db09976bcd1a9e6c03c7b79b",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x41697670106fb4b8bd4f08ecf3ef64c98ec8e8ec": {
+      "address": "0x41697670106fb4b8bd4f08ecf3ef64c98ec8e8ec",
+      "nftCount": 1,
+      "tokenIds": [
+        59
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x04de525e0392979ae3168be373afa98edc8c01c45a8dc8c90c32022f18033cbb",
+      "proof": [
+        "0x0035f9447bc180a0ac8912e30902888b02c73c47a9375c10f64ffc1d01cbf210",
+        "0x218c3aa4010791d32ca9220fe6af83a72786eda6a6e0a69009413fcd41100656",
+        "0x1ceb1aaff9e321a073713f176e08205586d460f7db09976bcd1a9e6c03c7b79b",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4250bcb497181ad9521f78337d68da1a85afa3c5": {
+      "address": "0x4250bcb497181ad9521f78337d68da1a85afa3c5",
+      "nftCount": 1,
+      "tokenIds": [
+        71
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x0035f9447bc180a0ac8912e30902888b02c73c47a9375c10f64ffc1d01cbf210",
+      "proof": [
+        "0x04de525e0392979ae3168be373afa98edc8c01c45a8dc8c90c32022f18033cbb",
+        "0x218c3aa4010791d32ca9220fe6af83a72786eda6a6e0a69009413fcd41100656",
+        "0x1ceb1aaff9e321a073713f176e08205586d460f7db09976bcd1a9e6c03c7b79b",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x42716e51285a9fafde6ae836bfd8f7f8cc88c7ea": {
+      "address": "0x42716e51285a9fafde6ae836bfd8f7f8cc88c7ea",
+      "nftCount": 1,
+      "tokenIds": [
+        309
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x9ed1b4c70b3aa7ee1e35e5fa4ff09627896b7fff4b154714543378d3fdbf5bb7",
+      "proof": [
+        "0x861b3d295391daaee4e8261ccf041e8a8a83e1c4e3de464e5c10bf0c3b6a8cd6",
+        "0xbba7e0670e6ccae42c9d9dcfd31676152d6abed15454d49cba1fb9dc02f2fb14",
+        "0x86ffd2d9bfbe19012f60ee1b693d3265995a52d9a4aca8a7dddd6b2c319a8fef",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x444030530b229f35c8318e0877ec23b9a4dfa001": {
+      "address": "0x444030530b229f35c8318e0877ec23b9a4dfa001",
+      "nftCount": 1,
+      "tokenIds": [
+        209
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x861b3d295391daaee4e8261ccf041e8a8a83e1c4e3de464e5c10bf0c3b6a8cd6",
+      "proof": [
+        "0x9ed1b4c70b3aa7ee1e35e5fa4ff09627896b7fff4b154714543378d3fdbf5bb7",
+        "0xbba7e0670e6ccae42c9d9dcfd31676152d6abed15454d49cba1fb9dc02f2fb14",
+        "0x86ffd2d9bfbe19012f60ee1b693d3265995a52d9a4aca8a7dddd6b2c319a8fef",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x452c6a1a13b6c28f7a6bfea89a60c39d2e4f39c2": {
+      "address": "0x452c6a1a13b6c28f7a6bfea89a60c39d2e4f39c2",
+      "nftCount": 1,
+      "tokenIds": [
+        54
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x5d64418ca026a7517c0c1ed86c618a12926295bc4821b625edd899e61da994cd",
+      "proof": [
+        "0xa8c73cb855263a2bc3c2923b0929fb4e9c0b2f1899750b6f3215b02c8f8f226d",
+        "0x4d6f2f733ca48a9c489eab9e37f49de1d58b2273ccb5c655bdaa51015af10fa4",
+        "0x86ffd2d9bfbe19012f60ee1b693d3265995a52d9a4aca8a7dddd6b2c319a8fef",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x473a3c1e3459e957f1e23c5ebe43e79f95bf6c85": {
+      "address": "0x473a3c1e3459e957f1e23c5ebe43e79f95bf6c85",
+      "nftCount": 1,
+      "tokenIds": [
+        19
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xa8c73cb855263a2bc3c2923b0929fb4e9c0b2f1899750b6f3215b02c8f8f226d",
+      "proof": [
+        "0x5d64418ca026a7517c0c1ed86c618a12926295bc4821b625edd899e61da994cd",
+        "0x4d6f2f733ca48a9c489eab9e37f49de1d58b2273ccb5c655bdaa51015af10fa4",
+        "0x86ffd2d9bfbe19012f60ee1b693d3265995a52d9a4aca8a7dddd6b2c319a8fef",
+        "0xd73636cedb19269ae6a8f741ed0c65370352228315f544353922f09c833c96d3",
+        "0xb712344c1b40971bd58dec437653ed749c2edf58cb1f1a7be955cd38531260ff",
+        "0x08416847302012b3646f7e4322931ff3cd1cc4c8d5e587c6fb3541adc47ad248",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4b3002e1d0ecbd31633506ae2c33027607f5d7b0": {
+      "address": "0x4b3002e1d0ecbd31633506ae2c33027607f5d7b0",
+      "nftCount": 1,
+      "tokenIds": [
+        20
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xbb2c223c2a9a479bf42959983865394db9f8a7d071cb4687e0c30299c80aff2b",
+      "proof": [
+        "0x87c618dc041b9298b1767eb1a758c81e5f471b095673ad5a22a87f4012fab38d",
+        "0xe3fd467fa2d03ba886ac254902d4eab443a16bd08ae3f4b3e00fdb8f129ea8a4",
+        "0xa66e86d92d72c185ac2bcdfec671e43c1fa52330629a73233194c9e6271534d1",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4bce2046c00df1e20fbcc21135c2fe7bef03345a": {
+      "address": "0x4bce2046c00df1e20fbcc21135c2fe7bef03345a",
+      "nftCount": 1,
+      "tokenIds": [
+        69
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x87c618dc041b9298b1767eb1a758c81e5f471b095673ad5a22a87f4012fab38d",
+      "proof": [
+        "0xbb2c223c2a9a479bf42959983865394db9f8a7d071cb4687e0c30299c80aff2b",
+        "0xe3fd467fa2d03ba886ac254902d4eab443a16bd08ae3f4b3e00fdb8f129ea8a4",
+        "0xa66e86d92d72c185ac2bcdfec671e43c1fa52330629a73233194c9e6271534d1",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4c91d3bed372c11795b9ce9a9017dfe447bf050a": {
+      "address": "0x4c91d3bed372c11795b9ce9a9017dfe447bf050a",
+      "nftCount": 1,
+      "tokenIds": [
+        3
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x5c9beb72784dc72e58df3da880d9058d0f1635c7edff6c7b0befa480a991e839",
+      "proof": [
+        "0x8473cb09b685f5eda7083192d63d53ce50c1ec55ee82d37635b97f8b8402faf2",
+        "0xec1500d74d6cae5c010e7b5be6a10f7d3314a10484342fabce0bc77874aac604",
+        "0xa66e86d92d72c185ac2bcdfec671e43c1fa52330629a73233194c9e6271534d1",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4ce021795aa70d084bbae996bf9d9adfd5a8fbe5": {
+      "address": "0x4ce021795aa70d084bbae996bf9d9adfd5a8fbe5",
+      "nftCount": 1,
+      "tokenIds": [
+        176
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x8473cb09b685f5eda7083192d63d53ce50c1ec55ee82d37635b97f8b8402faf2",
+      "proof": [
+        "0x5c9beb72784dc72e58df3da880d9058d0f1635c7edff6c7b0befa480a991e839",
+        "0xec1500d74d6cae5c010e7b5be6a10f7d3314a10484342fabce0bc77874aac604",
+        "0xa66e86d92d72c185ac2bcdfec671e43c1fa52330629a73233194c9e6271534d1",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4deefb53f4d8cfa69a8b8f3a4a35fedf1f24eaf9": {
+      "address": "0x4deefb53f4d8cfa69a8b8f3a4a35fedf1f24eaf9",
+      "nftCount": 1,
+      "tokenIds": [
+        66
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xabbd84daa1b4231140b5a26a75a0aa76df4e8d639a92efee45a2406cd8ef9167",
+      "proof": [
+        "0x8a326f74ec1c603f6a33217d66ba1eca9913cd2460303b8808bf8b1940eb646d",
+        "0x1df23c80ec93f5edf23c063251172cd46cc5ea4240b5fcc16923345a3bd0d126",
+        "0x5887f7834556130dba1be25e105b9ea6a54f6d952349fa6b85eb06e1e142d3c9",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x4df3806bfdba47c19d9f884569fc0114ede8f8cf": {
+      "address": "0x4df3806bfdba47c19d9f884569fc0114ede8f8cf",
+      "nftCount": 1,
+      "tokenIds": [
+        303
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x8a326f74ec1c603f6a33217d66ba1eca9913cd2460303b8808bf8b1940eb646d",
+      "proof": [
+        "0xabbd84daa1b4231140b5a26a75a0aa76df4e8d639a92efee45a2406cd8ef9167",
+        "0x1df23c80ec93f5edf23c063251172cd46cc5ea4240b5fcc16923345a3bd0d126",
+        "0x5887f7834556130dba1be25e105b9ea6a54f6d952349fa6b85eb06e1e142d3c9",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x50d96de4112d58c566bdb1af78ff7bc457b1ffce": {
+      "address": "0x50d96de4112d58c566bdb1af78ff7bc457b1ffce",
+      "nftCount": 1,
+      "tokenIds": [
+        316
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3a61cab7a666dabe8a0ec0f8b95dfab113e0cf88701504a29d67e412ffa1bdea",
+      "proof": [
+        "0x4c38e50f22a50ecea52cfad8a922f6e524a25c5ed7f549e8a70050d597a441ff",
+        "0xef5310b2a1c638b82cb3ad58018e652dfac552cd44c899f5e9cf9b4193499fe2",
+        "0x5887f7834556130dba1be25e105b9ea6a54f6d952349fa6b85eb06e1e142d3c9",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x53184302a7b590256b589b2745a8990774de41b0": {
+      "address": "0x53184302a7b590256b589b2745a8990774de41b0",
+      "nftCount": 1,
+      "tokenIds": [
+        257
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x4c38e50f22a50ecea52cfad8a922f6e524a25c5ed7f549e8a70050d597a441ff",
+      "proof": [
+        "0x3a61cab7a666dabe8a0ec0f8b95dfab113e0cf88701504a29d67e412ffa1bdea",
+        "0xef5310b2a1c638b82cb3ad58018e652dfac552cd44c899f5e9cf9b4193499fe2",
+        "0x5887f7834556130dba1be25e105b9ea6a54f6d952349fa6b85eb06e1e142d3c9",
+        "0x9fbacdaeb79a5325d6c5ea83f15c6287eb7df319e7ebcaee83c557fb6a9a18d2",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x534671e4c92413ca53171eadc943fe872416e6cf": {
+      "address": "0x534671e4c92413ca53171eadc943fe872416e6cf",
+      "nftCount": 1,
+      "tokenIds": [
+        99
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x0d917813ab2cc29f6647b907bd3e4b24ecf9b0562979cbc6b8451d3ccffee233",
+      "proof": [
+        "0x90bbe8cf8b7fa62569532f354a1c489d6ea352ddf0f39974ee53d07f822a34a9",
+        "0x81b05bca2296cf7407da7f946566d8ee3b39b5a6f29509e48481b7b31ff7e392",
+        "0xb844fc667812625fe9ee546761b9a74b91b74d7617da71278883853afc5ef37e",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x54e7e6aca137656a4672a15086456a8347a4acf8": {
+      "address": "0x54e7e6aca137656a4672a15086456a8347a4acf8",
+      "nftCount": 1,
+      "tokenIds": [
+        89
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x90bbe8cf8b7fa62569532f354a1c489d6ea352ddf0f39974ee53d07f822a34a9",
+      "proof": [
+        "0x0d917813ab2cc29f6647b907bd3e4b24ecf9b0562979cbc6b8451d3ccffee233",
+        "0x81b05bca2296cf7407da7f946566d8ee3b39b5a6f29509e48481b7b31ff7e392",
+        "0xb844fc667812625fe9ee546761b9a74b91b74d7617da71278883853afc5ef37e",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x5bc95ee1a2a849e631c99fefe5be297e4dadc342": {
+      "address": "0x5bc95ee1a2a849e631c99fefe5be297e4dadc342",
+      "nftCount": 1,
+      "tokenIds": [
+        118
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc0203de91419e98cc34e31de7a558a587fa643f0da4cbf09de09c77b8e8fa4aa",
+      "proof": [
+        "0x318158c60b4c7f5495044fd4a9a88de8af9da80d50a98aeefe1d00b9bd9f661a",
+        "0xbdf9ed03a9a77a1ffce6213d75ba3658ef4ac4f0120de32c6dbe9b235b9e4aca",
+        "0xb844fc667812625fe9ee546761b9a74b91b74d7617da71278883853afc5ef37e",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x5d72576dd1e0f1d3d169c019a859224c3470d242": {
+      "address": "0x5d72576dd1e0f1d3d169c019a859224c3470d242",
+      "nftCount": 1,
+      "tokenIds": [
+        307
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x318158c60b4c7f5495044fd4a9a88de8af9da80d50a98aeefe1d00b9bd9f661a",
+      "proof": [
+        "0xc0203de91419e98cc34e31de7a558a587fa643f0da4cbf09de09c77b8e8fa4aa",
+        "0xbdf9ed03a9a77a1ffce6213d75ba3658ef4ac4f0120de32c6dbe9b235b9e4aca",
+        "0xb844fc667812625fe9ee546761b9a74b91b74d7617da71278883853afc5ef37e",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x6160b60dde3b1273bccc34683be5461acc1b78d4": {
+      "address": "0x6160b60dde3b1273bccc34683be5461acc1b78d4",
+      "nftCount": 1,
+      "tokenIds": [
+        172
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc16c28d5303c12377f3a5beb279eae1d132b6b986892cf201564c295a567c291",
+      "proof": [
+        "0x047569268ce9f11a2481b16ec4cc5f6203c8d00a24fe30e00cebf7fc032ebb63",
+        "0x09c8e07f37bccfbcad3614afa4a920c19353b14c8ca294825006c0c54e09cf3f",
+        "0x3d0971d11eb6681c3474f98acf9cba1e78402304f097507c2a83283b63a8c091",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x6171b8df61a6d2f507a8c6cbef55148bd11b1a67": {
+      "address": "0x6171b8df61a6d2f507a8c6cbef55148bd11b1a67",
+      "nftCount": 1,
+      "tokenIds": [
+        214
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x047569268ce9f11a2481b16ec4cc5f6203c8d00a24fe30e00cebf7fc032ebb63",
+      "proof": [
+        "0xc16c28d5303c12377f3a5beb279eae1d132b6b986892cf201564c295a567c291",
+        "0x09c8e07f37bccfbcad3614afa4a920c19353b14c8ca294825006c0c54e09cf3f",
+        "0x3d0971d11eb6681c3474f98acf9cba1e78402304f097507c2a83283b63a8c091",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x61ddfd26065fcbee5a550ef98862ec4ac36a2ace": {
+      "address": "0x61ddfd26065fcbee5a550ef98862ec4ac36a2ace",
+      "nftCount": 1,
+      "tokenIds": [
+        7
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3e0c3aa124ab8f85e927f83e59395f385b219c6fbe5d0d240da8fe8c83ce8087",
+      "proof": [
+        "0x2bce18ed461296be06d872303e4a577c1b46eb632d5cc704d1e87358b0acb84a",
+        "0x5b9816e7e49a83b57e788fcdd63076a71de371bd4aa247fe1c97bcf515f1dbc3",
+        "0x3d0971d11eb6681c3474f98acf9cba1e78402304f097507c2a83283b63a8c091",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x625c0cb593f135e7d0624c22d31beb6418e9623c": {
+      "address": "0x625c0cb593f135e7d0624c22d31beb6418e9623c",
+      "nftCount": 1,
+      "tokenIds": [
+        112
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x2bce18ed461296be06d872303e4a577c1b46eb632d5cc704d1e87358b0acb84a",
+      "proof": [
+        "0x3e0c3aa124ab8f85e927f83e59395f385b219c6fbe5d0d240da8fe8c83ce8087",
+        "0x5b9816e7e49a83b57e788fcdd63076a71de371bd4aa247fe1c97bcf515f1dbc3",
+        "0x3d0971d11eb6681c3474f98acf9cba1e78402304f097507c2a83283b63a8c091",
+        "0xb2b06140091f187d0a3cae2b4163bfb5ab30818f376563c229586ec43cc51a09",
+        "0x41d4e62ee6f66eb49a8cf866c472631b46306bce6b338f6c4d793ce192c40a3c",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x6303381ed0deb5450dd335d6b93d30c801bfc6f3": {
+      "address": "0x6303381ed0deb5450dd335d6b93d30c801bfc6f3",
+      "nftCount": 1,
+      "tokenIds": [
+        36
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xebff3e8058f2863740fea565fedf08bd9214fab6eb7db79b3bcb8311e54618e4",
+      "proof": [
+        "0xe1ce6d99116f31c835526555095122c13b9f0d4674b790b32d55ad1d1992b8c1",
+        "0xc3dc39309244e53eaa1abd0e0514f36c2d9ef1c6322f8b66214256d94a60c508",
+        "0x8cac0a8d2df32877cba19aa5fa37884621d40eb82ad03ed28b73b67f490ae10b",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x64b2aa5158143857f01fca4c589b038a9c6b6c69": {
+      "address": "0x64b2aa5158143857f01fca4c589b038a9c6b6c69",
+      "nftCount": 1,
+      "tokenIds": [
+        76
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xe1ce6d99116f31c835526555095122c13b9f0d4674b790b32d55ad1d1992b8c1",
+      "proof": [
+        "0xebff3e8058f2863740fea565fedf08bd9214fab6eb7db79b3bcb8311e54618e4",
+        "0xc3dc39309244e53eaa1abd0e0514f36c2d9ef1c6322f8b66214256d94a60c508",
+        "0x8cac0a8d2df32877cba19aa5fa37884621d40eb82ad03ed28b73b67f490ae10b",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x6ab72fc974eda6190c051f4127377e1827b0bd25": {
+      "address": "0x6ab72fc974eda6190c051f4127377e1827b0bd25",
+      "nftCount": 1,
+      "tokenIds": [
+        162
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x7b0e10e8ea6f7bd5518b8c6804f7c077dc3d17c0009b2e61e483180d5beb1621",
+      "proof": [
+        "0xc1d8b8e67bb91a86faa1cb3540fca5154778d886882e7e671641aa7e59ba3bf6",
+        "0x746e4319d8c72df96c2f3cd9b34ffe06ab29a139d5c9099d638c329b9bd87842",
+        "0x8cac0a8d2df32877cba19aa5fa37884621d40eb82ad03ed28b73b67f490ae10b",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x721cc8794cb8ca4c992a4176d67cdbedfdea4d78": {
+      "address": "0x721cc8794cb8ca4c992a4176d67cdbedfdea4d78",
+      "nftCount": 1,
+      "tokenIds": [
+        33
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc1d8b8e67bb91a86faa1cb3540fca5154778d886882e7e671641aa7e59ba3bf6",
+      "proof": [
+        "0x7b0e10e8ea6f7bd5518b8c6804f7c077dc3d17c0009b2e61e483180d5beb1621",
+        "0x746e4319d8c72df96c2f3cd9b34ffe06ab29a139d5c9099d638c329b9bd87842",
+        "0x8cac0a8d2df32877cba19aa5fa37884621d40eb82ad03ed28b73b67f490ae10b",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x735ceff991bfd1dca5d02b7f7999d5045c001c8b": {
+      "address": "0x735ceff991bfd1dca5d02b7f7999d5045c001c8b",
+      "nftCount": 1,
+      "tokenIds": [
+        248
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x0bf166f3fe6b84bbd5b9d3fa38b9a4ca7ad0e7064438e94624fd23b258e222e6",
+      "proof": [
+        "0xc6bcdbda748cee6d5e2d03ec60168901764c23d4c5dac2056b73a9371ecf7bc6",
+        "0x8e3b7f561629792cb01a5784f82c4bd698a155fcdde2eb4dd30851f52a707cde",
+        "0x0484b45add4a777f2ea5256f7e1a14edfc9e4a643efa4dbfe2b5eb3e7bcdb438",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x76d62b704d4148c99a4e78f0f62cb9da13a55ec1": {
+      "address": "0x76d62b704d4148c99a4e78f0f62cb9da13a55ec1",
+      "nftCount": 1,
+      "tokenIds": [
+        100
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc6bcdbda748cee6d5e2d03ec60168901764c23d4c5dac2056b73a9371ecf7bc6",
+      "proof": [
+        "0x0bf166f3fe6b84bbd5b9d3fa38b9a4ca7ad0e7064438e94624fd23b258e222e6",
+        "0x8e3b7f561629792cb01a5784f82c4bd698a155fcdde2eb4dd30851f52a707cde",
+        "0x0484b45add4a777f2ea5256f7e1a14edfc9e4a643efa4dbfe2b5eb3e7bcdb438",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x7ae3b30a504e153b2bc8980fe0599882fe9ea671": {
+      "address": "0x7ae3b30a504e153b2bc8980fe0599882fe9ea671",
+      "nftCount": 1,
+      "tokenIds": [
+        182
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x091ae1ab45279da55172259f832a15c5a73166e380c216a0c2191db0aea5c96a",
+      "proof": [
+        "0xf798d081515c49269636ea79f9d108b2fd871b1ea778ea16fb68bdb6ee0f02f4",
+        "0x57155d27ed3c823fdf80131cb54c120cd08ed68503145db2778f26cd19e109b5",
+        "0x0484b45add4a777f2ea5256f7e1a14edfc9e4a643efa4dbfe2b5eb3e7bcdb438",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x842b3f6bdb1839d738bc27a0319e04056c2fe7e6": {
+      "address": "0x842b3f6bdb1839d738bc27a0319e04056c2fe7e6",
+      "nftCount": 1,
+      "tokenIds": [
+        167
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xf798d081515c49269636ea79f9d108b2fd871b1ea778ea16fb68bdb6ee0f02f4",
+      "proof": [
+        "0x091ae1ab45279da55172259f832a15c5a73166e380c216a0c2191db0aea5c96a",
+        "0x57155d27ed3c823fdf80131cb54c120cd08ed68503145db2778f26cd19e109b5",
+        "0x0484b45add4a777f2ea5256f7e1a14edfc9e4a643efa4dbfe2b5eb3e7bcdb438",
+        "0x185920f4a8dbacaf57f51330398e3bac0bb4a36615cd4e42290ab8caf50114cd",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x853dda5a97ba1a002cb7bdd61270c4654719740d": {
+      "address": "0x853dda5a97ba1a002cb7bdd61270c4654719740d",
+      "nftCount": 1,
+      "tokenIds": [
+        219
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc5723fe9d9e263611b9b4c672278bb4f9d4f571092aea8e7fae351b0474475e0",
+      "proof": [
+        "0x3c35c9cbcafd5e86f5de93c9337803f2bcdda3a7aaccf8d5f35690970364e472",
+        "0x80dcd52e6d1ed7a00ab889d518c1ae5ecdcf131c97811e5f95c1937b351ad4cf",
+        "0xa389d49537838e089b0b81895b1eab83c3e2ec3757de03d1ac6099f6b7c32e8c",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x85d0857ea50ea97e813e80bca03c5226d7b7add0": {
+      "address": "0x85d0857ea50ea97e813e80bca03c5226d7b7add0",
+      "nftCount": 1,
+      "tokenIds": [
+        102
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3c35c9cbcafd5e86f5de93c9337803f2bcdda3a7aaccf8d5f35690970364e472",
+      "proof": [
+        "0xc5723fe9d9e263611b9b4c672278bb4f9d4f571092aea8e7fae351b0474475e0",
+        "0x80dcd52e6d1ed7a00ab889d518c1ae5ecdcf131c97811e5f95c1937b351ad4cf",
+        "0xa389d49537838e089b0b81895b1eab83c3e2ec3757de03d1ac6099f6b7c32e8c",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x8b8d77c89d33879e9ad4cf72ed4f4f196358f837": {
+      "address": "0x8b8d77c89d33879e9ad4cf72ed4f4f196358f837",
+      "nftCount": 1,
+      "tokenIds": [
+        38
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x73b8d99bab338b77e423680eb6528dfdbf6df0a8008bd50c8916c53c5d594708",
+      "proof": [
+        "0xe9c1fc9ee28c906e7fbf0bdc2993305ef81a8d680e77d3bcae6c1d4f571cbd60",
+        "0x0465bf932998e58232839ce1dd5ded8c3bd063aadab875de488a4bf6c25ef409",
+        "0xa389d49537838e089b0b81895b1eab83c3e2ec3757de03d1ac6099f6b7c32e8c",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x8f371d8d3dd55665640165f7e770848ab662745a": {
+      "address": "0x8f371d8d3dd55665640165f7e770848ab662745a",
+      "nftCount": 1,
+      "tokenIds": [
+        231
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xe9c1fc9ee28c906e7fbf0bdc2993305ef81a8d680e77d3bcae6c1d4f571cbd60",
+      "proof": [
+        "0x73b8d99bab338b77e423680eb6528dfdbf6df0a8008bd50c8916c53c5d594708",
+        "0x0465bf932998e58232839ce1dd5ded8c3bd063aadab875de488a4bf6c25ef409",
+        "0xa389d49537838e089b0b81895b1eab83c3e2ec3757de03d1ac6099f6b7c32e8c",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x931156fd1f287ba1970322954a7e342d0ac7cbb1": {
+      "address": "0x931156fd1f287ba1970322954a7e342d0ac7cbb1",
+      "nftCount": 1,
+      "tokenIds": [
+        109
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x069b7b635508cc79c4caa90f2e78b3ce6289d133e4de21dbce2a3cdc722d0e26",
+      "proof": [
+        "0x7935a8bf3ad6a98ba6b1ca883d69d9d285f0751a050148225612e174afca9634",
+        "0x9d25052b054f8362f615b72f89aa6fba247691fd4809add96c587ddccfcb2009",
+        "0xe24747d51bc1464f5567eac5ef1a7ddb4b75ba03bbb53be26ffabd114722b509",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x94bb005711648e57dccc1770d84c54e71115ca81": {
+      "address": "0x94bb005711648e57dccc1770d84c54e71115ca81",
+      "nftCount": 1,
+      "tokenIds": [
+        318
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x7935a8bf3ad6a98ba6b1ca883d69d9d285f0751a050148225612e174afca9634",
+      "proof": [
+        "0x069b7b635508cc79c4caa90f2e78b3ce6289d133e4de21dbce2a3cdc722d0e26",
+        "0x9d25052b054f8362f615b72f89aa6fba247691fd4809add96c587ddccfcb2009",
+        "0xe24747d51bc1464f5567eac5ef1a7ddb4b75ba03bbb53be26ffabd114722b509",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x967c29851c09900624bf49bfe04d17ae518eaa2e": {
+      "address": "0x967c29851c09900624bf49bfe04d17ae518eaa2e",
+      "nftCount": 1,
+      "tokenIds": [
+        136
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x1dc48c1bb9a555b5f5a62251840ece097313d7d7e539dfdb418a3ee51ddac49d",
+      "proof": [
+        "0x10c16d0c3edc764eff57181963e4b23d0b4d759d84b554cdfa7473457b37ce75",
+        "0xfda387ed7342999b5a8730c8eb178be30c616b87447ef9082ecc6de59c1b58fc",
+        "0xe24747d51bc1464f5567eac5ef1a7ddb4b75ba03bbb53be26ffabd114722b509",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x9c4cfd0e9863201908892ef5413eaa61e36bab02": {
+      "address": "0x9c4cfd0e9863201908892ef5413eaa61e36bab02",
+      "nftCount": 1,
+      "tokenIds": [
+        159
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x10c16d0c3edc764eff57181963e4b23d0b4d759d84b554cdfa7473457b37ce75",
+      "proof": [
+        "0x1dc48c1bb9a555b5f5a62251840ece097313d7d7e539dfdb418a3ee51ddac49d",
+        "0xfda387ed7342999b5a8730c8eb178be30c616b87447ef9082ecc6de59c1b58fc",
+        "0xe24747d51bc1464f5567eac5ef1a7ddb4b75ba03bbb53be26ffabd114722b509",
+        "0xa84ab4d45fcbbfbd7d4ba7d7c28baf1eeb4192c67f6383ec67df55ed023084fc",
+        "0xf4e9cac624e5059e4677db2d0dd8162c89718fbcb2fd9d6305694a0d7803715d",
+        "0xbf83758ca2d09f93014e467a3ef6aada0b94b61135ef101c64d8b50f687f548f",
+        "0x59dc8dc8bf90fa8201e081ef1ac1450c4cde2c22a2e982d88bbd86347df7b78e"
+      ]
+    },
+    "0x9d9f72dd4a3edb34f0a77860ecb7683b94536651": {
+      "address": "0x9d9f72dd4a3edb34f0a77860ecb7683b94536651",
+      "nftCount": 1,
+      "tokenIds": [
+        50
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xddac0bea3818e91315968ce158988f806f9286c07cdb8de4c9e2a6f7018a19b3",
+      "proof": [
+        "0x01d33fb2d40020ec74b1a933862e9dd9e17b0176f6f035ad5256a9b64fc0af67",
+        "0x957be882d13a941a112a2dce16ffc8a0cda2badcfdf36574426b442f42837ede",
+        "0xec0adf18ba0967022829ef0d4e1347c4652f4026cb53c5fcab1dad45c5b425d5",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0x9e1ce95edea8a32aaef7b5cb601b7eccec357a49": {
+      "address": "0x9e1ce95edea8a32aaef7b5cb601b7eccec357a49",
+      "nftCount": 1,
+      "tokenIds": [
+        237
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x01d33fb2d40020ec74b1a933862e9dd9e17b0176f6f035ad5256a9b64fc0af67",
+      "proof": [
+        "0xddac0bea3818e91315968ce158988f806f9286c07cdb8de4c9e2a6f7018a19b3",
+        "0x957be882d13a941a112a2dce16ffc8a0cda2badcfdf36574426b442f42837ede",
+        "0xec0adf18ba0967022829ef0d4e1347c4652f4026cb53c5fcab1dad45c5b425d5",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xa0dec165d9b4441a46e7022f347c191c4e233587": {
+      "address": "0xa0dec165d9b4441a46e7022f347c191c4e233587",
+      "nftCount": 1,
+      "tokenIds": [
+        226
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x539e0a065dcbbc8190a86c80df5aff130a7b86f18eb62bdcf39f56ef9f737fc9",
+      "proof": [
+        "0x8be92d24a097ee4e5a122246fce22dd69a82064a7ee4c26dec7e03a46d636d34",
+        "0xc7f8da3b88708a8ab39cb0f0197043979f02cbdd9f16f21e9de03410b113595e",
+        "0xec0adf18ba0967022829ef0d4e1347c4652f4026cb53c5fcab1dad45c5b425d5",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xa14cfd1854dc5d98557d662696a00605e8d1d45b": {
+      "address": "0xa14cfd1854dc5d98557d662696a00605e8d1d45b",
+      "nftCount": 1,
+      "tokenIds": [
+        96
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x8be92d24a097ee4e5a122246fce22dd69a82064a7ee4c26dec7e03a46d636d34",
+      "proof": [
+        "0x539e0a065dcbbc8190a86c80df5aff130a7b86f18eb62bdcf39f56ef9f737fc9",
+        "0xc7f8da3b88708a8ab39cb0f0197043979f02cbdd9f16f21e9de03410b113595e",
+        "0xec0adf18ba0967022829ef0d4e1347c4652f4026cb53c5fcab1dad45c5b425d5",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xa8d05189774cd31ea53589314d902ca78ebd1bdb": {
+      "address": "0xa8d05189774cd31ea53589314d902ca78ebd1bdb",
+      "nftCount": 1,
+      "tokenIds": [
+        152
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x1aa9064c5a5df77cf6023243944681f7551c2581464b43a3fd8d20f3df70dcb4",
+      "proof": [
+        "0xbc836a5ac2c11f4564672fbc57285ab527812c8bf7e5b7713d5ac68b1e2a94cf",
+        "0xd361763b83efd421fcecef97e7d8433e418fbb4b946bda0ea28db701cf121f3c",
+        "0xb86256a47e2399c3d637394b51f8868aa95c22c3627d2a8825225fe0daa9c335",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xaeefe4893fc2acf927745f093c0a768fcdc5cc86": {
+      "address": "0xaeefe4893fc2acf927745f093c0a768fcdc5cc86",
+      "nftCount": 1,
+      "tokenIds": [
+        292
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xbc836a5ac2c11f4564672fbc57285ab527812c8bf7e5b7713d5ac68b1e2a94cf",
+      "proof": [
+        "0x1aa9064c5a5df77cf6023243944681f7551c2581464b43a3fd8d20f3df70dcb4",
+        "0xd361763b83efd421fcecef97e7d8433e418fbb4b946bda0ea28db701cf121f3c",
+        "0xb86256a47e2399c3d637394b51f8868aa95c22c3627d2a8825225fe0daa9c335",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb0191fd61a9caee3d60a93549ade9f54cd1623b4": {
+      "address": "0xb0191fd61a9caee3d60a93549ade9f54cd1623b4",
+      "nftCount": 1,
+      "tokenIds": [
+        278
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x660bd3800c31ec7eb1fde51aa6d5b77f292d547d9b04eb703a172c45f752b503",
+      "proof": [
+        "0x1a061624cebc432eb0b29da1735f4bd9d87012dbcf8bb1eb1b9bdd0c194206cd",
+        "0xabd0f53bf5843d205c1f389135598f841067e5f96bd44d953f1227b03fb972ce",
+        "0xb86256a47e2399c3d637394b51f8868aa95c22c3627d2a8825225fe0daa9c335",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb10d893441b96b9c25231d42591d64cf36484e04": {
+      "address": "0xb10d893441b96b9c25231d42591d64cf36484e04",
+      "nftCount": 1,
+      "tokenIds": [
+        34
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x1a061624cebc432eb0b29da1735f4bd9d87012dbcf8bb1eb1b9bdd0c194206cd",
+      "proof": [
+        "0x660bd3800c31ec7eb1fde51aa6d5b77f292d547d9b04eb703a172c45f752b503",
+        "0xabd0f53bf5843d205c1f389135598f841067e5f96bd44d953f1227b03fb972ce",
+        "0xb86256a47e2399c3d637394b51f8868aa95c22c3627d2a8825225fe0daa9c335",
+        "0xa6cd502a27d6b5482c559654e2c97faaa0e4d59acf7f7474941670c90728d9c2",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb1658bd148f54c1e59d85f7fda511b558533b0ca": {
+      "address": "0xb1658bd148f54c1e59d85f7fda511b558533b0ca",
+      "nftCount": 1,
+      "tokenIds": [
+        95
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xcc6fd0cf09c2b2081cafc55e2393b55ad792bbde13f647c888159c4db2787344",
+      "proof": [
+        "0x311da36e0934896cdabfe7a75b08ed74e2849416bcf6154fa3eb5121d341c9b8",
+        "0xa34ea78afb34c0e0dc151339d0e497226f285a3eb77c5b127944b8d3d0c1f6bb",
+        "0xdef167ee8235037bb0612d283d7e19346351336b8e2e6c6f4fe08eb963ad75e9",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb18c220c813f5a1578f08f7aeca7fbaaa574e9ca": {
+      "address": "0xb18c220c813f5a1578f08f7aeca7fbaaa574e9ca",
+      "nftCount": 1,
+      "tokenIds": [
+        2
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x311da36e0934896cdabfe7a75b08ed74e2849416bcf6154fa3eb5121d341c9b8",
+      "proof": [
+        "0xcc6fd0cf09c2b2081cafc55e2393b55ad792bbde13f647c888159c4db2787344",
+        "0xa34ea78afb34c0e0dc151339d0e497226f285a3eb77c5b127944b8d3d0c1f6bb",
+        "0xdef167ee8235037bb0612d283d7e19346351336b8e2e6c6f4fe08eb963ad75e9",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb3be45a893be0062e36056fd2b447b6839cfab36": {
+      "address": "0xb3be45a893be0062e36056fd2b447b6839cfab36",
+      "nftCount": 1,
+      "tokenIds": [
+        93
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x595b56b63c9f927dce0a2b7c9b3726842267f8657b7819fe1a8eab2201c0528a",
+      "proof": [
+        "0x139b59e502e729dd135fd405008590ccece48144a8910cf9bdc9f7000c2ea495",
+        "0x43cf46dbbec26fb066b7bd5e34476a72a7fc232c0f15b3469073f942a079c1be",
+        "0xdef167ee8235037bb0612d283d7e19346351336b8e2e6c6f4fe08eb963ad75e9",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb63573997de24d89a8045db91d6e428e881a4bdc": {
+      "address": "0xb63573997de24d89a8045db91d6e428e881a4bdc",
+      "nftCount": 1,
+      "tokenIds": [
+        256
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x139b59e502e729dd135fd405008590ccece48144a8910cf9bdc9f7000c2ea495",
+      "proof": [
+        "0x595b56b63c9f927dce0a2b7c9b3726842267f8657b7819fe1a8eab2201c0528a",
+        "0x43cf46dbbec26fb066b7bd5e34476a72a7fc232c0f15b3469073f942a079c1be",
+        "0xdef167ee8235037bb0612d283d7e19346351336b8e2e6c6f4fe08eb963ad75e9",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb72d088def563c456d6090019d9b5fe72fe7823e": {
+      "address": "0xb72d088def563c456d6090019d9b5fe72fe7823e",
+      "nftCount": 1,
+      "tokenIds": [
+        254
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xb3e9128f6650745b431fedb8f7ddcc7a04fa0f6c97c90907bcb417e035d2c67a",
+      "proof": [
+        "0xc626699e0a415af7420777d20dad4a4974638f9e2f79063b6d1ed727e7b5575e",
+        "0xc10a2662b733bf5fabfb08375d4322cca6962a14d42475aabe14a0c9ae97642f",
+        "0x825057ecae2b07dad5cd7454f6f877b62f1ec2d6da1d56fc775ad41a9025183c",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xb98b71ea3bfa7774aefb1d3a889a250c0b294355": {
+      "address": "0xb98b71ea3bfa7774aefb1d3a889a250c0b294355",
+      "nftCount": 1,
+      "tokenIds": [
+        119
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc626699e0a415af7420777d20dad4a4974638f9e2f79063b6d1ed727e7b5575e",
+      "proof": [
+        "0xb3e9128f6650745b431fedb8f7ddcc7a04fa0f6c97c90907bcb417e035d2c67a",
+        "0xc10a2662b733bf5fabfb08375d4322cca6962a14d42475aabe14a0c9ae97642f",
+        "0x825057ecae2b07dad5cd7454f6f877b62f1ec2d6da1d56fc775ad41a9025183c",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xbb0770623c4f871a8d0e41313be2622dca75edee": {
+      "address": "0xbb0770623c4f871a8d0e41313be2622dca75edee",
+      "nftCount": 1,
+      "tokenIds": [
+        326
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x329c5046f03a3711fe4a60cd2ac4e2715db0e58b5f716b08ea5b39c361d2ea80",
+      "proof": [
+        "0x75765fcdef60da397755671a68b3302b414098b979c734d6fbf8902d97461660",
+        "0x8b842a843daeba4508498666455a1bd5a5c11e697eaa58eaef6ab79f9e4a0643",
+        "0x825057ecae2b07dad5cd7454f6f877b62f1ec2d6da1d56fc775ad41a9025183c",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xbd052d27c6d7b972b18948907ed5b917b6171d07": {
+      "address": "0xbd052d27c6d7b972b18948907ed5b917b6171d07",
+      "nftCount": 1,
+      "tokenIds": [
+        64
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x75765fcdef60da397755671a68b3302b414098b979c734d6fbf8902d97461660",
+      "proof": [
+        "0x329c5046f03a3711fe4a60cd2ac4e2715db0e58b5f716b08ea5b39c361d2ea80",
+        "0x8b842a843daeba4508498666455a1bd5a5c11e697eaa58eaef6ab79f9e4a0643",
+        "0x825057ecae2b07dad5cd7454f6f877b62f1ec2d6da1d56fc775ad41a9025183c",
+        "0x3dce78634a17b83e4ef00e6e9462b24480ba3fc86591e408ad10344fd8142b7e",
+        "0x6d27b2acab8780514f97952aaf11467a3190a6168d3733bbeb85bab6090ca4f9",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xbdb1bec07df702f5d8a8feecb3cb39b64a441f3f": {
+      "address": "0xbdb1bec07df702f5d8a8feecb3cb39b64a441f3f",
+      "nftCount": 1,
+      "tokenIds": [
+        103
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xa9ef137220f06b53e1c84ddcd9723b0428e9ffa285b1b2732bc4c7455276b4a7",
+      "proof": [
+        "0xb6279eff64b5b41838fcc12a311741b6c719a18a6665443415d96afa14f32834",
+        "0x0121378f59656d4288c6dd18eb022bdf3b98ef32c0e2971178d6cd9309d377a8",
+        "0xe1c0637902666106f33e0df356905aceb837feb6bf1de345c546d55507017ccf",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xbea67092fe9514191b4ba87597f8301c2065c7db": {
+      "address": "0xbea67092fe9514191b4ba87597f8301c2065c7db",
+      "nftCount": 1,
+      "tokenIds": [
+        41
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xb6279eff64b5b41838fcc12a311741b6c719a18a6665443415d96afa14f32834",
+      "proof": [
+        "0xa9ef137220f06b53e1c84ddcd9723b0428e9ffa285b1b2732bc4c7455276b4a7",
+        "0x0121378f59656d4288c6dd18eb022bdf3b98ef32c0e2971178d6cd9309d377a8",
+        "0xe1c0637902666106f33e0df356905aceb837feb6bf1de345c546d55507017ccf",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xc3877f7472768a57f170ecf3284c584ec6e7f2e0": {
+      "address": "0xc3877f7472768a57f170ecf3284c584ec6e7f2e0",
+      "nftCount": 1,
+      "tokenIds": [
+        81
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xcc28bd6a008abe35616e4ceb132b46fed3edc1d68c8f7818287946314560e33c",
+      "proof": [
+        "0xbff2eef6af70741a011431809209711001e5944bb5426579680d3704b84c0abd",
+        "0x251318b1b7d52db75f1255c01902a4838f168c1b61f878bfd402b93d5361963b",
+        "0xe1c0637902666106f33e0df356905aceb837feb6bf1de345c546d55507017ccf",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xc56ac3751f741ec25d7f9e27ebcee84f921cedd3": {
+      "address": "0xc56ac3751f741ec25d7f9e27ebcee84f921cedd3",
+      "nftCount": 1,
+      "tokenIds": [
+        78
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xbff2eef6af70741a011431809209711001e5944bb5426579680d3704b84c0abd",
+      "proof": [
+        "0xcc28bd6a008abe35616e4ceb132b46fed3edc1d68c8f7818287946314560e33c",
+        "0x251318b1b7d52db75f1255c01902a4838f168c1b61f878bfd402b93d5361963b",
+        "0xe1c0637902666106f33e0df356905aceb837feb6bf1de345c546d55507017ccf",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xc5e928740eb15b1b148cd10b52f9f0048fd5badb": {
+      "address": "0xc5e928740eb15b1b148cd10b52f9f0048fd5badb",
+      "nftCount": 1,
+      "tokenIds": [
+        249
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x6f6c19b53225c6e7606ba01b8dfffff7812ae32d4c36b9c64b5e7f3ec0194cdf",
+      "proof": [
+        "0x023c52ce11e4ad3538815b5848507b8546661df4aa2f75d55150c193013af236",
+        "0x62b34fe647382879639ded7385fd969ef1e9215be4bc5bfbf8c98e6a436eca32",
+        "0x792ab7cd0dc2ba88fc7f84005f6bd03f749134420855f95aafee536c3e4c2738",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xcb6a37e756bbe85d0bcf965f3339611f29fd8245": {
+      "address": "0xcb6a37e756bbe85d0bcf965f3339611f29fd8245",
+      "nftCount": 1,
+      "tokenIds": [
+        46
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x023c52ce11e4ad3538815b5848507b8546661df4aa2f75d55150c193013af236",
+      "proof": [
+        "0x6f6c19b53225c6e7606ba01b8dfffff7812ae32d4c36b9c64b5e7f3ec0194cdf",
+        "0x62b34fe647382879639ded7385fd969ef1e9215be4bc5bfbf8c98e6a436eca32",
+        "0x792ab7cd0dc2ba88fc7f84005f6bd03f749134420855f95aafee536c3e4c2738",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xcd62c41a848059840babe83ee85f7a2670abb057": {
+      "address": "0xcd62c41a848059840babe83ee85f7a2670abb057",
+      "nftCount": 1,
+      "tokenIds": [
+        212
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x46acbade04e043c7561cf6292f5932e3346fc147d4dd705b63cdf2b877501c36",
+      "proof": [
+        "0x2efff361633cfdeb8bde6cda5f5023c1a50d328b9cf8843cac28a03a604c4e15",
+        "0x93afece28a7a1fcb1d1fe6e9dd16da65ce1ef3c3c827883b9f78b667b09aeee6",
+        "0x792ab7cd0dc2ba88fc7f84005f6bd03f749134420855f95aafee536c3e4c2738",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd0d5c7eec57f6d1133eb4aa16144648488bf3e2d": {
+      "address": "0xd0d5c7eec57f6d1133eb4aa16144648488bf3e2d",
+      "nftCount": 1,
+      "tokenIds": [
+        44
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x2efff361633cfdeb8bde6cda5f5023c1a50d328b9cf8843cac28a03a604c4e15",
+      "proof": [
+        "0x46acbade04e043c7561cf6292f5932e3346fc147d4dd705b63cdf2b877501c36",
+        "0x93afece28a7a1fcb1d1fe6e9dd16da65ce1ef3c3c827883b9f78b667b09aeee6",
+        "0x792ab7cd0dc2ba88fc7f84005f6bd03f749134420855f95aafee536c3e4c2738",
+        "0xeeccc0b0f2235f3088d780e42f190398e1b40887a32661ddda5e58ddc449a9ad",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd22edc8ae8b53192a04cbd963d4a0a8ee6c6a41f": {
+      "address": "0xd22edc8ae8b53192a04cbd963d4a0a8ee6c6a41f",
+      "nftCount": 1,
+      "tokenIds": [
+        142
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x7a6aca8b5b2bb7543714e37021a8255f5a29ecd9ae26dbddc7ccd43f1b255912",
+      "proof": [
+        "0xd3b410b2e39dc0fc53fd4b26639f889a7fbaea600a108eca3963d9f5465d22ba",
+        "0x5f67ef2293f3a0726d9a93908d8e97f562f5c734b4afb64dcbeaf139640187ee",
+        "0x45c7a68bbd8ce855d942079024278b386c67ed0773ce18ef4638e988b429c804",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd3b0be614669e0b94343f084dee240c363a1b67b": {
+      "address": "0xd3b0be614669e0b94343f084dee240c363a1b67b",
+      "nftCount": 1,
+      "tokenIds": [
+        108
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xd3b410b2e39dc0fc53fd4b26639f889a7fbaea600a108eca3963d9f5465d22ba",
+      "proof": [
+        "0x7a6aca8b5b2bb7543714e37021a8255f5a29ecd9ae26dbddc7ccd43f1b255912",
+        "0x5f67ef2293f3a0726d9a93908d8e97f562f5c734b4afb64dcbeaf139640187ee",
+        "0x45c7a68bbd8ce855d942079024278b386c67ed0773ce18ef4638e988b429c804",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd55263b84685ced7e10a77607c7ffd763d495b6e": {
+      "address": "0xd55263b84685ced7e10a77607c7ffd763d495b6e",
+      "nftCount": 1,
+      "tokenIds": [
+        79
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x5de20bf1708e79fb01e352387f9632b6c263b33526833b192578895043f6b3e8",
+      "proof": [
+        "0xbc1a2f50171f4f3d4c566051dac39c8d2e3ff21198f3f49f09c3d57adcc53bee",
+        "0x13ae5f31ce4ddf875e069ef0e0cb6c15941727c4ab5cbf1ab3cc15d5bb0be13f",
+        "0x45c7a68bbd8ce855d942079024278b386c67ed0773ce18ef4638e988b429c804",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd627158727cd253cba31d86a3da31d2baa00ff07": {
+      "address": "0xd627158727cd253cba31d86a3da31d2baa00ff07",
+      "nftCount": 1,
+      "tokenIds": [
+        185
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xbc1a2f50171f4f3d4c566051dac39c8d2e3ff21198f3f49f09c3d57adcc53bee",
+      "proof": [
+        "0x5de20bf1708e79fb01e352387f9632b6c263b33526833b192578895043f6b3e8",
+        "0x13ae5f31ce4ddf875e069ef0e0cb6c15941727c4ab5cbf1ab3cc15d5bb0be13f",
+        "0x45c7a68bbd8ce855d942079024278b386c67ed0773ce18ef4638e988b429c804",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xd81af520255a973825b7d62dfc998c1316cffc3b": {
+      "address": "0xd81af520255a973825b7d62dfc998c1316cffc3b",
+      "nftCount": 1,
+      "tokenIds": [
+        305
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x6e1e8af99f10d52ae10950c7a945c0f22111c791ffabdb12c4728db73b97bbaa",
+      "proof": [
+        "0xaa36890047f25c4b859ec3e64fc136d6e459294e23e5d7c5886be494cacac31d",
+        "0xc13744b6b3656830d332eb95e241b81606cc79991a21f38e9b25849e5ff3dbbf",
+        "0xf2fb35514ad422ef81bf29a26aa94b4cde4af031298bca941359034a0ca01593",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xdda556f7418a17e8ed33facf243c61077b333f0e": {
+      "address": "0xdda556f7418a17e8ed33facf243c61077b333f0e",
+      "nftCount": 1,
+      "tokenIds": [
+        30
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xaa36890047f25c4b859ec3e64fc136d6e459294e23e5d7c5886be494cacac31d",
+      "proof": [
+        "0x6e1e8af99f10d52ae10950c7a945c0f22111c791ffabdb12c4728db73b97bbaa",
+        "0xc13744b6b3656830d332eb95e241b81606cc79991a21f38e9b25849e5ff3dbbf",
+        "0xf2fb35514ad422ef81bf29a26aa94b4cde4af031298bca941359034a0ca01593",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xddb29d86be44a19073cb52888d489103ec4ac7b9": {
+      "address": "0xddb29d86be44a19073cb52888d489103ec4ac7b9",
+      "nftCount": 1,
+      "tokenIds": [
+        246
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x3687e2d248825b14b48a4c55734dfc3501805bb78130271d52a10bfbb24fa622",
+      "proof": [
+        "0x4d56016fae6d57fb05c02f8c223ccfcbb24e1c5877d9abfc40df01975617a284",
+        "0x45fcade31e7524b85c10c8f6f536e1d7de8782b33263994e06c64f483091f137",
+        "0xf2fb35514ad422ef81bf29a26aa94b4cde4af031298bca941359034a0ca01593",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xde3461f61d36746ad14a229f5d9fce91ae7ce026": {
+      "address": "0xde3461f61d36746ad14a229f5d9fce91ae7ce026",
+      "nftCount": 1,
+      "tokenIds": [
+        35
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x4d56016fae6d57fb05c02f8c223ccfcbb24e1c5877d9abfc40df01975617a284",
+      "proof": [
+        "0x3687e2d248825b14b48a4c55734dfc3501805bb78130271d52a10bfbb24fa622",
+        "0x45fcade31e7524b85c10c8f6f536e1d7de8782b33263994e06c64f483091f137",
+        "0xf2fb35514ad422ef81bf29a26aa94b4cde4af031298bca941359034a0ca01593",
+        "0x142252fe7408a8c88eda4fe02edae314cdffc83e17156fcdfeeb5f1e80cb0561",
+        "0x394b7d34f50baf9d3c585472a9c7d3c0a3ac70e6ae80168727e9b2b927d2da8b",
+        "0x42afdfad540b4b964470a06cba2abe33f0580a9d8ae8e0143439988ec01a7020",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xdf28cda90189b21d7bc0b0d4c39b731f0a4bee36": {
+      "address": "0xdf28cda90189b21d7bc0b0d4c39b731f0a4bee36",
+      "nftCount": 1,
+      "tokenIds": [
+        128
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xcd632a85e6473e0fbba5cf1464fdfd76cbdac37141b0601fe17430bffc4b28d3",
+      "proof": [
+        "0xefca0a364862fc58e8ffab4b3fe9cd9223cfc29dbdfdc43f5580be289357c6a6",
+        "0x785548bff0f81fe96a0b1666db0abda3f6c8c0f4bf965284e94dcf0165a5bc4c",
+        "0xe5c04dae63e3cda2fe246852a4a6ef60db835cfd422d267e4069ab87006a0d96",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xe0fd9984d2d39b9d8f51918824778c8840db905b": {
+      "address": "0xe0fd9984d2d39b9d8f51918824778c8840db905b",
+      "nftCount": 1,
+      "tokenIds": [
+        39
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xefca0a364862fc58e8ffab4b3fe9cd9223cfc29dbdfdc43f5580be289357c6a6",
+      "proof": [
+        "0xcd632a85e6473e0fbba5cf1464fdfd76cbdac37141b0601fe17430bffc4b28d3",
+        "0x785548bff0f81fe96a0b1666db0abda3f6c8c0f4bf965284e94dcf0165a5bc4c",
+        "0xe5c04dae63e3cda2fe246852a4a6ef60db835cfd422d267e4069ab87006a0d96",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xe3a67fba694377e3a2e5a0674a4bef4edfb419c5": {
+      "address": "0xe3a67fba694377e3a2e5a0674a4bef4edfb419c5",
+      "nftCount": 1,
+      "tokenIds": [
+        229
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xfbcc6ef173efa52f9cd5dc5a5622e645065285cd5cb1ca4091b47d57946e4d10",
+      "proof": [
+        "0xfd2d62cf52721346bd3dccfad7d0d3319550186a49586ed33f27f5696d38a83b",
+        "0x19778ea9cc297c6df856f8fadd10b8887a88ad9f25203815910306bab67aac0b",
+        "0xe5c04dae63e3cda2fe246852a4a6ef60db835cfd422d267e4069ab87006a0d96",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xea392d5deee981ae21d829fbf83b90a908f8ced2": {
+      "address": "0xea392d5deee981ae21d829fbf83b90a908f8ced2",
+      "nftCount": 1,
+      "tokenIds": [
+        235
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xfd2d62cf52721346bd3dccfad7d0d3319550186a49586ed33f27f5696d38a83b",
+      "proof": [
+        "0xfbcc6ef173efa52f9cd5dc5a5622e645065285cd5cb1ca4091b47d57946e4d10",
+        "0x19778ea9cc297c6df856f8fadd10b8887a88ad9f25203815910306bab67aac0b",
+        "0xe5c04dae63e3cda2fe246852a4a6ef60db835cfd422d267e4069ab87006a0d96",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xea9bb4a2ede72bc642ffd6d5eb69e2067bfe89f2": {
+      "address": "0xea9bb4a2ede72bc642ffd6d5eb69e2067bfe89f2",
+      "nftCount": 1,
+      "tokenIds": [
+        283
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x27cb753b2e0653342236d0db42511750343f4f9e5a0cf479d10e5f5fb718c8f7",
+      "proof": [
+        "0xecae481990a927972ccbe5777d7c8bf869e6e037926bc449102abb6c128169cc",
+        "0x374416d19ecd1b7342794057a69ffe3768859a303e3b0c848414c5442ecf8b0d",
+        "0x04091ea1623024f877b1a46e17a0c76a9f7f960b64a03245f3b22d48197f4345",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xeb882e743d8a1bba00631b0f5dbbcae286df80d2": {
+      "address": "0xeb882e743d8a1bba00631b0f5dbbcae286df80d2",
+      "nftCount": 1,
+      "tokenIds": [
+        252
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xecae481990a927972ccbe5777d7c8bf869e6e037926bc449102abb6c128169cc",
+      "proof": [
+        "0x27cb753b2e0653342236d0db42511750343f4f9e5a0cf479d10e5f5fb718c8f7",
+        "0x374416d19ecd1b7342794057a69ffe3768859a303e3b0c848414c5442ecf8b0d",
+        "0x04091ea1623024f877b1a46e17a0c76a9f7f960b64a03245f3b22d48197f4345",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xee940c4bb3914f74e979519a4c3aebc68a5579e9": {
+      "address": "0xee940c4bb3914f74e979519a4c3aebc68a5579e9",
+      "nftCount": 1,
+      "tokenIds": [
+        70
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x15c8f20d4eccc85f90fffbad07a30a8e5dcecd6463bec521965de48952046aff",
+      "proof": [
+        "0x057617f6f102ed0a6d167fc3903f658f724c1e79167f1ea753e97f5f68c2e23b",
+        "0x00af64f85c1a824333b0d67f9915ed9a310b4ef5c0271423f4148894947e8900",
+        "0x04091ea1623024f877b1a46e17a0c76a9f7f960b64a03245f3b22d48197f4345",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xeee9d4923ad30f3ee2a14eed45f39d5e27c67187": {
+      "address": "0xeee9d4923ad30f3ee2a14eed45f39d5e27c67187",
+      "nftCount": 1,
+      "tokenIds": [
+        270
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x057617f6f102ed0a6d167fc3903f658f724c1e79167f1ea753e97f5f68c2e23b",
+      "proof": [
+        "0x15c8f20d4eccc85f90fffbad07a30a8e5dcecd6463bec521965de48952046aff",
+        "0x00af64f85c1a824333b0d67f9915ed9a310b4ef5c0271423f4148894947e8900",
+        "0x04091ea1623024f877b1a46e17a0c76a9f7f960b64a03245f3b22d48197f4345",
+        "0x7c1828a1567eab03454647ddd8115984e4cac1e9f3bf70e160c265a5ad5d6e59",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xf2c9d1335f2e38a8258d1510bef2b1b954d1d620": {
+      "address": "0xf2c9d1335f2e38a8258d1510bef2b1b954d1d620",
+      "nftCount": 1,
+      "tokenIds": [
+        120
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x839ced1d57581c369efdc30f9c305b80929664f5bd631c01bf6d21ba32030e7b",
+      "proof": [
+        "0x660b48d6088a8384d66e797a6690e9cc5c7ea3375dcf0c496f8e5a05f7635675",
+        "0x1d06af1d9c4172d398d5256ed3f73329cc03be3e33f7759fe174257c1a2da5be",
+        "0xd531f1eb5534118ce560e4d539c661852800a4e3166e647581911ff18f7a4648",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xf31929d61986aca6be678842a00620e82c4111b1": {
+      "address": "0xf31929d61986aca6be678842a00620e82c4111b1",
+      "nftCount": 1,
+      "tokenIds": [
+        9
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x660b48d6088a8384d66e797a6690e9cc5c7ea3375dcf0c496f8e5a05f7635675",
+      "proof": [
+        "0x839ced1d57581c369efdc30f9c305b80929664f5bd631c01bf6d21ba32030e7b",
+        "0x1d06af1d9c4172d398d5256ed3f73329cc03be3e33f7759fe174257c1a2da5be",
+        "0xd531f1eb5534118ce560e4d539c661852800a4e3166e647581911ff18f7a4648",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xf36f8db6ca19872694551ff08dd0233f4cd5b3da": {
+      "address": "0xf36f8db6ca19872694551ff08dd0233f4cd5b3da",
+      "nftCount": 1,
+      "tokenIds": [
+        104
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0xc111a0cc9c25764c87b054e9ecc2abfca97f0e73f027c89102c7148595012e71",
+      "proof": [
+        "0x413e822c6d3ca315a884d364f022fb717f0d4bb1b990622d97d724e59fe1e316",
+        "0x642a7032cfb329ffaa813c872a04fb1af0757bcbc685a323ff747cf659268c96",
+        "0xd531f1eb5534118ce560e4d539c661852800a4e3166e647581911ff18f7a4648",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xf5ad66ff5a943ce0b08f3682b78b288172379534": {
+      "address": "0xf5ad66ff5a943ce0b08f3682b78b288172379534",
+      "nftCount": 1,
+      "tokenIds": [
+        48
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x413e822c6d3ca315a884d364f022fb717f0d4bb1b990622d97d724e59fe1e316",
+      "proof": [
+        "0xc111a0cc9c25764c87b054e9ecc2abfca97f0e73f027c89102c7148595012e71",
+        "0x642a7032cfb329ffaa813c872a04fb1af0757bcbc685a323ff747cf659268c96",
+        "0xd531f1eb5534118ce560e4d539c661852800a4e3166e647581911ff18f7a4648",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xf7878596918eeb5a09620a2055719963b8c5aeff": {
+      "address": "0xf7878596918eeb5a09620a2055719963b8c5aeff",
+      "nftCount": 1,
+      "tokenIds": [
+        276
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x6a0c392ba606201edca47e97b2aed97447e17fcdfe71e77b0e8c4c61fa47721c",
+      "proof": [
+        "0x2363a27e6bafeb43bb470518634c612d8c062ee72c6cd46a255f621675e190ce",
+        "0x1db316b972d07747f299e96b30b0d4e714803b2e73efea0a6cbc3dad4c42b944",
+        "0xc2c0ad6cc5a5b1ef1a28090fd70aee809c22ed73035dd23e0bdb9720c7f1b2c0",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xfa50de214e13302e01bdf635d5204ff26b84ea60": {
+      "address": "0xfa50de214e13302e01bdf635d5204ff26b84ea60",
+      "nftCount": 1,
+      "tokenIds": [
+        298
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x2363a27e6bafeb43bb470518634c612d8c062ee72c6cd46a255f621675e190ce",
+      "proof": [
+        "0x6a0c392ba606201edca47e97b2aed97447e17fcdfe71e77b0e8c4c61fa47721c",
+        "0x1db316b972d07747f299e96b30b0d4e714803b2e73efea0a6cbc3dad4c42b944",
+        "0xc2c0ad6cc5a5b1ef1a28090fd70aee809c22ed73035dd23e0bdb9720c7f1b2c0",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    },
+    "0xfaad7563f40dcadaa4d6d5920e8fa4076b218055": {
+      "address": "0xfaad7563f40dcadaa4d6d5920e8fa4076b218055",
+      "nftCount": 1,
+      "tokenIds": [
+        217
+      ],
+      "amount": 7207,
+      "amountWei": "7207000000000000000000",
+      "sharePercent": "0.9009%",
+      "leaf": "0x1db316b972d07747f299e96b30b0d4e714803b2e73efea0a6cbc3dad4c42b944",
+      "proof": [
+        "0x7e5d4e787d5cfd4c1b369e697f486bd3237f93d67fcf39f531fc4531b35bf6c9",
+        "0xc2c0ad6cc5a5b1ef1a28090fd70aee809c22ed73035dd23e0bdb9720c7f1b2c0",
+        "0xe48d996e1035ee5725395d00a81cf7db48f83249e5a0fe340779db565c48a889",
+        "0xdb83da34ec30a4f8a558de269cfa8512b19270ac9e74691b20a2a8967e29cbf9",
+        "0x9789ea05958bc4d197a6732664ac49e3169d91e84f6477b2ba79774de68c7ae6"
+      ]
+    }
+  }
+}

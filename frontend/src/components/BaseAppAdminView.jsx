@@ -11,6 +11,7 @@ import royalty1Data from '../data/royalty_1_proofs.json';
 import royalty2Data from '../data/royalty_2_proofs.json';
 import royalty3Data from '../data/royalty_3_proofs.json';
 import royalty4Data from '../data/royalty_4_proofs.json';
+import royalty5Data from '../data/royalty_5_proofs.json';
 import {
   Coins,
   Crown,
@@ -72,8 +73,8 @@ export function BaseAppAdminView() {
   const [holderBurnAmount, setHolderBurnAmount] = useState('');
   const [holderCommunityAmount, setHolderCommunityAmount] = useState('');
 
-  const [royaltyEpochId, setRoyaltyEpochId] = useState('4');
-  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty4Data?.merkleRoot || '0xc0623fa72aa0c8e17c3b91d6e44707cb8222b323390ced057b7d233105682b8f');
+  const [royaltyEpochId, setRoyaltyEpochId] = useState('5');
+  const [royaltyMerkleRoot, setRoyaltyMerkleRoot] = useState(royalty5Data?.merkleRoot || '0xf9b9bfb3b409ed97ed3923b0d8c506a057ec659feb2d9199831369373c7d3903');
   const [royaltyWithdrawAmount, setRoyaltyWithdrawAmount] = useState('');
   const [royaltyBurnAmount, setRoyaltyBurnAmount] = useState('');
   const [royaltyCommunityAmount, setRoyaltyCommunityAmount] = useState('');
@@ -237,7 +238,7 @@ export function BaseAppAdminView() {
       const claims = Object.values(
         isHolder
           ? (epoch === '2' ? (round2Data?.claims || {}) : (round1Data?.claims || {}))
-          : (epoch === '4' ? (royalty4Data?.claims || {}) : (epoch === '3' ? (royalty3Data?.claims || {}) : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {}))))
+          : (epoch === '5' ? (royalty5Data?.claims || {}) : (epoch === '4' ? (royalty4Data?.claims || {}) : (epoch === '3' ? (royalty3Data?.claims || {}) : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {})))))
       );
 
       // Single multicall for contract token balance + all hasClaimed boolean statuses
@@ -1210,7 +1211,8 @@ export function BaseAppAdminView() {
                   onChange={(e) => {
                     const ep = e.target.value;
                     setRoyaltyEpochId(ep);
-                    if (ep === '4') setRoyaltyMerkleRoot(royalty4Data?.merkleRoot || '0xc0623fa72aa0c8e17c3b91d6e44707cb8222b323390ced057b7d233105682b8f');
+                    if (ep === '5') setRoyaltyMerkleRoot(royalty5Data?.merkleRoot || '0xf9b9bfb3b409ed97ed3923b0d8c506a057ec659feb2d9199831369373c7d3903');
+                    else if (ep === '4') setRoyaltyMerkleRoot(royalty4Data?.merkleRoot || '0xc0623fa72aa0c8e17c3b91d6e44707cb8222b323390ced057b7d233105682b8f');
                     else if (ep === '3') setRoyaltyMerkleRoot(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
                     else if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
                     else if (ep === '1') setRoyaltyMerkleRoot(royalty1Data?.merkleRoot || '0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');

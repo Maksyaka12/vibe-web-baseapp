@@ -194,6 +194,7 @@ export function BaseAppClaimView(props) {
     royalty2Data,
     royalty3Data,
     royalty4Data,
+    royalty5Data,
     totalAvailableCount,
     upcomingHolderRound,
     upcomingVibeClubRound
@@ -206,7 +207,7 @@ export function BaseAppClaimView(props) {
   // Download / Save Banner
   const handleDownloadBanner = async () => {
     setDownloadingBanner(true);
-    const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3)));
+    const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('5') ? 5 : (shareModalItem?.id?.includes('4') ? 4 : (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 5)))));
     const imageUrl = getRoyaltyBannerUrl(ep);
     const fileName = `vibe-club-royalties-${ep}-claimed.jpg`;
     try {
@@ -1019,7 +1020,7 @@ export function BaseAppClaimView(props) {
           {/* Card 2: Vibe Club Royalty */}
           {(() => {
             const isVibeClubSnapshotDone = Boolean(upcomingVibeClubRound?.snapshotIso && (currentTime instanceof Date ? currentTime.getTime() : new Date().getTime()) >= new Date(upcomingVibeClubRound.snapshotIso).getTime());
-            const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty4Data?.claims && address && royalty4Data.claims[address.toLowerCase()]) || (royalty3Data?.claims && address && royalty3Data.claims[address.toLowerCase()]) || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
+            const hasRoyaltyProof = Boolean(hasConfirmedRoyaltyClaim || (royalty5Data?.claims && address && royalty5Data.claims[address.toLowerCase()]) || (royalty4Data?.claims && address && royalty4Data.claims[address.toLowerCase()]) || (royalty3Data?.claims && address && royalty3Data.claims[address.toLowerCase()]) || (royalty2Data?.claims && address && royalty2Data.claims[address.toLowerCase()]));
             const isRoyaltyEligibleNow = hasRoyaltyProof || hasNft;
             const vibeClubPoolAmount = upcomingVibeClubRound?.pool
               ? (upcomingVibeClubRound.pool.includes('$VIBE') || upcomingVibeClubRound.pool === 'TBA'
@@ -1404,17 +1405,17 @@ export function BaseAppClaimView(props) {
             </h3>
 
             <p className="claim-share-modal-sub">
-              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 3}`} 🐶🔥
+              You claimed <strong style={{ color: '#00f5ff' }}>+{Number(shareModalItem.amount || (activeRoyaltyEpochId === 5 ? 7207 : (activeRoyaltyEpochId === 4 ? 9909 : (activeRoyaltyEpochId === 3 ? 18018 : (activeRoyaltyEpochId === 2 ? 17117 : 22935))))).toLocaleString('en-US')} $VIBE</strong> in {shareModalItem.title || `Vibe Club · Royalty ${activeRoyaltyEpochId || 5}`} 🐶🔥
             </p>
 
             {/* Banner Preview */}
             <div className="claim-share-modal-banner-wrap">
               <img
-                src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3))))}
+                src={getRoyaltyBannerUrl(shareModalItem?.roundId || (shareModalItem?.id?.includes('5') ? 5 : (shareModalItem?.id?.includes('4') ? 4 : (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 5))))))}
                 alt="Claim Banner"
                 className="claim-share-modal-banner-img"
                 onError={(e) => {
-                  const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 3)));
+                  const ep = shareModalItem?.roundId || (shareModalItem?.id?.includes('5') ? 5 : (shareModalItem?.id?.includes('4') ? 4 : (shareModalItem?.id?.includes('3') ? 3 : (shareModalItem?.id?.includes('2') ? 2 : (activeRoyaltyEpochId || 5)))));
                   if (!e.currentTarget.src.includes('.jpg')) {
                     e.currentTarget.src = `/vibe-club-royalties-${ep}.jpg`;
                   } else {
