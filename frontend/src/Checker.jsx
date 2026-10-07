@@ -1232,8 +1232,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
         }
       }
 
-      const totalWallets = claims.length || (type === 'holder' ? 42 : (epoch === '4' ? 111 : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109))));
-      const totalPool = type === 'holder' ? 10000000 : (epoch === '4' ? 1100000 : (epoch === '3' ? 2000000 : (epoch === '2' ? 1900000 : 2500000)));
+      const totalWallets = claims.length || (type === 'holder' ? (epoch === '2' ? Object.keys(round2Data?.claims || {}).length : 42) : (epoch === '5' ? 111 : (epoch === '4' ? 111 : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109)))));
+      const totalPool = type === 'holder' ? 10000000 : (epoch === '5' ? (royalty5Data?.poolAmount || 800000) : (epoch === '4' ? 1100000 : (epoch === '3' ? 2000000 : (epoch === '2' ? 1900000 : 2500000))));
 
       const newMetrics = {
         contractBalance,
