@@ -7,6 +7,7 @@ import './styles/o1-components.css';
 import './styles/o1-profile.css';
 import './styles/o1-hub.css';
 import './styles/o1-claim.css';
+import './styles/o1-swap.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

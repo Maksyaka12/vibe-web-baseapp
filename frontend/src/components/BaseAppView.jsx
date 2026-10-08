@@ -9,6 +9,7 @@ import DeFiVibePanel from './DeFiVibePanel';
 import TokenomicsPage from '../pages/TokenomicsPage';
 import ContractsPage from '../pages/ContractsPage';
 import BaseAppAdminView from './BaseAppAdminView';
+import { PageHeader } from './ui';
 import './BaseAppTheme.css';
 
 class BaseAppErrorBoundary extends React.Component {
@@ -206,71 +207,12 @@ export function BaseAppView({ RewardsComponent }) {
           {/* View Content: Buy, Claim, Profile, Vibe Club, Tokenomics, Contracts, Rewards Hub */}
           <main style={{ flex: 1, paddingBottom: isDesktop ? '40px' : '90px' }}>
             {activeTab === 'buy' ? (
-              <div className="swap-view-container" style={{ padding: '20px 12px 60px 12px', maxWidth: '560px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-                {/* Swap Hero Header */}
-                <div
-                  className="rewards-hero-header"
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                    padding: '12px 8px 8px 8px'
-                  }}
-                >
-                  <h2
-                    className="rewards-hero-title"
-                    style={{
-                      fontSize: '18px',
-                      margin: '0 0 12px 0',
-                      letterSpacing: '0.6px',
-                      color: 'var(--text)',
-                      fontFamily: 'var(--font-sans)',
-                      textAlign: 'center',
-                      width: '100%',
-                      lineHeight: 1.3
-                    }}
-                  >
-                    SWAP <span style={{ color: 'var(--accent)' }}>$VIBE</span>
-                  </h2>
-
-                  <div
-                    className="rewards-hero-pill"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
-                      border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
-                      borderRadius: '99px',
-                      padding: '7px 16px',
-                      maxWidth: '100%',
-                      boxSizing: 'border-box'
-                    }}
-                  >
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
-                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-                      INSTANT ON-CHAIN SWAP · BASE MAINNET
-                    </span>
-                  </div>
-                </div>
-
-                {/* Embedded DeFi Swap Widget Card */}
-                <div
-                  className="swap-widget-card"
-                  style={{
-                    background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
-                    border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
-                    borderRadius: '18px',
-                    padding: '16px 14px',
-                    }}
-                >
-                  <DeFiVibePanel />
-                </div>
+              <div className="o1-swap-container" style={{ padding: '0 14px' }}>
+                <PageHeader
+                  title="Swap"
+                  description="Instant decentralized exchange on Base L2 via optimal liquidity routing"
+                />
+                <DeFiVibePanel />
               </div>
             ) : (activeTab === 'claim' || activeTab === 'profile') ? (
               <Checker isBaseAppMode={true} isProfileMode={activeTab === 'profile'} />
