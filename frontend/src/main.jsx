@@ -5,6 +5,7 @@ import './index.css';
 import './styles/o1-tokens.css';
 import './styles/o1-components.css';
 import './styles/o1-profile.css';
+import './styles/o1-hub.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

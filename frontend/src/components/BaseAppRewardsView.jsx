@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { usePrivy } from '@privy-io/react-auth';
-import { Coins, Lock, ArrowUpRight, ArrowRight, ChevronDown, Info, Sparkles, CheckCircle2, XCircle, Clock, Check, Lightbulb } from 'lucide-react';
+import {
+  Coins,
+  Lock,
+  ArrowUpRight,
+  ArrowRight,
+  ChevronDown,
+  Info,
+  CheckCircle2,
+  Clock,
+  ExternalLink
+} from 'lucide-react';
 import round1Data from '../data/round_1_proofs.json';
 import round2Data from '../data/round_2_proofs.json';
 import royalty1Data from '../data/royalty_1_proofs.json';
@@ -9,6 +19,7 @@ import royalty2Data from '../data/royalty_2_proofs.json';
 import royalty3Data from '../data/royalty_3_proofs.json';
 import royalty4Data from '../data/royalty_4_proofs.json';
 import royalty5Data from '../data/royalty_5_proofs.json';
+import { Button, Card, Tile, Badge, StatusPill, PageHeader, SectionTitle, Alert } from './ui';
 
 function formatClaimCountdown(targetDate) {
   if (!targetDate) return '';
@@ -26,9 +37,9 @@ function formatClaimCountdown(targetDate) {
   const pad = (n) => String(n).padStart(2, '0');
 
   if (days > 0) {
-    return `${days}D ${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`;
+    return `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
   }
-  return `${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`;
+  return `${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
 }
 
 function ActiveClaimCountdown({ targetDate }) {
@@ -41,137 +52,12 @@ function ActiveClaimCountdown({ targetDate }) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  return <span>{timeLeft}</span>;
-}
-
-function InfoSvgIcon({ size = 18, color = 'var(--accent)', className = '' }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={{ display: 'block', flexShrink: 0 }}
-    >
-      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="color-mix(in srgb, var(--accent) 15%, transparent)" />
-      <path d="M12 11v5" stroke={color} strokeWidth="2.4" strokeLinecap="round" />
-      <circle cx="12" cy="7.5" r="1.3" fill={color} />
-    </svg>
-  );
-}
-
-function BaseAppClaimCountdownButton({ targetDate }) {
-  const [timeLeft, setTimeLeft] = useState(() => {
-    if (!targetDate) return '';
-    const now = new Date().getTime();
-    const target = new Date(targetDate).getTime();
-    const diff = target - now;
-    if (diff <= 0) return '00H 00M 00S';
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-    const pad = (n) => String(n).padStart(2, '0');
-    return `${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`;
-  });
-
-  const [isReached, setIsReached] = useState(() => {
-    if (!targetDate) return false;
-    return new Date().getTime() >= new Date(targetDate).getTime();
-  });
-
-  useEffect(() => {
-    const updateCountdown = () => {
-      if (!targetDate) return;
-      const now = new Date().getTime();
-      const target = new Date(targetDate).getTime();
-      const diff = target - now;
-      if (diff <= 0) {
-        setIsReached(true);
-        setTimeLeft('00H 00M 00S');
-      } else {
-        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((diff / (1000 * 60)) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        const pad = (n) => String(n).padStart(2, '0');
-        setTimeLeft(`${pad(hours)}H ${pad(minutes)}M ${pad(seconds)}S`);
-      }
-    };
-    const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  if (isReached) {
-    return (
-      <Link
-        to="/claim"
-        className="rewards-claim-btn"
-        style={{
-          width: '100%',
-          padding: '12px',
-          fontSize: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '8px',
-          textDecoration: 'none',
-          background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-          border: '1.5px solid var(--green)',
-          color: 'var(--green)',
-          borderRadius: '10px',
-          fontFamily: 'var(--font-sans)',
-          fontWeight: 900,
-          transition: 'all 0.2s',
-          boxSizing: 'border-box',
-          }}
-      >
-        <span style={{ color: 'var(--green)' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
-      </Link>
-    );
-  }
-
-  return (
-    <button
-      disabled
-      className="rewards-claim-btn"
-      style={{
-        width: '100%',
-        padding: '12px',
-        fontSize: '8px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '8px',
-        background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-        border: '1.5px solid var(--green)',
-        color: 'var(--green)',
-        borderRadius: '10px',
-        fontFamily: 'var(--font-sans)',
-        fontWeight: 900,
-        boxSizing: 'border-box',
-        
-        cursor: 'default',
-        }}
-    >
-      <Clock size={14} color="var(--green)" strokeWidth={2.5} />
-      <span style={{ color: 'var(--green)' }}>CLAIM IN {timeLeft}</span>
-    </button>
-  );
+  return <span style={{ fontVariantNumeric: 'tabular-nums', fontFamily: 'var(--mono)' }}>{timeLeft}</span>;
 }
 
 const stripYear = (str) => {
   if (!str) return '';
   return str.replace(/\s\d{4},/, ',');
-};
-
-const formatEpochEndedDate = (d) => {
-  if (!d) return '';
-  const date = d instanceof Date ? d : new Date(d);
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  const day = date.getUTCDate();
-  const month = months[date.getUTCMonth()];
-  return `${day} ${month}, 00:00 UTC`;
 };
 
 const getEpochStatus = (ep, currentTime = new Date()) => {
@@ -198,12 +84,12 @@ const getRewardEpochStatus = (ep, currentTime = new Date()) => {
 };
 
 export default function BaseAppRewardsView({
-  HOLDER_UNLOCKS,
-  VIBECLUB_EPOCHS,
-  STAKING_EPOCHS,
-  GIVEAWAYS_DATA,
-  O1_STAKING_VAULT,
-  now
+  HOLDER_UNLOCKS = [],
+  VIBECLUB_EPOCHS = [],
+  STAKING_EPOCHS = [],
+  GIVEAWAYS_DATA = [],
+  O1_STAKING_VAULT = '',
+  now = new Date()
 }) {
   const { authenticated, user } = usePrivy();
   const address = user?.wallet?.address;
@@ -211,9 +97,8 @@ export default function BaseAppRewardsView({
 
   const [currentTab, setCurrentTab] = useState('holders');
   const [openFaq, setOpenFaq] = useState(null);
-  const [activeTooltip, setActiveTooltip] = useState(null);
 
-  // Cached / live states for balances
+  // Cached balances
   const [userBalance, setUserBalance] = useState(() => {
     if (!userAddress) return 0;
     return Number(localStorage.getItem(`vibe_balance_${userAddress}`) || 0);
@@ -237,26 +122,15 @@ export default function BaseAppRewardsView({
   const upcomingHolders = HOLDER_UNLOCKS.filter(u => getRewardEpochStatus(u, now) === 'upcoming');
 
   const featuredHolder = activeHolders[0] || upcomingHolders[0] || endedHolders[endedHolders.length - 1] || HOLDER_UNLOCKS[0];
-  const featuredHolderStatus = getRewardEpochStatus(featuredHolder, now);
-  const isFeaturedHolderClaimLive = featuredHolderStatus === 'active' && featuredHolder.dateObj && now >= featuredHolder.dateObj;
+  const featuredHolderStatus = featuredHolder ? getRewardEpochStatus(featuredHolder, now) : 'upcoming';
+  const isFeaturedHolderClaimLive = featuredHolderStatus === 'active' && featuredHolder?.dateObj && now >= featuredHolder.dateObj;
 
-  const otherUpcomingHolders = upcomingHolders.filter(u => u.unlock !== featuredHolder.unlock);
-  const otherEndedHolders = endedHolders.filter(u => u.unlock !== featuredHolder.unlock);
-
-  // Dynamic eligibility calculation for featured/active Holder Reward
-  // (Checks Merkle proof snapshot for Unlock 1/2, or 5M+ holding balance for active/subsequent unlocks)
   const isHolderActiveEligible = (() => {
     if (!authenticated || !userAddress) return false;
     const unlockNum = parseInt(featuredHolder?.unlock?.replace(/\D/g, '') || '1', 10);
-    if (unlockNum === 1) {
-      return Boolean(round1Data?.claims?.[userAddress]);
-    }
-    if (unlockNum === 2) {
-      return Boolean(round2Data?.claims?.[userAddress]);
-    }
-    if (userBalance >= 5000000) {
-      return true;
-    }
+    if (unlockNum === 1) return Boolean(round1Data?.claims?.[userAddress]);
+    if (unlockNum === 2) return Boolean(round2Data?.claims?.[userAddress]);
+    if (userBalance >= 5000000) return true;
     return false;
   })();
 
@@ -266,1459 +140,191 @@ export default function BaseAppRewardsView({
   const upcomingVibeClubs = VIBECLUB_EPOCHS.filter(u => getRewardEpochStatus(u, now) === 'upcoming');
 
   const featuredVibeClub = activeVibeClubs[0] || upcomingVibeClubs[0] || endedVibeClubs[endedVibeClubs.length - 1] || VIBECLUB_EPOCHS[0];
-  const featuredVibeClubStatus = getRewardEpochStatus(featuredVibeClub, now);
-  const isFeaturedVibeClubClaimLive = featuredVibeClubStatus === 'active' && featuredVibeClub.dateObj && now >= featuredVibeClub.dateObj;
+  const featuredVibeClubStatus = featuredVibeClub ? getRewardEpochStatus(featuredVibeClub, now) : 'upcoming';
+  const isFeaturedVibeClubClaimLive = featuredVibeClubStatus === 'active' && featuredVibeClub?.dateObj && now >= featuredVibeClub.dateObj;
 
-  const otherUpcomingVibeClubs = upcomingVibeClubs.filter(u => u.epoch !== featuredVibeClub.epoch);
-  const otherEndedVibeClubs = endedVibeClubs.filter(u => u.epoch !== featuredVibeClub.epoch);
-
-  // Dynamic eligibility calculation for featured/active Vibe Club Royalty
-  // (Checks Merkle proof snapshot for Royalty 1/2, or Vibe Club NFT ownership)
   const isVibeClubActiveEligible = (() => {
     if (!authenticated || !userAddress) return false;
     const epochNum = parseInt(featuredVibeClub?.epoch?.replace(/\D/g, '') || '1', 10);
-    if (epochNum === 1 && royalty1Data?.claims?.[userAddress]) {
-      return true;
-    }
-    if (epochNum === 2 && royalty2Data?.claims?.[userAddress]) {
-      return true;
-    }
-    if (epochNum === 3 && royalty3Data?.claims?.[userAddress]) {
-      return true;
-    }
-    if (epochNum === 4 && royalty4Data?.claims?.[userAddress]) {
-      return true;
-    }
-    if (epochNum === 5 && royalty5Data?.claims?.[userAddress]) {
-      return true;
-    }
-    if (userNftCount > 0) {
-      return true;
-    }
+    if (epochNum === 1 && royalty1Data?.claims?.[userAddress]) return true;
+    if (epochNum === 2 && royalty2Data?.claims?.[userAddress]) return true;
+    if (epochNum === 3 && royalty3Data?.claims?.[userAddress]) return true;
+    if (epochNum === 4 && royalty4Data?.claims?.[userAddress]) return true;
+    if (epochNum === 5 && royalty5Data?.claims?.[userAddress]) return true;
+    if (userNftCount > 0) return true;
     return false;
   })();
 
-  // Dynamic Staking calculations based on timestamps
+  // Staking calculations
   const activeStakings = STAKING_EPOCHS.filter(e => getEpochStatus(e, now) === 'active');
   const endedStakings = STAKING_EPOCHS.filter(e => getEpochStatus(e, now) === 'ended');
   const upcomingStakings = STAKING_EPOCHS.filter(e => getEpochStatus(e, now) === 'upcoming');
 
   const featuredStaking = activeStakings[activeStakings.length - 1] || upcomingStakings[0] || endedStakings[endedStakings.length - 1] || STAKING_EPOCHS[0];
-  const featuredStakingStatus = getEpochStatus(featuredStaking, now);
+  const featuredStakingStatus = featuredStaking ? getEpochStatus(featuredStaking, now) : 'upcoming';
 
-  const otherUpcomingStakings = upcomingStakings.filter(e => e.epoch !== featuredStaking.epoch);
-  const otherEndedStakings = endedStakings.filter(e => e.epoch !== featuredStaking.epoch);
-
-  // Giveaways calculations (All active ongoing vs Past ended)
+  // Giveaways calculations
   const activeGiveaways = GIVEAWAYS_DATA.filter(e => e.status === 'ongoing');
   const pastGiveaways = GIVEAWAYS_DATA.filter(e => e.status === 'ended');
 
-  const tabIndexMap = {
-    'holders': 0,
-    'vibe-club': 1,
-    'staking': 2,
-    'giveaways': 3
-  };
-  const activeTabIndex = tabIndexMap[currentTab] ?? 0;
+  const tabs = [
+    { id: 'holders', label: 'Holders', image: '/rewards-hub/holders.jfif', count: `${activeHolders.length} live`, tone: activeHolders.length > 0 ? 'success' : 'neutral' },
+    { id: 'vibe-club', label: 'Vibe Club', image: '/rewards-hub/vibe-club.jfif', count: `${activeVibeClubs.length} live`, tone: activeVibeClubs.length > 0 ? 'success' : 'neutral' },
+    { id: 'staking', label: 'Staking', image: '/rewards-hub/staking.jfif', count: `${activeStakings.length} live`, tone: activeStakings.length > 0 ? 'success' : 'neutral' },
+    { id: 'giveaways', label: 'Giveaways', image: '/rewards-hub/giveaways.jfif', count: `${activeGiveaways.length} active`, tone: activeGiveaways.length > 0 ? 'accent' : 'neutral' }
+  ];
 
   return (
-    <div style={{ width: '100%', boxSizing: 'border-box' }}>
-      {/* ── 1. MODERN REWARDS HERO HEADER (CENTERED & LARGER) ── */}
-      <div
-        className="rewards-hero-header"
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          marginBottom: '22px',
-          padding: '12px 8px 8px 8px'
-        }}
-      >
-        <h2
-          className="rewards-hero-title"
-          style={{
-            fontSize: '18px',
-            margin: '0 0 12px 0',
-            letterSpacing: '0.6px',
-            color: 'var(--text)',
-            fontFamily: 'var(--font-sans)',
-            
-            textAlign: 'center',
-            width: '100%',
-            lineHeight: 1.3
-          }}
-        >
-          REWARDS <span style={{ color: 'var(--accent)' }}>HUB</span>
-        </h2>
+    <div className="o1-hub-container">
+      <PageHeader
+        title="Rewards Hub"
+        description="Campaign distribution schedules, holder royalties, and staking yields"
+      />
 
-        {/* Subtitle Status Pill */}
-        <div
-          className="rewards-hero-pill"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
-            border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
-            borderRadius: '99px',
-            padding: '7px 16px',
-            maxWidth: '100%',
-            boxSizing: 'border-box'
-          }}
-        >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
-          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-            TRACK ACTIVE REWARDS. JOIN &amp; EARN
-          </span>
-        </div>
-      </div>
-
-      {/* ── 2. PREMIUM CYBERPUNK / WEB3 CATEGORY SWITCHER (VISUAL BANNER CARDS) ── */}
-      <div className="rewards-cat-grid">
-        {[
-          { id: 'holders', label: 'Holders', image: '/rewards-hub/holders.jfif', count: `${activeHolders.length} LIVE` },
-          { id: 'vibe-club', label: 'Vibe Club', image: '/rewards-hub/vibe-club.jfif', count: `${activeVibeClubs.length} LIVE` },
-          { id: 'staking', label: 'Staking', image: '/rewards-hub/staking.jfif', count: `${activeStakings.length} LIVE` },
-          { id: 'giveaways', label: 'Giveaways', image: '/rewards-hub/giveaways.jfif', count: `${activeGiveaways.length} EVENTS` }
-        ].map(tab => {
+      {/* ── 1. Campaign Switcher 4-Card Grid ── */}
+      <div className="o1-campaign-grid">
+        {tabs.map((tab) => {
           const isActive = currentTab === tab.id;
           return (
             <button
               key={tab.id}
               type="button"
-              className={`rewards-banner-card ${isActive ? 'active' : ''}`}
-              onClick={() => {
-                setCurrentTab(tab.id);
-                setActiveTooltip(null);
-              }}
+              className={`o1-campaign-card ${isActive ? 'active' : ''}`}
+              onClick={() => setCurrentTab(tab.id)}
               aria-label={tab.label}
             >
-              {/* Top-Left Live Status Badge */}
-              <div className="rewards-banner-badge">
-                <span className="rewards-banner-dot" />
-                <span className="rewards-banner-count">{tab.count}</span>
+              <div className="o1-campaign-card-badge">
+                <Badge tone={tab.tone} pill>{tab.count}</Badge>
               </div>
-              <img
-                src={tab.image}
-                alt={tab.label}
-                className="rewards-banner-img"
-                loading="eager"
-              />
+              <img src={tab.image} alt={tab.label} className="o1-campaign-card-img" />
+              <div className="o1-campaign-card-overlay" />
+              <div className="o1-campaign-card-title">{tab.label}</div>
             </button>
           );
         })}
-
-        {/* ── DESKTOP ONLY: INTERACTIVE SECTION SLIDER INDICATOR ── */}
-        <div className="rewards-desktop-slider-wrap" aria-hidden="true">
-          <div className="rewards-desktop-slider-track">
-            <div
-              className="rewards-desktop-slider-runner"
-              style={{
-                transform: `translateX(calc(${activeTabIndex} * (100% + 10px)))`
-              }}
-            >
-              <div className="rewards-desktop-slider-notch" />
-              <div className="rewards-desktop-slider-thumb">
-                <span className="rewards-desktop-slider-glow-bar" />
-                <span className="rewards-desktop-slider-center-dot" />
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* ── 3. CATEGORY VIEW: 💎 HOLDER REWARDS ── */}
+      {/* ── 2. HOLDER REWARDS TAB ── */}
       {currentTab === 'holders' && (
-        <div>
-          {/* Smart Rule Strip */}
-          <div
-            className="rewards-rule-strip"
-            style={{
-              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
-              border: '1.5px solid var(--amber)',
-              borderRadius: '12px',
-              padding: '10px 12px',
-              marginBottom: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '8px'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
-                Hold 5M+ $VIBE at snapshot time to share the rewards pool.
-              </span>
-            </div>
-            <a
-              href="/tokenomics#vesting-details"
-              target="_blank"
-              rel="noreferrer"
-              className="rewards-rule-btn"
-              style={{
-                fontSize: '6.5px',
-                color: 'var(--amber)',
-                border: '1px solid var(--amber)',
-                padding: '4px 8px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                fontWeight: 800,
-                flexShrink: 0,
-                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
-                fontFamily: 'var(--font-sans)',
-                
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px'
-              }}
-            >
-              <span>RULES</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
-            </a>
-          </div>
-
-          {/* Featured Spotlight Active Card */}
-          {featuredHolder && (
-            <div
-              className="rewards-featured-card"
-              style={{
-                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
-                border: '2px solid var(--accent)',
-                borderRadius: '18px',
-                padding: '18px 16px',
-                marginBottom: '20px',
-                }}
-            >
-              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
-                  <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredHolder.unlock}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'var(--green)' : featuredHolderStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                      {isFeaturedHolderClaimLive ? 'CLAIM IS LIVE' : featuredHolderStatus === 'active' ? 'ACTIVE' : featuredHolderStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
-                    </div>
-                  </div>
-                </div>
-                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
-                  {isFeaturedHolderClaimLive && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTooltip(activeTooltip === 'holder-timer' ? null : 'holder-timer');
-                      }}
-                      onMouseEnter={() => setActiveTooltip('holder-timer')}
-                      onMouseLeave={() => setActiveTooltip(null)}
-                      className="rewards-timer-info-btn"
-                      aria-label="Claim Window Info"
-                    >
-                      <InfoSvgIcon className="rewards-timer-info-icon" />
-                    </button>
-                  )}
-                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredHolderStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '1px solid var(--green)' : featuredHolderStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'var(--green)' : featuredHolderStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
-                    {(isFeaturedHolderClaimLive || featuredHolderStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)' }} />}
-                    {isFeaturedHolderClaimLive ? (
-                      <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
-                    ) : featuredHolderStatus === 'active' ? (
-                      'ACTIVE'
-                    ) : featuredHolderStatus === 'ended' ? (
-                      'ENDED'
-                    ) : (
-                      'UPCOMING'
-                    )}
-                  </div>
-
-                  {activeTooltip === 'holder-timer' && (
-                    <div
-                      className="rewards-timer-tooltip"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="var(--accent)" />
-                        <span>CLAIM WINDOW</span>
-                      </div>
-                      <div className="rewards-timer-tooltip-desc">
-                        The claim window remains open until this timer expires. Make sure to claim your rewards before the countdown ends.
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Rewards Pool highlight (Clean Turquoise, No Neon Blur) */}
-              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>REWARDS POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                  {featuredHolder.poolAmount} <span className="rewards-pool-unit" style={{ fontSize: '8px', color: 'var(--accent)' }}>$VIBE</span>
-                </div>
-              </div>
-
-              {/* Two info pills */}
-              <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>REQUIREMENT</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap', }}>Holder 5M+ $VIBE</div>
-                </div>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
-                    <CheckCircle2 className="rewards-snapshot-check-icon" size={9} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>SNAPSHOT COMPLETED</span>
-                  </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredHolder.snapshotTime)}</div>
-                </div>
-              </div>
-
-              {/* Direct Claim Action Button (Explicit Green text & border) */}
-              {isFeaturedHolderClaimLive ? (
-                <Link
-                  to="/claim"
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    textDecoration: 'none',
-                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-                    border: '1.5px solid var(--green)',
-                    color: 'var(--green)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900,
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    }}
-                >
-                  <span style={{ color: 'var(--green)' }}>CLAIM REWARD</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
-                </Link>
-              ) : featuredHolderStatus === 'active' ? (
-                <BaseAppClaimCountdownButton targetDate={featuredHolder.dateObj} />
-              ) : featuredHolderStatus === 'ended' ? (
-                <button
-                  disabled
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: 'var(--text-3)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900
-                  }}
-                >
-                  CLAIM ENDED
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: 'var(--text-3)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900
-                  }}
-                >
-                  LOCKED
-                </button>
-              )}
-
-              {/* Dynamic Eligibility Indicator Under Claim Button */}
-              {authenticated ? (
-                isHolderActiveEligible ? (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                    <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '7px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800 }}>
-                      You are eligible
-                    </span>
-                  </div>
-                ) : (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                    <XCircle size={13} color="var(--red)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: 'var(--red)', fontFamily: 'var(--font-sans)', fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
-                      Not eligible for this unlock. Complete requirement for the next unlock.
-                    </span>
-                  </div>
-                )
-              ) : (
-                <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                  <Info size={11} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                    Connect wallet to check eligibility
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Upcoming Schedule Timeline List */}
-          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: otherEndedHolders.length > 0 ? '20px' : '24px' }}>
-            <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>UNLOCK SCHEDULE</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>{otherUpcomingHolders.length} ROUNDS</div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {otherUpcomingHolders.map((u, i) => {
-                const roundKey = u.unlock || `holder-unlock-${i}`;
-                const isTooltipOpen = activeTooltip === roundKey;
-                return (
-                  <div key={roundKey} style={{ position: 'relative' }}>
-                    <div
-                      className="rewards-schedule-row"
-                      style={{
-                        background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                        border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
-                        borderRadius: '10px',
-                        padding: '10px 12px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        transition: 'all 0.15s'
-                      }}
-                    >
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.unlock}</span>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveTooltip(isTooltipOpen ? null : roundKey);
-                            }}
-                            onMouseEnter={() => setActiveTooltip(roundKey)}
-                            onMouseLeave={() => setActiveTooltip(null)}
-                            style={{
-                              background: isTooltipOpen ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'color-mix(in srgb, var(--accent) 15%, transparent)',
-                              border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 40%, transparent)',
-                              color: isTooltipOpen ? 'var(--amber)' : 'var(--accent)',
-                              borderRadius: '50%',
-                              width: '16px',
-                              height: '16px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              cursor: 'pointer',
-                              padding: 0,
-                              flexShrink: 0
-                            }}
-                          >
-                            <Info size={10} strokeWidth={2.5} />
-                          </button>
-                        </div>
-                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                          {stripYear(u.unlockDate)}
-                        </div>
-                      </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.poolAmount} $VIBE</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: 'var(--font-sans)', }}>
-                          <Lock size={9} /> LOCKED
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Snapshot Info Tooltip Dropdown */}
-                    {isTooltipOpen && (
-                      <div
-                        className="rewards-schedule-tooltip"
-                        style={{
-                          marginTop: '4px',
-                          background: 'color-mix(in srgb, var(--bg) 98%, transparent)',
-                          border: '1.5px solid var(--amber)',
-                          borderRadius: '8px',
-                          padding: '8px 10px',
-                          
-                          fontFamily: 'var(--font-sans)'
-                        }}
-                      >
-                        <div style={{ fontSize: '6.5px', color: 'var(--amber)', fontWeight: 800, marginBottom: '3px', }}>
-                          📸 Snapshot: {stripYear(u.snapshotTime)}
-                        </div>
-                        <div style={{ fontSize: '6px', color: 'var(--text-2)', lineHeight: 1.5, }}>
-                          Hold 5M+ $VIBE at snapshot time to be eligible.
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Previous Unlocks */}
-          {otherEndedHolders.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
-              <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS UNLOCKS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="var(--green)" strokeWidth={3} />
-                  <span>COMPLETED</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {otherEndedHolders.map((u, i) => (
-                  <div
-                    key={u.unlock || i}
-                    className="rewards-schedule-row"
-                    style={{
-                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
-                      borderRadius: '10px',
-                      padding: '10px 12px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.unlock}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                        ENDED: {u.nextSnapshotDate ? formatEpochEndedDate(u.nextSnapshotDate) : stripYear(u.unlockDate)}
-                      </div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>
-                        {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : `${u.poolAmount} $VIBE`}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── 4. CATEGORY VIEW: 👑 VIBE CLUB ── */}
-      {currentTab === 'vibe-club' && (
-        <div>
-          {/* Smart Rule Strip (Updated copy: TO SHARE ROYALTY POOL) */}
-          <div
-            className="rewards-rule-strip"
-            style={{
-              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
-              border: '1.5px solid var(--amber)',
-              borderRadius: '12px',
-              padding: '10px 12px',
-              marginBottom: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '8px'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
-                Hold Vibe Club NFT at snapshot time to share royalty pool.
-              </span>
-            </div>
-            <Link
-              to="/vibeclub"
-              className="rewards-rule-btn"
-              style={{
-                fontSize: '6.5px',
-                color: 'var(--amber)',
-                border: '1px solid var(--amber)',
-                padding: '4px 8px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                fontWeight: 800,
-                flexShrink: 0,
-                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
-                fontFamily: 'var(--font-sans)',
-                
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px'
-              }}
-            >
-              <span>MINT NFT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
-            </Link>
-          </div>
-
-          {/* Featured Active Royalty Card */}
-          {featuredVibeClub && (
-            <div
-              className="rewards-featured-card"
-              style={{
-                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
-                border: '2px solid var(--accent)',
-                borderRadius: '18px',
-                padding: '18px 16px',
-                marginBottom: '20px',
-                }}
-            >
-              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
-                  <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredVibeClub.epoch}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'var(--green)' : featuredVibeClubStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                      {isFeaturedVibeClubClaimLive ? 'CLAIM IS LIVE' : featuredVibeClubStatus === 'active' ? 'ACTIVE' : featuredVibeClubStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
-                    </div>
-                  </div>
-                </div>
-                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
-                  {isFeaturedVibeClubClaimLive && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTooltip(activeTooltip === 'vibeclub-timer' ? null : 'vibeclub-timer');
-                      }}
-                      onMouseEnter={() => setActiveTooltip('vibeclub-timer')}
-                      onMouseLeave={() => setActiveTooltip(null)}
-                      className="rewards-timer-info-btn"
-                      aria-label="Claim Window Info"
-                    >
-                      <InfoSvgIcon className="rewards-timer-info-icon" />
-                    </button>
-                  )}
-                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredVibeClubStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid var(--green)' : featuredVibeClubStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'var(--green)' : featuredVibeClubStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
-                    {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)' }} />}
-                    {isFeaturedVibeClubClaimLive ? (
-                      <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
-                    ) : featuredVibeClubStatus === 'active' ? (
-                      'ACTIVE'
-                    ) : featuredVibeClubStatus === 'ended' ? (
-                      'ENDED'
-                    ) : (
-                      'UPCOMING'
-                    )}
-                  </div>
-
-                  {activeTooltip === 'vibeclub-timer' && (
-                    <div
-                      className="rewards-timer-tooltip"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="var(--accent)" />
-                        <span>CLAIM WINDOW</span>
-                      </div>
-                      <div className="rewards-timer-tooltip-desc">
-                        The claim window remains open until this timer expires. Make sure to claim your royalties before the countdown ends.
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Royalty Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>ROYALTY POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                  {featuredVibeClub.poolAmount}
-                </div>
-              </div>
-
-              {/* Two info pills */}
-              <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>REQUIREMENT</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap', }}>Vibe Club NFT Holder</div>
-                </div>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px', overflow: 'hidden' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '3px', overflow: 'hidden' }}>
-                    <CheckCircle2 className="rewards-snapshot-check-icon" size={8} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span className="rewards-info-label" style={{ fontSize: '4.8px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, whiteSpace: 'nowrap' }}>SNAPSHOT COMPLETED</span>
-                  </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredVibeClub.snapshotTime)}</div>
-                </div>
-              </div>
-
-              {/* Direct Claim / Pre-claim Countdown / Disabled Action Button */}
-              {isFeaturedVibeClubClaimLive ? (
-                <Link
-                  to="/claim"
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    textDecoration: 'none',
-                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-                    border: '1.5px solid var(--green)',
-                    color: 'var(--green)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900,
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    }}
-                >
-                  <span style={{ color: 'var(--green)' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
-                </Link>
-              ) : featuredVibeClubStatus === 'active' ? (
-                <BaseAppClaimCountdownButton targetDate={featuredVibeClub.dateObj} />
-              ) : featuredVibeClubStatus === 'ended' ? (
-                <button
-                  disabled
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: 'var(--text-3)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900
-                  }}
-                >
-                  CLAIM ENDED
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: 'var(--text-3)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900
-                  }}
-                >
-                  LOCKED
-                </button>
-              )}
-
-              {/* Dynamic Eligibility Indicator Under Claim Button */}
-              {authenticated ? (
-                isVibeClubActiveEligible ? (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                    <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '7px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800 }}>
-                      You are eligible
-                    </span>
-                  </div>
-                ) : (
-                  <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                    <XCircle size={13} color="var(--red)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: 'var(--red)', fontFamily: 'var(--font-sans)', fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
-                      Not eligible for this payout. Complete requirement for the next payout.
-                    </span>
-                  </div>
-                )
-              ) : (
-                <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                  <Info size={11} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                    Connect wallet to check eligibility
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Upcoming Royalty Schedule (Header: EVERY 10 DAYS + 11th Extra Card) */}
-          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
-            <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>MORE ROYALTY PAYOUTS</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>EVERY 10 DAYS</div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {otherUpcomingVibeClubs.map((u, i) => {
-                const roundKey = u.epoch || `vibe-epoch-${i}`;
-                const isTooltipOpen = activeTooltip === roundKey;
-                return (
-                  <div key={roundKey} style={{ position: 'relative' }}>
-                    <div
-                      className="rewards-schedule-row"
-                      style={{
-                        background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                        border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
-                        borderRadius: '10px',
-                        padding: '10px 12px',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        transition: 'all 0.15s'
-                      }}
-                    >
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</span>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setActiveTooltip(isTooltipOpen ? null : roundKey);
-                            }}
-                            onMouseEnter={() => setActiveTooltip(roundKey)}
-                            onMouseLeave={() => setActiveTooltip(null)}
-                            style={{
-                              background: isTooltipOpen ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'color-mix(in srgb, var(--accent) 15%, transparent)',
-                              border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 40%, transparent)',
-                              color: isTooltipOpen ? 'var(--amber)' : 'var(--accent)',
-                              borderRadius: '50%',
-                              width: '16px',
-                              height: '16px',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              cursor: 'pointer',
-                              padding: 0,
-                              flexShrink: 0
-                            }}
-                          >
-                            <Info size={10} strokeWidth={2.5} />
-                          </button>
-                        </div>
-                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                          {stripYear(u.claimDate)}
-                        </div>
-                      </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.poolAmount}</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: 'var(--font-sans)', }}>
-                          <Lock size={9} /> LOCKED
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Snapshot Info Tooltip */}
-                    {isTooltipOpen && (
-                      <div
-                        className="rewards-schedule-tooltip"
-                        style={{
-                          marginTop: '4px',
-                          background: 'color-mix(in srgb, var(--bg) 98%, transparent)',
-                          border: '1.5px solid var(--amber)',
-                          borderRadius: '8px',
-                          padding: '8px 10px',
-                          
-                          fontFamily: 'var(--font-sans)'
-                        }}
-                      >
-                        <div style={{ fontSize: '6.5px', color: 'var(--amber)', fontWeight: 800, marginBottom: '3px', }}>
-                          📸 Snapshot: {stripYear(u.snapshotTime || 'Snapshot Date')}
-                        </div>
-                        <div style={{ fontSize: '6px', color: 'var(--text-2)', lineHeight: 1.5, }}>
-                          Hold Vibe Club NFT at snapshot time to be eligible.
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-
-              {/* Extra Card: More Royalty Epochs Notice */}
-              <div
-                className="rewards-schedule-notice"
-                style={{
-                  background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                  border: '1px dashed color-mix(in srgb, var(--amber) 45%, transparent)',
-                  borderRadius: '10px',
-                  padding: '12px 14px',
-                  textAlign: 'center'
-                }}
-              >
-                <span style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.6, fontFamily: 'var(--font-sans)',  display: 'block' }}>
-                  More royalty epochs will be added every 10 days
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Previous Royalty Payouts */}
-          {otherEndedVibeClubs.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
-              <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS ROYALTY PAYOUTS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="var(--green)" strokeWidth={3} />
-                  <span>COMPLETED</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {otherEndedVibeClubs.map((u, i) => (
-                  <div
-                    key={u.epoch || i}
-                    className="rewards-schedule-row"
-                    style={{
-                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
-                      borderRadius: '10px',
-                      padding: '10px 12px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                        ENDED: 7 Sep, 00:00 UTC
-                      </div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>
-                        {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : (u.poolAmount !== 'TBA' ? `${u.poolAmount} $VIBE` : u.poolAmount)}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── 5. CATEGORY VIEW: ⚡ STAKING ── */}
-      {currentTab === 'staking' && (
-        <div>
-          {/* Smart Rule Strip */}
-          <div
-            className="rewards-rule-strip"
-            style={{
-              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
-              border: '1.5px solid var(--amber)',
-              borderRadius: '12px',
-              padding: '10px 12px',
-              marginBottom: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '8px'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
-                Stake $VIBE in active vault on o1 exchange to earn passive yield.
-              </span>
-            </div>
-            <a
-              href={O1_STAKING_VAULT}
-              target="_blank"
-              rel="noreferrer"
-              className="rewards-rule-btn"
-              style={{
-                fontSize: '6.5px',
-                color: 'var(--amber)',
-                border: '1px solid var(--amber)',
-                padding: '4px 8px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                fontWeight: 800,
-                flexShrink: 0,
-                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
-                fontFamily: 'var(--font-sans)',
-                
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px'
-              }}
-            >
-              <span>VAULT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
-            </a>
-          </div>
-
-          {/* Featured Staking Spotlight Card (Dynamic: Active / Ended / Upcoming) */}
-          {featuredStaking && (
-            <div
-              className="rewards-featured-card"
-              style={{
-                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
-                border: '2px solid var(--accent)',
-                borderRadius: '18px',
-                padding: '18px 16px',
-                marginBottom: '20px',
-                }}
-            >
-              <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
-                  <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredStaking.epoch}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: featuredStakingStatus === 'active' ? 'var(--green)' : featuredStakingStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                      {featuredStakingStatus === 'active' ? 'STAKING IS LIVE' : featuredStakingStatus === 'ended' ? 'EPOCH ENDED' : 'STARTING SOON'}
-                    </div>
-                  </div>
-                </div>
-                <div className="rewards-countdown-wrap" style={{ position: 'relative' }}>
-                  {featuredStakingStatus === 'active' && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveTooltip(activeTooltip === 'staking-timer' ? null : 'staking-timer');
-                      }}
-                      onMouseEnter={() => setActiveTooltip('staking-timer')}
-                      onMouseLeave={() => setActiveTooltip(null)}
-                      className="rewards-timer-info-btn"
-                      aria-label="Staking Vault Info"
-                    >
-                      <InfoSvgIcon className="rewards-timer-info-icon" />
-                    </button>
-                  )}
-                  <div className="rewards-countdown-pill" style={{ background: featuredStakingStatus === 'active' ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredStakingStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: featuredStakingStatus === 'active' ? '1px solid var(--green)' : featuredStakingStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: featuredStakingStatus === 'active' ? 'var(--green)' : featuredStakingStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
-                    {featuredStakingStatus === 'active' && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)', }} />}
-                    {featuredStakingStatus === 'active' ? (
-                      <ActiveClaimCountdown targetDate={featuredStaking.endDateObj} />
-                    ) : featuredStakingStatus === 'ended' ? (
-                      'ENDED'
-                    ) : (
-                      'UPCOMING'
-                    )}
-                  </div>
-
-                  {activeTooltip === 'staking-timer' && (
-                    <div
-                      className="rewards-timer-tooltip"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="var(--accent)" />
-                        <span>ACTIVE VAULT</span>
-                      </div>
-                      <div className="rewards-timer-tooltip-desc">
-                        Stake $VIBE into the active vault. When the countdown ends, claim your yield and withdraw tokens.
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>REWARDS POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                  {featuredStaking.poolAmount} {featuredStaking.poolAmount !== 'TBA' && <span className="rewards-pool-unit" style={{ fontSize: '8px', color: 'var(--accent)' }}>$VIBE</span>}
-                </div>
-              </div>
-
-              {/* Two info pills without Year (only Date and Time) */}
-              <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '5.5px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>VAULT OPEN</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredStaking.startTime)}</div>
-                </div>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '5px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>CLAIM YIELD &amp; WITHDRAW</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredStaking.endTime)}</div>
-                </div>
-              </div>
-
-              {/* Direct Action Button (Explicit Green text & border) */}
-              {featuredStakingStatus === 'active' ? (
-                <a
-                  href={featuredStaking.link || O1_STAKING_VAULT}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    textDecoration: 'none',
-                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-                    border: '1.5px solid var(--green)',
-                    color: 'var(--green)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900,
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    }}
-                >
-                  <span style={{ color: 'var(--green)' }}>STAKE &amp; EARN</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
-                </a>
-              ) : featuredStakingStatus === 'ended' ? (
-                <a
-                  href={featuredStaking.link || O1_STAKING_VAULT}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '7.5px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    textDecoration: 'none',
-                    background: 'color-mix(in srgb, var(--accent) 12%, transparent)',
-                    border: '1.5px solid var(--accent)',
-                    color: 'var(--accent)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900,
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    }}
-                >
-                  <span style={{ color: 'var(--accent)' }}>WITHDRAW &amp; CLAIM YIELD</span> <ArrowUpRight size={14} color="var(--accent)" strokeWidth={2.5} />
-                </a>
-              ) : (
-                <div
-                  className="rewards-claim-btn"
-                  style={{
-                    width: '100%',
-                    padding: '12px',
-                    fontSize: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: 'var(--text-3)',
-                    borderRadius: '10px',
-                    fontFamily: 'var(--font-sans)',
-                    fontWeight: 900
-                  }}
-                >
-                  COMING SOON
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Staking Upcoming Epochs List */}
-          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
-            <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>MORE STAKING EPOCHS</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>EVERY 10 DAYS</div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {otherUpcomingStakings.map((u, i) => (
-                <div
-                  key={u.epoch || i}
-                  className="rewards-schedule-row"
-                  style={{
-                    background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                    border: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
-                    borderRadius: '10px',
-                    padding: '10px 12px',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    gap: '8px'
-                  }}
-                >
-                  <div>
-                    <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
-                    <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                      {stripYear(u.startTime)}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
-                      {u.poolAmount} {u.poolAmount !== 'TBA' && '$VIBE'}
-                    </div>
-                    <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', fontFamily: 'var(--font-sans)', }}>UPCOMING</div>
-                  </div>
-                </div>
-              ))}
-
-              {/* More Staking Vaults Notice */}
-              <div
-                className="rewards-schedule-notice"
-                style={{
-                  background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                  border: '1px dashed color-mix(in srgb, var(--amber) 45%, transparent)',
-                  borderRadius: '10px',
-                  padding: '12px 14px',
-                  textAlign: 'center'
-                }}
-              >
-                <span style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.6, fontFamily: 'var(--font-sans)',  display: 'block' }}>
-                  More staking vaults will be added every 10 days
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Staking Previous Epochs List */}
-          {otherEndedStakings.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
-              <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS STAKING EPOCHS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="var(--green)" strokeWidth={3} />
-                  <span>COMPLETED</span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {otherEndedStakings.map((u, i) => (
-                  <div
-                    key={u.epoch || i}
-                    className="rewards-schedule-row"
-                    style={{
-                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--accent) 30%, transparent)',
-                      borderRadius: '10px',
-                      padding: '10px 12px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
-                        ENDED: {stripYear(u.endTime)}
-                      </div>
-                    </div>
-                    <div>
-                      <a
-                        href={u.link || O1_STAKING_VAULT}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rewards-action-sm-btn"
-                        style={{
-                          fontSize: '6.5px',
-                          color: 'var(--accent)',
-                          border: '1px solid var(--accent)',
-                          background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
-                          padding: '6px 9px',
-                          borderRadius: '6px',
-                          textDecoration: 'none',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '4px',
-                          fontFamily: 'var(--font-sans)',
-                          fontWeight: 800,
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        <span style={{ color: 'var(--accent)' }}>Withdraw &amp; Claim</span> <ArrowUpRight size={10} color="var(--accent)" />
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ── 6. CATEGORY VIEW: 🎁 GIVEAWAYS (ALL ACTIVE CARDS STACKED) ── */}
-      {currentTab === 'giveaways' && (
-        <div>
-          {/* Smart Rule Strip */}
-          <div
-            className="rewards-rule-strip"
-            style={{
-              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
-              border: '1.5px solid var(--amber)',
-              borderRadius: '12px',
-              padding: '10px 12px',
-              marginBottom: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-          >
-            <span style={{ fontSize: '13px', flexShrink: 0 }}>💡</span>
-            <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.5, fontFamily: 'var(--font-sans)', }}>
-              Community giveaways distributed directly to eligible winners.
-            </span>
-          </div>
-
-          {/* All Active Ongoing Giveaways as Full Rich Cards */}
-          {activeGiveaways.map((g) => (
-            <div
-              key={g.id}
-              className="rewards-featured-card"
-              style={{
-                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
-                border: '2px solid var(--accent)',
-                borderRadius: '18px',
-                padding: '18px 16px',
-                marginBottom: '20px',
-                }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img
-                    src="/new-logo-vibe.png"
-                    alt="VIBE"
-                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', objectFit: 'cover' }}
-                  />
-                  <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                      {g.title}
-                    </div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: 'var(--green)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                      EVENT IS LIVE
-                    </div>
-                  </div>
-                </div>
-                <div className="rewards-countdown-pill" style={{ background: 'color-mix(in srgb, var(--green) 15%, transparent)', border: '1px solid var(--green)', color: 'var(--green)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)', }} />
-                  ONGOING
-                </div>
-              </div>
-
-              {/* Prize Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>PRIZE POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
-                  {g.prizePool}
-                </div>
-              </div>
-
-              {/* Two info pills: Distribution & Deadline / Winners */}
-              <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>DISTRIBUTION</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
-                    {g.distribution || 'Not Started'}
-                  </div>
-                </div>
-                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>
-                    {g.deadlineDate ? 'DEADLINE' : 'WINNERS'}
-                  </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: g.deadlineDate ? 'var(--green)' : 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
-                    {g.deadlineDate ? <ActiveClaimCountdown targetDate={g.deadlineDate} /> : (g.winners || 'TBA')}
-                  </div>
-                </div>
-              </div>
-
-              {/* Direct Join Action Button (Links to Tweet) */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <Alert
+            tone="warn"
+            icon={<Info size={16} />}
+            action={
               <a
-                href={g.link}
+                href="/tokenomics#vesting-details"
                 target="_blank"
                 rel="noreferrer"
-                className="rewards-claim-btn"
                 style={{
-                  width: '100%',
-                  padding: '12px',
-                  fontSize: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
+                  color: 'var(--amber)',
                   textDecoration: 'none',
-                  background: 'color-mix(in srgb, var(--green) 12%, transparent)',
-                  border: '1.5px solid var(--green)',
-                  color: 'var(--green)',
-                  borderRadius: '10px',
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: 900,
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  }}
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
               >
-                <span style={{ color: 'var(--green)' }}>JOIN GIVEAWAY</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
+                <span>View rules</span>
+                <ArrowRight size={13} />
               </a>
-            </div>
-          ))}
+            }
+          >
+            Hold at least 5,000,000 $VIBE at the scheduled snapshot block to participate in holder reward distributions.
+          </Alert>
 
-          {/* Past Giveaways (7 NFTs Vibe Club & Base App Welcome Bonus with 350 Winners & View Button) */}
-          {pastGiveaways.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
-              <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PAST GIVEAWAYS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', }}>{pastGiveaways.length} EVENTS</div>
+          {featuredHolder && (
+            <Card className="o1-hub-featured-card">
+              <div className="o1-hub-featured-head">
+                <div className="o1-hub-featured-title-wrap">
+                  <div className="o1-hub-featured-icon">
+                    <img src="/new-logo-vibe.png" alt="VIBE" />
+                  </div>
+                  <div>
+                    <div className="o1-hub-featured-name">{featuredHolder.unlock}</div>
+                    <div className="o1-hub-featured-sub">
+                      Snapshot: {stripYear(featuredHolder.snapshotTime)}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <StatusPill
+                    status={isFeaturedHolderClaimLive ? 'Live' : featuredHolderStatus === 'ended' ? 'Ended' : 'Upcoming'}
+                    tone={isFeaturedHolderClaimLive ? 'success' : featuredHolderStatus === 'ended' ? 'neutral' : 'warn'}
+                  />
+                  {isFeaturedHolderClaimLive && featuredHolder.nextSnapshotDate && (
+                    <Badge tone="success" pill>
+                      <Clock size={12} style={{ marginRight: 4 }} />
+                      <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
+                    </Badge>
+                  )}
+                </div>
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {pastGiveaways.map((u, i) => (
-                  <div
-                    key={u.id || i}
-                    className="rewards-schedule-row"
-                    style={{
-                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
-                      border: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
-                      borderRadius: '10px',
-                      padding: '10px 12px',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      gap: '8px'
-                    }}
-                  >
-                    <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.title}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '3px', fontFamily: 'var(--font-sans)', }}>{u.winners}</div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.prizePool}</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', fontFamily: 'var(--font-sans)', }}>ENDED</div>
-                      </div>
-                      <a
-                        href={u.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="rewards-action-sm-btn"
-                        style={{
-                          fontSize: '6.5px',
-                          color: 'var(--accent)',
-                          border: '1px solid var(--accent)',
-                          background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
-                          padding: '6px 9px',
-                          borderRadius: '6px',
-                          textDecoration: 'none',
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '4px',
-                          fontFamily: 'var(--font-sans)',
-                          fontWeight: 800,
-                          whiteSpace: 'nowrap'
-                        }}
-                      >
-                        <span style={{ color: 'var(--accent)' }}>View</span> <ArrowUpRight size={10} color="var(--accent)" />
-                      </a>
+              <div className="o1-hub-tiles-3">
+                <Tile
+                  label="Rewards pool"
+                  value={`${featuredHolder.poolAmount} $VIBE`}
+                  sub="Distributed proportionally to eligible holders"
+                />
+                <Tile
+                  label="Requirement"
+                  value="5M+ $VIBE"
+                  sub="Balance held at snapshot block"
+                />
+                <Tile
+                  label="Your status"
+                  value={
+                    !authenticated ? (
+                      <Badge tone="neutral" pill>Connect wallet</Badge>
+                    ) : isHolderActiveEligible ? (
+                      <Badge tone="success" pill>Eligible</Badge>
+                    ) : (
+                      <Badge tone="neutral" pill>Not eligible</Badge>
+                    )
+                  }
+                  sub={
+                    !authenticated
+                      ? 'Connect wallet to verify'
+                      : isHolderActiveEligible
+                      ? 'Snapshot requirement satisfied'
+                      : 'Minimum 5M $VIBE holding required'
+                  }
+                />
+              </div>
+
+              <div className="o1-hub-action-row">
+                <Button
+                  as={Link}
+                  to="/claim"
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight size={15} />}
+                >
+                  Go to Claim Portal
+                </Button>
+              </div>
+            </Card>
+          )}
+
+          {/* Schedule list */}
+          {upcomingHolders.length > 0 && (
+            <div>
+              <SectionTitle title="Upcoming distributions" count={upcomingHolders.length} />
+              <div className="o1-schedule-card">
+                <div className="o1-schedule-head">
+                  <div>Epoch</div>
+                  <div>Date</div>
+                  <div>Allocation</div>
+                  <div>Status</div>
+                </div>
+                {upcomingHolders.map((u, idx) => (
+                  <div key={idx} className="o1-schedule-row">
+                    <div className="o1-schedule-col-name">{u.unlock}</div>
+                    <div className="o1-schedule-col-date">{stripYear(u.date)}</div>
+                    <div className="o1-schedule-col-amount">{u.poolAmount} $VIBE</div>
+                    <div className="o1-schedule-col-status">
+                      <StatusPill status="Locked" tone="neutral" />
                     </div>
                   </div>
                 ))}
@@ -1728,29 +334,305 @@ export default function BaseAppRewardsView({
         </div>
       )}
 
-      {/* ── 7. FAQ ACCORDION (COMPACT) ── */}
-      <div className="rewards-faq-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
-        <div className="rewards-faq-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, textAlign: 'center', marginBottom: '12px', fontFamily: 'var(--font-sans)', }}>
-          RULES &amp; FAQ
+      {/* ── 3. VIBE CLUB ROYALTIES TAB ── */}
+      {currentTab === 'vibe-club' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <Alert
+            tone="warn"
+            icon={<Info size={16} />}
+            action={
+              <Link
+                to="/nft"
+                style={{
+                  color: 'var(--amber)',
+                  textDecoration: 'none',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <span>Mint NFT</span>
+                <ArrowRight size={13} />
+              </Link>
+            }
+          >
+            Hold at least 1 Vibe Club NFT at snapshot block to receive recurring royalty distributions.
+          </Alert>
+
+          {featuredVibeClub && (
+            <Card className="o1-hub-featured-card">
+              <div className="o1-hub-featured-head">
+                <div className="o1-hub-featured-title-wrap">
+                  <div className="o1-hub-featured-icon">
+                    <img src="/nft/images/5.png" alt="NFT" />
+                  </div>
+                  <div>
+                    <div className="o1-hub-featured-name">{featuredVibeClub.epoch}</div>
+                    <div className="o1-hub-featured-sub">
+                      Snapshot: {stripYear(featuredVibeClub.snapshotTime)}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <StatusPill
+                    status={isFeaturedVibeClubClaimLive ? 'Live' : featuredVibeClubStatus === 'ended' ? 'Ended' : 'Upcoming'}
+                    tone={isFeaturedVibeClubClaimLive ? 'success' : featuredVibeClubStatus === 'ended' ? 'neutral' : 'warn'}
+                  />
+                  {isFeaturedVibeClubClaimLive && featuredVibeClub.nextSnapshotDate && (
+                    <Badge tone="success" pill>
+                      <Clock size={12} style={{ marginRight: 4 }} />
+                      <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
+                    </Badge>
+                  )}
+                </div>
+              </div>
+
+              <div className="o1-hub-tiles-3">
+                <Tile
+                  label="Rewards pool"
+                  value={`${featuredVibeClub.poolAmount} $VIBE`}
+                  sub="Distributed equally among all NFT holders"
+                />
+                <Tile
+                  label="Requirement"
+                  value="1+ Vibe Club NFT"
+                  sub="Must be held in wallet during snapshot"
+                />
+                <Tile
+                  label="Your status"
+                  value={
+                    !authenticated ? (
+                      <Badge tone="neutral" pill>Connect wallet</Badge>
+                    ) : isVibeClubActiveEligible ? (
+                      <Badge tone="success" pill>Eligible</Badge>
+                    ) : (
+                      <Badge tone="neutral" pill>Not eligible</Badge>
+                    )
+                  }
+                  sub={
+                    !authenticated
+                      ? 'Connect wallet to verify'
+                      : isVibeClubActiveEligible
+                      ? 'NFT holder requirement satisfied'
+                      : 'Must hold at least 1 Vibe Club NFT'
+                  }
+                />
+              </div>
+
+              <div className="o1-hub-action-row">
+                <Button
+                  as={Link}
+                  to="/claim"
+                  variant="primary"
+                  size="lg"
+                  icon={<ArrowRight size={15} />}
+                >
+                  Go to Claim Portal
+                </Button>
+              </div>
+            </Card>
+          )}
+
+          {upcomingVibeClubs.length > 0 && (
+            <div>
+              <SectionTitle title="Upcoming royalties" count={upcomingVibeClubs.length} />
+              <div className="o1-schedule-card">
+                <div className="o1-schedule-head">
+                  <div>Epoch</div>
+                  <div>Date</div>
+                  <div>Allocation</div>
+                  <div>Status</div>
+                </div>
+                {upcomingVibeClubs.map((u, idx) => (
+                  <div key={idx} className="o1-schedule-row">
+                    <div className="o1-schedule-col-name">{u.epoch}</div>
+                    <div className="o1-schedule-col-date">{stripYear(u.date)}</div>
+                    <div className="o1-schedule-col-amount">{u.poolAmount} $VIBE</div>
+                    <div className="o1-schedule-col-status">
+                      <StatusPill status="Locked" tone="neutral" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      )}
+
+      {/* ── 4. STAKING VAULTS TAB ── */}
+      {currentTab === 'staking' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <Alert
+            tone="info"
+            icon={<Info size={16} />}
+            action={
+              <a
+                href={O1_STAKING_VAULT}
+                target="_blank"
+                rel="noreferrer"
+                style={{
+                  color: 'var(--accent)',
+                  textDecoration: 'none',
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px'
+                }}
+              >
+                <span>Open o1 Exchange</span>
+                <ExternalLink size={13} />
+              </a>
+            }
+          >
+            Stake $VIBE on o1 Exchange to earn fixed rewards every 10-day epoch with zero impermanent loss.
+          </Alert>
+
+          {featuredStaking && (
+            <Card className="o1-hub-featured-card">
+              <div className="o1-hub-featured-head">
+                <div className="o1-hub-featured-title-wrap">
+                  <div className="o1-hub-featured-icon">
+                    <Coins size={22} color="var(--accent)" />
+                  </div>
+                  <div>
+                    <div className="o1-hub-featured-name">{featuredStaking.epoch}</div>
+                    <div className="o1-hub-featured-sub">{featuredStaking.dateRange}</div>
+                  </div>
+                </div>
+                <StatusPill
+                  status={featuredStakingStatus === 'active' ? 'Live' : featuredStakingStatus === 'ended' ? 'Ended' : 'Upcoming'}
+                  tone={featuredStakingStatus === 'active' ? 'success' : featuredStakingStatus === 'ended' ? 'neutral' : 'warn'}
+                />
+              </div>
+
+              <div className="o1-hub-tiles-3">
+                <Tile
+                  label="Epoch pool"
+                  value={`${featuredStaking.rewards || featuredStaking.poolAmount || '1,000,000'} $VIBE`}
+                  sub="Proportional rewards for stakers"
+                />
+                <Tile
+                  label="Duration"
+                  value="10 days"
+                  sub="Epoch locking period"
+                />
+                <Tile
+                  label="Platform"
+                  value="o1 Exchange"
+                  sub="Decentralized staking vaults on Base"
+                />
+              </div>
+
+              <div className="o1-hub-action-row">
+                <Button
+                  as="a"
+                  href={featuredStaking.link || O1_STAKING_VAULT}
+                  target="_blank"
+                  rel="noreferrer"
+                  variant="primary"
+                  size="lg"
+                  icon={<ExternalLink size={15} />}
+                >
+                  Stake on o1 Exchange
+                </Button>
+              </div>
+            </Card>
+          )}
+
+          {STAKING_EPOCHS.length > 0 && (
+            <div>
+              <SectionTitle title="Staking epochs" count={STAKING_EPOCHS.length} />
+              <div className="o1-schedule-card">
+                <div className="o1-schedule-head">
+                  <div>Epoch</div>
+                  <div>Dates</div>
+                  <div>Rewards</div>
+                  <div>Vault</div>
+                </div>
+                {STAKING_EPOCHS.map((e, idx) => {
+                  const status = getEpochStatus(e, now);
+                  return (
+                    <div key={idx} className="o1-schedule-row">
+                      <div className="o1-schedule-col-name">{e.epoch}</div>
+                      <div className="o1-schedule-col-date">{e.dateRange}</div>
+                      <div className="o1-schedule-col-amount">{e.rewards || '1,000,000'} $VIBE</div>
+                      <div className="o1-schedule-col-status">
+                        <a
+                          href={e.link || O1_STAKING_VAULT}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            color: 'var(--accent)',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            textDecoration: 'none',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px'
+                          }}
+                        >
+                          <span>{status === 'active' ? 'Stake' : 'View'}</span>
+                          <ExternalLink size={12} />
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 5. GIVEAWAYS TAB ── */}
+      {currentTab === 'giveaways' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <Alert tone="info" icon={<Info size={16} />}>
+            Participate in community giveaways and seasonal quests to earn $VIBE rewards.
+          </Alert>
+
+          {activeGiveaways.length > 0 && (
+            <div>
+              <SectionTitle title="Active events" count={activeGiveaways.length} />
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '14px' }}>
+                {activeGiveaways.map((g, idx) => (
+                  <Card key={idx} style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>{g.title}</span>
+                      <StatusPill status="Active" tone="success" />
+                    </div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: '16px', fontWeight: 700, color: 'var(--text)' }}>
+                      {g.prize}
+                    </div>
+                    {g.link && (
+                      <Button as="a" href={g.link} target="_blank" rel="noreferrer" variant="secondary" size="sm" icon={<ExternalLink size={13} />}>
+                        Participate
+                      </Button>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── 6. FAQ Accordion ── */}
+      <div>
+        <SectionTitle title="Frequently asked questions" />
+        <div className="o1-faq-card">
           {[
             {
               question: 'How to claim rewards?',
               answer: (
                 <span>
                   Claim active Holder rewards &amp; Vibe Club royalties directly in the{' '}
-                  <Link
-                    to="/claim"
-                    style={{
-                      color: 'var(--accent)',
-                      textDecoration: 'underline',
-                      fontWeight: 800,
-                      fontFamily: 'var(--font-sans)',
-                      }}
-                  >
-                    Claim Portal ↗
-                  </Link>
+                  <Link to="/claim" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
+                    Claim Portal
+                  </Link>.
                 </span>
               )
             },
@@ -1759,42 +641,10 @@ export default function BaseAppRewardsView({
               answer: (
                 <span>
                   Stake $VIBE into active staking vaults on{' '}
-                  <a
-                    href="https://launch.o1.exchange/staking/vaults?chain=8453&token=0xb200000000000000000000df24ecb8bf51100a01"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      color: 'var(--accent)',
-                      textDecoration: 'underline',
-                      fontWeight: 800,
-                      fontFamily: 'var(--font-sans)',
-                      }}
-                  >
-                    o1 Exchange ↗
+                  <a href={O1_STAKING_VAULT} target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>
+                    o1 Exchange
                   </a>{' '}
                   to earn passive yields every 10 days.
-                </span>
-              )
-            },
-            {
-              question: 'How to claim staking rewards & withdraw?',
-              answer: (
-                <span>
-                  You can claim your staking rewards and withdraw your staked tokens directly on{' '}
-                  <a
-                    href="https://launch.o1.exchange/staking/vaults?chain=8453&token=0xb200000000000000000000df24ecb8bf51100a01"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      color: 'var(--accent)',
-                      textDecoration: 'underline',
-                      fontWeight: 800,
-                      fontFamily: 'var(--font-sans)',
-                      }}
-                  >
-                    o1 Exchange ↗
-                  </a>{' '}
-                  in the corresponding staking vault.
                 </span>
               )
             },
@@ -1817,51 +667,23 @@ export default function BaseAppRewardsView({
           ].map((faq, idx) => {
             const isOpen = openFaq === idx;
             return (
-              <div
-                key={idx}
-                className="rewards-faq-card"
-                style={{
-                  background: 'color-mix(in srgb, var(--surface) 88%, transparent)',
-                  border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
-                  borderRadius: '12px',
-                  overflow: 'hidden'
-                }}
-              >
+              <div key={idx} className="o1-faq-item">
                 <button
                   type="button"
-                  className="rewards-faq-btn"
+                  className="o1-faq-trigger"
                   onClick={() => setOpenFaq(isOpen ? null : idx)}
-                  style={{
-                    width: '100%',
-                    padding: '12px 14px',
-                    background: 'transparent',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '7px',
-                    color: 'var(--text)',
-                    }}
                 >
-                  <span style={{ color: 'var(--text)' }}>{faq.question}</span>
+                  <span>{faq.question}</span>
                   <ChevronDown
-                    size={14}
+                    size={15}
                     style={{
                       transform: isOpen ? 'rotate(180deg)' : 'none',
-                      transition: 'transform 0.2s ease',
-                      color: 'var(--accent)',
-                      flexShrink: 0
+                      transition: 'transform var(--ease-fast)',
+                      color: 'var(--text-3)'
                     }}
                   />
                 </button>
-                {isOpen && (
-                  <div className="rewards-faq-ans" style={{ padding: '0 14px 12px 14px', fontSize: '6.5px', color: 'var(--text-2)', lineHeight: 1.6, borderTop: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)', fontFamily: 'var(--font-sans)', }}>
-                    <div style={{ paddingTop: '8px' }}>{faq.answer}</div>
-                  </div>
-                )}
+                {isOpen && <div className="o1-faq-content">{faq.answer}</div>}
               </div>
             );
           })}
