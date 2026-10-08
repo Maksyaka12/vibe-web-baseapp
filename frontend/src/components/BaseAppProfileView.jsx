@@ -1,44 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw, CheckCircle2, Gift, Clock, Coins, ArrowRight, Lock, Sparkles, Flame } from 'lucide-react';
+import { CheckCircle2, Gift, Clock, Coins, ArrowRight, Lock, Flame, Info } from 'lucide-react';
 import { formatUnits } from 'viem';
 import { getPublicClient } from '../config/rpc';
 import { STAKING_CONTRACT, STAKING_VAULTS_INFO } from '../Checker';
 import { useVibeCheckIn } from '../hooks/useVibeCheckIn';
 import { useVibeAchievements } from '../hooks/useVibeAchievements';
-
-function getNftFontSize(name) {
-  if (!name) return '13px';
-  const len = name.length;
-  if (len <= 10) return '13.5px';
-  if (len <= 14) return '12px';
-  if (len <= 18) return '10.5px';
-  if (len <= 22) return '9px';
-  return '8px';
-}
-
-function InfoSvgIcon({ size = 14, color = 'var(--accent)', className = '' }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      style={{ display: 'block', flexShrink: 0 }}
-    >
-      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="color-mix(in srgb, var(--accent) 15%, transparent)" />
-      <path
-        d="M9.6 9a2.4 2.4 0 0 1 4.8 0c0 1.5-2.4 2-2.4 3.5"
-        stroke={color}
-        strokeWidth="2.3"
-        strokeLinecap="round"
-      />
-      <circle cx="12" cy="16.5" r="1.3" fill={color} />
-    </svg>
-  );
-}
+import { Button, Card, Badge, PageHeader, SectionTitle } from './ui';
 
 const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
 
@@ -121,10 +89,7 @@ export function BaseAppProfileView(props) {
     balance,
     nftCount,
     userNft,
-    loading,
-    fetchBalances,
     claimedHistory,
-    isHolderEligibleLive,
     totalAvailableCount = 0,
     totalAvailableTokens = 0,
     totalExpiredCount = 0,
@@ -136,7 +101,6 @@ export function BaseAppProfileView(props) {
     streak,
     longestStreak,
     hasCheckedInToday,
-    canCheckInToday,
     isCheckingIn,
     timeUntilNext,
     performCheckIn
@@ -199,11 +163,11 @@ export function BaseAppProfileView(props) {
 
   const isAdmin = address && address.toLowerCase() === ADMIN_WALLET.toLowerCase();
 
-  // Exact Staking Rewards: sum of user's claimed rewards from Staking claims
+  // Staking claims calculation
   const stakingClaims = (claimedHistory || []).filter(c => c && (c.type === 'staking' || c.id?.startsWith('staking-')));
   const totalStakingEarned = stakingClaims.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
 
-  // Epochs participated: count of vaults where user either has on-chain stake or has a claim
+  // Epochs participated calculation
   const storedVaults = getStoredParticipatedVaults(address);
   const claimRoundIds = stakingClaims.map(c => c?.roundId).filter(Boolean);
   const liveRoundIds = (stakingStats?.participationByVault || []).filter(p => p && p.hasDeposit).map(p => p.roundId);
@@ -220,95 +184,74 @@ export function BaseAppProfileView(props) {
 
   const totalStakingEpochs = STAKING_VAULTS_INFO.filter(v => allParticipatedRoundIds.has(v.roundId)).length || (isAdmin ? 5 : allParticipatedRoundIds.size);
 
-  // Maximum deposit amount into any single vault (in whole VIBE tokens) - permanently latched
-  const liveMaxDeposit = (stakingStats?.participationByVault || []).reduce((max, p) => {
-    const dep = Number(p?.depositAmount) || 0;
-    return dep > max ? dep : max;
-  }, 0);
-
-  const storedMaxDeposit = getStoredHistoricalDeposit(address);
-  const maxSingleVaultDeposit = Math.max(liveMaxDeposit, storedMaxDeposit, (isAdmin ? 10000000 : 0));
-
-  if (address && maxSingleVaultDeposit > 0) {
-    updateStoredHistoricalDeposit(address, maxSingleVaultDeposit);
-  }
-
-  // Effective streak considering on-chain longest streak and current streak
+  // Effective streak
   const effectiveMaxStreak = Math.max(Number(streak) || 0, Number(longestStreak) || 0);
 
-  // Portal Claimed (ONLY Holder Rewards & Vibe Club Royalties, Staking is counted separately in Tile 4)
+  // Portal claims (Holder rewards + royalties)
   const portalClaims = (claimedHistory || []).filter(c => c && c.type !== 'staking' && !c.id?.startsWith('staking-'));
   const totalClaimedCount = portalClaims.length;
   const totalClaimedTokens = portalClaims.reduce((acc, curr) => acc + (Number(curr?.amount) || 0), 0);
-  const hasNft = Boolean(nftCount && nftCount > 0);
-  const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Unknown Dog';
 
-  // On-Chain Claimed state management for Active Dog & Dog Staker achievements (SBT)
+  const hasNft = Boolean(nftCount && nftCount > 0);
+  const nftDisplayName = hasNft ? (userNft?.name || `Vibe Club #${userNft?.id || 1}`) : 'Non-member';
+
+  // SBT Achievements
   const {
     claimedMap,
     claimingId,
     claimAchievement: handleClaimAchievement
   } = useVibeAchievements(address);
-  const [activeAchievementTooltip, setActiveAchievementTooltip] = useState(null);
+  const [activeTooltip, setActiveTooltip] = useState(null);
 
   useEffect(() => {
-    if (!activeAchievementTooltip) return;
-    const handleDocClick = () => setActiveAchievementTooltip(null);
+    if (!activeTooltip) return;
+    const handleDocClick = () => setActiveTooltip(null);
     window.addEventListener('click', handleDocClick);
     return () => window.removeEventListener('click', handleDocClick);
-  }, [activeAchievementTooltip]);
+  }, [activeTooltip]);
 
-  // Dynamic achievement unlock calculations
-  // 1. REWARDS ELIGIBILITY (Auto-unlocked & auto-highlighted)
+  // Eligibility and milestones
   const isEligibleHolder = Boolean(balance !== null && Number(balance) >= 5000000);
   const isNftHolderUnlocked = Boolean(hasNft && nftCount > 0);
 
-  // 2. ACTIVE DOG (Streak check-in rules: 7, 14, 30 days) - permanently latched once met
-  const isStarterDogMet = Boolean(
-    address && (effectiveMaxStreak >= 7 || getMilestoneLatched(address, 'starter-dog'))
-  );
+  const isStarterDogMet = Boolean(address && (effectiveMaxStreak >= 7 || getMilestoneLatched(address, 'starter-dog')));
   if (isStarterDogMet && address) latchMilestone(address, 'starter-dog');
 
-  const isLoyalDogMet = Boolean(
-    address && (effectiveMaxStreak >= 14 || getMilestoneLatched(address, 'loyal-dog'))
-  );
+  const isLoyalDogMet = Boolean(address && (effectiveMaxStreak >= 14 || getMilestoneLatched(address, 'loyal-dog')));
   if (isLoyalDogMet && address) latchMilestone(address, 'loyal-dog');
 
-  const isUltraActiveDogMet = Boolean(
-    address && (effectiveMaxStreak >= 30 || getMilestoneLatched(address, 'ultra-active-dog'))
-  );
+  const isUltraActiveDogMet = Boolean(address && (effectiveMaxStreak >= 30 || getMilestoneLatched(address, 'ultra-active-dog')));
   if (isUltraActiveDogMet && address) latchMilestone(address, 'ultra-active-dog');
 
-  // 3. DOG STAKER (1, 3, 5 vaults, or single deposit 5M+ / 10M+ VIBE) - permanently latched once met
-  const isNoviceStakerMet = Boolean(
-    address && (totalStakingEpochs >= 1 || getMilestoneLatched(address, 'novice-staker'))
-  );
+  const isNoviceStakerMet = Boolean(address && (totalStakingEpochs >= 1 || getMilestoneLatched(address, 'novice-staker')));
   if (isNoviceStakerMet && address) latchMilestone(address, 'novice-staker');
 
-  const isConfidentBankerMet = Boolean(
-    address && (totalStakingEpochs >= 3 || getMilestoneLatched(address, 'confident-banker'))
-  );
+  const isConfidentBankerMet = Boolean(address && (totalStakingEpochs >= 3 || getMilestoneLatched(address, 'confident-banker')));
   if (isConfidentBankerMet && address) latchMilestone(address, 'confident-banker');
 
-  const isWolfOfWallStreetMet = Boolean(
-    address && (totalStakingEpochs >= 5 || getMilestoneLatched(address, 'wolf-of-wall-street'))
-  );
+  const isWolfOfWallStreetMet = Boolean(address && (totalStakingEpochs >= 5 || getMilestoneLatched(address, 'wolf-of-wall-street')));
   if (isWolfOfWallStreetMet && address) latchMilestone(address, 'wolf-of-wall-street');
 
-  const isRichDogMet = Boolean(
-    address && (maxSingleVaultDeposit >= 5000000 || getMilestoneLatched(address, 'rich-dog'))
-  );
+  const liveMaxDeposit = (stakingStats?.participationByVault || []).reduce((max, p) => {
+    const dep = Number(p?.depositAmount) || 0;
+    return dep > max ? dep : max;
+  }, 0);
+  const storedMaxDeposit = getStoredHistoricalDeposit(address);
+  const maxSingleVaultDeposit = Math.max(liveMaxDeposit, storedMaxDeposit, (isAdmin ? 10000000 : 0));
+  if (address && maxSingleVaultDeposit > 0) {
+    updateStoredHistoricalDeposit(address, maxSingleVaultDeposit);
+  }
+
+  const isRichDogMet = Boolean(address && (maxSingleVaultDeposit >= 5000000 || getMilestoneLatched(address, 'rich-dog')));
   if (isRichDogMet && address) latchMilestone(address, 'rich-dog');
 
-  const isBankFounderMet = Boolean(
-    address && (maxSingleVaultDeposit >= 10000000 || getMilestoneLatched(address, 'bank-founder'))
-  );
+  const isBankFounderMet = Boolean(address && (maxSingleVaultDeposit >= 10000000 || getMilestoneLatched(address, 'bank-founder')));
   if (isBankFounderMet && address) latchMilestone(address, 'bank-founder');
 
   const REWARDS_ELIGIBILITY_ACHIEVEMENTS = [
     {
       id: 'eligible-holder',
-      name: 'ELIGIBLE HOLDER',
+      name: 'Eligible holder',
       description: 'Hold at least 5,000,000 $VIBE in your connected wallet.',
       image: '/achievements/holder.jfif',
       conditionMet: isEligibleHolder,
@@ -317,7 +260,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'nft-holder',
-      name: 'VIBE CLUB MEMBER',
+      name: 'Vibe Club member',
       description: 'Hold at least 1 Vibe Club NFT in your connected wallet.',
       image: '/achievements/nft-holder.jfif',
       conditionMet: isNftHolderUnlocked,
@@ -329,7 +272,7 @@ export function BaseAppProfileView(props) {
   const ACTIVE_DOG_ACHIEVEMENTS = [
     {
       id: 'starter-dog',
-      name: 'STARTER DOG',
+      name: 'Starter dog',
       description: 'Reach a 7-day daily check-in streak.',
       image: '/achievements/STARTER DOG.jfif',
       conditionMet: isStarterDogMet,
@@ -338,7 +281,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'loyal-dog',
-      name: 'LOYAL DOG',
+      name: 'Loyal dog',
       description: 'Reach a 14-day daily check-in streak.',
       image: '/achievements/LOYAL DOG.jfif',
       conditionMet: isLoyalDogMet,
@@ -347,7 +290,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'ultra-active-dog',
-      name: 'ULTRA-ACTIVE DOG',
+      name: 'Ultra-active dog',
       description: 'Reach a 30-day daily check-in streak.',
       image: '/achievements/ULTRA-ACTIVE DOG.jfif',
       conditionMet: isUltraActiveDogMet,
@@ -359,7 +302,7 @@ export function BaseAppProfileView(props) {
   const DOG_STAKER_ACHIEVEMENTS = [
     {
       id: 'novice-staker',
-      name: 'NOVICE STAKER',
+      name: 'Novice staker',
       description: 'Participate in at least 1 staking vault.',
       image: '/achievements/NOVICE STAKER.jfif',
       conditionMet: isNoviceStakerMet,
@@ -368,7 +311,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'confident-banker',
-      name: 'CONFIDENT BANKER',
+      name: 'Confident banker',
       description: 'Participate in at least 3 staking vaults.',
       image: '/achievements/CONFIDENT BANKER.jfif',
       conditionMet: isConfidentBankerMet,
@@ -377,7 +320,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'wolf-of-wall-street',
-      name: 'WOLF OF WALL ST',
+      name: 'Wolf of Wall St',
       description: 'Participate in at least 5 staking vaults.',
       image: '/achievements/WOLF OF WALL ST.jfif',
       conditionMet: isWolfOfWallStreetMet,
@@ -386,7 +329,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'rich-dog',
-      name: 'RICH DOG',
+      name: 'Rich dog',
       description: 'Deposit at least 5,000,000 $VIBE into any staking vault.',
       image: '/achievements/RICH DOG.jfif',
       conditionMet: isRichDogMet,
@@ -395,7 +338,7 @@ export function BaseAppProfileView(props) {
     },
     {
       id: 'bank-founder',
-      name: 'BANK FOUNDER',
+      name: 'Bank founder',
       description: 'Deposit at least 10,000,000 $VIBE into any staking vault.',
       image: '/achievements/BANK FOUNDER.jfif',
       conditionMet: isBankFounderMet,
@@ -420,820 +363,298 @@ export function BaseAppProfileView(props) {
     return path;
   };
 
-  return (
-    <div className="profile-view-container" style={{ width: '100%', boxSizing: 'border-box' }}>
-      {/* ── 1. MODERN PROFILE HERO HEADER ── */}
+  const renderAchievementCard = (ach) => {
+    const isUnlocked = ach.unlocked;
+    const isClaimable = ach.isClaimable;
+    const isLocked = !isUnlocked && !isClaimable;
+    const isPopoverOpen = activeTooltip === ach.id;
+
+    return (
       <div
-        className="rewards-hero-header"
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          marginBottom: '22px',
-          padding: '12px 8px 8px 8px'
-        }}
+        key={ach.id}
+        className={`o1-achievement-tile ${isUnlocked ? 'unlocked' : ''} ${isClaimable ? 'claimable' : ''} ${isLocked ? 'locked' : ''}`}
       >
-        <h2
-          className="rewards-hero-title"
-          style={{
-            fontSize: '18px',
-            margin: '0 0 12px 0',
-            letterSpacing: '0.6px',
-            color: 'var(--text)',
-            fontFamily: 'var(--font-sans)',
-            textAlign: 'center',
-            width: '100%',
-            lineHeight: 1.3
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setActiveTooltip(isPopoverOpen ? null : ach.id);
           }}
+          className="o1-achievement-info-trigger"
+          title="Info"
+          aria-label={`${ach.name} info`}
         >
-          USER <span style={{ color: 'var(--accent)' }}>PROFILE</span>
-        </h2>
+          <Info size={13} />
+        </button>
 
-        {/* Subtitle Status Pill */}
-        <div
-          className="rewards-hero-pill"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
-            border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
-            borderRadius: '99px',
-            padding: '7px 16px',
-            maxWidth: '100%',
-            boxSizing: 'border-box'
-          }}
-        >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
-          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-            BASE DOG IDENTITY &amp; DASHBOARD
-          </span>
-        </div>
-      </div>
-
-      {/* ── 2. USER PROFILE CARD (FULL HEIGHT NFT IMAGE + CLEAN RIGHT INFO) ── */}
-      {!address ? (
-        <div
-          className="profile-user-card profile-connect-card"
-          style={{
-            background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
-            border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
-            borderRadius: '18px',
-            padding: '28px 16px',
-            textAlign: 'center',
-            marginBottom: '24px',
-            }}
-        >
-          <div
-            className="profile-avatar-box"
-            style={{
-              width: '84px',
-              height: '84px',
-              margin: '0 auto 16px auto',
-              borderRadius: '16px',
-              border: '2px solid color-mix(in srgb, var(--accent) 50%, transparent)',
-              overflow: 'hidden',
-              background: 'var(--bg)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              }}
-          >
-            <img src="/new-logo-vibe.png" alt="Vibe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {isPopoverOpen && (
+          <div className="o1-achievement-popover" onClick={(e) => e.stopPropagation()}>
+            <div className="o1-achievement-popover-title">{ach.name}</div>
+            <div className="o1-achievement-popover-desc">{ach.description}</div>
           </div>
-          <div className="profile-connect-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', marginBottom: '8px', fontWeight: 900 }}>
-            CONNECT YOUR WALLET
-          </div>
-          <p className="profile-connect-desc" style={{ fontSize: '7px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0 0 18px 0' }}>
-            Connect to view your identity, holding balances and Vibe Club status.
-          </p>
-          <button
-            onClick={login}
-            className="profile-connect-btn"
-            style={{
-              background: 'var(--accent)',
-              border: '1.5px solid var(--accent)',
-              color: 'var(--bg)',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '8.5px',
-              fontWeight: 900,
-              padding: '12px 24px',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-          >
-            CONNECT WALLET ↗
-          </button>
-        </div>
-      ) : (
-        <div className="profile-user-card profile-connected-card">
-          {/* Main NFT Card Frame (Identical to Vibe Club NFT section) */}
-          <div className="profile-nft-card-frame">
-            <img
-              src={hasNft ? (userNft?.image || '/nft/images/5.png') : '/new-logo-vibe.png'}
-              alt={nftDisplayName}
-              className="profile-nft-main-img"
-              style={{
-                filter: hasNft ? 'none' : 'grayscale(1) brightness(0.7)'
-              }}
-            />
+        )}
 
-            {/* Top-left floating status badge (Green for Vibe Club Member, Orange for Unknown Dog) */}
-            {hasNft ? (
-              <div className="profile-nft-member-badge member-green">
-                <span className="profile-nft-member-badge-dot member-green-dot" />
-                <span>VIBE CLUB MEMBER</span>
-              </div>
-            ) : (
-              <div className="profile-nft-member-badge member-orange">
-                <span className="profile-nft-member-badge-dot member-orange-dot" />
-                <span>UNKNOWN DOG</span>
-              </div>
-            )}
-
-            {/* Bottom badge: NFT name if holder, or interactive MINT & JOIN CTA if non-holder */}
-            {hasNft ? (
-              <div className="profile-nft-name-badge">
-                <span>{nftDisplayName.toUpperCase()}</span>
-              </div>
-            ) : (
-              <Link to={getLinkPath('/nft')} className="profile-nft-name-badge profile-nft-mint-cta-badge mint-orange">
-                <span>MINT YOUR NFT &amp; JOIN VIBE CLUB</span>
-                <ArrowRight size={11} strokeWidth={2.5} className="profile-mint-arrow-icon mint-orange-arrow" />
-              </Link>
-            )}
-          </div>
-
-          {/* Desktop Right Column: Reward Dashboard + Daily Check-In with Section Headers */}
-          <div className="profile-desktop-dashboard-panel">
-            <div className="profile-card-dashboard-section">
-              <div className="profile-card-dashboard-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)',  flexShrink: 0, display: 'inline-block' }} />
-                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
-                    REWARD DASHBOARD
-                  </h3>
-                </div>
-              </div>
-
-              <div className="profile-dashboard-grid-2x2">
-                {/* Tile 1: Total Claimed (Green) */}
-                <div
-                  className="profile-stat-card profile-stat-card-claimed"
-                  style={{
-                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-                    border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)',
-                    borderRadius: '14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: '8px',
-                    }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                      TOTAL CLAIMED
-                    </span>
-                    <CheckCircle2 size={16} color="var(--green)" className="profile-stat-icon" />
-                  </div>
-                  <div>
-                    <div className="profile-stat-val" style={{ color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
-                      +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
-                    </div>
-                    <div className="profile-stat-sub" style={{ color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                      {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
-                <div
-                  className="profile-stat-card profile-stat-card-staking"
-                  style={{
-                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-                    border: totalStakingEarned > 0 ? '1.5px solid var(--text-2)' : '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)',
-                    borderRadius: '14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: '8px',
-                    }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                      STAKING REWARDS
-                    </span>
-                    <Coins size={16} color="var(--text-2)" className="profile-stat-icon" />
-                  </div>
-                  <div>
-                    <div className="profile-stat-val" style={{ color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
-                      +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
-                    </div>
-                    <div className="profile-stat-sub" style={{ color: totalStakingEpochs > 0 ? 'var(--text-2)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                      {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tile 3: Available to Claim (Cyan) */}
-                <div
-                  className="profile-stat-card profile-stat-card-available"
-                  style={{
-                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-                    border: totalAvailableCount > 0 ? '1.5px solid var(--accent)' : '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
-                    borderRadius: '14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: '8px',
-                    }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: 'var(--accent)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                      AVAILABLE NOW
-                    </span>
-                    <Gift size={16} color="var(--accent)" className="profile-stat-icon" />
-                  </div>
-                  <div>
-                    <div className="profile-stat-val" style={{ color: totalAvailableCount > 0 ? 'var(--accent)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
-                      +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
-                    </div>
-                    <div className="profile-stat-sub" style={{ color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                      {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
-                    </div>
-                  </div>
-                </div>
-
-                {/* Tile 4: Expired Claims (Red/Muted) */}
-                <div
-                  className="profile-stat-card profile-stat-card-expired"
-                  style={{
-                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-                    border: totalExpiredCount > 0 ? '1.5px solid color-mix(in srgb, var(--red) 50%, transparent)' : '1.5px solid color-mix(in srgb, var(--accent) 20%, transparent)',
-                    borderRadius: '14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    gap: '8px',
-                    }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                      EXPIRED CLAIMS
-                    </span>
-                    <Clock size={16} color={totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)'} className="profile-stat-icon" />
-                  </div>
-                  <div>
-                    <div className="profile-stat-val" style={{ color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px' }}>
-                      {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
-                    </div>
-                    <div className="profile-stat-sub" style={{ color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                      {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className="o1-achievement-thumb">
+          <img src={ach.image} alt={ach.name} className="o1-achievement-img" />
+          {isLocked && (
+            <div className="o1-achievement-lock" title="Locked">
+              <Lock size={12} />
             </div>
+          )}
+        </div>
 
-            {/* Desktop Embedded Daily Check-In Section with Header */}
-            <div className="profile-card-checkin-section">
-              <div className="profile-card-checkin-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: hasCheckedInToday ? 'var(--green)' : 'var(--amber)',  flexShrink: 0, display: 'inline-block' }} />
-                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
-                    DAILY CHECK-IN
-                  </h3>
-                </div>
-              </div>
+        <div className="o1-achievement-name">{ach.name}</div>
 
-              <div className="profile-dashboard-grid-checkin">
-                {/* Tile 1: Current Streak (Clean High Web3 Card) */}
-                <div
-                  className={`profile-checkin-streak-box ${hasCheckedInToday ? 'checked-in' : ''}`}
-                >
-                  <div className="profile-checkin-streak-label">
-                    CURRENT STREAK:
-                  </div>
-                  <div className="profile-checkin-streak-val-wrap">
-                    <div className="profile-checkin-streak-val">
-                      <span className="profile-checkin-streak-num">{streak}</span>
-                      <span className="profile-checkin-streak-unit">{streak === 1 ? 'DAY' : 'DAYS'}</span>
-                    </div>
-                  </div>
-                </div>
+        {isClaimable && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClaimAchievement(ach.id);
+            }}
+            disabled={claimingId === ach.id}
+            className="o1-achievement-claim-btn"
+          >
+            {claimingId === ach.id ? 'Claiming...' : 'Claim SBT'}
+          </button>
+        )}
+      </div>
+    );
+  };
 
-                {/* Tile 2: Check-In Action Button (Entire Plate is a stylish Web3 Button) */}
-                {!address ? (
-                  <button
-                    onClick={login}
-                    className="profile-checkin-big-btn connect-mode"
-                  >
-                    <span>CONNECT WALLET</span>
-                  </button>
-                ) : hasCheckedInToday ? (
-                  <div
-                    className="profile-checkin-big-btn checked-mode"
-                    title={`Next check-in resets at 00:00 UTC (in ${timeUntilNext})`}
-                  >
-                    <div className="profile-checkin-big-btn-title">
-                      <CheckCircle2 size={16} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                      <span>CHECKED IN TODAY</span>
-                    </div>
-                    <div className="profile-checkin-big-btn-timer">NEXT IN {timeUntilNext}</div>
-                  </div>
+  return (
+    <div className="o1-profile-container">
+      <PageHeader
+        title="Profile"
+        description="Base dog identity, claimed reward totals, and milestone credentials"
+      />
+
+      <div className="o1-profile-layout">
+        {/* ── Left Column: Identity / NFT Card ── */}
+        <div>
+          <Card className="o1-nft-card">
+            <div className="o1-nft-frame">
+              <img
+                src={hasNft ? (userNft?.image || '/nft/images/5.png') : (address ? '/nft/images/5.png' : '/new-logo-vibe.png')}
+                alt={nftDisplayName}
+                className={`o1-nft-img ${hasNft ? '' : 'non-member'}`}
+              />
+              <div className="o1-nft-badge-overlay">
+                {hasNft ? (
+                  <Badge tone="success" pill>Vibe Club member</Badge>
                 ) : (
-                  <button
-                    onClick={performCheckIn}
-                    disabled={isCheckingIn}
-                    className="profile-checkin-big-btn active-mode"
-                  >
-                    <span>{isCheckingIn ? 'CHECKING...' : 'CHECK-IN'}</span>
-                  </button>
+                  <Badge tone="neutral" pill>Non-member</Badge>
                 )}
               </div>
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* ── 3. REWARD DASHBOARD ZONE (MOBILE ONLY - ON DESKTOP IT IS IN THE USER CARD) ── */}
-      <div className="profile-dashboard-zone profile-dashboard-zone-mobile-only" style={{ marginBottom: '24px' }}>
-        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)',  flexShrink: 0, display: 'inline-block' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
-            REWARD DASHBOARD
-          </h3>
-        </div>
+            <div className="o1-nft-info">
+              <div className="o1-nft-title-row">
+                <span className="o1-nft-name">
+                  {hasNft ? nftDisplayName : (address ? 'Unknown Dog' : 'Guest')}
+                </span>
+                {hasNft && userNft?.id && (
+                  <span className="o1-nft-id">#{userNft.id}</span>
+                )}
+              </div>
 
-        <div className="profile-stat-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          {/* Tile 1: Total Claimed (Green) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-              border: '1px solid color-mix(in srgb, var(--green) 35%, transparent)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                TOTAL CLAIMED
-              </span>
-              <CheckCircle2 size={13} color="var(--green)" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
-                +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 2: Staking Rewards (Signature Staking Purple) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-              border: totalStakingEarned > 0 ? '1.5px solid var(--text-2)' : '1px solid color-mix(in srgb, var(--text-2) 35%, transparent)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                STAKING REWARDS
-              </span>
-              <Coins size={13} color="var(--text-2)" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
-                +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? 'var(--text-2)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 3: Available to Claim (Cyan) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-              border: totalAvailableCount > 0 ? '1.5px solid var(--green)' : '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                AVAILABLE NOW
-              </span>
-              <Gift size={13} color="var(--green)" className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
-                +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
-              </div>
-            </div>
-          </div>
-
-          {/* Tile 4: Expired Claims (Red/Muted) */}
-          <div
-            className="profile-stat-card"
-            style={{
-              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
-              border: totalExpiredCount > 0 ? '1.5px solid color-mix(in srgb, var(--red) 50%, transparent)' : '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
-              borderRadius: '14px',
-              padding: '12px 10px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: '6px',
-              }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
-                EXPIRED CLAIMS
-              </span>
-              <Clock size={13} color={totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)'} className="profile-stat-icon" />
-            </div>
-            <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px' }}>
-                {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
-              </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
-                {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── 4. DAILY CHECK-IN & STREAK ZONE (MOBILE ONLY - EMBEDDED IN USER CARD ON DESKTOP) ── */}
-      <div className="profile-checkin-zone profile-checkin-zone-mobile-only" style={{ marginBottom: '24px' }}>
-        <div
-          className="profile-section-header"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '14px',
-            flexWrap: 'wrap',
-            gap: '8px'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span
-              className="profile-section-dot"
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: 'var(--amber)',
-                
-                flexShrink: 0,
-                display: 'inline-block'
-              }}
-            />
-            <h3
-              className="profile-section-title"
-              style={{
-                fontSize: '11px',
-                color: 'var(--text)',
-                fontFamily: 'var(--font-sans)',
-                margin: 0,
-                fontWeight: 900,
-                lineHeight: 1
-              }}
-            >
-              DAILY CHECK-IN
-            </h3>
-          </div>
-
-          {/* Current Streak Badge in Section Header */}
-          <div className="profile-checkin-header-streak">
-            <Flame size={12} color="var(--amber)" style={{ }} />
-            <span>{streak} {streak === 1 ? 'DAY' : 'DAYS'} STREAK</span>
-          </div>
-        </div>
-
-        {/* Main Check-In Card */}
-        <div className="profile-checkin-card">
-          {/* Left: Flame Icon + Dynamic Title + Subtitle */}
-          <div className="profile-checkin-left">
-            <div className={`profile-checkin-icon-box ${hasCheckedInToday ? 'checked-in' : ''}`}>
-              {hasCheckedInToday ? (
-                <CheckCircle2 size={24} color="var(--green)" style={{ }} />
-              ) : (
-                <Flame size={26} color="var(--amber)" style={{ }} />
+              {!hasNft && (
+                <div className="o1-nft-cta-box">
+                  <p className="o1-nft-cta-text">
+                    Mint your NFT to join Vibe Club, unlock exclusive royalties, and establish your on-chain identity.
+                  </p>
+                  <Button
+                    as={Link}
+                    to={getLinkPath('/nft')}
+                    variant="secondary"
+                    size="sm"
+                    fullWidth
+                    style={{ justifyContent: 'center' }}
+                  >
+                    <span>Mint NFT</span>
+                    <ArrowRight size={13} style={{ marginLeft: 6 }} />
+                  </Button>
+                </div>
               )}
             </div>
-            <div>
-              <div className="profile-checkin-title">
-                {!address ? (
-                  <>DAILY <span style={{ color: 'var(--accent)' }}>STREAK</span></>
-                ) : hasCheckedInToday ? (
-                  <>CHECKED IN <span style={{ color: 'var(--green)' }}>TODAY</span></>
-                ) : (
-                  <>KEEP YOUR <span style={{ color: 'var(--amber)' }}>STREAK</span></>
-                )}
-              </div>
-              <div className="profile-checkin-sub">
-                {!address ? (
-                  'Connect wallet to start your daily on-chain streak.'
-                ) : hasCheckedInToday ? (
-                  <>Next check-in unlocks in <span style={{ color: 'var(--accent)', fontVariantNumeric: 'tabular-nums' }}>{timeUntilNext}</span>.</>
-                ) : (
-                  'Check in every 24h to keep your daily streak alive.'
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Clean Action Button */}
-          <div className="profile-checkin-right">
-            {!address ? (
-              <button onClick={login} className="profile-checkin-connect-btn">
-                CONNECT WALLET
-              </button>
-            ) : hasCheckedInToday ? (
-              <div className="profile-checkin-checked" title={`Checked in today! Next reset in ${timeUntilNext}`}>
-                <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                <span>NEXT: {timeUntilNext}</span>
-              </div>
-            ) : (
-              <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-checkin-btn">
-                <Flame size={14} color="var(--bg)" strokeWidth={2.5} />
-                <span>{isCheckingIn ? 'CHECKING IN...' : 'CHECK IN NOW'}</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* ── 5. ACHIEVEMENTS SECTION (CATEGORIZED TIERS) ── */}
-      <div className="profile-achievements-zone" style={{ marginBottom: '24px' }}>
-        <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0, display: 'inline-block' }} />
-            <h3 className="profile-section-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
-              ACHIEVEMENTS
-            </h3>
-          </div>
-          <div className="profile-achievements-tracker" style={{ background: 'color-mix(in srgb, var(--green) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 40%, transparent)', borderRadius: '8px', padding: '5px 10px', fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--green)', }} />
-            <span>{unlockedCount}/{totalAchievementsCount} UNLOCKED</span>
-          </div>
+          </Card>
         </div>
 
-        {/* Top Container: 2 Sub-categories (Side-by-side on desktop) */}
-        <div className="profile-achievements-top-row">
-          {/* Sub-category 1: REWARDS ELIGIBILITY */}
-          <div className="profile-achievements-subgroup">
-            <div className="profile-achievements-subgroup-header">
-              <div className="profile-achievements-subgroup-title">
-                <span className="profile-subgroup-dot" />
-                <span>REWARDS ELIGIBILITY</span>
-              </div>
-              <div className="profile-achievements-subgroup-count">
-                {REWARDS_ELIGIBILITY_ACHIEVEMENTS.filter(a => a.unlocked).length}/{REWARDS_ELIGIBILITY_ACHIEVEMENTS.length}
-              </div>
-            </div>
-            <div className="profile-achievements-subgrid profile-grid-2-col">
-              {REWARDS_ELIGIBILITY_ACHIEVEMENTS.map((ach) => (
-                <div
-                  key={ach.id}
-                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
-                >
-                  <div className="profile-achievement-info-wrap">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                      }}
-                      onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                      onMouseLeave={() => setActiveAchievementTooltip(null)}
-                      className="profile-achievement-info-btn"
-                      aria-label={`${ach.name} info`}
-                    >
-                      <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                    </button>
-
-                    {activeAchievementTooltip === ach.id && (
-                      <div
-                        className="profile-achievement-tooltip"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="profile-achievement-tooltip-title">
-                          <InfoSvgIcon size={11} color="var(--accent)" />
-                          <span>{ach.name}</span>
-                        </div>
-                        <div className="profile-achievement-tooltip-desc">
-                          {ach.description}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="profile-achievement-img-box">
-                    <img
-                      src={ach.image}
-                      alt={ach.name}
-                      className="profile-achievement-img"
-                    />
-                  </div>
-                  <div className="profile-achievement-name" title={ach.name}>
-                    {ach.name}
-                  </div>
+        {/* ── Right Column: Stacked Sections ── */}
+        <div className="o1-profile-right">
+          {/* Section 1: Reward Dashboard */}
+          <div>
+            <SectionTitle
+              title="Reward dashboard"
+              subtitle="Claimed totals and available allocations"
+            />
+            <div className="o1-reward-grid">
+              {/* Tile 1: Total claimed */}
+              <div className="o1-reward-tile">
+                <div className="o1-reward-tile-header">
+                  <span className="o1-reward-tile-label">Total claimed</span>
+                  <CheckCircle2 size={16} color="var(--green)" />
                 </div>
-              ))}
+                <div className={`o1-reward-tile-value ${totalClaimedTokens > 0 ? 'positive' : 'neutral'}`}>
+                  +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
+                </div>
+                <div className="o1-reward-tile-sub">
+                  {totalClaimedCount} {totalClaimedCount === 1 ? 'claim' : 'claims'} completed
+                </div>
+              </div>
+
+              {/* Tile 2: Staking rewards */}
+              <div className="o1-reward-tile">
+                <div className="o1-reward-tile-header">
+                  <span className="o1-reward-tile-label">Staking rewards</span>
+                  <Coins size={16} color="var(--text-3)" />
+                </div>
+                <div className={`o1-reward-tile-value ${totalStakingEarned > 0 ? 'positive' : 'neutral'}`}>
+                  +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
+                </div>
+                <div className="o1-reward-tile-sub">
+                  {totalStakingEpochs} {totalStakingEpochs === 1 ? 'epoch' : 'epochs'} participated
+                </div>
+              </div>
+
+              {/* Tile 3: Available now */}
+              <div className="o1-reward-tile">
+                <div className="o1-reward-tile-header">
+                  <span className="o1-reward-tile-label">Available now</span>
+                  <Gift size={16} color={totalAvailableCount > 0 ? 'var(--accent)' : 'var(--text-3)'} />
+                </div>
+                <div className={`o1-reward-tile-value ${totalAvailableCount > 0 ? 'accent' : 'neutral'}`}>
+                  +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
+                </div>
+                <div className="o1-reward-tile-sub">
+                  {totalAvailableCount > 0 ? `${totalAvailableCount} ready to claim` : '0 rewards ready'}
+                </div>
+              </div>
+
+              {/* Tile 4: Expired claims */}
+              <div className="o1-reward-tile">
+                <div className="o1-reward-tile-header">
+                  <span className="o1-reward-tile-label">Expired claims</span>
+                  <Clock size={16} color={totalExpiredCount > 0 ? 'var(--danger)' : 'var(--text-3)'} />
+                </div>
+                <div className={`o1-reward-tile-value ${totalExpiredCount > 0 ? 'danger' : 'neutral'}`}>
+                  {totalExpiredTokens > 0 ? Math.round(totalExpiredTokens).toLocaleString('en-US') : '0'} $VIBE
+                </div>
+                <div className="o1-reward-tile-sub">
+                  {totalExpiredCount} {totalExpiredCount === 1 ? 'reward' : 'rewards'} missed
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Sub-category 2: ACTIVE DOG */}
-          <div className="profile-achievements-subgroup">
-            <div className="profile-achievements-subgroup-header">
-              <div className="profile-achievements-subgroup-title">
-                <span className="profile-subgroup-dot" />
-                <span>ACTIVE DOG</span>
-              </div>
-              <div className="profile-achievements-subgroup-count">
-                {ACTIVE_DOG_ACHIEVEMENTS.filter(a => a.unlocked).length}/{ACTIVE_DOG_ACHIEVEMENTS.length}
-              </div>
-            </div>
-            <div className="profile-achievements-subgrid profile-grid-3-col">
-              {ACTIVE_DOG_ACHIEVEMENTS.map((ach) => (
-                <div
-                  key={ach.id}
-                  className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
-                >
-                  <div className="profile-achievement-info-wrap">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                      }}
-                      onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                      onMouseLeave={() => setActiveAchievementTooltip(null)}
-                      className="profile-achievement-info-btn"
-                      aria-label={`${ach.name} info`}
-                    >
-                      <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                    </button>
-
-                    {activeAchievementTooltip === ach.id && (
-                      <div
-                        className="profile-achievement-tooltip"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <div className="profile-achievement-tooltip-title">
-                          <InfoSvgIcon size={11} color="var(--accent)" />
-                          <span>{ach.name}</span>
-                        </div>
-                        <div className="profile-achievement-tooltip-desc">
-                          {ach.description}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="profile-achievement-img-box">
-                    <img
-                      src={ach.image}
-                      alt={ach.name}
-                      className="profile-achievement-img"
-                    />
-                    {ach.isClaimable && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleClaimAchievement(ach.id);
-                        }}
-                        disabled={claimingId === ach.id}
-                        className="profile-achievement-claim-btn"
-                        title="Claim this achievement"
-                      >
-                        {claimingId === ach.id ? 'CLAIMING...' : 'CLAIM'}
-                      </button>
-                    )}
-                  </div>
-                  <div className="profile-achievement-name" title={ach.name}>
-                    {ach.name}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Container: DOG STAKER (Full Width, 5 items) */}
-        <div className="profile-achievements-subgroup profile-achievements-staker-group">
-          <div className="profile-achievements-subgroup-header">
-            <div className="profile-achievements-subgroup-title">
-              <span className="profile-subgroup-dot" />
-              <span>DOG STAKER</span>
-            </div>
-            <div className="profile-achievements-subgroup-count">
-              {DOG_STAKER_ACHIEVEMENTS.filter(a => a.unlocked).length}/{DOG_STAKER_ACHIEVEMENTS.length}
-            </div>
-          </div>
-          <div className="profile-achievements-subgrid profile-grid-5-col">
-            {DOG_STAKER_ACHIEVEMENTS.map((ach) => (
-              <div
-                key={ach.id}
-                className={`profile-achievement-card ${ach.unlocked ? 'unlocked' : ach.isClaimable ? 'claimable' : 'locked'} ${activeAchievementTooltip === ach.id ? 'has-active-tooltip' : ''}`}
-              >
-                <div className="profile-achievement-info-wrap">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setActiveAchievementTooltip(activeAchievementTooltip === ach.id ? null : ach.id);
-                    }}
-                    onMouseEnter={() => setActiveAchievementTooltip(ach.id)}
-                    onMouseLeave={() => setActiveAchievementTooltip(null)}
-                    className="profile-achievement-info-btn"
-                    aria-label={`${ach.name} info`}
-                  >
-                    <InfoSvgIcon size={12} className="profile-achievement-info-icon" />
-                  </button>
-
-                  {activeAchievementTooltip === ach.id && (
-                    <div
-                      className="profile-achievement-tooltip"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div className="profile-achievement-tooltip-title">
-                        <InfoSvgIcon size={11} color="var(--accent)" />
-                        <span>{ach.name}</span>
-                      </div>
-                      <div className="profile-achievement-tooltip-desc">
-                        {ach.description}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className="profile-achievement-img-box">
-                  <img
-                    src={ach.image}
-                    alt={ach.name}
-                    className="profile-achievement-img"
+          {/* Section 2: Daily Check-in */}
+          <div>
+            <SectionTitle
+              title="Daily check-in"
+              subtitle="Keep your streak alive every 24 hours"
+            />
+            <div className="o1-checkin-card">
+              <div className="o1-checkin-left">
+                <div className="o1-checkin-icon-box">
+                  <Flame
+                    size={22}
+                    color={hasCheckedInToday ? 'var(--green)' : 'var(--amber)'}
                   />
-                  {ach.isClaimable && (
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleClaimAchievement(ach.id);
-                      }}
-                      disabled={claimingId === ach.id}
-                      className="profile-achievement-claim-btn"
-                      title="Claim this achievement"
-                    >
-                      {claimingId === ach.id ? 'CLAIMING...' : 'CLAIM'}
-                    </button>
-                  )}
                 </div>
-                <div className="profile-achievement-name" title={ach.name}>
-                  {ach.name}
+                <div className="o1-checkin-streak-info">
+                  <span className="o1-checkin-streak-label">Current streak</span>
+                  <div className="o1-checkin-streak-val-row">
+                    <span className="o1-checkin-streak-num">{streak || 0}</span>
+                    <span className="o1-checkin-streak-unit">{streak === 1 ? 'day' : 'days'}</span>
+                  </div>
+                  <div className="o1-checkin-sub">
+                    {!address
+                      ? 'Connect wallet to start daily streak'
+                      : hasCheckedInToday
+                      ? `Checked in today · next in ${timeUntilNext}`
+                      : 'Check in to maintain your on-chain streak'}
+                  </div>
                 </div>
               </div>
-            ))}
+
+              <div className="o1-checkin-right">
+                {!address ? (
+                  <Button onClick={login} variant="secondary" size="md">
+                    Connect wallet
+                  </Button>
+                ) : hasCheckedInToday ? (
+                  <Button variant="secondary" size="md" disabled={true}>
+                    <CheckCircle2 size={15} color="var(--green)" style={{ marginRight: 6 }} />
+                    <span>Checked in</span>
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={performCheckIn}
+                    disabled={isCheckingIn}
+                    variant="primary"
+                    size="lg"
+                  >
+                    <Flame size={15} style={{ marginRight: 6 }} />
+                    <span>{isCheckingIn ? 'Checking in...' : 'Check in'}</span>
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3: Achievements */}
+          <div className="o1-achievements-container">
+            <div className="o1-achievements-header">
+              <SectionTitle
+                title="Achievements"
+                subtitle="On-chain credentials and milestones"
+              />
+              <Badge tone={unlockedCount > 0 ? 'success' : 'neutral'} pill>
+                {unlockedCount}/{totalAchievementsCount} unlocked
+              </Badge>
+            </div>
+
+            {/* Subgroup 1: Rewards Eligibility */}
+            <div className="o1-achievements-group">
+              <div className="o1-achievements-group-header">
+                <span className="o1-achievements-group-title">Rewards eligibility</span>
+                <span className="o1-achievements-group-count">
+                  {REWARDS_ELIGIBILITY_ACHIEVEMENTS.filter(a => a.unlocked).length}/{REWARDS_ELIGIBILITY_ACHIEVEMENTS.length}
+                </span>
+              </div>
+              <div className="o1-achievements-grid o1-achievements-grid-2">
+                {REWARDS_ELIGIBILITY_ACHIEVEMENTS.map(renderAchievementCard)}
+              </div>
+            </div>
+
+            {/* Subgroup 2: Active Dog */}
+            <div className="o1-achievements-group">
+              <div className="o1-achievements-group-header">
+                <span className="o1-achievements-group-title">Active dog</span>
+                <span className="o1-achievements-group-count">
+                  {ACTIVE_DOG_ACHIEVEMENTS.filter(a => a.unlocked).length}/{ACTIVE_DOG_ACHIEVEMENTS.length}
+                </span>
+              </div>
+              <div className="o1-achievements-grid o1-achievements-grid-3">
+                {ACTIVE_DOG_ACHIEVEMENTS.map(renderAchievementCard)}
+              </div>
+            </div>
+
+            {/* Subgroup 3: Dog Staker */}
+            <div className="o1-achievements-group">
+              <div className="o1-achievements-group-header">
+                <span className="o1-achievements-group-title">Dog staker</span>
+                <span className="o1-achievements-group-count">
+                  {DOG_STAKER_ACHIEVEMENTS.filter(a => a.unlocked).length}/{DOG_STAKER_ACHIEVEMENTS.length}
+                </span>
+              </div>
+              <div className="o1-achievements-grid o1-achievements-grid-5">
+                {DOG_STAKER_ACHIEVEMENTS.map(renderAchievementCard)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
