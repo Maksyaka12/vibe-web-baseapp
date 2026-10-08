@@ -1,220 +1,377 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  User,
   ArrowLeftRight,
-  Crown,
+  Coins,
   Gift,
-  CheckCircle2,
-  User
+  MoreHorizontal,
+  Crown,
+  TrendingUp,
+  FileCode2,
+  Shield,
+  ArrowUpRight,
+  X
 } from 'lucide-react';
+import { usePrivy, useWallets } from '@privy-io/react-auth';
+import { useAccount } from 'wagmi';
+
+const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
 
 export function BaseAppBottomNav({ activeTab, onSelectTab }) {
-  const navItems = [
-    {
-      id: 'buy',
-      label: 'BUY',
-      icon: ArrowLeftRight,
-    },
-    {
-      id: 'vibeclub',
-      label: 'MINT NFT',
-      icon: Crown,
-    },
-    {
-      id: 'hub',
-      label: 'REWARDS HUB',
-      icon: Gift,
-      isCenter: true
-    },
-    {
-      id: 'claim',
-      label: 'CLAIM',
-      icon: CheckCircle2,
-    },
-    {
-      id: 'profile',
-      label: 'PROFILE',
-      icon: User,
-    }
-  ];
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const { user } = usePrivy();
+  const { wallets } = useWallets();
+  const { address: wagmiAddress } = useAccount();
+
+  const activeAddress = user?.wallet?.address || wallets?.[0]?.address || wagmiAddress;
+  const isAdmin = !!activeAddress && activeAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
+
+  const handleTabClick = (tabId) => {
+    onSelectTab(tabId);
+    setIsMoreOpen(false);
+  };
 
   return (
-    <nav
-      className="base-app-bottom-nav"
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        top: 'auto',
-        left: 0,
-        right: 0,
-        width: '100%',
-        height: '62px',
-        zIndex: 99999,
-        background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
-        
-        
-        borderTop: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
-        
-        paddingTop: '5px',
-        paddingBottom: 'calc(10px + env(safe-area-inset-bottom, 0px))',
-        boxSizing: 'border-box',
-        transform: 'translate3d(0, 0, 0)',
-        WebkitTransform: 'translate3d(0, 0, 0)',
-        overflow: 'visible'
-      }}
-    >
-      <div
+    <>
+      {/* Bottom Tab Bar (o1-dark-ui-design §5.12) */}
+      <nav
+        className="base-app-bottom-nav"
         style={{
-          maxWidth: '720px',
-          margin: '0 auto',
-          height: '100%',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(5, 1fr)',
-          gap: '2px',
-          padding: '0 4px',
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          width: '100%',
+          height: '64px',
+          zIndex: 99999,
+          background: 'rgba(11, 12, 15, 0.95)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
+          borderTop: '1px solid var(--border)',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
           boxSizing: 'border-box',
-          overflow: 'visible',
-          alignItems: 'center'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-around'
         }}
       >
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '480px',
+            margin: '0 auto',
+            height: '100%',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(5, 1fr)',
+            alignItems: 'center'
+          }}
+        >
+          {/* 1. Profile */}
+          <button
+            type="button"
+            onClick={() => handleTabClick('profile')}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: activeTab === 'profile' ? 'var(--accent)' : 'var(--text-3)'
+            }}
+          >
+            <User size={22} strokeWidth={1.75} />
+            <span style={{ fontSize: '11px', fontWeight: 500 }}>Profile</span>
+          </button>
 
-          if (item.isCenter) {
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onSelectTab(item.id);
-                }}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  background: 'transparent',
-                  border: 'none',
-                  padding: '0 2px 2px 2px',
-                  height: '100%',
-                  cursor: 'pointer',
-                  touchAction: 'manipulation',
-                  WebkitTapHighlightColor: 'transparent',
-                  position: 'relative',
-                  overflow: 'visible'
-                }}
-              >
-                {/* Protruding Floating Circle (Always Cyan with Dark Navy Icon) */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '-20px',
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: 'var(--accent)',
-                    border: isActive ? '2.5px solid var(--text)' : '2px solid rgba(255, 255, 255, 0.8)',
-                    
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.15s ease',
-                    transform: isActive ? 'scale(1.06)' : 'scale(1)'
-                  }}
-                >
-                  <Icon
-                    size={22}
-                    color="var(--bg)"
-                    strokeWidth={2.6}
-                  />
-                </div>
+          {/* 2. Swap */}
+          <button
+            type="button"
+            onClick={() => handleTabClick('buy')}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: activeTab === 'buy' ? 'var(--accent)' : 'var(--text-3)'
+            }}
+          >
+            <ArrowLeftRight size={22} strokeWidth={1.75} />
+            <span style={{ fontSize: '11px', fontWeight: 500 }}>Swap</span>
+          </button>
 
-                <span
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '5.5px',
-                    fontWeight: 900,
-                    letterSpacing: '0.15px',
-                    whiteSpace: 'nowrap',
-                    lineHeight: 1,
-                    color: isActive ? 'var(--accent)' : 'var(--text-3)',
-                    
-                    marginTop: '24px'
-                  }}
-                >
-                  {item.label}
-                </span>
-              </button>
-            );
-          }
-          
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                onSelectTab(item.id);
-              }}
+          {/* 3. Center Raised Action: Claim */}
+          <button
+            type="button"
+            onClick={() => handleTabClick('claim')}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              position: 'relative'
+            }}
+          >
+            <div
               style={{
+                position: 'absolute',
+                top: '-20px',
+                width: '52px',
+                height: '52px',
+                borderRadius: '50%',
+                background: 'var(--accent)',
+                color: 'var(--on-accent)',
                 display: 'flex',
-                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: '4px',
-                height: '100%',
-                background: isActive ? 'color-mix(in srgb, var(--accent) 8%, transparent)' : 'transparent',
-                border: 'none',
-                borderRadius: '8px',
-                padding: '4px 2px',
-                cursor: 'pointer',
-                touchAction: 'manipulation',
-                WebkitTapHighlightColor: 'transparent',
-                transition: 'all 0.15s ease',
-                color: isActive ? 'var(--accent)' : 'var(--text-3)',
-                }}
+                border: '2px solid var(--bg-bar)',
+                transition: 'transform 0.15s ease'
+              }}
             >
-              <Icon
-                size={18}
-                color={isActive ? 'var(--accent)' : 'var(--text-3)'}
-                strokeWidth={isActive ? 2.5 : 2}
+              <Coins size={24} strokeWidth={2} />
+            </div>
+            <span
+              style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                color: 'var(--accent)',
+                marginTop: '34px'
+              }}
+            >
+              Claim
+            </span>
+          </button>
+
+          {/* 4. Rewards Hub */}
+          <button
+            type="button"
+            onClick={() => handleTabClick('hub')}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: activeTab === 'hub' ? 'var(--accent)' : 'var(--text-3)'
+            }}
+          >
+            <Gift size={22} strokeWidth={1.75} />
+            <span style={{ fontSize: '11px', fontWeight: 500 }}>Rewards</span>
+          </button>
+
+          {/* 5. More */}
+          <button
+            type="button"
+            onClick={() => setIsMoreOpen(true)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '4px',
+              background: 'transparent',
+              border: 'none',
+              cursor: 'pointer',
+              color: isMoreOpen ? 'var(--accent)' : 'var(--text-3)'
+            }}
+          >
+            <MoreHorizontal size={22} strokeWidth={1.75} />
+            <span style={{ fontSize: '11px', fontWeight: 500 }}>More</span>
+          </button>
+        </div>
+      </nav>
+
+      {/* "More" Bottom Sheet Modal */}
+      {isMoreOpen && (
+        <>
+          <div
+            onClick={() => setIsMoreOpen(false)}
+            style={{
+              position: 'fixed',
+              inset: 0,
+              background: 'rgba(0, 0, 0, 0.7)',
+              zIndex: 100000
+            }}
+          />
+          <div
+            style={{
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: 'var(--surface)',
+              borderTop: '1px solid var(--border)',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px',
+              zIndex: 100001,
+              padding: '20px 20px calc(24px + env(safe-area-inset-bottom, 0px))',
+              boxSizing: 'border-box',
+              maxHeight: '80vh',
+              overflowY: 'auto'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+              <span style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text)' }}>More options</span>
+              <button
+                onClick={() => setIsMoreOpen(false)}
                 style={{
-                  
-                  transition: 'all 0.15s ease'
+                  background: 'transparent',
+                  border: 'none',
+                  color: 'var(--text-3)',
+                  cursor: 'pointer',
+                  padding: '4px'
                 }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '5.5px',
-                  fontWeight: 900,
-                  letterSpacing: '0.2px',
-                  whiteSpace: 'nowrap',
-                  lineHeight: 1,
-                  color: isActive ? 'var(--accent)' : 'var(--text-3)',
-                  }}
               >
-                {item.label}
-              </span>
-              {isActive ? (
-                <span
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <button
+                onClick={() => handleTabClick('vibeclub')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '12px',
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text)',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <Crown size={18} color="var(--accent)" />
+                <span>Vibe Club NFT</span>
+              </button>
+
+              <button
+                onClick={() => handleTabClick('tokenomics')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '12px',
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text)',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <TrendingUp size={18} color="var(--accent)" />
+                <span>Tokenomics</span>
+              </button>
+
+              <button
+                onClick={() => handleTabClick('contracts')}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '12px 14px',
+                  borderRadius: '12px',
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--border)',
+                  color: 'var(--text)',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  textAlign: 'left'
+                }}
+              >
+                <FileCode2 size={18} color="var(--accent)" />
+                <span>Official addresses</span>
+              </button>
+
+              {isAdmin && (
+                <button
+                  onClick={() => handleTabClick('admin')}
                   style={{
-                    width: '3px',
-                    height: '3px',
-                    borderRadius: '50%',
-                    background: 'var(--accent)',
-                    
-                    marginTop: '-1px'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '12px 14px',
+                    borderRadius: '12px',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--border)',
+                    color: 'var(--text)',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    textAlign: 'left'
                   }}
-                />
-              ) : (
-                <span style={{ width: '3px', height: '3px', marginTop: '-1px' }} />
+                >
+                  <Shield size={18} color="var(--red)" />
+                  <span>Admin panel</span>
+                </button>
               )}
-            </button>
-          );
-        })}
-      </div>
-    </nav>
+
+              <div style={{ marginTop: '8px', paddingTop: '12px', borderTop: '1px solid var(--border)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <a
+                  href="https://launch.o1.exchange/token/0xb200000000000000000000df24ecb8bf51100a01?chain=8453"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    borderRadius: '10px',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--border)',
+                    color: 'var(--text-2)',
+                    fontSize: '13px',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <span>O1 Exchange</span>
+                  <ArrowUpRight size={14} />
+                </a>
+
+                <a
+                  href="https://dexscreener.com/base/0xa1a4159e61ac9fc48aa9e9992c8d4870ef8a496d5749af1d219e8002f74835c5"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '10px 12px',
+                    borderRadius: '10px',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--border)',
+                    color: 'var(--text-2)',
+                    fontSize: '13px',
+                    textDecoration: 'none'
+                  }}
+                >
+                  <span>Dexscreener</span>
+                  <ArrowUpRight size={14} />
+                </a>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 }
