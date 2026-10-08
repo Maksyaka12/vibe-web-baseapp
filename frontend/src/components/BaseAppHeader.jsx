@@ -34,8 +34,8 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
       className="base-app-header"
       style={{
         height: '66px',
-        background: 'rgba(2, 11, 26, 0.92)',
-        borderBottom: '1px solid rgba(0, 245, 255, 0.2)',
+        background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+        borderBottom: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -43,11 +43,11 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        color: '#FFFFFF',
-        fontFamily: "'Press Start 2P', monospace",
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        textTransform: 'uppercase',
+        color: 'var(--text)',
+        fontFamily: 'var(--font-sans)',
+        
+        
+        
         boxSizing: 'border-box',
         flexWrap: 'nowrap'
       }}
@@ -60,10 +60,10 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
           aria-label="Open Navigation Menu"
           className="mobile-hamburger-btn"
           style={{
-            background: 'rgba(0, 245, 255, 0.08)',
-            border: '1.5px solid rgba(0, 245, 255, 0.3)',
+            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+            border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
             borderRadius: '8px',
-            color: '#00f5ff',
+            color: 'var(--accent)',
             cursor: 'pointer',
             padding: '6px',
             display: isDesktop ? 'none' : 'flex',
@@ -74,7 +74,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
             transition: 'all 0.15s ease'
           }}
         >
-          <Menu size={17} color="#00f5ff" strokeWidth={2.5} />
+          <Menu size={17} color="var(--accent)" strokeWidth={2.5} />
         </button>
 
         {/* Mobile Logo + $VIBE HUB */}
@@ -96,8 +96,8 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               height: '24px',
               borderRadius: '6px',
               objectFit: 'cover',
-              border: '1.5px solid #00f5ff',
-              boxShadow: '0 0 8px rgba(0, 245, 255, 0.4)',
+              border: '1.5px solid var(--accent)',
+              
               flexShrink: 0
             }}
           />
@@ -105,7 +105,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
             style={{
               fontSize: '9px',
               fontWeight: 900,
-              color: '#00f5ff',
+              color: 'var(--accent)',
               letterSpacing: '0.3px',
               whiteSpace: 'nowrap'
             }}
@@ -127,7 +127,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
             style={{
               fontSize: '11px',
               fontWeight: 900,
-              color: '#ffffff',
+              color: 'var(--text)',
               letterSpacing: '0.6px',
               whiteSpace: 'nowrap'
             }}
@@ -146,9 +146,9 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               className="header-balance-pill header-streak-pill"
               title={`Daily Check-In Streak: ${streak} ${streak === 1 ? 'Day' : 'Days'}`}
               style={{
-                background: 'rgba(4, 14, 36, 0.9)',
-                border: '1.5px solid rgba(255, 170, 0, 0.45)',
-                boxShadow: '0 0 8px rgba(255, 170, 0, 0.2)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--amber) 45%, transparent)',
+                
                 borderRadius: '8px',
                 padding: '5px 8px',
                 display: 'flex',
@@ -163,16 +163,16 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 style={{
                   fontSize: '7.5px',
                   fontWeight: 900,
-                  color: '#ffaa00',
+                  color: 'var(--amber)',
                   letterSpacing: '0.2px',
                   fontVariantNumeric: 'tabular-nums',
-                  textShadow: '0 0 8px rgba(255, 170, 0, 0.5)',
+                  
                   whiteSpace: 'nowrap'
                 }}
               >
                 {streak}
               </span>
-              <Flame size={13} color="#ffaa00" strokeWidth={2.5} style={{ filter: 'drop-shadow(0 0 4px rgba(255, 170, 0, 0.8))', flexShrink: 0 }} />
+              <Flame size={13} color="var(--amber)" strokeWidth={2.5} style={{  flexShrink: 0 }} />
             </div>
 
             {/* NFT Balance Pill */}
@@ -180,9 +180,9 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               className="header-balance-pill header-nft-pill"
               title="Vibe Club NFT Balance"
               style={{
-                background: 'rgba(4, 14, 36, 0.9)',
-                border: '1.5px solid rgba(0, 245, 255, 0.3)',
-                boxShadow: '0 0 8px rgba(0, 245, 255, 0.15)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
+                
                 borderRadius: '8px',
                 padding: '5px 7px',
                 display: 'flex',
@@ -197,7 +197,7 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 style={{
                   fontSize: '7px',
                   fontWeight: 900,
-                  color: '#00f5ff',
+                  color: 'var(--accent)',
                   letterSpacing: '0.2px',
                   fontVariantNumeric: 'tabular-nums',
                   whiteSpace: 'nowrap'
@@ -224,9 +224,9 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               className="header-balance-pill header-token-pill"
               title="$VIBE Token Balance"
               style={{
-                background: 'rgba(4, 14, 36, 0.9)',
-                border: '1.5px solid rgba(0, 255, 136, 0.35)',
-                boxShadow: '0 0 8px rgba(0, 255, 136, 0.15)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)',
+                
                 borderRadius: '8px',
                 padding: '5px 7px',
                 display: 'flex',
@@ -241,10 +241,10 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
                 style={{
                   fontSize: '7px',
                   fontWeight: 900,
-                  color: '#00ff88',
+                  color: 'var(--green)',
                   letterSpacing: '0.2px',
                   fontVariantNumeric: 'tabular-nums',
-                  textShadow: '0 0 8px rgba(0, 255, 136, 0.4)',
+                  
                   whiteSpace: 'nowrap'
                 }}
               >
@@ -269,9 +269,9 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
             onClick={login}
             className="header-connect-btn"
             style={{
-              background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-              color: '#020b1a',
-              border: '1.5px solid #00f5ff',
+              background: 'var(--accent)',
+              color: 'var(--bg)',
+              border: '1.5px solid var(--accent)',
               borderRadius: '8px',
               padding: '6px 10px',
               fontSize: '7px',
@@ -280,15 +280,15 @@ export function BaseAppHeader({ onOpenSidebar, activeTab, isDesktop = false }) {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '5px',
-              boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)',
+              
               transition: 'all 0.2s ease',
               outline: 'none',
-              textTransform: 'uppercase',
+              
               whiteSpace: 'nowrap',
               flexShrink: 0
             }}
           >
-            <Wallet size={11} color="#020b1a" strokeWidth={2.5} />
+            <Wallet size={11} color="var(--bg)" strokeWidth={2.5} />
             <span>CONNECT</span>
           </button>
         )}

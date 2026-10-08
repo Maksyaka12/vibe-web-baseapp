@@ -49,11 +49,11 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
         width: '100%',
         height: '62px',
         zIndex: 99999,
-        background: 'rgba(2, 11, 26, 0.92)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderTop: '1px solid rgba(0, 245, 255, 0.2)',
-        boxShadow: '0 -6px 24px rgba(0, 0, 0, 0.8), 0 -1px 0 rgba(0, 245, 255, 0.15)',
+        background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+        
+        
+        borderTop: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
+        
         paddingTop: '5px',
         paddingBottom: 'calc(10px + env(safe-area-inset-bottom, 0px))',
         boxSizing: 'border-box',
@@ -113,11 +113,9 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
                     width: '44px',
                     height: '44px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #00d2eb 100%)',
-                    border: isActive ? '2.5px solid #ffffff' : '2px solid rgba(255, 255, 255, 0.8)',
-                    boxShadow: isActive
-                      ? '0 0 18px rgba(0, 245, 255, 0.9), 0 4px 10px rgba(0, 0, 0, 0.6)'
-                      : '0 0 10px rgba(0, 245, 255, 0.5), 0 3px 8px rgba(0, 0, 0, 0.5)',
+                    background: 'var(--accent)',
+                    border: isActive ? '2.5px solid var(--text)' : '2px solid rgba(255, 255, 255, 0.8)',
+                    
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -127,21 +125,21 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
                 >
                   <Icon
                     size={22}
-                    color="#020b1a"
+                    color="var(--bg)"
                     strokeWidth={2.6}
                   />
                 </div>
 
                 <span
                   style={{
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '5.5px',
                     fontWeight: 900,
                     letterSpacing: '0.15px',
                     whiteSpace: 'nowrap',
                     lineHeight: 1,
-                    color: isActive ? '#00f5ff' : '#88aacc',
-                    textShadow: isActive ? '0 0 8px rgba(0, 245, 255, 0.6)' : 'none',
+                    color: isActive ? 'var(--accent)' : 'var(--text-3)',
+                    
                     marginTop: '24px'
                   }}
                 >
@@ -166,7 +164,7 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
                 justifyContent: 'center',
                 gap: '4px',
                 height: '100%',
-                background: isActive ? 'rgba(0, 245, 255, 0.08)' : 'transparent',
+                background: isActive ? 'color-mix(in srgb, var(--accent) 8%, transparent)' : 'transparent',
                 border: 'none',
                 borderRadius: '8px',
                 padding: '4px 2px',
@@ -174,30 +172,28 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
                 touchAction: 'manipulation',
                 WebkitTapHighlightColor: 'transparent',
                 transition: 'all 0.15s ease',
-                color: isActive ? '#00f5ff' : '#88aacc',
-                boxShadow: isActive ? 'inset 0 0 10px rgba(0, 245, 255, 0.15)' : 'none'
-              }}
+                color: isActive ? 'var(--accent)' : 'var(--text-3)',
+                }}
             >
               <Icon
                 size={18}
-                color={isActive ? '#00f5ff' : '#88aacc'}
+                color={isActive ? 'var(--accent)' : 'var(--text-3)'}
                 strokeWidth={isActive ? 2.5 : 2}
                 style={{
-                  filter: isActive ? 'drop-shadow(0 0 6px rgba(0, 245, 255, 0.6))' : 'none',
+                  
                   transition: 'all 0.15s ease'
                 }}
               />
               <span
                 style={{
-                  fontFamily: "'Press Start 2P', monospace",
+                  fontFamily: 'var(--font-sans)',
                   fontSize: '5.5px',
                   fontWeight: 900,
                   letterSpacing: '0.2px',
                   whiteSpace: 'nowrap',
                   lineHeight: 1,
-                  color: isActive ? '#00f5ff' : '#88aacc',
-                  textShadow: isActive ? '0 0 8px rgba(0, 245, 255, 0.6)' : 'none'
-                }}
+                  color: isActive ? 'var(--accent)' : 'var(--text-3)',
+                  }}
               >
                 {item.label}
               </span>
@@ -207,8 +203,8 @@ export function BaseAppBottomNav({ activeTab, onSelectTab }) {
                     width: '3px',
                     height: '3px',
                     borderRadius: '50%',
-                    background: '#00f5ff',
-                    boxShadow: '0 0 6px #00f5ff',
+                    background: 'var(--accent)',
+                    
                     marginTop: '-1px'
                   }}
                 />

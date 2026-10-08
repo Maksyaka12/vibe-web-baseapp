@@ -234,8 +234,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
       <div style={{
         minHeight: isEmbeddedInBaseApp ? 'calc(100vh - 120px)' : '100vh',
         width: '100%',
-        background: isEmbeddedInBaseApp ? 'transparent' : 'radial-gradient(circle at 50% 30%, #041430 0%, #020b1a 70%, #000511 100%)',
-        color: '#fff',
+        background: isEmbeddedInBaseApp ? 'transparent' : 'var(--surface)',
+        color: 'var(--text)',
         fontFamily: 'var(--vv-pixel)',
         display: 'flex',
         flexDirection: 'column',
@@ -246,20 +246,19 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
-        textTransform: 'uppercase'
-      }}>
+        }}>
         {/* Inline animation keyframes */}
         <style>{`
           @keyframes vvPulseDotAnimation {
-            0% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px #00ff88; }
-            50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 12px #00ff88, 0 0 20px #00ff88; }
-            100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px #00ff88; }
+            0% { transform: scale(0.9); opacity: 0.7;  }
+            50% { transform: scale(1.35); opacity: 1;  }
+            100% { transform: scale(0.9); opacity: 0.7;  }
           }
           .vv-lock-pulse-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #00ff88;
+            background: var(--green);
             display: inline-block;
             animation: vvPulseDotAnimation 1.6s infinite ease-in-out;
           }
@@ -295,9 +294,9 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '8px',
-                background: 'rgba(0, 245, 255, 0.12)',
-                border: '1.5px solid #00f5ff',
-                color: '#00ff88',
+                background: 'color-mix(in srgb, var(--accent) 12%, transparent)',
+                border: '1.5px solid var(--accent)',
+                color: 'var(--green)',
                 padding: '8px 14px',
                 borderRadius: '10px',
                 cursor: 'pointer',
@@ -314,9 +313,9 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '8px',
-                background: 'linear-gradient(135deg, #00f5ff, #00b8ff)',
-                color: '#020b1a',
-                border: '1.5px solid #ffffff',
+                background: 'var(--accent)',
+                color: 'var(--bg)',
+                border: '1.5px solid var(--border-strong)',
                 padding: '8px 14px',
                 borderRadius: '10px',
                 cursor: 'pointer',
@@ -336,7 +335,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           position: 'absolute',
           width: '600px',
           height: '600px',
-          background: 'radial-gradient(circle, rgba(0, 245, 255, 0.15) 0%, rgba(0, 0, 0, 0) 70%)',
+          background: 'radial-gradient(circle, color-mix(in srgb, var(--accent) 15%, transparent) 0%, rgba(0, 0, 0, 0) 70%)',
           pointerEvents: 'none'
         }} />
 
@@ -349,9 +348,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               width: '96px',
               height: '96px',
               borderRadius: '24px',
-              border: '3px solid #00f5ff',
-              boxShadow: '0 0 32px rgba(0, 245, 255, 0.5)'
-            }}
+              border: '3px solid var(--accent)',
+              }}
           />
         </div>
 
@@ -359,8 +357,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
         <h1 className="vv-lock-title" style={{
           fontFamily: 'var(--vv-pixel)',
           fontSize: '22px',
-          color: '#00f5ff',
-          textShadow: '0 0 20px rgba(0, 245, 255, 0.6)',
+          color: 'var(--accent)',
+          
           marginBottom: '14px',
           maxWidth: '750px',
           lineHeight: 1.4,
@@ -374,16 +372,16 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          background: 'rgba(0, 255, 136, 0.12)',
-          border: '1.5px solid #00ff88',
-          color: '#00ff88',
+          background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+          border: '1.5px solid var(--green)',
+          color: 'var(--green)',
           borderRadius: '20px',
           padding: '8px 18px',
           fontSize: '9.5px',
           fontFamily: 'var(--vv-pixel)',
           letterSpacing: '0.6px',
           marginBottom: '32px',
-          boxShadow: '0 0 18px rgba(0, 255, 136, 0.25)',
+          
           whiteSpace: 'nowrap'
         }}>
           <span className="vv-lock-pulse-dot" />
@@ -399,59 +397,59 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           marginBottom: '20px'
         }}>
           <div className="vv-timer-box" style={{
-            background: 'rgba(2, 11, 26, 0.92)',
-            border: '2px solid #00f5ff',
+            background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+            border: '2px solid var(--accent)',
             borderRadius: '14px',
             padding: '16px 22px',
             minWidth: '76px',
-            boxShadow: '0 0 24px rgba(0, 245, 255, 0.35)',
+            
             textAlign: 'center'
           }}>
-            <div className="vv-timer-digit" style={{ fontSize: '26px', color: '#00f5ff', textShadow: '0 0 16px #00f5ff' }}>
+            <div className="vv-timer-digit" style={{ fontSize: '26px', color: 'var(--accent)', }}>
               {countdownHours}
             </div>
-            <div style={{ fontSize: '7.5px', color: '#88aacc', marginTop: '4px', letterSpacing: '0.5px' }}>HOURS</div>
+            <div style={{ fontSize: '7.5px', color: 'var(--text-3)', marginTop: '4px', letterSpacing: '0.5px' }}>HOURS</div>
           </div>
 
-          <span style={{ fontSize: '24px', color: '#ffd700' }}>:</span>
+          <span style={{ fontSize: '24px', color: 'var(--amber)' }}>:</span>
 
           <div className="vv-timer-box" style={{
-            background: 'rgba(2, 11, 26, 0.92)',
-            border: '2px solid #ffd700',
+            background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+            border: '2px solid var(--amber)',
             borderRadius: '14px',
             padding: '16px 22px',
             minWidth: '76px',
-            boxShadow: '0 0 24px rgba(255, 215, 0, 0.35)',
+            
             textAlign: 'center'
           }}>
-            <div className="vv-timer-digit" style={{ fontSize: '26px', color: '#ffd700', textShadow: '0 0 16px #ffd700' }}>
+            <div className="vv-timer-digit" style={{ fontSize: '26px', color: 'var(--amber)', }}>
               {countdownMins}
             </div>
-            <div style={{ fontSize: '7.5px', color: '#88aacc', marginTop: '4px', letterSpacing: '0.5px' }}>MINS</div>
+            <div style={{ fontSize: '7.5px', color: 'var(--text-3)', marginTop: '4px', letterSpacing: '0.5px' }}>MINS</div>
           </div>
 
-          <span style={{ fontSize: '24px', color: '#ffd700' }}>:</span>
+          <span style={{ fontSize: '24px', color: 'var(--amber)' }}>:</span>
 
           <div className="vv-timer-box" style={{
-            background: 'rgba(2, 11, 26, 0.92)',
+            background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
             border: '2px solid #ff007f',
             borderRadius: '14px',
             padding: '16px 22px',
             minWidth: '76px',
-            boxShadow: '0 0 24px rgba(255, 0, 127, 0.35)',
+            
             textAlign: 'center'
           }}>
-            <div className="vv-timer-digit" style={{ fontSize: '26px', color: '#ff007f', textShadow: '0 0 16px #ff007f' }}>
+            <div className="vv-timer-digit" style={{ fontSize: '26px', color: '#ff007f', }}>
               {countdownSecs}
             </div>
-            <div style={{ fontSize: '7.5px', color: '#88aacc', marginTop: '4px', letterSpacing: '0.5px' }}>SECS</div>
+            <div style={{ fontSize: '7.5px', color: 'var(--text-3)', marginTop: '4px', letterSpacing: '0.5px' }}>SECS</div>
           </div>
         </div>
 
         {/* Subtitle */}
         <div style={{
           fontSize: '9px',
-          color: '#88aacc',
+          color: 'var(--text-3)',
           letterSpacing: '0.8px',
           fontFamily: 'var(--vv-pixel)',
           lineHeight: 1.6
@@ -465,26 +463,26 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
   return (
     <div style={{
       minHeight: isEmbeddedInBaseApp ? 'auto' : '100vh',
-      background: isEmbeddedInBaseApp ? 'transparent' : 'radial-gradient(circle at 50% 10%, #041430 0%, #020b1a 70%, #000511 100%)',
-      color: '#fff',
+      background: isEmbeddedInBaseApp ? 'transparent' : 'var(--surface)',
+      color: 'var(--text)',
       fontFamily: 'var(--vv-pixel)',
       paddingBottom: isEmbeddedInBaseApp ? '0px' : '80px',
       overflowX: 'hidden',
-      textTransform: 'uppercase',
+      
       width: '100%'
     }}>
       {/* Inline animation & Mobile CSS Override */}
       <style>{`
         @keyframes vvPulseDotAnimation {
-          0% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px #00ff88; }
-          50% { transform: scale(1.35); opacity: 1; box-shadow: 0 0 12px #00ff88, 0 0 20px #00ff88; }
-          100% { transform: scale(0.9); opacity: 0.7; box-shadow: 0 0 4px #00ff88; }
+          0% { transform: scale(0.9); opacity: 0.7;  }
+          50% { transform: scale(1.35); opacity: 1;  }
+          100% { transform: scale(0.9); opacity: 0.7;  }
         }
         .vv-pulse-indicator {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: #00ff88;
+          background: var(--green);
           display: inline-block;
           animation: vvPulseDotAnimation 1.6s infinite ease-in-out;
         }
@@ -641,12 +639,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
         {/* ── MAIN CARD CONTAINER ── */}
         <div className="vv-nft-club-main-card" style={{
-          background: 'rgba(4, 20, 48, 0.85)',
-          border: '2px solid #00f5ff',
+          background: 'color-mix(in srgb, var(--surface) 85%, transparent)',
+          border: '2px solid var(--accent)',
           borderRadius: '20px',
           padding: '28px',
-          boxShadow: '0 12px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 245, 255, 0.25)',
-          backdropFilter: 'blur(16px)',
+          
+          
           textAlign: 'left'
         }}>
 
@@ -660,14 +658,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           }}>
             <div style={{
               display: 'inline-block',
-              background: 'rgba(0, 255, 136, 0.15)',
-              border: '1.5px solid #00ff88',
-              color: '#00ff88',
+              background: 'color-mix(in srgb, var(--green) 15%, transparent)',
+              border: '1.5px solid var(--green)',
+              color: 'var(--green)',
               borderRadius: '8px',
               padding: '6px 10px',
               fontSize: '8px',
               letterSpacing: '0.4px',
-              textTransform: 'uppercase',
+              
               whiteSpace: 'nowrap'
             }}>
               ● MINT IS LIVE
@@ -678,7 +676,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                color: '#88aacc',
+                color: 'var(--text-3)',
                 textDecoration: 'none',
                 display: 'flex',
                 flexDirection: 'column',
@@ -688,8 +686,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 lineHeight: 1.3
               }}
             >
-              <span style={{ fontSize: '7px', color: '#88aacc', letterSpacing: '0.3px' }}>CONTRACT:</span>
-              <span style={{ fontSize: '7.5px', color: '#00f5ff', letterSpacing: '0.3px' }}>
+              <span style={{ fontSize: '7px', color: 'var(--text-3)', letterSpacing: '0.3px' }}>CONTRACT:</span>
+              <span style={{ fontSize: '7.5px', color: 'var(--accent)', letterSpacing: '0.3px' }}>
                 {NFT_CONTRACT_ADDRESS.slice(0, 6)}...{NFT_CONTRACT_ADDRESS.slice(-4)} ↗
               </span>
             </a>
@@ -709,9 +707,9 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               position: 'relative',
               borderRadius: '16px',
               overflow: 'hidden',
-              border: '3px solid #00f5ff',
-              boxShadow: '0 0 28px rgba(0, 245, 255, 0.4), 0 12px 30px rgba(0,0,0,0.8)',
-              background: '#020b1a',
+              border: '3px solid var(--accent)',
+              
+              background: 'var(--bg)',
               aspectRatio: '1/1',
               width: '100%',
               maxWidth: '100%',
@@ -740,7 +738,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                       width: '100%',
                       height: '100%',
                       position: 'relative',
-                      background: '#020b1a',
+                      background: 'var(--bg)',
                       boxSizing: 'border-box',
                       overflow: 'hidden'
                     }}
@@ -761,28 +759,27 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 ))}
               </div>
 
-              {/* BOTTOM CHARACTER NAME BADGE (ALWAYS BRAND CYAN #00F5FF & SINGLE NUMBER) */}
+              {/* BOTTOM CHARACTER NAME BADGE (ALWAYS BRAND CYAN var(--accent) & SINGLE NUMBER) */}
               <div style={{
                 position: 'absolute',
                 bottom: '12px',
                 left: '12px',
                 right: '12px',
-                background: 'rgba(2, 11, 26, 0.92)',
-                border: '1.5px solid #00f5ff',
+                background: 'color-mix(in srgb, var(--bg) 92%, transparent)',
+                border: '1.5px solid var(--accent)',
                 padding: '8px 12px',
                 borderRadius: '10px',
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '9px',
-                color: '#00f5ff',
+                color: 'var(--accent)',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                boxShadow: '0 4px 16px rgba(0,0,0,0.85)',
+                
                 zIndex: 10,
                 textAlign: 'center',
                 letterSpacing: '0.4px',
-                backdropFilter: 'blur(8px)'
-              }}>
+                }}>
                 <span>
                   VIBE CLUB #{currentNftId} {cleanCharacterName.toUpperCase()}
                 </span>
@@ -807,14 +804,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               }}>
                 <div className="vv-desktop-phase-pill" style={{
                   display: 'inline-block',
-                  background: 'rgba(0, 255, 136, 0.15)',
-                  border: '1.5px solid #00ff88',
-                  color: '#00ff88',
+                  background: 'color-mix(in srgb, var(--green) 15%, transparent)',
+                  border: '1.5px solid var(--green)',
+                  color: 'var(--green)',
                   borderRadius: '8px',
                   padding: '6px 10px',
                   fontSize: '8px',
                   letterSpacing: '0.4px',
-                  textTransform: 'uppercase',
+                  
                   whiteSpace: 'nowrap'
                 }}>
                   ● MINT IS LIVE
@@ -827,7 +824,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                   className="vv-desktop-contract-link"
                   style={{
                     fontSize: '8px',
-                    color: '#88aacc',
+                    color: 'var(--text-3)',
                     textDecoration: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -843,26 +840,26 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
               {/* CARD 1: ETH PRICE & LIVE $VIBE PRICE + LIMIT */}
               <div className="vv-nft-ctrl-card vv-nft-price-card" style={{
-                background: 'rgba(2, 11, 26, 0.7)',
-                border: '1px solid rgba(0, 245, 255, 0.25)',
+                background: 'color-mix(in srgb, var(--bg) 70%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
                 <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>ETH PRICE</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: 'var(--accent)' }}>
                     {ethPriceFormatted} ETH
                   </span>
                 </div>
                 <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>$VIBE PRICE</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#ffd700' }}>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: 'var(--amber)' }}>
                     {formatVibeComma(currentDynamicVibeAmount)}
                   </span>
                 </div>
                 <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>LIMIT</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: '#00ff88' }}>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', color: 'var(--green)' }}>
                     1 NFT PER WALLET
                   </span>
                 </div>
@@ -870,33 +867,33 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
               {/* CARD 2: TOTAL MINTED & PROGRESS BAR */}
               <div className="vv-nft-ctrl-card vv-nft-minted-card" style={{
-                background: 'rgba(2, 11, 26, 0.7)',
-                border: '1px solid rgba(0, 245, 255, 0.25)',
+                background: 'color-mix(in srgb, var(--bg) 70%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                 borderRadius: '12px',
                 padding: '10px 14px'
               }}>
                 <div className="vv-nft-ctrl-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                   <span className="vv-nft-ctrl-label" style={{ fontSize: '8px', color: '#aaa' }}>TOTAL MINTED</span>
-                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: '#00f5ff' }}>
+                  <span className="vv-nft-ctrl-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', color: 'var(--accent)' }}>
                     {totalMinted} / {maxSupply}
                   </span>
                 </div>
                 {/* Progress Bar */}
                 <div className="vv-nft-progress-bar-wrap" style={{ width: '100%', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-                  <div style={{ width: `${Math.max(1, (totalMinted / maxSupply) * 100)}%`, height: '100%', background: 'linear-gradient(90deg, #00f5ff, #00ff88)' }} />
+                  <div style={{ width: `${Math.max(1, (totalMinted / maxSupply) * 100)}%`, height: '100%', background: 'var(--accent)' }} />
                 </div>
               </div>
 
               {/* CARD 3: TOTAL BURNED */}
               <div className="vv-nft-ctrl-card vv-nft-burned-card" style={{
-                background: 'rgba(2, 11, 26, 0.7)',
-                border: '1px solid rgba(255, 68, 102, 0.35)',
+                background: 'color-mix(in srgb, var(--bg) 70%, transparent)',
+                border: '1px solid color-mix(in srgb, var(--red) 35%, transparent)',
                 borderRadius: '10px',
                 padding: '7px 10px'
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-burned-label" style={{ fontSize: '7px', color: '#ff4466', fontWeight: 400, letterSpacing: '0px' }}>TOTAL BURNED BY MINT</span>
-                  <span className="vv-nft-burned-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', fontWeight: 400, letterSpacing: '0px', color: '#ffffff' }}>
+                  <span className="vv-nft-burned-label" style={{ fontSize: '7px', color: 'var(--red)', fontWeight: 400, letterSpacing: '0px' }}>TOTAL BURNED BY MINT</span>
+                  <span className="vv-nft-burned-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '8px', fontWeight: 400, letterSpacing: '0px', color: 'var(--text)' }}>
                     {formatVibeComma(totalVibeBurnedByContract)}
                   </span>
                 </div>
@@ -904,18 +901,18 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
               {/* USER WALLET BALANCES */}
               <div className="vv-nft-wallet-balances-box" style={{ padding: '2px 4px' }}>
-                <div className="vv-nft-wallet-title" style={{ fontSize: '8px', color: '#88aacc', marginBottom: '4px', letterSpacing: '0px', fontWeight: 400, whiteSpace: 'nowrap' }}>
+                <div className="vv-nft-wallet-title" style={{ fontSize: '8px', color: 'var(--text-3)', marginBottom: '4px', letterSpacing: '0px', fontWeight: 400, whiteSpace: 'nowrap' }}>
                   YOUR WALLET BALANCES:
                 </div>
                 <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• ETH BALANCE:</span>
-                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#00f5ff' : '#ff4466' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: 'var(--text-3)', fontWeight: 400, letterSpacing: '0px' }}>• ETH BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? 'var(--accent)' : 'var(--red)' }}>
                     {authenticated ? `${Number(balances?.eth || 0).toFixed(4)} ETH` : 'NOT CONNECTED'}
                   </span>
                 </div>
                 <div className="vv-nft-wallet-row" style={{ display: 'flex', justifyContent: 'space-between', whiteSpace: 'nowrap' }}>
-                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: '#88aacc', fontWeight: 400, letterSpacing: '0px' }}>• $VIBE BALANCE:</span>
-                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? '#ffd700' : '#ff4466' }}>
+                  <span className="vv-nft-wallet-label" style={{ fontSize: '8px', color: 'var(--text-3)', fontWeight: 400, letterSpacing: '0px' }}>• $VIBE BALANCE:</span>
+                  <span className="vv-nft-wallet-val" style={{ fontFamily: 'var(--vv-pixel)', fontSize: '9px', fontWeight: 400, letterSpacing: '0px', color: authenticated ? 'var(--amber)' : 'var(--red)' }}>
                     {authenticated ? formatVibeComma(Math.floor(Number(balances?.vibe || 0))) : 'NOT CONNECTED'}
                   </span>
                 </div>
@@ -925,12 +922,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: 'auto', paddingTop: '4px' }}>
                 {errorMessage && (
                   <div style={{
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid #ff4466',
+                    background: 'color-mix(in srgb, var(--red) 15%, transparent)',
+                    border: '1px solid var(--red)',
                     borderRadius: '8px',
                     padding: '8px 12px',
                     fontSize: '8px',
-                    color: '#ff6688',
+                    color: 'var(--red)',
                     textAlign: 'center',
                     marginBottom: '4px'
                   }}>
@@ -940,16 +937,15 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
                 {mintSuccess && (
                   <div style={{
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1.5px solid #00ff88',
+                    background: 'color-mix(in srgb, var(--green) 15%, transparent)',
+                    border: '1.5px solid var(--green)',
                     borderRadius: '10px',
                     padding: '12px',
                     fontSize: '9px',
-                    color: '#00ff88',
+                    color: 'var(--green)',
                     textAlign: 'center',
                     marginBottom: '6px',
-                    boxShadow: '0 0 16px rgba(0, 255, 136, 0.3)'
-                  }}>
+                    }}>
                     🎉 MINT SUCCESSFUL! WELCOME TO VIBE CLUB!
                     {txHash && (
                       <div style={{ marginTop: '6px' }}>
@@ -957,7 +953,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                           href={`https://basescan.org/tx/${txHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ color: '#00f5ff', textDecoration: 'underline', fontSize: '8px' }}
+                          style={{ color: 'var(--accent)', textDecoration: 'underline', fontSize: '8px' }}
                         >
                           VIEW ON BASESCAN ↗
                         </a>
@@ -976,14 +972,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                       fontFamily: 'var(--vv-pixel)',
                       fontSize: '10px',
                       fontWeight: 900,
-                      background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                      border: '2px solid #ffffff',
+                      background: 'var(--accent)',
+                      border: '2px solid var(--border-strong)',
                       borderRadius: '10px',
-                      color: '#020b1a',
+                      color: 'var(--bg)',
                       cursor: 'pointer',
-                      boxShadow: '0 4px 16px rgba(0, 245, 255, 0.45)',
+                      
                       letterSpacing: '0.5px',
-                      textTransform: 'uppercase',
+                      
                       whiteSpace: 'nowrap',
                       display: 'flex',
                       alignItems: 'center',
@@ -998,24 +994,23 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                   <div style={{
                     width: '100%',
                     padding: '14px',
-                    background: 'rgba(0, 255, 136, 0.12)',
-                    border: '2px solid #00ff88',
+                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                    border: '2px solid var(--green)',
                     borderRadius: '10px',
                     textAlign: 'center',
-                    color: '#00ff88',
+                    color: 'var(--green)',
                     fontSize: '10px',
                     fontWeight: 900,
-                    boxShadow: '0 0 16px rgba(0, 255, 136, 0.3)'
-                  }}>
+                    }}>
                     ✓ YOU HAVE MINTED (1/1 MAX)
                     <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                       <button
                         onClick={() => setShowSuccessModal(true)}
                         style={{
                           fontFamily: 'var(--vv-pixel)',
-                          background: 'rgba(0, 245, 255, 0.15)',
-                          border: '1.5px solid #00f5ff',
-                          color: '#00f5ff',
+                          background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                          border: '1.5px solid var(--accent)',
+                          color: 'var(--accent)',
                           padding: '6px 12px',
                           borderRadius: '8px',
                           fontSize: '8px',
@@ -1032,7 +1027,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                         href={OPENSEA_COLLECTION_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: '#00f5ff', textDecoration: 'underline', fontSize: '8px' }}
+                        style={{ color: 'var(--accent)', textDecoration: 'underline', fontSize: '8px' }}
                       >
                         VIEW ON OPENSEA ↗
                       </a>
@@ -1051,14 +1046,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                         fontFamily: 'var(--vv-pixel)',
                         fontSize: '10px',
                         fontWeight: 900,
-                        background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                        border: '2px solid #ffffff',
+                        background: 'var(--accent)',
+                        border: '2px solid var(--border-strong)',
                         borderRadius: '10px',
-                        color: '#020b1a',
+                        color: 'var(--bg)',
                         cursor: (isMintingEth || isMintingVibe || isApprovingVibe) ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 4px 16px rgba(0, 245, 255, 0.45)',
+                        
                         letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
+                        
                         whiteSpace: 'nowrap',
                         opacity: (isMintingEth || isMintingVibe || isApprovingVibe) ? 0.7 : 1
                       }}
@@ -1070,7 +1065,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                     <div style={{
                       textAlign: 'center',
                       fontSize: '8px',
-                      color: '#88aacc',
+                      color: 'var(--text-3)',
                       letterSpacing: '1px',
                       margin: '1px 0'
                     }}>
@@ -1087,14 +1082,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                         fontFamily: 'var(--vv-pixel)',
                         fontSize: '10px',
                         fontWeight: 900,
-                        background: 'linear-gradient(135deg, #ffd700 0%, #ff6b35 100%)',
-                        border: '2px solid #ffffff',
+                        background: 'var(--amber)',
+                        border: '2px solid var(--border-strong)',
                         borderRadius: '10px',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         cursor: (isMintingEth || isMintingVibe || isApprovingVibe) ? 'not-allowed' : 'pointer',
-                        boxShadow: '0 4px 16px rgba(255, 215, 0, 0.4)',
+                        
                         letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
+                        
                         whiteSpace: 'nowrap',
                         opacity: (isMintingEth || isMintingVibe || isApprovingVibe) ? 0.7 : 1
                       }}
@@ -1123,8 +1118,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             fontFamily: 'var(--vv-pixel)',
             fontSize: '14px',
             fontWeight: 400,
-            color: '#00f5ff',
-            textShadow: 'none',
+            color: 'var(--accent)',
+            
             marginBottom: '24px',
             letterSpacing: '0px',
             textAlign: 'center',
@@ -1140,18 +1135,17 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           }}>
             {/* FAQ 1: VIBE CLUB UTILITY */}
             <div className="vv-faq-card" style={{
-              background: 'rgba(4, 20, 48, 0.75)',
-              border: '1.5px solid rgba(0, 245, 255, 0.35)',
+              background: 'color-mix(in srgb, var(--surface) 75%, transparent)',
+              border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
               borderRadius: '16px',
               padding: '22px 24px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(12px)'
-            }}>
+              
+              }}>
               <div className="vv-faq-title" style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '10px',
                 fontWeight: 400,
-                color: '#00f5ff',
+                color: 'var(--accent)',
                 marginBottom: '14px',
                 display: 'flex',
                 alignItems: 'center',
@@ -1171,26 +1165,25 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 color: '#a0b5d0',
                 lineHeight: 1.8,
                 letterSpacing: '0px',
-                textTransform: 'uppercase'
-              }}>
+                }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00f5ff', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--accent)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>LIFETIME $VIBE ROYALTIES DISTRIBUTED TO NFT HOLDERS EVERY 10 DAYS</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00ff88', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--green)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>ROYALTY POOL SIZE = 15% OF CURRENT COMMUNITY POOL</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#ffd700', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--amber)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>
                     TRACK & CLAIM ROYALTIES IN{' '}
                     <Link
                       to="/hub"
                       style={{
-                        color: '#00f5ff',
+                        color: 'var(--accent)',
                         textDecoration: 'underline',
                         fontWeight: 400,
                         display: 'inline-flex',
@@ -1208,18 +1201,17 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
             {/* FAQ 2: 80% AUTO-BURN & 20% REWARDS POOL */}
             <div className="vv-faq-card" style={{
-              background: 'rgba(4, 20, 48, 0.75)',
-              border: '1.5px solid rgba(255, 68, 102, 0.35)',
+              background: 'color-mix(in srgb, var(--surface) 75%, transparent)',
+              border: '1.5px solid color-mix(in srgb, var(--red) 35%, transparent)',
               borderRadius: '16px',
               padding: '22px 24px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(12px)'
-            }}>
+              
+              }}>
               <div className="vv-faq-title" style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '10px',
                 fontWeight: 400,
-                color: '#ff4466',
+                color: 'var(--red)',
                 marginBottom: '14px',
                 display: 'flex',
                 alignItems: 'center',
@@ -1239,15 +1231,14 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 color: '#a0b5d0',
                 lineHeight: 1.8,
                 letterSpacing: '0px',
-                textTransform: 'uppercase'
-              }}>
+                }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#ff4466', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--red)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>80% OF ALL NFT MINT REVENUE AUTO BUYS & BURNS $VIBE TOKENS ON CONTRACT LEVEL.</span>
                 </div>
 
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00ff88', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--green)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>THE REMAINING 20% GOES DIRECTLY INTO THE COMMUNITY POOL.</span>
                 </div>
               </div>
@@ -1257,13 +1248,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
 
             {/* FAQ 4: PRIMARY MINT & OPENSEA TRADING */}
             <div className="vv-faq-card" style={{
-              background: 'rgba(4, 20, 48, 0.75)',
+              background: 'color-mix(in srgb, var(--surface) 75%, transparent)',
               border: '1.5px solid rgba(32, 129, 226, 0.45)',
               borderRadius: '16px',
               padding: '22px 24px',
-              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.6)',
-              backdropFilter: 'blur(12px)'
-            }}>
+              
+              }}>
               <div className="vv-faq-title" style={{
                 fontFamily: 'var(--vv-pixel)',
                 fontSize: '10px',
@@ -1288,10 +1278,9 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 color: '#a0b5d0',
                 lineHeight: 1.8,
                 letterSpacing: '0px',
-                textTransform: 'uppercase'
-              }}>
+                }}>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                  <span style={{ color: '#00ff88', fontSize: '8px', flexShrink: 0 }}>•</span>
+                  <span style={{ color: 'var(--green)', fontSize: '8px', flexShrink: 0 }}>•</span>
                   <span>MINT IS AVAILABLE ONLY ON THIS OFFICIAL VIBE LAUNCHPAD PAGE.</span>
                 </div>
 
@@ -1304,7 +1293,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        color: '#00f5ff',
+                        color: 'var(--accent)',
                         textDecoration: 'underline',
                         fontWeight: 400,
                         display: 'inline-flex',
@@ -1332,8 +1321,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0, 5, 17, 0.88)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)',
+          
+          
           zIndex: 9999,
           display: 'flex',
           alignItems: 'center',
@@ -1341,13 +1330,13 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
           padding: '20px'
         }}>
           <div style={{
-            background: 'linear-gradient(145deg, rgba(4, 20, 48, 0.96), rgba(2, 11, 26, 0.98))',
-            border: '2px solid #00f5ff',
+            background: 'color-mix(in srgb, var(--surface) 96%, transparent)',
+            border: '2px solid var(--accent)',
             borderRadius: '24px',
             padding: '28px 24px',
             maxWidth: '400px',
             width: '100%',
-            boxShadow: '0 0 50px rgba(0, 245, 255, 0.4), 0 20px 60px rgba(0, 0, 0, 0.9)',
+            
             position: 'relative',
             textAlign: 'center',
             boxSizing: 'border-box'
@@ -1360,8 +1349,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 top: '16px',
                 right: '16px',
                 background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(0, 245, 255, 0.4)',
-                color: '#00f5ff',
+                border: '1px solid color-mix(in srgb, var(--accent) 40%, transparent)',
+                color: 'var(--accent)',
                 width: '32px',
                 height: '32px',
                 borderRadius: '50%',
@@ -1380,11 +1369,11 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             {/* CELEBRATION BADGE */}
             <div style={{
               fontSize: '8px',
-              color: '#00ff88',
+              color: 'var(--green)',
               letterSpacing: '1px',
               marginBottom: '8px',
-              background: 'rgba(0, 255, 136, 0.12)',
-              border: '1px solid #00ff88',
+              background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+              border: '1px solid var(--green)',
               padding: '4px 12px',
               borderRadius: '12px',
               display: 'inline-block'
@@ -1396,8 +1385,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
             <h2 style={{
               fontFamily: 'var(--vv-pixel)',
               fontSize: '11px',
-              color: '#00f5ff',
-              textShadow: '0 0 14px rgba(0, 245, 255, 0.5)',
+              color: 'var(--accent)',
+              
               margin: '8px auto 14px auto',
               lineHeight: 1.5,
               letterSpacing: '0.4px',
@@ -1416,12 +1405,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               position: 'relative',
               borderRadius: '16px',
               overflow: 'hidden',
-              border: '2px solid #00f5ff',
-              boxShadow: '0 0 24px rgba(0, 245, 255, 0.3)',
+              border: '2px solid var(--accent)',
+              
               aspectRatio: '1/1',
               maxWidth: '250px',
               margin: '0 auto 16px auto',
-              background: '#020b1a'
+              background: 'var(--bg)'
             }}>
               <img
                 src={`/nft/images/${modalNftId}.png`}
@@ -1449,8 +1438,8 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', zIndex: 2 }}>
                   <span style={{
-                    background: '#00f5ff',
-                    color: '#020b1a',
+                    background: 'var(--accent)',
+                    color: 'var(--bg)',
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '7.5px',
                     fontWeight: 900,
@@ -1462,7 +1451,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                   <span style={{
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '7.5px',
-                    color: '#00f5ff',
+                    color: 'var(--accent)',
                     letterSpacing: '0.4px'
                   }}>
                     SAVE IMAGE
@@ -1473,7 +1462,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 <div style={{
                   flex: 1,
                   height: '2px',
-                  background: 'linear-gradient(90deg, #00f5ff, #1da1f2)',
+                  background: 'var(--accent)',
                   margin: '0 8px',
                   position: 'relative',
                   opacity: 0.7
@@ -1492,7 +1481,7 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', zIndex: 2 }}>
                   <span style={{
                     background: '#1da1f2',
-                    color: '#ffffff',
+                    color: 'var(--text)',
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '7.5px',
                     fontWeight: 900,
@@ -1526,12 +1515,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '9px',
                     fontWeight: 900,
-                    background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                    border: '1.5px solid #ffffff',
+                    background: 'var(--accent)',
+                    border: '1.5px solid var(--border-strong)',
                     borderRadius: '12px',
-                    color: '#020b1a',
+                    color: 'var(--bg)',
                     cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(0, 245, 255, 0.35)',
+                    
                     letterSpacing: '0.4px',
                     display: 'flex',
                     alignItems: 'center',
@@ -1552,12 +1541,12 @@ export default function NftClubPage({ isEmbeddedInBaseApp = false } = {}) {
                     fontFamily: 'var(--vv-pixel)',
                     fontSize: '9px',
                     fontWeight: 900,
-                    background: '#000000',
+                    background: 'var(--bg)',
                     border: '1.5px solid #1da1f2',
                     borderRadius: '12px',
                     color: '#1da1f2',
                     cursor: 'pointer',
-                    boxShadow: '0 4px 14px rgba(29, 161, 242, 0.3)',
+                    
                     letterSpacing: '0.4px',
                     display: 'flex',
                     alignItems: 'center',

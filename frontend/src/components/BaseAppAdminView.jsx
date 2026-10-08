@@ -578,23 +578,22 @@ export function BaseAppAdminView() {
       <div className="admin-view-container" style={{ padding: '40px 16px 80px 16px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         <div
           style={{
-            background: 'linear-gradient(180deg, rgba(30, 10, 20, 0.95) 0%, rgba(10, 2, 8, 0.98) 100%)',
-            border: '2px solid #ff4466',
+            background: 'color-mix(in srgb, var(--bg) 95%, transparent)',
+            border: '2px solid var(--red)',
             borderRadius: '20px',
             padding: '36px 20px',
-            boxShadow: '0 0 30px rgba(255, 68, 102, 0.3)'
-          }}
+            }}
         >
-          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(255, 68, 102, 0.15)', border: '2px solid #ff4466', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
-            <AlertTriangle size={30} color="#ff4466" />
+          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'color-mix(in srgb, var(--red) 15%, transparent)', border: '2px solid var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
+            <AlertTriangle size={30} color="var(--red)" />
           </div>
-          <h2 style={{ fontSize: '14px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", marginBottom: '14px' }}>
+          <h2 style={{ fontSize: '14px', color: 'var(--red)', fontFamily: 'var(--font-sans)', marginBottom: '14px' }}>
             ACCESS RESTRICTED
           </h2>
-          <p style={{ fontSize: '8px', color: '#cbd5e1', lineHeight: 1.8, fontFamily: "'Press Start 2P', monospace", maxWidth: '520px', margin: '0 auto 24px auto' }}>
+          <p style={{ fontSize: '8px', color: 'var(--text-2)', lineHeight: 1.8, fontFamily: 'var(--font-sans)', maxWidth: '520px', margin: '0 auto 24px auto' }}>
             THIS ADMIN PANEL IS RESERVED EXCLUSIVELY FOR THE VIBE PROTOCOL OWNER. CONNECT WITH THE AUTHORIZED WALLET TO PROCEED.
           </p>
-          <div style={{ fontSize: '7px', color: '#88aacc', fontFamily: 'monospace', marginBottom: '24px', background: 'rgba(2, 11, 26, 0.8)', padding: '10px', borderRadius: '8px', display: 'inline-block' }}>
+          <div style={{ fontSize: '7px', color: 'var(--text-3)', fontFamily: 'monospace', marginBottom: '24px', background: 'color-mix(in srgb, var(--bg) 80%, transparent)', padding: '10px', borderRadius: '8px', display: 'inline-block' }}>
             REQUIRED: {ADMIN_WALLET}
           </div>
           <div>
@@ -602,17 +601,16 @@ export function BaseAppAdminView() {
               <button
                 onClick={login}
                 style={{
-                  background: '#ff4466',
-                  color: '#ffffff',
+                  background: 'var(--red)',
+                  color: 'var(--text)',
                   border: 'none',
                   borderRadius: '10px',
                   padding: '12px 24px',
-                  fontFamily: "'Press Start 2P', monospace",
+                  fontFamily: 'var(--font-sans)',
                   fontSize: '8.5px',
                   fontWeight: 900,
                   cursor: 'pointer',
-                  boxShadow: '0 0 16px rgba(255, 68, 102, 0.5)'
-                }}
+                  }}
               >
                 CONNECT ADMIN WALLET
               </button>
@@ -624,12 +622,12 @@ export function BaseAppAdminView() {
                     logout?.();
                   }}
                   style={{
-                    background: 'rgba(255, 68, 102, 0.2)',
-                    border: '1.5px solid #ff4466',
-                    color: '#ff4466',
+                    background: 'color-mix(in srgb, var(--red) 20%, transparent)',
+                    border: '1.5px solid var(--red)',
+                    color: 'var(--red)',
                     borderRadius: '10px',
                     padding: '10px 18px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '8px',
                     cursor: 'pointer'
                   }}
@@ -646,17 +644,16 @@ export function BaseAppAdminView() {
 
   // Consistent Pixel UI Style Constants
   const ACTION_CARD_STYLE = (borderColor) => ({
-    background: 'rgba(4, 20, 48, 0.85)',
+    background: 'color-mix(in srgb, var(--surface) 85%, transparent)',
     border: `1.5px solid ${borderColor}`,
     borderRadius: '16px',
     padding: '18px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.35)'
-  });
+    });
 
   const ACTION_HEADER_STYLE = (color) => ({
     fontSize: '8px',
     color: color,
-    fontFamily: "'Press Start 2P', monospace",
+    fontFamily: 'var(--font-sans)',
     fontWeight: 900,
     marginBottom: '14px',
     letterSpacing: '0.4px',
@@ -665,25 +662,25 @@ export function BaseAppAdminView() {
     gap: '6px'
   });
 
-  const INPUT_STYLE = (borderColor, textColor = '#ffffff', isMonospace = false) => ({
+  const INPUT_STYLE = (borderColor, textColor = 'var(--border-strong)', isMonospace = false) => ({
     height: '42px',
-    background: 'rgba(2, 11, 26, 0.9)',
+    background: 'color-mix(in srgb, var(--bg) 90%, transparent)',
     border: `1.5px solid ${borderColor}`,
     borderRadius: '10px',
     padding: '0 14px',
     color: textColor,
-    fontFamily: isMonospace ? 'monospace' : "'Press Start 2P', monospace",
+    fontFamily: isMonospace ? 'monospace' : 'var(--font-sans)',
     fontSize: isMonospace ? '8.5px' : '8px',
     outline: 'none',
     boxSizing: 'border-box'
   });
 
-  const ACTION_BTN_STYLE = (bgGradient, borderColor, textColor = '#020b1a', isDanger = false) => ({
+  const ACTION_BTN_STYLE = (bgGradient, borderColor, textColor = 'var(--bg)', isDanger = false) => ({
     height: '42px',
     background: bgGradient,
     border: `1.5px solid ${borderColor}`,
     color: textColor,
-    fontFamily: "'Press Start 2P', monospace",
+    fontFamily: 'var(--font-sans)',
     fontSize: '8px',
     fontWeight: 900,
     letterSpacing: '0.4px',
@@ -695,7 +692,7 @@ export function BaseAppAdminView() {
     alignItems: 'center',
     justifyContent: 'center',
     boxSizing: 'border-box',
-    boxShadow: isDanger ? '0 0 16px rgba(255, 68, 102, 0.3)' : 'none',
+    
     transition: 'all 0.15s ease'
   });
 
@@ -704,7 +701,7 @@ export function BaseAppAdminView() {
     background: bg,
     border: `1px solid ${border}`,
     color: color,
-    fontFamily: "'Press Start 2P', monospace",
+    fontFamily: 'var(--font-sans)',
     fontSize: '6.5px',
     fontWeight: 800,
     padding: '0 8px',
@@ -722,8 +719,8 @@ export function BaseAppAdminView() {
       
       {/* Header Banner */}
       <div style={{ textAlign: 'center', marginBottom: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <h2 style={{ fontSize: '18px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: '0', letterSpacing: '0.6px', textAlign: 'center' }}>
-          ADMIN <span style={{ color: '#ff4466' }}>PANEL</span>
+        <h2 style={{ fontSize: '18px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: '0', letterSpacing: '0.6px', textAlign: 'center' }}>
+          ADMIN <span style={{ color: 'var(--red)' }}>PANEL</span>
         </h2>
       </div>
 
@@ -731,17 +728,16 @@ export function BaseAppAdminView() {
       {(errorMessage || nftErrorMessage) && (
         <div
           style={{
-            background: 'rgba(255, 68, 102, 0.15)',
-            border: '1.5px solid #ff4466',
+            background: 'color-mix(in srgb, var(--red) 15%, transparent)',
+            border: '1.5px solid var(--red)',
             borderRadius: '12px',
             padding: '12px 16px',
             fontSize: '8px',
-            color: '#ff6688',
-            fontFamily: "'Press Start 2P', monospace",
+            color: 'var(--red)',
+            fontFamily: 'var(--font-sans)',
             lineHeight: 1.6,
             marginBottom: '20px',
-            boxShadow: '0 0 16px rgba(255, 68, 102, 0.2)'
-          }}
+            }}
         >
           ⚠️ {errorMessage || nftErrorMessage}
         </div>
@@ -750,17 +746,16 @@ export function BaseAppAdminView() {
       {(successMessage || withdrawSuccess || withdrawVibeSuccess || adminSwapSuccess || setRouterSuccess || customRouterSuccess || adminPaidMintSuccess) && (
         <div
           style={{
-            background: 'rgba(0, 255, 136, 0.15)',
-            border: '1.5px solid #00ff88',
+            background: 'color-mix(in srgb, var(--green) 15%, transparent)',
+            border: '1.5px solid var(--green)',
             borderRadius: '12px',
             padding: '12px 16px',
             fontSize: '8.5px',
-            color: '#00ff88',
-            fontFamily: "'Press Start 2P', monospace",
+            color: 'var(--green)',
+            fontFamily: 'var(--font-sans)',
             lineHeight: 1.6,
             marginBottom: '20px',
-            boxShadow: '0 0 16px rgba(0, 255, 136, 0.25)'
-          }}
+            }}
         >
           {successMessage || (
             withdrawSuccess ? '✓ ETH WITHDRAWN TO ADMIN WALLET SUCCESSFULLY!' :
@@ -776,7 +771,7 @@ export function BaseAppAdminView() {
                 href={`https://basescan.org/tx/${txHash || adminTxHash}`}
                 target="_blank"
                 rel="noreferrer"
-                style={{ color: '#00f5ff', textDecoration: 'underline', fontSize: '7.5px' }}
+                style={{ color: 'var(--accent)', textDecoration: 'underline', fontSize: '7.5px' }}
               >
                 VIEW TX ON BASESCAN ↗
               </a>
@@ -791,8 +786,8 @@ export function BaseAppAdminView() {
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '8px',
-          background: 'rgba(4, 14, 36, 0.8)',
-          border: '1.5px solid rgba(0, 245, 255, 0.25)',
+          background: 'color-mix(in srgb, var(--surface) 80%, transparent)',
+          border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
           borderRadius: '14px',
           padding: '6px',
           marginBottom: '24px'
@@ -803,10 +798,10 @@ export function BaseAppAdminView() {
           style={{
             padding: '12px 8px',
             borderRadius: '10px',
-            border: activeTab === 'holder' ? '1.5px solid #00f5ff' : '1px solid transparent',
-            background: activeTab === 'holder' ? 'linear-gradient(135deg, rgba(0, 245, 255, 0.25) 0%, rgba(0, 184, 255, 0.15) 100%)' : 'transparent',
-            color: activeTab === 'holder' ? '#00f5ff' : '#88aacc',
-            fontFamily: "'Press Start 2P', monospace",
+            border: activeTab === 'holder' ? '1.5px solid var(--accent)' : '1px solid transparent',
+            background: activeTab === 'holder' ? 'color-mix(in srgb, var(--accent) 25%, transparent)' : 'transparent',
+            color: activeTab === 'holder' ? 'var(--accent)' : 'var(--text-3)',
+            fontFamily: 'var(--font-sans)',
             fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
@@ -818,7 +813,7 @@ export function BaseAppAdminView() {
             textAlign: 'center'
           }}
         >
-          <Coins size={16} color={activeTab === 'holder' ? '#00f5ff' : '#88aacc'} />
+          <Coins size={16} color={activeTab === 'holder' ? 'var(--accent)' : 'var(--text-3)'} />
           <span>HOLDERS</span>
         </button>
 
@@ -827,10 +822,10 @@ export function BaseAppAdminView() {
           style={{
             padding: '12px 8px',
             borderRadius: '10px',
-            border: activeTab === 'royalty' ? '1.5px solid #c084fc' : '1px solid transparent',
-            background: activeTab === 'royalty' ? 'linear-gradient(135deg, rgba(168, 85, 247, 0.25) 0%, rgba(192, 132, 252, 0.15) 100%)' : 'transparent',
-            color: activeTab === 'royalty' ? '#c084fc' : '#88aacc',
-            fontFamily: "'Press Start 2P', monospace",
+            border: activeTab === 'royalty' ? '1.5px solid var(--text-2)' : '1px solid transparent',
+            background: activeTab === 'royalty' ? 'color-mix(in srgb, var(--text-2) 25%, transparent)' : 'transparent',
+            color: activeTab === 'royalty' ? 'var(--text-2)' : 'var(--text-3)',
+            fontFamily: 'var(--font-sans)',
             fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
@@ -842,7 +837,7 @@ export function BaseAppAdminView() {
             textAlign: 'center'
           }}
         >
-          <Crown size={16} color={activeTab === 'royalty' ? '#c084fc' : '#88aacc'} />
+          <Crown size={16} color={activeTab === 'royalty' ? 'var(--text-2)' : 'var(--text-3)'} />
           <span>ROYALTIES</span>
         </button>
 
@@ -851,10 +846,10 @@ export function BaseAppAdminView() {
           style={{
             padding: '12px 8px',
             borderRadius: '10px',
-            border: activeTab === 'nft' ? '1.5px solid #ffd700' : '1px solid transparent',
-            background: activeTab === 'nft' ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 170, 0, 0.15) 100%)' : 'transparent',
-            color: activeTab === 'nft' ? '#ffd700' : '#88aacc',
-            fontFamily: "'Press Start 2P', monospace",
+            border: activeTab === 'nft' ? '1.5px solid var(--amber)' : '1px solid transparent',
+            background: activeTab === 'nft' ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'transparent',
+            color: activeTab === 'nft' ? 'var(--amber)' : 'var(--text-3)',
+            fontFamily: 'var(--font-sans)',
             fontSize: '8px',
             fontWeight: 900,
             cursor: 'pointer',
@@ -866,7 +861,7 @@ export function BaseAppAdminView() {
             textAlign: 'center'
           }}
         >
-          <Sparkles size={16} color={activeTab === 'nft' ? '#ffd700' : '#88aacc'} />
+          <Sparkles size={16} color={activeTab === 'nft' ? 'var(--amber)' : 'var(--text-3)'} />
           <span>VIBE CLUB</span>
         </button>
       </div>
@@ -880,8 +875,8 @@ export function BaseAppAdminView() {
           {/* Header & Contract Link */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff' }} />
-              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)', }} />
+              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 HOLDER REWARDS VESTING CONTROLS
               </h3>
             </div>
@@ -889,7 +884,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#88aacc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
+              style={{ fontSize: '7.5px', color: 'var(--text-3)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
             >
               CA: 0x77e0...d089 ↗
             </a>
@@ -897,46 +892,46 @@ export function BaseAppAdminView() {
 
           {/* 4 Metric Cards */}
           <div className="admin-metrics-grid">
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 245, 255, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 CONTRACT $VIBE BALANCE
               </div>
-              <div className="admin-metric-value" style={{ color: '#00f5ff' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--accent)' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 255, 136, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 WALLETS CLAIMED
               </div>
-              <div className="admin-metric-value" style={{ color: '#00ff88' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.claimedWalletsCount} / ${holderMetrics.totalWalletsCount}`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 245, 255, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 TOTAL CLAIMED
               </div>
-              <div className="admin-metric-value" style={{ color: '#ffffff' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--text)' }}>
                 {holderMetrics.loading ? '...' : `+${holderMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(255, 215, 0, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 UNCLAIMED IN ROUND
               </div>
-              <div className="admin-metric-value" style={{ color: '#ffd700' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
                 {holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
 
           {/* Action 1: Set Merkle Root */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00f5ff' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
               1. PUBLISH MERKLE ROOT PROOF
             </div>
             <div className="admin-merkle-row">
@@ -957,7 +952,7 @@ export function BaseAppAdminView() {
                   placeholder="Round"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#ffffff'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--text)'),
                     width: '80px',
                     textAlign: 'center'
                   }}
@@ -969,7 +964,7 @@ export function BaseAppAdminView() {
                   placeholder="0x... Merkle Root"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff', true),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)', true),
                     flex: 1
                   }}
                 />
@@ -979,7 +974,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -989,8 +984,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw Tokens */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00f5ff' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
             <div className="admin-action-row">
@@ -1002,7 +997,7 @@ export function BaseAppAdminView() {
                   placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)'),
                     width: '100%',
                     paddingRight: '65px'
                   }}
@@ -1012,7 +1007,7 @@ export function BaseAppAdminView() {
                   onClick={() => setHolderWithdrawAmount(holderMetrics.contractBalance.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(0, 245, 255, 0.18)', 'rgba(0, 245, 255, 0.45)', '#00f5ff'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--accent) 18%, transparent)', 'color-mix(in srgb, var(--accent) 45%, transparent)', 'var(--accent)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1027,7 +1022,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1037,8 +1032,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Burn Unclaimed Tokens */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 68, 102, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#ff4466' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--red) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--red)' }}>
               3. BURN UNCLAIMED TOKENS
             </div>
             <div className="admin-action-row">
@@ -1050,7 +1045,7 @@ export function BaseAppAdminView() {
                   placeholder="Amount in $VIBE to burn"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(255, 68, 102, 0.3)', '#ff4466'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--red) 30%, transparent)', 'var(--red)'),
                     width: '100%',
                     paddingRight: '125px'
                   }}
@@ -1060,7 +1055,7 @@ export function BaseAppAdminView() {
                   onClick={() => setHolderBurnAmount(holderMetrics.unclaimedTokens.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(255, 68, 102, 0.18)', 'rgba(255, 68, 102, 0.45)', '#ff4466'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--red) 18%, transparent)', 'color-mix(in srgb, var(--red) 45%, transparent)', 'var(--red)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1075,7 +1070,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff4466 0%, #cc0033 100%)', '#ff4466', '#ffffff', true),
+                  ...ACTION_BTN_STYLE('var(--red)', '#ff4466', 'var(--text)', true),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1085,8 +1080,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 4: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
               4. WITHDRAW COMMUNITY
             </div>
             <div className="admin-action-row">
@@ -1098,7 +1093,7 @@ export function BaseAppAdminView() {
                   placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
                     width: '100%',
                     paddingRight: '65px'
                   }}
@@ -1108,7 +1103,7 @@ export function BaseAppAdminView() {
                   onClick={() => setHolderCommunityAmount(holderMetrics.contractBalance.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1123,7 +1118,7 @@ export function BaseAppAdminView() {
                 disabled={loading || holderMetrics.contractBalance <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #00b8ff 100%)', '#00ff88', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
                   cursor: (loading || holderMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1144,8 +1139,8 @@ export function BaseAppAdminView() {
           {/* Header & Contract Link */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#c084fc', boxShadow: '0 0 8px #c084fc' }} />
-              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--text-2)', }} />
+              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 VIBE CLUB ROYALTIES CONTROLS
               </h3>
             </div>
@@ -1153,7 +1148,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#c084fc', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
+              style={{ fontSize: '7.5px', color: 'var(--text-2)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
             >
               CA: 0x3753...97c1 ↗
             </a>
@@ -1161,46 +1156,46 @@ export function BaseAppAdminView() {
 
           {/* 4 Metric Cards */}
           <div className="admin-metrics-grid">
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(168, 85, 247, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 CONTRACT $VIBE BALANCE
               </div>
-              <div className="admin-metric-value" style={{ color: '#c084fc' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--text-2)' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 255, 136, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 WALLETS CLAIMED
               </div>
-              <div className="admin-metric-value" style={{ color: '#00ff88' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.claimedWalletsCount} / ${royaltyMetrics.totalWalletsCount}`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(168, 85, 247, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 TOTAL CLAIMED
               </div>
-              <div className="admin-metric-value" style={{ color: '#ffffff' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--text)' }}>
                 {royaltyMetrics.loading ? '...' : `+${royaltyMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(255, 215, 0, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 UNCLAIMED IN ROUND
               </div>
-              <div className="admin-metric-value" style={{ color: '#ffd700' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
                 {royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
               </div>
             </div>
           </div>
 
           {/* Action 1: Set Merkle Root */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#c084fc' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
               1. PUBLISH ROYALTIES MERKLE ROOT
             </div>
             <div className="admin-merkle-row">
@@ -1221,7 +1216,7 @@ export function BaseAppAdminView() {
                   placeholder="Epoch"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#ffffff'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text)'),
                     width: '80px',
                     textAlign: 'center'
                   }}
@@ -1233,7 +1228,7 @@ export function BaseAppAdminView() {
                   placeholder="0x... Merkle Root"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc', true),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)', true),
                     flex: 1
                   }}
                 />
@@ -1243,7 +1238,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1253,8 +1248,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw Tokens */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#c084fc' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
             <div className="admin-action-row">
@@ -1266,7 +1261,7 @@ export function BaseAppAdminView() {
                   placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)'),
                     width: '100%',
                     paddingRight: '65px'
                   }}
@@ -1276,7 +1271,7 @@ export function BaseAppAdminView() {
                   onClick={() => setRoyaltyWithdrawAmount(royaltyMetrics.contractBalance.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(168, 85, 247, 0.18)', 'rgba(168, 85, 247, 0.45)', '#c084fc'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--text-2) 18%, transparent)', 'color-mix(in srgb, var(--text-2) 45%, transparent)', 'var(--text-2)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1291,7 +1286,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1301,8 +1296,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Burn Unclaimed Tokens */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 68, 102, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#ff4466' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--red) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--red)' }}>
               3. BURN UNCLAIMED TOKENS
             </div>
             <div className="admin-action-row">
@@ -1314,7 +1309,7 @@ export function BaseAppAdminView() {
                   placeholder="Amount in $VIBE to burn"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(255, 68, 102, 0.3)', '#ff4466'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--red) 30%, transparent)', 'var(--red)'),
                     width: '100%',
                     paddingRight: '125px'
                   }}
@@ -1324,7 +1319,7 @@ export function BaseAppAdminView() {
                   onClick={() => setRoyaltyBurnAmount(royaltyMetrics.unclaimedTokens.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(255, 68, 102, 0.18)', 'rgba(255, 68, 102, 0.45)', '#ff4466'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--red) 18%, transparent)', 'color-mix(in srgb, var(--red) 45%, transparent)', 'var(--red)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1339,7 +1334,7 @@ export function BaseAppAdminView() {
                 disabled={loading}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff4466 0%, #cc0033 100%)', '#ff4466', '#ffffff', true),
+                  ...ACTION_BTN_STYLE('var(--red)', '#ff4466', 'var(--text)', true),
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1349,8 +1344,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 4: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
               4. WITHDRAW COMMUNITY
             </div>
             <div className="admin-action-row">
@@ -1362,7 +1357,7 @@ export function BaseAppAdminView() {
                   placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
                     width: '100%',
                     paddingRight: '65px'
                   }}
@@ -1372,7 +1367,7 @@ export function BaseAppAdminView() {
                   onClick={() => setRoyaltyCommunityAmount(royaltyMetrics.contractBalance.toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1387,7 +1382,7 @@ export function BaseAppAdminView() {
                 disabled={loading || royaltyMetrics.contractBalance <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #a855f7 100%)', '#00ff88', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
                   cursor: (loading || royaltyMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1408,8 +1403,8 @@ export function BaseAppAdminView() {
           {/* Header & Contract Link */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ffd700', boxShadow: '0 0 8px #ffd700' }} />
-              <h3 style={{ fontSize: '10.5px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--amber)', }} />
+              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
                 VIBE CLUB NFT CONTROLS
               </h3>
             </div>
@@ -1417,7 +1412,7 @@ export function BaseAppAdminView() {
               href="https://basescan.org/address/0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: '#ffd700', textDecoration: 'none', fontFamily: "'Press Start 2P', monospace", letterSpacing: '0.3px' }}
+              style={{ fontSize: '7.5px', color: 'var(--amber)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
             >
               CA: 0x9E92...b886 ↗
             </a>
@@ -1425,37 +1420,37 @@ export function BaseAppAdminView() {
 
           {/* 3 Metric Cards (Balance VIBE, Balance ETH, Current DEX Router) */}
           <div className="admin-metrics-grid-3">
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(255, 215, 0, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 CONTRACT $VIBE BALANCE
               </div>
-              <div className="admin-metric-value" style={{ color: '#ffd700' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
                 {Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 245, 255, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 CONTRACT ETH BALANCE
               </div>
-              <div className="admin-metric-value" style={{ color: '#00f5ff' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--accent)' }}>
                 {parseFloat(contractEthBalance || '0').toFixed(4)} ETH
               </div>
             </div>
 
-            <div className="admin-metric-card" style={{ border: '1.5px solid rgba(0, 255, 136, 0.35)' }}>
+            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
               <div className="admin-metric-label">
                 CURRENT DEX ROUTER
               </div>
-              <div className="admin-metric-value" style={{ color: '#00ff88' }}>
+              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
                 {aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'}
               </div>
             </div>
           </div>
 
           {/* Action 1: Execute Swap & Burn */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#ffd700' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
               1. EXECUTE SWAP & BURN
             </div>
             <div className="admin-action-row">
@@ -1469,7 +1464,7 @@ export function BaseAppAdminView() {
                   placeholder="0.005"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
                     width: '100%',
                     paddingRight: '155px'
                   }}
@@ -1482,7 +1477,7 @@ export function BaseAppAdminView() {
                       onClick={() => setAdminEthInput(Number(preset).toFixed(4))}
                       className="admin-badge-btn"
                       style={{
-                        ...BADGE_BTN_STYLE('rgba(255, 215, 0, 0.18)', 'rgba(255, 215, 0, 0.45)', '#ffd700'),
+                        ...BADGE_BTN_STYLE('color-mix(in srgb, var(--amber) 18%, transparent)', 'color-mix(in srgb, var(--amber) 45%, transparent)', 'var(--amber)'),
                         padding: '0 6px'
                       }}
                     >
@@ -1496,7 +1491,7 @@ export function BaseAppAdminView() {
                 disabled={isAdminSwapping || parseFloat(adminEthInput || '0') <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ff4466 100%)', '#ffffff', '#ffffff', true),
+                  ...ACTION_BTN_STYLE('var(--amber)', '#ffffff', 'var(--text)', true),
                   cursor: (isAdminSwapping || parseFloat(adminEthInput || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1506,8 +1501,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 2: Withdraw $VIBE to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#ffd700' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
               2. WITHDRAW $VIBE TO ADMIN WALLET
             </div>
             <div className="admin-action-row">
@@ -1517,7 +1512,7 @@ export function BaseAppAdminView() {
                 value={`CONTRACT BALANCE: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
                 className="admin-input"
                 style={{
-                  ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
+                  ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
                   flex: 1,
                   width: '100%'
                 }}
@@ -1527,7 +1522,7 @@ export function BaseAppAdminView() {
                 disabled={isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', '#ffd700', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--amber)', '#ffd700', 'var(--bg)'),
                   cursor: (isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1537,8 +1532,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 3: Withdraw $ETH to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00f5ff' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
               3. WITHDRAW $ETH TO ADMIN WALLET
             </div>
             <div className="admin-action-row">
@@ -1548,7 +1543,7 @@ export function BaseAppAdminView() {
                 value={`CONTRACT BALANCE: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
                 className="admin-input"
                 style={{
-                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff'),
+                  ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)'),
                   flex: 1,
                   width: '100%'
                 }}
@@ -1558,7 +1553,7 @@ export function BaseAppAdminView() {
                 disabled={isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
                   cursor: (isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1568,8 +1563,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 4: Mint to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 245, 255, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00f5ff' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
               4. MINT TO ADMIN WALLET
             </div>
             <div className="admin-mint-action-row">
@@ -1580,7 +1575,7 @@ export function BaseAppAdminView() {
                 placeholder={activeAddress || '0x... (Winner Address or Leave empty for Admin)'}
                 className="admin-input"
                 style={{
-                  ...INPUT_STYLE('rgba(0, 245, 255, 0.3)', '#00f5ff', true),
+                  ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)', true),
                   flex: 1,
                   width: '100%'
                 }}
@@ -1591,7 +1586,7 @@ export function BaseAppAdminView() {
                   disabled={isAdminPaidMinting}
                   className="admin-action-btn"
                   style={{
-                    ...ACTION_BTN_STYLE('linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)', '#00f5ff', '#020b1a'),
+                    ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
                     cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer'
                   }}
                 >
@@ -1602,7 +1597,7 @@ export function BaseAppAdminView() {
                   disabled={isAdminPaidMinting}
                   className="admin-action-btn"
                   style={{
-                    ...ACTION_BTN_STYLE('linear-gradient(135deg, #ff9900 0%, #ff5500 100%)', '#ff9900', '#ffffff'),
+                    ...ACTION_BTN_STYLE('var(--amber)', '#ff9900', 'var(--text)'),
                     cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer'
                   }}
                 >
@@ -1613,8 +1608,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 5: Set New DEX Router */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(168, 85, 247, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#c084fc' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
               5. SET NEW DEX ROUTER
             </div>
             <div className="admin-action-row">
@@ -1625,7 +1620,7 @@ export function BaseAppAdminView() {
                 placeholder={aggregatorRouterAddress || '0x6131B5fae19EA4f9D964eAc0408E4408b66337b5'}
                 className="admin-input"
                 style={{
-                  ...INPUT_STYLE('rgba(168, 85, 247, 0.3)', '#c084fc', true),
+                  ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)', true),
                   flex: 1,
                   width: '100%'
                 }}
@@ -1635,7 +1630,7 @@ export function BaseAppAdminView() {
                 disabled={isCustomRouterSaving}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #a855f7 0%, #c084fc 100%)', '#c084fc', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
                   cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1645,8 +1640,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 6: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(0, 255, 136, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#00ff88' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
               6. WITHDRAW COMMUNITY
             </div>
             <div className="admin-action-row">
@@ -1658,7 +1653,7 @@ export function BaseAppAdminView() {
                   placeholder={`Max: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(0, 255, 136, 0.3)', '#00ff88'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
                     width: '100%',
                     paddingRight: '65px'
                   }}
@@ -1668,7 +1663,7 @@ export function BaseAppAdminView() {
                   onClick={() => setNftCommunityAmount(Math.floor(Number(contractVibeBalance || 0)).toString())}
                   className="admin-badge-btn"
                   style={{
-                    ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
                     position: 'absolute',
                     right: '8px',
                     top: '50%',
@@ -1683,7 +1678,7 @@ export function BaseAppAdminView() {
                 disabled={loading || parseFloat(contractVibeBalance || '0') <= 0}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #00ff88 0%, #ffd700 100%)', '#00ff88', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
                   cursor: (loading || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
                 }}
               >
@@ -1693,8 +1688,8 @@ export function BaseAppAdminView() {
           </div>
 
           {/* Action 7: Set Mint Price (Override) */}
-          <div className="admin-action-card" style={{ background: 'rgba(4, 20, 48, 0.9)', border: '1.5px solid rgba(255, 215, 0, 0.3)' }}>
-            <div className="admin-action-header" style={{ color: '#ffd700' }}>
+          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
+            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
               7. SET MINT PRICE
             </div>
             <div className="admin-action-row">
@@ -1708,7 +1703,7 @@ export function BaseAppAdminView() {
                   placeholder="0.005 (in ETH)"
                   className="admin-input"
                   style={{
-                    ...INPUT_STYLE('rgba(255, 215, 0, 0.3)', '#ffd700'),
+                    ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
                     width: '100%',
                     paddingRight: '190px'
                   }}
@@ -1719,7 +1714,7 @@ export function BaseAppAdminView() {
                     onClick={() => { setOverridePriceInput('0.005'); handleSetOverrideMintPrice('0.005'); }}
                     className="admin-badge-btn"
                     style={{
-                      ...BADGE_BTN_STYLE('rgba(0, 255, 136, 0.18)', 'rgba(0, 255, 136, 0.45)', '#00ff88'),
+                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
                       padding: '0 6px'
                     }}
                   >
@@ -1730,7 +1725,7 @@ export function BaseAppAdminView() {
                     onClick={() => { setOverridePriceInput('0.015'); handleSetOverrideMintPrice('0.015'); }}
                     className="admin-badge-btn"
                     style={{
-                      ...BADGE_BTN_STYLE('rgba(255, 215, 0, 0.18)', 'rgba(255, 215, 0, 0.45)', '#ffd700'),
+                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--amber) 18%, transparent)', 'color-mix(in srgb, var(--amber) 45%, transparent)', 'var(--amber)'),
                       padding: '0 6px'
                     }}
                   >
@@ -1741,7 +1736,7 @@ export function BaseAppAdminView() {
                     onClick={() => { setOverridePriceInput('0'); handleSetOverrideMintPrice('0'); }}
                     className="admin-badge-btn"
                     style={{
-                      ...BADGE_BTN_STYLE('rgba(0, 245, 255, 0.18)', 'rgba(0, 245, 255, 0.45)', '#00f5ff'),
+                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--accent) 18%, transparent)', 'color-mix(in srgb, var(--accent) 45%, transparent)', 'var(--accent)'),
                       padding: '0 6px'
                     }}
                   >
@@ -1754,7 +1749,7 @@ export function BaseAppAdminView() {
                 disabled={isOverridePriceSaving}
                 className="admin-action-btn"
                 style={{
-                  ...ACTION_BTN_STYLE('linear-gradient(135deg, #ffd700 0%, #ffaa00 100%)', '#ffd700', '#020b1a'),
+                  ...ACTION_BTN_STYLE('var(--amber)', '#ffd700', 'var(--bg)'),
                   cursor: isOverridePriceSaving ? 'not-allowed' : 'pointer'
                 }}
               >

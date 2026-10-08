@@ -161,14 +161,14 @@ export default function ContractsPage({ isBaseAppMode = false }) {
               fontSize: '18px',
               margin: '0 0 12px 0',
               letterSpacing: '0.6px',
-              color: '#ffffff',
-              fontFamily: "'Press Start 2P', monospace",
+              color: 'var(--text)',
+              fontFamily: 'var(--font-sans)',
               textAlign: 'center',
               width: '100%',
               lineHeight: 1.3
             }}
           >
-            OFFICIAL <span style={{ color: '#00f5ff' }}>ADDRESSES</span>
+            OFFICIAL <span style={{ color: 'var(--accent)' }}>ADDRESSES</span>
           </h2>
 
           <div
@@ -178,16 +178,16 @@ export default function ContractsPage({ isBaseAppMode = false }) {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              background: 'rgba(0, 245, 255, 0.08)',
-              border: '1.5px solid rgba(0, 245, 255, 0.35)',
+              background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+              border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
               borderRadius: '99px',
               padding: '7px 16px',
               maxWidth: '100%',
               boxSizing: 'border-box'
             }}
           >
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
               VERIFIED CONTRACTS · TRANSPARENCY ZONE
             </span>
           </div>

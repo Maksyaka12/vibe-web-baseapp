@@ -68,8 +68,8 @@ export default function DarkPixelLandingPage() {
           position: absolute;
           inset: -4px;
           border-radius: 28px;
-          border: 2px solid #00f5ff;
-          box-shadow: 0 0 24px rgba(0, 245, 255, 0.4), inset 0 0 20px rgba(0, 80, 255, 0.3);
+          border: 2px solid var(--accent);
+          
           z-index: 0;
           animation: stormAuraPulse1 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
           pointer-events: none;
@@ -79,8 +79,8 @@ export default function DarkPixelLandingPage() {
           position: absolute;
           inset: -4px;
           border-radius: 28px;
-          border: 2px solid #0050ff;
-          box-shadow: 0 0 30px rgba(0, 80, 255, 0.5), inset 0 0 25px rgba(0, 245, 255, 0.3);
+          border: 2px solid var(--accent);
+          
           z-index: 0;
           animation: stormAuraPulse2 2.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
           animation-delay: 1.4s;
@@ -92,8 +92,8 @@ export default function DarkPixelLandingPage() {
       <header
         style={{
           height: '72px',
-          background: 'rgba(2, 11, 26, 0.95)',
-          borderBottom: '1.5px solid rgba(0, 245, 255, 0.25)',
+          background: 'color-mix(in srgb, var(--bg) 95%, transparent)',
+          borderBottom: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -101,8 +101,8 @@ export default function DarkPixelLandingPage() {
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          
+          
           boxSizing: 'border-box'
         }}
       >
@@ -114,7 +114,7 @@ export default function DarkPixelLandingPage() {
             alignItems: 'center',
             gap: '12px',
             textDecoration: 'none',
-            color: '#00f5ff'
+            color: 'var(--accent)'
           }}
         >
           <img
@@ -125,11 +125,10 @@ export default function DarkPixelLandingPage() {
               height: '34px',
               borderRadius: '8px',
               objectFit: 'cover',
-              border: '1.5px solid #00f5ff',
-              boxShadow: '0 0 14px rgba(0, 245, 255, 0.45)'
-            }}
+              border: '1.5px solid var(--accent)',
+              }}
           />
-          <span style={{ fontSize: '13px', fontWeight: 900, letterSpacing: '0.8px', color: '#00f5ff' }}>
+          <span style={{ fontSize: '13px', fontWeight: 900, letterSpacing: '0.8px', color: 'var(--accent)' }}>
             $VIBE HUB
           </span>
         </Link>
@@ -139,9 +138,9 @@ export default function DarkPixelLandingPage() {
           <button
             onClick={() => navigate('/hub')}
             style={{
-              background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
-              color: '#ffffff',
-              border: '1.5px solid #ffffff',
+              background: 'var(--accent)',
+              color: 'var(--text)',
+              border: '1.5px solid var(--border-strong)',
               borderRadius: '10px',
               padding: '11px 18px',
               fontSize: '9px',
@@ -150,9 +149,9 @@ export default function DarkPixelLandingPage() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: '0 0 18px rgba(0, 245, 255, 0.45)',
-              fontFamily: "'Press Start 2P', monospace",
-              textTransform: 'uppercase',
+              
+              fontFamily: 'var(--font-sans)',
+              
               transition: 'all 0.15s ease'
             }}
           >
@@ -186,26 +185,24 @@ export default function DarkPixelLandingPage() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '9px',
-                  background: 'rgba(0, 245, 255, 0.08)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.4)',
+                  background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                  border: '1.5px solid color-mix(in srgb, var(--accent) 40%, transparent)',
                   borderRadius: '99px',
                   padding: '7px 18px',
-                  boxShadow: '0 0 14px rgba(0, 245, 255, 0.2)'
-                }}
+                  }}
               >
                 <span
                   style={{
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
-                    background: '#00ff88',
-                    boxShadow: '0 0 10px #00ff88'
-                  }}
+                    background: 'var(--green)',
+                    }}
                 />
                 <span
                   style={{
                     fontSize: '8.5px',
-                    color: '#00f5ff',
+                    color: 'var(--accent)',
                     letterSpacing: '0.6px',
                     fontWeight: 900
                   }}
@@ -221,32 +218,31 @@ export default function DarkPixelLandingPage() {
                 fontSize: 'clamp(24px, 4.2vw, 40px)',
                 lineHeight: 1.35,
                 margin: 0,
-                color: '#ffffff',
+                color: 'var(--text)',
                 letterSpacing: '0.6px'
               }}
             >
-              I AM THE <span style={{ color: '#00f5ff', textShadow: '0 0 20px rgba(0, 245, 255, 0.55)' }}>VIBE.</span><br />
-              THE <span style={{ color: '#00f5ff', textShadow: '0 0 20px rgba(0, 245, 255, 0.55)' }}>BASE</span> DOG.
+              I AM THE <span style={{ color: 'var(--accent)', }}>VIBE.</span><br />
+              THE <span style={{ color: 'var(--accent)', }}>BASE</span> DOG.
             </h1>
 
             {/* Cyberpunk Quote Box */}
             <div
               style={{
-                background: 'rgba(4, 20, 48, 0.95)',
-                border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                background: 'color-mix(in srgb, var(--surface) 95%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                 borderRadius: '14px',
                 padding: '14px 18px',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '8px',
-                boxShadow: '0 6px 24px rgba(0, 0, 0, 0.65)'
-              }}
+                }}
             >
-              <div style={{ fontSize: '9px', color: '#cbd5e1', lineHeight: 1.6 }}>
-                Dog Vibe belongs to only one owner <strong style={{ color: '#ff4466' }}>offchain</strong>.
+              <div style={{ fontSize: '9px', color: 'var(--text-2)', lineHeight: 1.6 }}>
+                Dog Vibe belongs to only one owner <strong style={{ color: 'var(--red)' }}>offchain</strong>.
               </div>
-              <div style={{ fontSize: '9px', color: '#00f5ff', lineHeight: 1.6, fontWeight: 900 }}>
-                Base Dog $VIBE belongs to everyone <strong style={{ color: '#00ff88' }}>onchain</strong>.
+              <div style={{ fontSize: '9px', color: 'var(--accent)', lineHeight: 1.6, fontWeight: 900 }}>
+                Base Dog $VIBE belongs to everyone <strong style={{ color: 'var(--green)' }}>onchain</strong>.
               </div>
             </div>
 
@@ -255,7 +251,7 @@ export default function DarkPixelLandingPage() {
               style={{
                 fontSize: '9.5px',
                 lineHeight: 1.8,
-                color: '#88aacc',
+                color: 'var(--text-3)',
                 margin: 0,
                 letterSpacing: '0.3px'
               }}
@@ -268,9 +264,9 @@ export default function DarkPixelLandingPage() {
               <button
                 onClick={() => navigate('/hub')}
                 style={{
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #0050ff 100%)',
-                  color: '#ffffff',
-                  border: '2px solid #ffffff',
+                  background: 'var(--accent)',
+                  color: 'var(--text)',
+                  border: '2px solid var(--border-strong)',
                   borderRadius: '12px',
                   padding: '15px 24px',
                   fontSize: '9.5px',
@@ -279,9 +275,9 @@ export default function DarkPixelLandingPage() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '9px',
-                  boxShadow: '0 0 22px rgba(0, 245, 255, 0.5)',
-                  fontFamily: "'Press Start 2P', monospace",
-                  textTransform: 'uppercase',
+                  
+                  fontFamily: 'var(--font-sans)',
+                  
                   transition: 'all 0.15s ease'
                 }}
               >
@@ -294,9 +290,9 @@ export default function DarkPixelLandingPage() {
                 target="_blank"
                 rel="noreferrer"
                 style={{
-                  background: 'rgba(0, 245, 255, 0.12)',
-                  border: '1.5px solid #00f5ff',
-                  color: '#00f5ff',
+                  background: 'color-mix(in srgb, var(--accent) 12%, transparent)',
+                  border: '1.5px solid var(--accent)',
+                  color: 'var(--accent)',
                   borderRadius: '12px',
                   padding: '15px 22px',
                   fontSize: '9.5px',
@@ -305,9 +301,9 @@ export default function DarkPixelLandingPage() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '8px',
-                  fontFamily: "'Press Start 2P', monospace",
-                  textTransform: 'uppercase',
-                  boxShadow: '0 0 14px rgba(0, 245, 255, 0.25)',
+                  fontFamily: 'var(--font-sans)',
+                  
+                  
                   textDecoration: 'none'
                 }}
               >
@@ -318,29 +314,28 @@ export default function DarkPixelLandingPage() {
 
             {/* Contract Address Box */}
             <div style={{ marginTop: '8px' }}>
-              <div style={{ fontSize: '8px', color: '#88aacc', marginBottom: '8px', letterSpacing: '0.5px' }}>
+              <div style={{ fontSize: '8px', color: 'var(--text-3)', marginBottom: '8px', letterSpacing: '0.5px' }}>
                 $VIBE CONTRACT ADDRESS (BASE)
               </div>
               <div
                 style={{
-                  background: 'rgba(2, 11, 26, 0.95)',
-                  border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                  background: 'color-mix(in srgb, var(--bg) 95%, transparent)',
+                  border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                   borderRadius: '12px',
                   padding: '12px 16px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   gap: '12px',
-                  boxShadow: '0 0 14px rgba(0, 245, 255, 0.12)'
-                }}
+                  }}
               >
                 <span
                   style={{
                     fontSize: '8.5px',
-                    color: '#00f5ff',
+                    color: 'var(--accent)',
                     wordBreak: 'break-all',
                     letterSpacing: '0.3px',
-                    fontFamily: "'Press Start 2P', monospace"
+                    fontFamily: 'var(--font-sans)'
                   }}
                 >
                   {CA}
@@ -349,10 +344,10 @@ export default function DarkPixelLandingPage() {
                   onClick={copy}
                   title="Copy Address"
                   style={{
-                    background: copied ? 'rgba(0, 255, 136, 0.25)' : 'rgba(0, 245, 255, 0.15)',
-                    border: copied ? '1.5px solid #00ff88' : '1.5px solid rgba(0, 245, 255, 0.35)',
+                    background: copied ? 'color-mix(in srgb, var(--green) 25%, transparent)' : 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                    border: copied ? '1.5px solid var(--green)' : '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                     borderRadius: '8px',
-                    color: copied ? '#00ff88' : '#00f5ff',
+                    color: copied ? 'var(--green)' : 'var(--accent)',
                     padding: '8px 12px',
                     cursor: 'pointer',
                     display: 'flex',
@@ -360,7 +355,7 @@ export default function DarkPixelLandingPage() {
                     gap: '6px',
                     flexShrink: 0,
                     fontSize: '8px',
-                    fontFamily: "'Press Start 2P', monospace"
+                    fontFamily: 'var(--font-sans)'
                   }}
                 >
                   {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -376,11 +371,11 @@ export default function DarkPixelLandingPage() {
             <div
               style={{
                 position: 'relative',
-                background: 'radial-gradient(circle at 50% 50%, rgba(0, 80, 255, 0.25) 0%, rgba(2, 11, 26, 0.95) 80%)',
-                border: '2px solid rgba(0, 245, 255, 0.45)',
+                background: 'rgba(0, 80, 255, 0.25)',
+                border: '2px solid color-mix(in srgb, var(--accent) 45%, transparent)',
                 borderRadius: '28px',
                 padding: '24px',
-                boxShadow: '0 16px 48px rgba(0, 0, 0, 0.85), 0 0 36px rgba(0, 245, 255, 0.3)',
+                
                 maxWidth: '460px',
                 width: '100%',
                 display: 'flex',
@@ -401,9 +396,9 @@ export default function DarkPixelLandingPage() {
                   aspectRatio: '1/1',
                   borderRadius: '20px',
                   overflow: 'hidden',
-                  border: '2.5px solid #00f5ff',
-                  boxShadow: '0 0 24px rgba(0, 245, 255, 0.45)',
-                  background: '#041430',
+                  border: '2.5px solid var(--accent)',
+                  
+                  background: 'var(--surface)',
                   position: 'relative',
                   zIndex: 2
                 }}
@@ -427,10 +422,10 @@ export default function DarkPixelLandingPage() {
         {/* ── 2. ECOSYSTEM FEATURES GRID ── */}
         <section style={{ marginBottom: '40px' }}>
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <h2 style={{ fontSize: '18px', color: '#00f5ff', margin: '0 0 12px 0', letterSpacing: '0.6px' }}>
+            <h2 style={{ fontSize: '18px', color: 'var(--accent)', margin: '0 0 12px 0', letterSpacing: '0.6px' }}>
               $VIBE ECOSYSTEM
             </h2>
-            <p style={{ fontSize: '9.5px', color: '#88aacc', margin: 0, letterSpacing: '0.4px' }}>
+            <p style={{ fontSize: '9.5px', color: 'var(--text-3)', margin: 0, letterSpacing: '0.4px' }}>
               EVERYTHING YOU NEED IN ONE DECENTRALIZED HUB
             </p>
           </div>
@@ -446,15 +441,15 @@ export default function DarkPixelLandingPage() {
             <div
               onClick={() => navigate('/hub')}
               style={{
-                background: 'rgba(4, 20, 48, 0.9)',
-                border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
                 borderRadius: '18px',
                 padding: '24px 20px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.65)',
+                
                 transition: 'all 0.2s ease'
               }}
             >
@@ -464,23 +459,23 @@ export default function DarkPixelLandingPage() {
                     width: '44px',
                     height: '44px',
                     borderRadius: '12px',
-                    background: 'rgba(0, 245, 255, 0.15)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                    background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#00f5ff',
+                    color: 'var(--accent)',
                     marginBottom: '16px'
                   }}
                 >
                   <Gift size={24} />
                 </div>
-                <h3 style={{ fontSize: '12px', color: '#ffffff', margin: '0 0 12px 0' }}>REWARDS HUB</h3>
-                <p style={{ fontSize: '8.5px', color: '#88aacc', lineHeight: 1.7, margin: 0 }}>
+                <h3 style={{ fontSize: '12px', color: 'var(--text)', margin: '0 0 12px 0' }}>REWARDS HUB</h3>
+                <p style={{ fontSize: '8.5px', color: 'var(--text-3)', lineHeight: 1.7, margin: 0 }}>
                   Track active rewards. Join. Earn.
                 </p>
               </div>
-              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: '#00f5ff', fontSize: '8.5px', fontWeight: 900 }}>
+              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontSize: '8.5px', fontWeight: 900 }}>
                 <span>OPEN VIBE HUB</span>
                 <ArrowRight size={14} strokeWidth={2.5} />
               </div>
@@ -490,15 +485,15 @@ export default function DarkPixelLandingPage() {
             <div
               onClick={() => navigate('/claim')}
               style={{
-                background: 'rgba(4, 20, 48, 0.9)',
-                border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
                 borderRadius: '18px',
                 padding: '24px 20px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.65)',
+                
                 transition: 'all 0.2s ease'
               }}
             >
@@ -508,23 +503,23 @@ export default function DarkPixelLandingPage() {
                     width: '44px',
                     height: '44px',
                     borderRadius: '12px',
-                    background: 'rgba(0, 255, 136, 0.15)',
-                    border: '1.5px solid rgba(0, 255, 136, 0.35)',
+                    background: 'color-mix(in srgb, var(--green) 15%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#00ff88',
+                    color: 'var(--green)',
                     marginBottom: '16px'
                   }}
                 >
                   <Coins size={24} />
                 </div>
-                <h3 style={{ fontSize: '12px', color: '#ffffff', margin: '0 0 12px 0' }}>CLAIM PORTAL</h3>
-                <p style={{ fontSize: '8.5px', color: '#88aacc', lineHeight: 1.7, margin: 0 }}>
+                <h3 style={{ fontSize: '12px', color: 'var(--text)', margin: '0 0 12px 0' }}>CLAIM PORTAL</h3>
+                <p style={{ fontSize: '8.5px', color: 'var(--text-3)', lineHeight: 1.7, margin: 0 }}>
                   Check your eligibility for upcoming rewards. Claim your unlocked $VIBE rewards.
                 </p>
               </div>
-              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: '#00ff88', fontSize: '8.5px', fontWeight: 900 }}>
+              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--green)', fontSize: '8.5px', fontWeight: 900 }}>
                 <span>OPEN CLAIM PORTAL</span>
                 <ArrowRight size={14} strokeWidth={2.5} />
               </div>
@@ -534,15 +529,15 @@ export default function DarkPixelLandingPage() {
             <div
               onClick={() => navigate('/vibeclub')}
               style={{
-                background: 'rgba(4, 20, 48, 0.9)',
-                border: '1.5px solid rgba(255, 215, 0, 0.35)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)',
                 borderRadius: '18px',
                 padding: '24px 20px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.65)',
+                
                 transition: 'all 0.2s ease'
               }}
             >
@@ -552,23 +547,23 @@ export default function DarkPixelLandingPage() {
                     width: '44px',
                     height: '44px',
                     borderRadius: '12px',
-                    background: 'rgba(255, 215, 0, 0.18)',
-                    border: '1.5px solid rgba(255, 215, 0, 0.45)',
+                    background: 'color-mix(in srgb, var(--amber) 18%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--amber) 45%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#ffd700',
+                    color: 'var(--amber)',
                     marginBottom: '16px'
                   }}
                 >
                   <Crown size={24} />
                 </div>
-                <h3 style={{ fontSize: '12px', color: '#ffd700', margin: '0 0 12px 0' }}>VIBE CLUB NFT</h3>
-                <p style={{ fontSize: '8.5px', color: '#88aacc', lineHeight: 1.7, margin: 0 }}>
+                <h3 style={{ fontSize: '12px', color: 'var(--amber)', margin: '0 0 12px 0' }}>VIBE CLUB NFT</h3>
+                <p style={{ fontSize: '8.5px', color: 'var(--text-3)', lineHeight: 1.7, margin: 0 }}>
                   Official $VIBE NFT collection with royalty payouts every 10 days to holders.
                 </p>
               </div>
-              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: '#ffd700', fontSize: '8.5px', fontWeight: 900 }}>
+              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--amber)', fontSize: '8.5px', fontWeight: 900 }}>
                 <span>JOIN VIBE CLUB</span>
                 <ArrowRight size={14} strokeWidth={2.5} />
               </div>
@@ -578,15 +573,15 @@ export default function DarkPixelLandingPage() {
             <div
               onClick={() => navigate('/buy')}
               style={{
-                background: 'rgba(4, 20, 48, 0.9)',
-                border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
                 borderRadius: '18px',
                 padding: '24px 20px',
                 cursor: 'pointer',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.65)',
+                
                 transition: 'all 0.2s ease'
               }}
             >
@@ -596,23 +591,23 @@ export default function DarkPixelLandingPage() {
                     width: '44px',
                     height: '44px',
                     borderRadius: '12px',
-                    background: 'rgba(0, 245, 255, 0.15)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                    background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#00f5ff',
+                    color: 'var(--accent)',
                     marginBottom: '16px'
                   }}
                 >
                   <ArrowLeftRight size={24} />
                 </div>
-                <h3 style={{ fontSize: '12px', color: '#ffffff', margin: '0 0 12px 0' }}>DEFI SWAP</h3>
-                <p style={{ fontSize: '8.5px', color: '#88aacc', lineHeight: 1.7, margin: 0 }}>
+                <h3 style={{ fontSize: '12px', color: 'var(--text)', margin: '0 0 12px 0' }}>DEFI SWAP</h3>
+                <p style={{ fontSize: '8.5px', color: 'var(--text-3)', lineHeight: 1.7, margin: 0 }}>
                   Instant swap directly on the vibe hub, with automatic best-rate routing.
                 </p>
               </div>
-              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: '#00f5ff', fontSize: '8.5px', fontWeight: 900 }}>
+              <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--accent)', fontSize: '8.5px', fontWeight: 900 }}>
                 <span>TRADE $VIBE</span>
                 <ArrowRight size={14} strokeWidth={2.5} />
               </div>
@@ -625,12 +620,12 @@ export default function DarkPixelLandingPage() {
       {/* ── FOOTER ── */}
       <footer
         style={{
-          borderTop: '1.5px solid rgba(0, 245, 255, 0.2)',
-          background: 'rgba(2, 11, 26, 0.95)',
+          borderTop: '1.5px solid color-mix(in srgb, var(--accent) 20%, transparent)',
+          background: 'color-mix(in srgb, var(--bg) 95%, transparent)',
           padding: '22px 28px',
           textAlign: 'center',
           fontSize: '8px',
-          color: '#88aacc',
+          color: 'var(--text-3)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -644,10 +639,10 @@ export default function DarkPixelLandingPage() {
           <span>$VIBE · THE BASE DOG</span>
         </div>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          <a href="https://t.me/vibe_b20" target="_blank" rel="noreferrer" style={{ color: '#00f5ff', textDecoration: 'none' }}>TELEGRAM</a>
-          <a href="https://x.com/vibeb20" target="_blank" rel="noreferrer" style={{ color: '#00f5ff', textDecoration: 'none' }}>X (TWITTER)</a>
-          <a href={DEX} target="_blank" rel="noreferrer" style={{ color: '#00f5ff', textDecoration: 'none' }}>DEXSCREENER</a>
-          <a href={O1} target="_blank" rel="noreferrer" style={{ color: '#00f5ff', textDecoration: 'none' }}>O1 EXCHANGE</a>
+          <a href="https://t.me/vibe_b20" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>TELEGRAM</a>
+          <a href="https://x.com/vibeb20" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>X (TWITTER)</a>
+          <a href={DEX} target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>DEXSCREENER</a>
+          <a href={O1} target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>O1 EXCHANGE</a>
         </div>
       </footer>
     </div>

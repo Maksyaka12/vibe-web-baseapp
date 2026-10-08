@@ -25,21 +25,21 @@ class BaseAppErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ padding: '40px 20px', textAlign: 'center', color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
-          <h2 style={{ fontSize: '14px', marginBottom: '16px', color: '#ff4466' }}>UNEXPECTED ERROR</h2>
-          <p style={{ fontSize: '9px', lineHeight: 1.6, color: '#cbd5e1', marginBottom: '20px' }}>
+        <div style={{ padding: '40px 20px', textAlign: 'center', color: 'var(--accent)', fontFamily: 'var(--font-sans)' }}>
+          <h2 style={{ fontSize: '14px', marginBottom: '16px', color: 'var(--red)' }}>UNEXPECTED ERROR</h2>
+          <p style={{ fontSize: '9px', lineHeight: 1.6, color: 'var(--text-2)', marginBottom: '20px' }}>
             {this.state.error?.message || 'Failed to load Base App view.'}
           </p>
           <button
             onClick={() => window.location.reload()}
             style={{
               padding: '10px 18px',
-              background: '#00f5ff',
-              color: '#020b1a',
+              background: 'var(--accent)',
+              color: 'var(--bg)',
               border: 'none',
               borderRadius: '8px',
               fontWeight: 900,
-              fontFamily: "'Press Start 2P', monospace",
+              fontFamily: 'var(--font-sans)',
               fontSize: '8px',
               cursor: 'pointer'
             }}
@@ -227,14 +227,14 @@ export function BaseAppView({ RewardsComponent }) {
                       fontSize: '18px',
                       margin: '0 0 12px 0',
                       letterSpacing: '0.6px',
-                      color: '#ffffff',
-                      fontFamily: "'Press Start 2P', monospace",
+                      color: 'var(--text)',
+                      fontFamily: 'var(--font-sans)',
                       textAlign: 'center',
                       width: '100%',
                       lineHeight: 1.3
                     }}
                   >
-                    SWAP <span style={{ color: '#00f5ff' }}>$VIBE</span>
+                    SWAP <span style={{ color: 'var(--accent)' }}>$VIBE</span>
                   </h2>
 
                   <div
@@ -244,16 +244,16 @@ export function BaseAppView({ RewardsComponent }) {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                      border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                       borderRadius: '99px',
                       padding: '7px 16px',
                       maxWidth: '100%',
                       boxSizing: 'border-box'
                     }}
                   >
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
                       INSTANT ON-CHAIN SWAP · BASE MAINNET
                     </span>
                   </div>
@@ -263,12 +263,11 @@ export function BaseAppView({ RewardsComponent }) {
                 <div
                   className="swap-widget-card"
                   style={{
-                    background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                    background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                     borderRadius: '18px',
                     padding: '16px 14px',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.8), 0 0 16px rgba(0, 245, 255, 0.15)'
-                  }}
+                    }}
                 >
                   <DeFiVibePanel />
                 </div>
@@ -297,14 +296,14 @@ export function BaseAppView({ RewardsComponent }) {
                       fontSize: '18px',
                       margin: '0 0 12px 0',
                       letterSpacing: '0.6px',
-                      color: '#ffffff',
-                      fontFamily: "'Press Start 2P', monospace",
+                      color: 'var(--text)',
+                      fontFamily: 'var(--font-sans)',
                       textAlign: 'center',
                       width: '100%',
                       lineHeight: 1.3
                     }}
                   >
-                    VIBE CLUB <span style={{ color: '#00f5ff' }}>NFT</span>
+                    VIBE CLUB <span style={{ color: 'var(--accent)' }}>NFT</span>
                   </h2>
 
                   <div
@@ -314,16 +313,16 @@ export function BaseAppView({ RewardsComponent }) {
                       alignItems: 'center',
                       justifyContent: 'center',
                       gap: '8px',
-                      background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1.5px solid rgba(0, 245, 255, 0.35)',
+                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                      border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
                       borderRadius: '99px',
                       padding: '7px 16px',
                       maxWidth: '100%',
                       boxSizing: 'border-box'
                     }}
                   >
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
                       EXCLUSIVE 333 MEMBERSHIP · PASSIVE ROYALTIES
                     </span>
                   </div>

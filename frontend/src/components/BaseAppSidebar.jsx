@@ -182,8 +182,8 @@ export function BaseAppSidebar({
             position: 'fixed',
             inset: 0,
             background: 'rgba(0, 0, 0, 0.8)',
-            backdropFilter: 'blur(8px)',
-            WebkitBackdropFilter: 'blur(8px)',
+            
+            
             zIndex: 999998,
             animation: 'fadeIn 0.2s ease-out'
           }}
@@ -201,8 +201,8 @@ export function BaseAppSidebar({
           width: sidebarWidth,
           maxWidth: isDesktop ? 'none' : '85vw',
           height: '100vh',
-          background: '#020b1a',
-          borderRight: '1.5px solid rgba(0, 245, 255, 0.22)',
+          background: 'var(--bg)',
+          borderRight: '1.5px solid color-mix(in srgb, var(--accent) 22%, transparent)',
           zIndex: isDesktop ? 60 : 999999,
           display: 'flex',
           flexDirection: 'column',
@@ -213,13 +213,11 @@ export function BaseAppSidebar({
               ? '18px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px'
               : '16px 14px calc(20px + env(safe-area-inset-bottom, 0px)) 14px',
           boxSizing: 'border-box',
-          fontFamily: "'Press Start 2P', monospace",
-          boxShadow: isDesktop
-            ? '4px 0 24px rgba(0, 0, 0, 0.6)'
-            : '10px 0 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 245, 255, 0.1)',
+          fontFamily: 'var(--font-sans)',
+          
           animation: isDesktop ? 'none' : 'slideInLeft 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
           transition: isDesktop ? 'width 0.25s cubic-bezier(0.16, 1, 0.3, 1), padding 0.25s ease' : 'none',
-          textTransform: 'uppercase',
+          
           overflowY: 'auto',
           overflowX: 'hidden'
         }}
@@ -233,7 +231,7 @@ export function BaseAppSidebar({
               alignItems: 'center',
               justifyContent: isCollapsed ? 'center' : 'space-between',
               paddingBottom: isDesktop ? '16px' : '14px',
-              borderBottom: '1.5px solid rgba(0, 245, 255, 0.18)',
+              borderBottom: '1.5px solid color-mix(in srgb, var(--accent) 18%, transparent)',
               minHeight: '40px'
             }}
           >
@@ -249,8 +247,8 @@ export function BaseAppSidebar({
                     height: '32px',
                     borderRadius: '8px',
                     objectFit: 'cover',
-                    border: '1.5px solid #00f5ff',
-                    boxShadow: '0 0 10px rgba(0, 245, 255, 0.4)',
+                    border: '1.5px solid var(--accent)',
+                    
                     cursor: 'pointer'
                   }}
                 />
@@ -259,10 +257,10 @@ export function BaseAppSidebar({
                     onClick={onToggleCollapse}
                     title="Expand Sidebar"
                     style={{
-                      background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                       borderRadius: '6px',
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       cursor: 'pointer',
                       padding: '5px',
                       display: 'flex',
@@ -291,15 +289,14 @@ export function BaseAppSidebar({
                       height: isDesktop ? '32px' : '28px',
                       borderRadius: '8px',
                       objectFit: 'cover',
-                      border: '1.5px solid #00f5ff',
-                      boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)'
-                    }}
+                      border: '1.5px solid var(--accent)',
+                      }}
                   />
                   <span
                     style={{
                       fontSize: isDesktop ? '13px' : '11px',
                       fontWeight: 900,
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       letterSpacing: '0.6px'
                     }}
                   >
@@ -314,10 +311,10 @@ export function BaseAppSidebar({
                     title="Collapse Sidebar"
                     aria-label="Toggle Sidebar"
                     style={{
-                      background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1.5px solid rgba(0, 245, 255, 0.3)',
+                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                      border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
                       borderRadius: '8px',
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       cursor: 'pointer',
                       padding: '6px',
                       display: 'flex',
@@ -334,10 +331,10 @@ export function BaseAppSidebar({
                     onClick={onClose}
                     aria-label="Close Menu"
                     style={{
-                      background: 'rgba(0, 245, 255, 0.08)',
-                      border: '1px solid rgba(0, 245, 255, 0.25)',
+                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                       borderRadius: '8px',
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       cursor: 'pointer',
                       padding: '5px',
                       display: 'flex',
@@ -346,7 +343,7 @@ export function BaseAppSidebar({
                       outline: 'none'
                     }}
                   >
-                    <X size={15} color="#00f5ff" />
+                    <X size={15} color="var(--accent)" />
                   </button>
                 )}
               </>
@@ -374,7 +371,7 @@ export function BaseAppSidebar({
                     style={{
                       fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       letterSpacing: '0.6px'
                     }}
                   >
@@ -382,7 +379,7 @@ export function BaseAppSidebar({
                   </span>
                   <ChevronDown
                     size={isDesktop ? 13 : 12}
-                    color="#00f5ff"
+                    color="var(--accent)"
                     style={{
                       transform: isAppMenuOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                       transition: 'transform 0.2s ease'
@@ -413,25 +410,22 @@ export function BaseAppSidebar({
                           padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                           borderRadius: '10px',
                           border: isActive
-                            ? (isGold ? '1.5px solid #ffd700' : '1.5px solid #00f5ff')
-                            : '1px solid rgba(0, 245, 255, 0.08)',
+                            ? (isGold ? '1.5px solid var(--amber)' : '1.5px solid var(--accent)')
+                            : '1px solid color-mix(in srgb, var(--accent) 8%, transparent)',
                           background: isActive
-                            ? (isGold ? 'rgba(255, 215, 0, 0.15)' : 'rgba(0, 245, 255, 0.12)')
-                            : 'rgba(4, 14, 36, 0.6)',
+                            ? (isGold ? 'color-mix(in srgb, var(--amber) 15%, transparent)' : 'color-mix(in srgb, var(--accent) 12%, transparent)')
+                            : 'color-mix(in srgb, var(--surface) 60%, transparent)',
                           color: isActive
-                            ? (isGold ? '#ffd700' : '#00f5ff')
-                            : (isGold ? '#e2c542' : '#cbd5e1'),
+                            ? (isGold ? 'var(--amber)' : 'var(--accent)')
+                            : (isGold ? 'var(--amber)' : 'var(--text-2)'),
                           fontSize: isDesktop ? '8.5px' : '7px',
                           fontWeight: 800,
                           cursor: 'pointer',
                           textAlign: 'left',
                           transition: 'all 0.15s ease',
-                          boxShadow: isActive
-                            ? (isGold ? '0 0 12px rgba(255, 215, 0, 0.3)' : '0 0 12px rgba(0, 245, 255, 0.25)')
-                            : 'none',
-                          fontFamily: "'Press Start 2P', monospace",
-                          textTransform: 'uppercase'
-                        }}
+                          
+                          fontFamily: 'var(--font-sans)',
+                          }}
                       >
                         <div
                           style={{
@@ -439,14 +433,14 @@ export function BaseAppSidebar({
                             height: isDesktop ? '26px' : '22px',
                             borderRadius: '6px',
                             background: isActive
-                              ? (isGold ? 'rgba(255, 215, 0, 0.25)' : '#0052ff')
-                              : 'rgba(0, 245, 255, 0.08)',
+                              ? (isGold ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'var(--accent)')
+                              : 'color-mix(in srgb, var(--accent) 8%, transparent)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             color: isActive
-                              ? (isGold ? '#ffd700' : '#FFFFFF')
-                              : (isGold ? '#ffd700' : '#00f5ff'),
+                              ? (isGold ? 'var(--amber)' : 'var(--text)')
+                              : (isGold ? 'var(--amber)' : 'var(--accent)'),
                             flexShrink: 0
                           }}
                         >
@@ -482,7 +476,7 @@ export function BaseAppSidebar({
                     style={{
                       fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       letterSpacing: '0.6px'
                     }}
                   >
@@ -490,7 +484,7 @@ export function BaseAppSidebar({
                   </span>
                   <ChevronDown
                     size={isDesktop ? 13 : 12}
-                    color="#00f5ff"
+                    color="var(--accent)"
                     style={{
                       transform: isDocsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                       transition: 'transform 0.2s ease'
@@ -519,29 +513,28 @@ export function BaseAppSidebar({
                           width: '100%',
                           padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                           borderRadius: '10px',
-                          border: isActive ? '1.5px solid #00f5ff' : '1px solid rgba(0, 245, 255, 0.08)',
-                          background: isActive ? 'rgba(0, 245, 255, 0.12)' : 'rgba(4, 14, 36, 0.6)',
-                          color: isActive ? '#00f5ff' : '#cbd5e1',
+                          border: isActive ? '1.5px solid var(--accent)' : '1px solid color-mix(in srgb, var(--accent) 8%, transparent)',
+                          background: isActive ? 'color-mix(in srgb, var(--accent) 12%, transparent)' : 'color-mix(in srgb, var(--surface) 60%, transparent)',
+                          color: isActive ? 'var(--accent)' : 'var(--text-2)',
                           fontSize: isDesktop ? '8.5px' : '7px',
                           fontWeight: 800,
                           cursor: 'pointer',
                           textAlign: 'left',
                           transition: 'all 0.15s ease',
-                          boxShadow: isActive ? '0 0 12px rgba(0, 245, 255, 0.25)' : 'none',
-                          fontFamily: "'Press Start 2P', monospace",
-                          textTransform: 'uppercase'
-                        }}
+                          
+                          fontFamily: 'var(--font-sans)',
+                          }}
                       >
                         <div
                           style={{
                             width: isDesktop ? '26px' : '22px',
                             height: isDesktop ? '26px' : '22px',
                             borderRadius: '6px',
-                            background: isActive ? '#0052ff' : 'rgba(0, 245, 255, 0.08)',
+                            background: isActive ? 'var(--accent)' : 'color-mix(in srgb, var(--accent) 8%, transparent)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            color: isActive ? '#FFFFFF' : '#00f5ff',
+                            color: isActive ? 'var(--text)' : 'var(--accent)',
                             flexShrink: 0
                           }}
                         >
@@ -577,7 +570,7 @@ export function BaseAppSidebar({
                     style={{
                       fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       letterSpacing: '0.6px'
                     }}
                   >
@@ -585,7 +578,7 @@ export function BaseAppSidebar({
                   </span>
                   <ChevronDown
                     size={isDesktop ? 13 : 12}
-                    color="#00f5ff"
+                    color="var(--accent)"
                     style={{
                       transform: isDexOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                       transition: 'transform 0.2s ease'
@@ -611,18 +604,17 @@ export function BaseAppSidebar({
                         width: '100%',
                         padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                         borderRadius: '10px',
-                        border: '1px solid rgba(0, 245, 255, 0.08)',
-                        background: 'rgba(4, 14, 36, 0.6)',
-                        color: '#cbd5e1',
+                        border: '1px solid color-mix(in srgb, var(--accent) 8%, transparent)',
+                        background: 'color-mix(in srgb, var(--surface) 60%, transparent)',
+                        color: 'var(--text-2)',
                         fontSize: isDesktop ? '8px' : '7px',
                         fontWeight: 800,
                         cursor: 'pointer',
                         textDecoration: 'none',
                         boxSizing: 'border-box',
                         transition: 'all 0.15s ease',
-                        fontFamily: "'Press Start 2P', monospace",
-                        textTransform: 'uppercase'
-                      }}
+                        fontFamily: 'var(--font-sans)',
+                        }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '9px' : '7px', overflow: 'hidden' }}>
                         <img
@@ -643,7 +635,7 @@ export function BaseAppSidebar({
                         )}
                       </div>
                       {!isCollapsed && (
-                        <ArrowUpRight size={12} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <ArrowUpRight size={12} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       )}
                     </a>
                   ))}
@@ -669,7 +661,7 @@ export function BaseAppSidebar({
                     style={{
                       fontSize: isDesktop ? '8.5px' : '7.5px',
                       fontWeight: 800,
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       letterSpacing: '0.6px'
                     }}
                   >
@@ -677,7 +669,7 @@ export function BaseAppSidebar({
                   </span>
                   <ChevronDown
                     size={isDesktop ? 13 : 12}
-                    color="#00f5ff"
+                    color="var(--accent)"
                     style={{
                       transform: isSocialsOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
                       transition: 'transform 0.2s ease'
@@ -703,21 +695,20 @@ export function BaseAppSidebar({
                         width: '100%',
                         padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                         borderRadius: '10px',
-                        border: '1px solid rgba(0, 245, 255, 0.08)',
-                        background: 'rgba(4, 14, 36, 0.6)',
-                        color: '#cbd5e1',
+                        border: '1px solid color-mix(in srgb, var(--accent) 8%, transparent)',
+                        background: 'color-mix(in srgb, var(--surface) 60%, transparent)',
+                        color: 'var(--text-2)',
                         fontSize: isDesktop ? '8px' : '7px',
                         fontWeight: 800,
                         cursor: 'pointer',
                         textDecoration: 'none',
                         boxSizing: 'border-box',
                         transition: 'all 0.15s ease',
-                        fontFamily: "'Press Start 2P', monospace",
-                        textTransform: 'uppercase'
-                      }}
+                        fontFamily: 'var(--font-sans)',
+                        }}
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? '9px' : '7px', overflow: 'hidden' }}>
-                        <div style={{ color: '#00f5ff', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                        <div style={{ color: 'var(--accent)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                           {item.icon}
                         </div>
                         {!isCollapsed && (
@@ -727,7 +718,7 @@ export function BaseAppSidebar({
                         )}
                       </div>
                       {!isCollapsed && (
-                        <ArrowUpRight size={12} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                        <ArrowUpRight size={12} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       )}
                     </a>
                   ))}
@@ -739,7 +730,7 @@ export function BaseAppSidebar({
         </div>
 
         {/* Footer: Wallet status & Admin Panel */}
-        <div style={{ paddingTop: '16px', borderTop: '1.5px solid rgba(0, 245, 255, 0.18)', marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ paddingTop: '16px', borderTop: '1.5px solid color-mix(in srgb, var(--accent) 18%, transparent)', marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           
           {/* Admin Panel (Only visible to Admin Wallet) */}
           {isAdmin && (
@@ -755,14 +746,14 @@ export function BaseAppSidebar({
                     width: '38px',
                     height: '38px',
                     borderRadius: '8px',
-                    background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.25)' : 'rgba(4, 14, 36, 0.6)',
-                    border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.3)',
-                    color: '#ff4466',
+                    background: activeTab === 'admin' ? 'color-mix(in srgb, var(--red) 25%, transparent)' : 'color-mix(in srgb, var(--surface) 60%, transparent)',
+                    border: activeTab === 'admin' ? '1.5px solid var(--red)' : '1px solid color-mix(in srgb, var(--red) 30%, transparent)',
+                    color: 'var(--red)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.3)' : 'none',
+                    
                     transition: 'all 0.15s ease'
                   }}
                 >
@@ -783,29 +774,28 @@ export function BaseAppSidebar({
                   width: '100%',
                   padding: isCollapsed ? '8px 0' : (isDesktop ? '9px 11px' : '7px 9px'),
                   borderRadius: '10px',
-                  border: activeTab === 'admin' ? '1.5px solid #ff4466' : '1px solid rgba(255, 68, 102, 0.25)',
-                  background: activeTab === 'admin' ? 'rgba(255, 68, 102, 0.2)' : 'rgba(4, 14, 36, 0.6)',
-                  color: activeTab === 'admin' ? '#ff4466' : '#cbd5e1',
+                  border: activeTab === 'admin' ? '1.5px solid var(--red)' : '1px solid color-mix(in srgb, var(--red) 25%, transparent)',
+                  background: activeTab === 'admin' ? 'color-mix(in srgb, var(--red) 20%, transparent)' : 'color-mix(in srgb, var(--surface) 60%, transparent)',
+                  color: activeTab === 'admin' ? 'var(--red)' : 'var(--text-2)',
                   fontSize: isDesktop ? '8.5px' : '7px',
                   fontWeight: 800,
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.15s ease',
-                  boxShadow: activeTab === 'admin' ? '0 0 12px rgba(255, 68, 102, 0.25)' : 'none',
-                  fontFamily: "'Press Start 2P', monospace",
-                  textTransform: 'uppercase'
-                }}
+                  
+                  fontFamily: 'var(--font-sans)',
+                  }}
               >
                 <div
                   style={{
                     width: isDesktop ? '26px' : '22px',
                     height: isDesktop ? '26px' : '22px',
                     borderRadius: '6px',
-                    background: activeTab === 'admin' ? '#ff4466' : 'rgba(255, 68, 102, 0.15)',
+                    background: activeTab === 'admin' ? 'var(--red)' : 'color-mix(in srgb, var(--red) 15%, transparent)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: activeTab === 'admin' ? '#FFFFFF' : '#ff4466',
+                    color: activeTab === 'admin' ? 'var(--text)' : 'var(--red)',
                     flexShrink: 0
                   }}
                 >
@@ -827,17 +817,16 @@ export function BaseAppSidebar({
                     width: '38px',
                     height: '38px',
                     borderRadius: '8px',
-                    background: 'rgba(4, 14, 36, 0.9)',
-                    border: '1.5px solid rgba(0, 255, 136, 0.4)',
-                    color: copied ? '#00ff88' : '#00f5ff',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--green) 40%, transparent)',
+                    color: copied ? 'var(--green)' : 'var(--accent)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 0 10px rgba(0, 255, 136, 0.2)'
-                  }}
+                    }}
                 >
-                  {copied ? <Check size={15} color="#00ff88" /> : <Wallet size={15} color="#00ff88" />}
+                  {copied ? <Check size={15} color="var(--green)" /> : <Wallet size={15} color="var(--green)" />}
                 </button>
                 <button
                   onClick={handleDisconnect}
@@ -846,9 +835,9 @@ export function BaseAppSidebar({
                     width: '38px',
                     height: '28px',
                     borderRadius: '6px',
-                    background: 'rgba(255, 68, 102, 0.15)',
-                    border: '1px solid rgba(255, 68, 102, 0.4)',
-                    color: '#ff4466',
+                    background: 'color-mix(in srgb, var(--red) 15%, transparent)',
+                    border: '1px solid color-mix(in srgb, var(--red) 40%, transparent)',
+                    color: 'var(--red)',
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center',
@@ -862,8 +851,8 @@ export function BaseAppSidebar({
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <div
                   style={{
-                    background: 'rgba(4, 14, 36, 0.9)',
-                    border: '1.5px solid rgba(0, 245, 255, 0.25)',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                     borderRadius: '10px',
                     padding: isDesktop ? '10px 12px' : '8px 10px',
                     display: 'flex',
@@ -877,7 +866,7 @@ export function BaseAppSidebar({
                       alt="avatar"
                       style={{ width: isDesktop ? '20px' : '18px', height: isDesktop ? '20px' : '18px', borderRadius: '4px' }}
                     />
-                    <span style={{ fontSize: isDesktop ? '8.5px' : '7px', fontWeight: 900, color: '#00ff88' }}>
+                    <span style={{ fontSize: isDesktop ? '8.5px' : '7px', fontWeight: 900, color: 'var(--green)' }}>
                       {shortAddress(activeAddress)}
                     </span>
                   </div>
@@ -888,7 +877,7 @@ export function BaseAppSidebar({
                     style={{
                       background: 'transparent',
                       border: 'none',
-                      color: copied ? '#00ff88' : '#00f5ff',
+                      color: copied ? 'var(--green)' : 'var(--accent)',
                       cursor: 'pointer',
                       padding: '3px',
                       display: 'flex',
@@ -903,9 +892,9 @@ export function BaseAppSidebar({
                   onClick={handleDisconnect}
                   style={{
                     width: '100%',
-                    background: 'rgba(255, 68, 102, 0.12)',
-                    border: '1.5px solid rgba(255, 68, 102, 0.35)',
-                    color: '#ff4466',
+                    background: 'color-mix(in srgb, var(--red) 12%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--red) 35%, transparent)',
+                    color: 'var(--red)',
                     borderRadius: '10px',
                     padding: isDesktop ? '11px 12px' : '9px 10px',
                     fontSize: isDesktop ? '8px' : '7px',
@@ -916,9 +905,8 @@ export function BaseAppSidebar({
                     justifyContent: 'center',
                     gap: '6px',
                     transition: 'all 0.15s ease',
-                    fontFamily: "'Press Start 2P', monospace",
-                    textTransform: 'uppercase'
-                  }}
+                    fontFamily: 'var(--font-sans)',
+                    }}
                 >
                   <LogOut size={12} />
                   <span>DISCONNECT</span>
@@ -936,18 +924,18 @@ export function BaseAppSidebar({
                 width: '38px',
                 height: '38px',
                 borderRadius: '8px',
-                background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                color: '#020b1a',
-                border: '1.5px solid #00f5ff',
+                background: 'var(--accent)',
+                color: 'var(--bg)',
+                border: '1.5px solid var(--accent)',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                boxShadow: '0 0 12px rgba(0, 245, 255, 0.45)',
+                
                 margin: '0 auto'
               }}
             >
-              <Wallet size={15} color="#020b1a" strokeWidth={2.5} />
+              <Wallet size={15} color="var(--bg)" strokeWidth={2.5} />
             </button>
           ) : (
             <button
@@ -957,9 +945,9 @@ export function BaseAppSidebar({
               }}
               style={{
                 width: '100%',
-                background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                color: '#020b1a',
-                border: '1.5px solid #00f5ff',
+                background: 'var(--accent)',
+                color: 'var(--bg)',
+                border: '1.5px solid var(--accent)',
                 borderRadius: '10px',
                 padding: isDesktop ? '12px 14px' : '10px 12px',
                 fontSize: isDesktop ? '8.5px' : '7.5px',
@@ -969,12 +957,11 @@ export function BaseAppSidebar({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: '0 0 16px rgba(0, 245, 255, 0.45)',
-                fontFamily: "'Press Start 2P', monospace",
-                textTransform: 'uppercase'
-              }}
+                
+                fontFamily: 'var(--font-sans)',
+                }}
             >
-              <Wallet size={14} color="#020b1a" strokeWidth={2.5} />
+              <Wallet size={14} color="var(--bg)" strokeWidth={2.5} />
               <span>CONNECT WALLET</span>
             </button>
           )}

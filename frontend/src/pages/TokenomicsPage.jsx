@@ -169,11 +169,11 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
   // ═════════════════════════════════════════════════════════════════════
   if (isBaseAppMode) {
     const cardStyle = {
-      background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-      border: '1.5px solid rgba(0, 245, 255, 0.25)',
+      background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
+      border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
       borderRadius: '16px',
       padding: '16px 14px',
-      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+      
       display: 'flex',
       flexDirection: 'column',
       gap: '12px',
@@ -182,8 +182,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
     };
 
     const tileStyle = {
-      background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-      border: '1.5px solid rgba(0, 245, 255, 0.25)',
+      background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
+      border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
       borderRadius: '14px',
       padding: '14px 12px',
       textAlign: 'center',
@@ -200,8 +200,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
       alignItems: 'flex-start',
       gap: '12px',
       padding: '12px 12px',
-      background: 'rgba(2, 11, 26, 0.7)',
-      border: '1px solid rgba(0, 245, 255, 0.12)',
+      background: 'color-mix(in srgb, var(--bg) 70%, transparent)',
+      border: '1px solid color-mix(in srgb, var(--accent) 12%, transparent)',
       borderRadius: '10px',
       boxSizing: 'border-box'
     };
@@ -210,8 +210,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
       width: '28px',
       height: '28px',
       borderRadius: '7px',
-      background: bgColor || 'rgba(0, 245, 255, 0.08)',
-      border: borderColor ? `1px solid ${borderColor}` : '1px solid rgba(0, 245, 255, 0.2)',
+      background: bgColor || 'color-mix(in srgb, var(--accent) 8%, transparent)',
+      border: borderColor ? `1px solid ${borderColor}` : '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -223,8 +223,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         
         {/* ── BLOCK 1: TOKENOMICS INFO ── */}
         <div className="rewards-hero-header" style={{ textAlign: 'center', marginBottom: '24px', padding: '12px 8px 8px 8px', width: '100%' }}>
-          <h2 className="rewards-hero-title" style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            $VIBE <span style={{ color: '#00f5ff' }}>TOKENOMICS</span>
+          <h2 className="rewards-hero-title" style={{ fontSize: '18px', margin: '0 0 12px 0', letterSpacing: '0.6px', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.3, textAlign: 'center' }}>
+            $VIBE <span style={{ color: 'var(--accent)' }}>TOKENOMICS</span>
           </h2>
           <div
             className="rewards-hero-pill"
@@ -233,16 +233,16 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              background: 'rgba(0, 245, 255, 0.08)',
-              border: '1.5px solid rgba(0, 245, 255, 0.35)',
+              background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+              border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
               borderRadius: '99px',
               padding: '7px 16px',
               maxWidth: '100%',
               boxSizing: 'border-box'
             }}
           >
-            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.4px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+            <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.4px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
               FAIR LAUNCH. NO TEAM ALLOCATIONS. NO INSIDER BUYS.
             </span>
           </div>
@@ -252,14 +252,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
         <div className="tokenomics-top-stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '12px', marginBottom: '36px' }}>
           {/* Total Supply */}
           <div className="tokenomics-top-stat-card" style={tileStyle}>
-            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
               Total Supply
             </span>
-            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
               {totalSupplyStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
-              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: 'var(--font-sans)', fontWeight: 900, marginTop: '2px' }}>
                 <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
@@ -268,14 +268,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
           {/* Circulating */}
           <div className="tokenomics-top-stat-card" style={tileStyle}>
-            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
               Circulating
             </span>
-            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
               {circulatingStr}
             </span>
             {!loading && totalBurnedNum > 0 && (
-              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginTop: '2px' }}>
+              <div className="tokenomics-top-stat-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '7px', background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.35)', color: '#ff4d4d', padding: '3px 7px', borderRadius: '6px', fontFamily: 'var(--font-sans)', fontWeight: 900, marginTop: '2px' }}>
                 <Flame size={11} color="#ff4d4d" strokeWidth={2.5} />
                 <span>{totalBurned}</span>
               </div>
@@ -284,26 +284,26 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
           {/* Vesting */}
           <div className="tokenomics-top-stat-card" style={tileStyle}>
-            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
               Vesting Rewards
             </span>
-            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
               100M
             </span>
-            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: 'var(--green)', background: 'color-mix(in srgb, var(--green) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', padding: '3px 7px', borderRadius: '6px', fontFamily: 'var(--font-sans)', fontWeight: 800, marginTop: '2px' }}>
               10% MONTHLY
             </span>
           </div>
 
           {/* Monthly Unlock */}
           <div className="tokenomics-top-stat-card" style={tileStyle}>
-            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+            <span className="tokenomics-top-stat-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
               Monthly Unlock
             </span>
-            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+            <span className="tokenomics-top-stat-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
               10M
             </span>
-            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: '#00ff88', background: 'rgba(0, 255, 136, 0.1)', border: '1px solid rgba(0, 255, 136, 0.25)', padding: '3px 7px', borderRadius: '6px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, marginTop: '2px' }}>
+            <span className="tokenomics-top-stat-badge" style={{ display: 'inline-block', fontSize: '7px', color: 'var(--green)', background: 'color-mix(in srgb, var(--green) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 25%, transparent)', padding: '3px 7px', borderRadius: '6px', fontFamily: 'var(--font-sans)', fontWeight: 800, marginTop: '2px' }}>
               TO HOLDERS
             </span>
           </div>
@@ -311,10 +311,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
         {/* ── BLOCK 2: REVENUE ECONOMY ── */}
         <div style={{ marginBottom: '20px', marginTop: '10px' }}>
-          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            REVENUE <span style={{ color: '#00f5ff' }}>ECONOMY</span>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.3, textAlign: 'center' }}>
+            REVENUE <span style={{ color: 'var(--accent)' }}>ECONOMY</span>
           </h2>
-          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Creator Revenue is going towards buybacks and actions aimed at strengthening the token economy.
           </p>
         </div>
@@ -323,36 +323,36 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* 4 Revenue Tiles (4 cols on Desktop, 2x2 grid on Mobile with pool & addr full width) */}
           <div className="tokenomics-revenue-stats-grid">
             <div className="tokenomics-rev-tile" style={tileStyle}>
-              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
                 Total Buyback
               </span>
-              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBuybacks}
               </span>
             </div>
 
             <div className="tokenomics-rev-tile" style={tileStyle}>
-              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
                 Total Burned
               </span>
-              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.1 }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#ef4444', fontFamily: 'var(--font-sans)', lineHeight: 1.1 }}>
                 {loading ? <Loader2 size={16} className="spin"/> : totalBurned}
               </span>
             </div>
 
             {/* Current Community Pool Banner */}
             <div className="tokenomics-rev-tile tokenomics-rev-pool-tile" style={tileStyle}>
-              <span className="tokenomics-rev-label" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase' }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '7px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', }}>
                 Current community pool:
               </span>
-              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <span className="tokenomics-rev-val" style={{ fontSize: '14px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)' }}>
                 {loading ? <Loader2 size={16} className="spin"/> : communityRewards}
               </span>
             </div>
 
             {/* Buyback Address Card */}
             <div className="tokenomics-rev-tile tokenomics-rev-addr-tile" style={tileStyle}>
-              <span className="tokenomics-rev-label" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textTransform: 'uppercase', lineHeight: 1.3 }}>
+              <span className="tokenomics-rev-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)',  lineHeight: 1.3 }}>
                 Buyback &amp; Burn, Rewards
               </span>
               <a
@@ -364,14 +364,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
-                  background: 'rgba(0, 82, 255, 0.2)',
-                  border: '1.5px solid #0052ff',
-                  color: '#ffffff',
+                  background: 'color-mix(in srgb, var(--accent) 20%, transparent)',
+                  border: '1.5px solid var(--accent)',
+                  color: 'var(--text)',
                   padding: '7px 12px',
                   borderRadius: '8px',
                   fontSize: '7px',
                   fontWeight: 900,
-                  fontFamily: "'Press Start 2P', monospace",
+                  fontFamily: 'var(--font-sans)',
                   textDecoration: 'none',
                   whiteSpace: 'nowrap'
                 }}
@@ -385,10 +385,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* Buyback Program Card (Centered Title, Subtitle, SVG Donut Chart & 2 Badges) */}
           <div className="tokenomics-buyback-card" style={{ ...cardStyle, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', textAlign: 'center' }}>
-              <h3 className="tokenomics-buyback-title" style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", textAlign: 'center' }}>
+              <h3 className="tokenomics-buyback-title" style={{ fontSize: '11px', fontWeight: 900, margin: '0 0 8px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)', textAlign: 'center' }}>
                 BUYBACK PROGRAM
               </h3>
-              <p className="tokenomics-buyback-sub" style={{ fontSize: '7.5px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, textAlign: 'center' }}>
+              <p className="tokenomics-buyback-sub" style={{ fontSize: '7.5px', color: 'var(--text-3)', margin: 0, fontFamily: 'var(--font-sans)', lineHeight: 1.6, textAlign: 'center' }}>
                 Strategic utilization of revenue generated.
               </p>
             </div>
@@ -402,20 +402,20 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="100%" stopColor="#ef4444" />
                   </linearGradient>
                   <linearGradient id="bpBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#00f5ff" />
-                    <stop offset="100%" stopColor="#0052ff" />
+                    <stop offset="0%" stopColor="var(--accent)" />
+                    <stop offset="100%" stopColor="var(--accent)" />
                   </linearGradient>
                   <filter id="bpRedGlow" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
                   </filter>
                   <filter id="bpBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#00f5ff" floodOpacity="0.4" />
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="var(--accent)" floodOpacity="0.4" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 125)">
                   {/* Track */}
-                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="color-mix(in srgb, var(--accent) 8%, transparent)" strokeWidth="16" />
 
                   {/* Community 70% */}
                   <circle
@@ -434,26 +434,26 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   {/* Left Callout: Burn 30% */}
                   <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
                   <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 30%</text>
+                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily='var(--font-sans)'>Burn 30%</text>
 
                   {/* Right Callout: Community 70% */}
-                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
-                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 70%</text>
+                  <circle cx="40" cy="56" r="3.5" fill="var(--accent)" />
+                  <polyline points="40,56 68,78 100,78" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="80" fill="var(--accent)" fontSize="8" fontWeight="800" textAnchor="start" fontFamily='var(--font-sans)'>Community 70%</text>
 
                   {/* Center Text */}
-                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">BUYBACKS</text>
+                  <text x="0" y="-2" fill="var(--text)" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily='var(--font-sans)'>100%</text>
+                  <text x="0" y="16" fill="var(--text-3)" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily='var(--font-sans)'>BUYBACKS</text>
                 </g>
               </svg>
             </div>
 
             {/* Bottom 2 Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap', width: '100%' }}>
-              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: '#ef4444', fontFamily: 'var(--font-sans)' }}>
                 <Flame size={12} /> BURN 30%
               </div>
-              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-badge-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)', padding: '7px 14px', borderRadius: '8px', fontSize: '7.5px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)' }}>
                 <Users size={12} /> COMMUNITY 70%
               </div>
             </div>
@@ -462,10 +462,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
         {/* ── BLOCK 3: REWARDS ECONOMY (70% Community Allocation) ── */}
         <div style={{ marginBottom: '20px', marginTop: '10px' }}>
-          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            REWARDS <span style={{ color: '#00f5ff' }}>ECONOMY</span>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.3, textAlign: 'center' }}>
+            REWARDS <span style={{ color: 'var(--accent)' }}>ECONOMY</span>
           </h2>
-          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Constitutes the 70% reserved for the community in the Buyback Program.
           </p>
         </div>
@@ -475,21 +475,21 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           
           {/* Left Column: Distribution Breakdown */}
           <div className="tokenomics-content-card tokenomics-breakdown-card" style={cardStyle}>
-            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>
               DISTRIBUTION BREAKDOWN
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {/* 10-Day Rolling Epochs (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Clock color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Clock color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     10-Day Rolling Epochs
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Reward distribution across all pools happens every 10 days
                   </div>
                 </div>
@@ -497,14 +497,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Epoch Allocation Size (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calculator color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Calculator color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Epoch Allocation Size
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Equals designated % of Community Pool
                   </div>
                 </div>
@@ -512,14 +512,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* $VIBE Staking (Purple) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(168, 85, 247, 0.15)', 'rgba(168, 85, 247, 0.3)')}>
-                  <Coins color="#a855f7" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--text-2) 15%, transparent)', 'color-mix(in srgb, var(--text-2) 30%, transparent)')}>
+                  <Coins color="var(--text-2)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     $VIBE Staking (15%)
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Yield for locking $VIBE in verified staking pool on o1
                   </div>
                 </div>
@@ -531,10 +531,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <Crown color="#f59e0b" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Vibe Club NFTs (15%)
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Direct royalties for holders of the 333 Vibe Club NFTs
                   </div>
                 </div>
@@ -542,14 +542,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Reserve (Green) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(16, 185, 129, 0.15)', 'rgba(16, 185, 129, 0.3)')}>
-                  <ShieldCheck color="#10b981" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--green) 15%, transparent)', 'color-mix(in srgb, var(--green) 30%, transparent)')}>
+                  <ShieldCheck color="var(--green)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Reserve (70%)
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Buffer for continuous reward refills
                   </div>
                 </div>
@@ -565,8 +565,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   justifyContent: 'space-between',
                   padding: '13px 16px',
                   borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
+                  background: 'var(--accent)',
+                  border: '1.5px solid var(--accent)',
                   textDecoration: 'none',
                   marginTop: '6px',
                   boxSizing: 'border-box'
@@ -574,13 +574,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Gift color="#020b1a" size={13} />
+                    <Gift color="var(--bg)" size={13} />
                   </div>
-                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: 'var(--bg)', fontFamily: 'var(--font-sans)' }}>
                     EXPLORE REWARDS HUB
                   </span>
                 </div>
-                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="var(--bg)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -588,10 +588,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* Right Column: Donut Chart Card (Community Distribution) */}
           <div className="tokenomics-content-card tokenomics-chart-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>
                 COMMUNITY ALLOCATION
               </h3>
-              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: 'var(--text-3)', margin: 0, fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                 Allocation of the 70% Revenue Share.
               </p>
             </div>
@@ -601,7 +601,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <svg viewBox="0 0 420 260" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="commPurpleGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#c084fc" />
+                    <stop offset="0%" stopColor="var(--text-2)" />
                     <stop offset="100%" stopColor="#9333ea" />
                   </linearGradient>
                   <linearGradient id="commAmberGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -610,7 +610,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </linearGradient>
                   <linearGradient id="commGreenGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#34d399" />
-                    <stop offset="100%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="var(--green)" />
                   </linearGradient>
 
                   <filter id="commPurpleGlow2" x="-20%" y="-20%" width="140%" height="140%">
@@ -620,12 +620,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#f59e0b" floodOpacity="0.4" />
                   </filter>
                   <filter id="commGreenGlow2" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#10b981" floodOpacity="0.4" />
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="var(--green)" floodOpacity="0.4" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 130)">
-                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="color-mix(in srgb, var(--accent) 8%, transparent)" strokeWidth="16" />
 
                   {/* Staking 15% */}
                   <circle
@@ -647,33 +647,33 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   />
 
                   {/* Callouts */}
-                  <circle cx="31" cy="-61" r="3.5" fill="#a855f7" />
-                  <polyline points="31,-61 60,-80 95,-80" fill="none" stroke="#a855f7" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="100" y="-76" fill="#a855f7" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Staking 15%</text>
+                  <circle cx="31" cy="-61" r="3.5" fill="var(--text-2)" />
+                  <polyline points="31,-61 60,-80 95,-80" fill="none" stroke="var(--text-2)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="100" y="-76" fill="var(--text-2)" fontSize="8" fontWeight="800" textAnchor="start" fontFamily='var(--font-sans)'>Staking 15%</text>
 
                   <circle cx="67" cy="-11" r="3.5" fill="#f59e0b" />
                   <polyline points="67,-11 95,10 125,10" fill="none" stroke="#f59e0b" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="130" y="14" fill="#f59e0b" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">NFT Club 15%</text>
+                  <text x="130" y="14" fill="#f59e0b" fontSize="8" fontWeight="800" textAnchor="start" fontFamily='var(--font-sans)'>NFT Club 15%</text>
 
-                  <circle cx="-55" cy="40" r="3.5" fill="#10b981" />
-                  <polyline points="-55,40 -85,60 -115,60" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-120" y="64" fill="#10b981" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Reserve 70%</text>
+                  <circle cx="-55" cy="40" r="3.5" fill="var(--green)" />
+                  <polyline points="-55,40 -85,60 -115,60" fill="none" stroke="var(--green)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-120" y="64" fill="var(--green)" fontSize="8" fontWeight="800" textAnchor="end" fontFamily='var(--font-sans)'>Reserve 70%</text>
 
-                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">COMMUNITY</text>
+                  <text x="0" y="-2" fill="var(--text)" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily='var(--font-sans)'>100%</text>
+                  <text x="0" y="16" fill="var(--text-3)" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily='var(--font-sans)'>COMMUNITY</text>
                 </g>
               </svg>
             </div>
 
             {/* Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(168, 85, 247, 0.12)', border: '1px solid rgba(168, 85, 247, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#a855f7', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'color-mix(in srgb, var(--text-2) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--text-2) 30%, transparent)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: 'var(--text-2)', fontFamily: 'var(--font-sans)' }}>
                 <Coins size={11} /> STAKING 15%
               </div>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#f59e0b', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.12)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#f59e0b', fontFamily: 'var(--font-sans)' }}>
                 <Crown size={11} /> NFT CLUB 15%
               </div>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.12)', border: '1px solid rgba(16, 185, 129, 0.3)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: '#10b981', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'color-mix(in srgb, var(--green) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 30%, transparent)', padding: '5px 9px', borderRadius: '6px', fontSize: '6.5px', fontWeight: 900, color: 'var(--green)', fontFamily: 'var(--font-sans)' }}>
                 <ShieldCheck size={11} /> RESERVE 70%
               </div>
             </div>
@@ -682,10 +682,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
         {/* ── BLOCK 4: VIBE CLUB ECONOMY (Official NFT Collection) ── */}
         <div style={{ marginBottom: '20px', marginTop: '10px' }}>
-          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            VIBE CLUB <span style={{ color: '#ffd700' }}>ECONOMY</span>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.3, textAlign: 'center' }}>
+            VIBE CLUB <span style={{ color: 'var(--amber)' }}>ECONOMY</span>
           </h2>
-          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             Official $VIBE NFT collection fully integrated into B20 economy.
           </p>
         </div>
@@ -695,7 +695,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           
           {/* Left Column: Vibe Club Breakdown */}
           <div className="tokenomics-content-card tokenomics-breakdown-card" style={cardStyle}>
-            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffd700', fontFamily: "'Press Start 2P', monospace" }}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--amber)', fontFamily: 'var(--font-sans)' }}>
               VIBE CLUB BREAKDOWN
             </h3>
 
@@ -706,10 +706,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <Flame color="#ef4444" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Deflationary Mint Burn
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Every mint triggers an instant burn, reducing total $VIBE supply
                   </div>
                 </div>
@@ -717,14 +717,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* NFTs Utility (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Crown color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Crown color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     NFTs Utility
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Holders receive regular royalty payouts distributed every 10 days
                   </div>
                 </div>
@@ -732,14 +732,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Mint Process (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Coins color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Coins color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Mint Process
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Minting is available with both ETH and native $VIBE tokens
                   </div>
                 </div>
@@ -747,14 +747,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Royalties Pool (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Coins color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Coins color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Royalties Pool
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     15% of the Community Pool, refilled every 10 days for each royalty payout
                   </div>
                 </div>
@@ -762,14 +762,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Equal Holder Rewards (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Users color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Users color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Equal Holder Rewards
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     All holders receive equal royalty payouts
                   </div>
                 </div>
@@ -794,13 +794,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Crown color="#020b1a" size={14} strokeWidth={2.5} />
+                    <Crown color="var(--bg)" size={14} strokeWidth={2.5} />
                   </div>
-                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: 'var(--bg)', fontFamily: 'var(--font-sans)' }}>
                     JOIN VIBE CLUB
                   </span>
                 </div>
-                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="var(--bg)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -808,10 +808,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* Right Column: Donut Chart Card (Mint Revenue) */}
           <div className="tokenomics-content-card tokenomics-chart-card" style={cardStyle}>
             <div style={{ textAlign: 'center' }}>
-              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>
                 MINT REVENUE ALLOCATION
               </h3>
-              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: 0, fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: 'var(--text-3)', margin: 0, fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                 Utilization of revenue collected from NFT mint.
               </p>
             </div>
@@ -825,19 +825,19 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <stop offset="100%" stopColor="#ef4444" />
                   </linearGradient>
                   <linearGradient id="nftBlueGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#00f5ff" />
-                    <stop offset="100%" stopColor="#0052ff" />
+                    <stop offset="0%" stopColor="var(--accent)" />
+                    <stop offset="100%" stopColor="var(--accent)" />
                   </linearGradient>
                   <filter id="nftRedGlow2" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#ef4444" floodOpacity="0.4" />
                   </filter>
                   <filter id="nftBlueGlow2" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#0052ff" floodOpacity="0.4" />
+                    <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="var(--accent)" floodOpacity="0.4" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 125)">
-                  <circle cx="0" cy="0" r="68" fill="none" stroke="rgba(0, 245, 255, 0.08)" strokeWidth="16" />
+                  <circle cx="0" cy="0" r="68" fill="none" stroke="color-mix(in srgb, var(--accent) 8%, transparent)" strokeWidth="16" />
 
                   {/* Community 20% */}
                   <circle
@@ -853,28 +853,28 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   />
 
                   {/* Right Callout: Community 20% */}
-                  <circle cx="40" cy="56" r="3.5" fill="#00f5ff" />
-                  <polyline points="40,56 68,78 100,78" fill="none" stroke="#00f5ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="106" y="80" fill="#00f5ff" fontSize="8" fontWeight="800" textAnchor="start" fontFamily="'Press Start 2P', monospace">Community 20%</text>
+                  <circle cx="40" cy="56" r="3.5" fill="var(--accent)" />
+                  <polyline points="40,56 68,78 100,78" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="106" y="80" fill="var(--accent)" fontSize="8" fontWeight="800" textAnchor="start" fontFamily='var(--font-sans)'>Community 20%</text>
 
                   {/* Left Callout: Burn 80% */}
                   <circle cx="-56" cy="-40" r="3.5" fill="#ef4444" />
                   <polyline points="-56,-40 -85,-60 -115,-60" fill="none" stroke="#ef4444" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily="'Press Start 2P', monospace">Burn 80%</text>
+                  <text x="-120" y="-56" fill="#ef4444" fontSize="8" fontWeight="800" textAnchor="end" fontFamily='var(--font-sans)'>Burn 80%</text>
 
                   {/* Center text */}
-                  <text x="0" y="-2" fill="#ffffff" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily="'Press Start 2P', monospace">100%</text>
-                  <text x="0" y="16" fill="#88aacc" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily="'Press Start 2P', monospace">MINT REVENUE</text>
+                  <text x="0" y="-2" fill="var(--text)" fontSize="18" fontWeight="900" textAnchor="middle" fontFamily='var(--font-sans)'>100%</text>
+                  <text x="0" y="16" fill="var(--text-3)" fontSize="7" fontWeight="800" textAnchor="middle" fontFamily='var(--font-sans)'>MINT REVENUE</text>
                 </g>
               </svg>
             </div>
 
             {/* Badges */}
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(239, 68, 68, 0.12)', border: '1.5px solid rgba(239, 68, 68, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#ef4444', fontFamily: 'var(--font-sans)' }}>
                 <Flame size={12} /> BURN 80%
               </div>
-              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(0, 245, 255, 0.1)', border: '1.5px solid rgba(0, 245, 255, 0.3)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="tokenomics-donut-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'color-mix(in srgb, var(--accent) 10%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)', padding: '6px 12px', borderRadius: '8px', fontSize: '7px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)' }}>
                 <Users size={12} /> COMMUNITY 20%
               </div>
             </div>
@@ -883,10 +883,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
         {/* ── BLOCK 5: VESTING DETAILS ── */}
         <div id="vesting-details" style={{ marginBottom: '20px', marginTop: '10px', scrollMarginTop: '80px' }}>
-          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.3, textAlign: 'center' }}>
-            VESTING <span style={{ color: '#00f5ff' }}>DETAILS</span>
+          <h2 className="tokenomics-section-title" style={{ fontSize: '16px', margin: '0 0 10px 0', letterSpacing: '0.6px', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.3, textAlign: 'center' }}>
+            VESTING <span style={{ color: 'var(--accent)' }}>DETAILS</span>
           </h2>
-          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
+          <p className="tokenomics-section-sub" style={{ fontSize: '7.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0', textAlign: 'center' }}>
             100M tokens vested. Every month 10M unlocks and get distributed among holders.
           </p>
         </div>
@@ -896,21 +896,21 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           
           {/* Left Column: Holder Rewards Card */}
           <div className="tokenomics-content-card" style={cardStyle}>
-            <h3 className="tokenomics-card-title" style={{ fontSize: '9.5px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+            <h3 className="tokenomics-card-title" style={{ fontSize: '9.5px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
               HOLDER REWARDS · 100M $VIBE
             </h3>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {/* $VIBE Holders (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
                   <img src="/vibe-logo.png" alt="Vibe" style={{ width: '18px', height: '18px', borderRadius: '4px', objectFit: 'cover' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     $VIBE Holders
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Hold 5M+ $VIBE to qualify
                   </div>
                 </div>
@@ -918,14 +918,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Allocation Size (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <TrendingUp color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <TrendingUp color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Allocation Size
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     The more you hold, the larger your allocation
                   </div>
                 </div>
@@ -933,14 +933,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Max Allocation Cap (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <ShieldCheck color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <ShieldCheck color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Max Allocation Cap
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Set to prevent whale dominance &amp; ensure fair distribution
                   </div>
                 </div>
@@ -948,14 +948,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Allocation Calculation (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calculator color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Calculator color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Allocation Calculation
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Proportionally calculated based on holding balance
                   </div>
                 </div>
@@ -963,14 +963,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Snapshot Schedule (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Clock color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Clock color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Snapshot Schedule
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Balance snapshot at 00:00 UTC on the day of unlock
                   </div>
                 </div>
@@ -978,14 +978,14 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
               {/* Claim Window (Cyan) */}
               <div className="tokenomics-list-row" style={listRowStyle}>
-                <div className="tokenomics-list-icon" style={iconBoxStyle('rgba(0, 245, 255, 0.15)', 'rgba(0, 245, 255, 0.3)')}>
-                  <Calendar color="#00f5ff" size={15} />
+                <div className="tokenomics-list-icon" style={iconBoxStyle('color-mix(in srgb, var(--accent) 15%, transparent)', 'color-mix(in srgb, var(--accent) 30%, transparent)')}>
+                  <Calendar color="var(--accent)" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Claim Window
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Stays open for 30 days until the next unlock
                   </div>
                 </div>
@@ -997,10 +997,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <Flame color="#ef4444" size={15} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: '#ffffff', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+                  <div className="tokenomics-list-title" style={{ fontSize: '8px', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                     Unclaimed Tokens
                   </div>
-                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#ef4444', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4, marginTop: '3px' }}>
+                  <div className="tokenomics-list-desc" style={{ fontSize: '6.5px', color: '#ef4444', fontFamily: 'var(--font-sans)', lineHeight: 1.4, marginTop: '3px' }}>
                     Permanently burned
                   </div>
                 </div>
@@ -1016,8 +1016,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   justifyContent: 'space-between',
                   padding: '13px 16px',
                   borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-                  border: '1.5px solid #00f5ff',
+                  background: 'var(--accent)',
+                  border: '1.5px solid var(--accent)',
                   textDecoration: 'none',
                   marginTop: '6px',
                   boxSizing: 'border-box'
@@ -1025,13 +1025,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <div style={{ width: '24px', height: '24px', borderRadius: '6px', background: 'rgba(0, 0, 0, 0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Check color="#020b1a" size={15} strokeWidth={3} />
+                    <Check color="var(--bg)" size={15} strokeWidth={3} />
                   </div>
-                  <span style={{ fontSize: '8px', fontWeight: 900, color: '#020b1a', fontFamily: "'Press Start 2P', monospace" }}>
+                  <span style={{ fontSize: '8px', fontWeight: 900, color: 'var(--bg)', fontFamily: 'var(--font-sans)' }}>
                     CHECK YOUR ELIGIBILITY
                   </span>
                 </div>
-                <ArrowRight size={15} color="#020b1a" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <ArrowRight size={15} color="var(--bg)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
               </Link>
             </div>
           </div>
@@ -1039,10 +1039,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
           {/* Right Column: Unlock Schedule Card */}
           <div className="tokenomics-content-card" style={cardStyle}>
             <div>
-              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: '#ffffff', fontFamily: "'Press Start 2P', monospace" }}>
+              <h3 className="tokenomics-card-title" style={{ fontSize: '10px', fontWeight: 900, margin: '0 0 6px 0', color: 'var(--text)', fontFamily: 'var(--font-sans)' }}>
                 UNLOCK SCHEDULE
               </h3>
-              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: '#88aacc', margin: '0 0 14px 0', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.4 }}>
+              <p className="tokenomics-card-sub" style={{ fontSize: '7px', color: 'var(--text-3)', margin: '0 0 14px 0', fontFamily: 'var(--font-sans)', lineHeight: 1.4 }}>
                 Aug 2026 → May 2027
               </p>
             </div>
@@ -1059,16 +1059,16 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       padding: '10px 12px',
-                      background: 'rgba(2, 11, 26, 0.7)',
-                      border: '1px solid rgba(0, 245, 255, 0.12)',
+                      background: 'color-mix(in srgb, var(--bg) 70%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 12%, transparent)',
                       borderRadius: '8px',
                       gap: '8px'
                     }}
                   >
-                    <span className="tokenomics-unlock-date" style={{ fontSize: '7px', color: '#cbd5e1', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span className="tokenomics-unlock-date" style={{ fontSize: '7px', color: 'var(--text-2)', fontFamily: 'var(--font-sans)' }}>
                       {u.d}
                     </span>
-                    <span className="tokenomics-unlock-amount" style={{ fontSize: '8px', fontWeight: 900, color: '#00f5ff', fontFamily: "'Press Start 2P', monospace" }}>
+                    <span className="tokenomics-unlock-amount" style={{ fontSize: '8px', fontWeight: 900, color: 'var(--accent)', fontFamily: 'var(--font-sans)' }}>
                       {u.a}
                     </span>
                     <span
@@ -1076,13 +1076,13 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                       style={{
                         fontSize: '6.5px',
                         fontWeight: 900,
-                        fontFamily: "'Press Start 2P', monospace",
-                        textTransform: 'uppercase',
+                        fontFamily: 'var(--font-sans)',
+                        
                         padding: '4px 8px',
                         borderRadius: '4px',
-                        background: isUnlocked ? 'rgba(0, 255, 136, 0.15)' : 'rgba(136, 170, 204, 0.1)',
-                        border: isUnlocked ? '1px solid rgba(0, 255, 136, 0.3)' : '1px solid rgba(136, 170, 204, 0.2)',
-                        color: isUnlocked ? '#00ff88' : '#88aacc'
+                        background: isUnlocked ? 'color-mix(in srgb, var(--green) 15%, transparent)' : 'rgba(136, 170, 204, 0.1)',
+                        border: isUnlocked ? '1px solid color-mix(in srgb, var(--green) 30%, transparent)' : '1px solid rgba(136, 170, 204, 0.2)',
+                        color: isUnlocked ? 'var(--green)' : 'var(--text-3)'
                       }}
                     >
                       {isUnlocked ? 'UNLOCKED' : 'LOCKED'}
@@ -1224,19 +1224,19 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </linearGradient>
                   <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#0052ff" />
+                    <stop offset="100%" stopColor="var(--accent)" />
                   </linearGradient>
 
                   <filter id="redGlow" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#ef4444" floodOpacity="0.25" />
                   </filter>
                   <filter id="blueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#0052ff" floodOpacity="0.25" />
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="var(--accent)" floodOpacity="0.25" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 140)">
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
+                  <circle cx="0" cy="0" r="80" fill="none" stroke="var(--text-2)" strokeWidth="18" />
 
                   {/* 70% Community */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#blueGradient)" strokeWidth="18"
@@ -1254,9 +1254,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 30%</text>
 
                   {/* Right Callout (Community 70% - Bottom Right) */}
-                  <circle cx="47" cy="65" r="4" fill="#0052ff" />
-                  <polyline points="47,65 75,90 115,90" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="122" y="94" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
+                  <circle cx="47" cy="65" r="4" fill="var(--accent)" />
+                  <polyline points="47,65 75,90 115,90" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="122" y="94" fill="var(--accent)" fontSize="13" fontWeight="800" textAnchor="start">Community 70%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
@@ -1270,7 +1270,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: '#ef4444' }}>
                 <Flame size={14} /> Burn 30%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 82, 255, 0.08)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--blue)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'color-mix(in srgb, var(--accent) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--blue)' }}>
                 <Users size={14} /> Community 70%
               </div>
             </div>
@@ -1315,10 +1315,10 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Coins color="#a855f7" size={20} />
+                    <Coins color="var(--text-2)" size={20} />
                   </div>
                   <div className="who-t">
-                    $VIBE Staking <span style={{ color: '#a855f7', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(15%)</span>
+                    $VIBE Staking <span style={{ color: 'var(--text-2)', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(15%)</span>
                     <span>Yield for locking $VIBE in verified staking pool on o1</span>
                   </div>
                 </div>
@@ -1335,19 +1335,19 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <ShieldCheck color="#10b981" size={20} />
+                    <ShieldCheck color="var(--green)" size={20} />
                   </div>
                   <div className="who-t">
-                    Reserve <span style={{ color: '#10b981', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(70%)</span>
+                    Reserve <span style={{ color: 'var(--green)', fontWeight: 900, display: 'inline', marginLeft: '4px' }}>(70%)</span>
                     <span>Buffer for continuous reward refills</span>
                   </div>
                 </div>
 
                 <Link to={hubLink} className="who-r" style={{ textDecoration: 'none', cursor: 'pointer', background: 'var(--blue)' }}>
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Gift color="#fff" size={20} />
+                    <Gift color="var(--text)" size={20} />
                   </div>
-                  <div className="who-t" style={{ color: '#fff' }}>
+                  <div className="who-t" style={{ color: 'var(--text)' }}>
                     Explore Rewards Hub
                     <span style={{ color: 'rgba(255,255,255,0.8)' }}>
                       Track available rewards <ArrowRightCircle size={14} style={{ verticalAlign: 'middle', marginLeft: 4 }} />
@@ -1369,7 +1369,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <svg viewBox="0 0 420 280" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
                 <defs>
                   <linearGradient id="commPurpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#a855f7" />
+                    <stop offset="0%" stopColor="var(--text-2)" />
                     <stop offset="100%" stopColor="#7c3aed" />
                   </linearGradient>
                   <linearGradient id="commAmberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1378,7 +1378,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </linearGradient>
                   <linearGradient id="commGreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#34d399" />
-                    <stop offset="100%" stopColor="#10b981" />
+                    <stop offset="100%" stopColor="var(--green)" />
                   </linearGradient>
 
                   <filter id="commPurpleGlow" x="-20%" y="-20%" width="140%" height="140%">
@@ -1388,12 +1388,12 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                     <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#f59e0b" floodOpacity="0.25" />
                   </filter>
                   <filter id="commGreenGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#10b981" floodOpacity="0.25" />
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="var(--green)" floodOpacity="0.25" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 140)">
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
+                  <circle cx="0" cy="0" r="80" fill="none" stroke="var(--text-2)" strokeWidth="18" />
 
                   {/* 1. Staking 15% */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#commPurpleGrad)" strokeWidth="18"
@@ -1421,9 +1421,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <text x="150" y="20" fill="#f59e0b" fontSize="12" fontWeight="800" textAnchor="start">NFT Club 15%</text>
 
                   {/* Callout 3: Reserve 70% */}
-                  <circle cx="-65" cy="47" r="4" fill="#10b981" />
-                  <polyline points="-65,47 -100,75 -140,75" fill="none" stroke="#10b981" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="-145" y="80" fill="#10b981" fontSize="12" fontWeight="800" textAnchor="end">Reserve 70%</text>
+                  <circle cx="-65" cy="47" r="4" fill="var(--green)" />
+                  <polyline points="-65,47 -100,75 -140,75" fill="none" stroke="var(--green)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="-145" y="80" fill="var(--green)" fontSize="12" fontWeight="800" textAnchor="end">Reserve 70%</text>
 
                   <text x="0" y="-3" fill="var(--ink)" fontSize="28" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
                   <text x="0" y="16" fill="var(--muted)" fontSize="9" fontWeight="800" textAnchor="middle" letterSpacing="1px">COMMUNITY</text>
@@ -1438,7 +1438,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#f59e0b' }}>
                 <Crown size={13} /> NFT Club 15%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: '#10b981' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: 'color-mix(in srgb, var(--green) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 20%, transparent)', padding: '4px 10px', borderRadius: '99px', fontSize: '0.75rem', fontWeight: 800, color: 'var(--green)' }}>
                 <ShieldCheck size={13} /> Reserve 70%
               </div>
             </div>
@@ -1473,7 +1473,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Crown color="#10b981" size={20} />
+                    <Crown color="var(--green)" size={20} />
                   </div>
                   <div className="who-t">
                     NFTs Utility
@@ -1493,7 +1493,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <div className="who-r">
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Coins color="#00f5ff" size={20} />
+                    <Coins color="var(--accent)" size={20} />
                   </div>
                   <div className="who-t">
                     Royalties Pool
@@ -1513,9 +1513,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
 
                 <a href={vibeClubLink} target="_blank" rel="noreferrer" className="who-r" style={{ textDecoration: 'none', cursor: 'pointer', background: 'var(--blue)' }}>
                   <div className="who-ico" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <Crown color="#fff" size={20} />
+                    <Crown color="var(--text)" size={20} />
                   </div>
-                  <div className="who-t" style={{ color: '#fff' }}>
+                  <div className="who-t" style={{ color: 'var(--text)' }}>
                     Join Vibe Club
                     <span style={{ color: 'rgba(255,255,255,0.8)' }}>
                       Mint your NFT <ArrowUpRight size={14} style={{ verticalAlign: 'middle', marginLeft: 4 }} />
@@ -1542,19 +1542,19 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   </linearGradient>
                   <linearGradient id="nftBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#3b82f6" />
-                    <stop offset="100%" stopColor="#0052ff" />
+                    <stop offset="100%" stopColor="var(--accent)" />
                   </linearGradient>
 
                   <filter id="nftRedGlow" x="-20%" y="-20%" width="140%" height="140%">
                     <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#ef4444" floodOpacity="0.25" />
                   </filter>
                   <filter id="nftBlueGlow" x="-20%" y="-20%" width="140%" height="140%">
-                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#0052ff" floodOpacity="0.25" />
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="var(--accent)" floodOpacity="0.25" />
                   </filter>
                 </defs>
 
                 <g transform="translate(210, 140)">
-                  <circle cx="0" cy="0" r="80" fill="none" stroke="#f1f5f9" strokeWidth="18" />
+                  <circle cx="0" cy="0" r="80" fill="none" stroke="var(--text-2)" strokeWidth="18" />
 
                   {/* 20% Community */}
                   <circle cx="0" cy="0" r="80" fill="none" stroke="url(#nftBlueGrad)" strokeWidth="18"
@@ -1572,9 +1572,9 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <text x="-130" y="-64" fill="#ef4444" fontSize="13" fontWeight="800" textAnchor="end">Burn 80%</text>
 
                   {/* Right Callout (Community 20% - Top Right) */}
-                  <circle cx="47" cy="-65" r="4" fill="#0052ff" />
-                  <polyline points="47,-65 80,-80 120,-80" fill="none" stroke="#0052ff" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <text x="125" y="-76" fill="#0052ff" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
+                  <circle cx="47" cy="-65" r="4" fill="var(--accent)" />
+                  <polyline points="47,-65 80,-80 120,-80" fill="none" stroke="var(--accent)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <text x="125" y="-76" fill="var(--accent)" fontSize="13" fontWeight="800" textAnchor="start">Community 20%</text>
 
                   {/* Center Text */}
                   <text x="0" y="-3" fill="var(--ink)" fontSize="30" fontWeight="900" textAnchor="middle" letterSpacing="-0.5px">100%</text>
@@ -1587,7 +1587,7 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: '#ef4444' }}>
                 <Flame size={14} /> Burn 80%
               </div>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(0, 82, 255, 0.08)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--blue)' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'color-mix(in srgb, var(--accent) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', padding: '5px 12px', borderRadius: '99px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--blue)' }}>
                 <Users size={14} /> Community 20%
               </div>
             </div>
@@ -1634,8 +1634,8 @@ export default function TokenomicsPage({ isBaseAppMode = false }) {
                   <div className="who-t">Unclaimed Tokens<span>Permanently burned</span></div>
                 </div>
                 <Link to={claimLink} className="who-r" style={{textDecoration:'none', cursor:'pointer', background:'var(--blue)'}}>
-                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Check color="#fff" size={20}/></div>
-                  <div className="who-t" style={{color:'#fff'}}>Check your eligibility<span style={{color:'rgba(255,255,255,0.8)'}}>Qualify for the next distribution <ArrowRightCircle size={14} style={{verticalAlign:'middle', marginLeft:4}}/></span></div>
+                  <div className="who-ico" style={{display:'flex', alignItems:'center', justifyContent:'center'}}><Check color="var(--text)" size={20}/></div>
+                  <div className="who-t" style={{color:'var(--text)'}}>Check your eligibility<span style={{color:'rgba(255,255,255,0.8)'}}>Qualify for the next distribution <ArrowRightCircle size={14} style={{verticalAlign:'middle', marginLeft:4}}/></span></div>
                 </Link>
               </div>
             </div>

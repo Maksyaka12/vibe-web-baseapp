@@ -17,7 +17,7 @@ function getNftFontSize(name) {
   return '8px';
 }
 
-function InfoSvgIcon({ size = 14, color = '#00f5ff', className = '' }) {
+function InfoSvgIcon({ size = 14, color = 'var(--accent)', className = '' }) {
   return (
     <svg
       width={size}
@@ -28,7 +28,7 @@ function InfoSvgIcon({ size = 14, color = '#00f5ff', className = '' }) {
       className={className}
       style={{ display: 'block', flexShrink: 0 }}
     >
-      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="rgba(0, 245, 255, 0.15)" />
+      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="color-mix(in srgb, var(--accent) 15%, transparent)" />
       <path
         d="M9.6 9a2.4 2.4 0 0 1 4.8 0c0 1.5-2.4 2-2.4 3.5"
         stroke={color}
@@ -442,14 +442,14 @@ export function BaseAppProfileView(props) {
             fontSize: '18px',
             margin: '0 0 12px 0',
             letterSpacing: '0.6px',
-            color: '#ffffff',
-            fontFamily: "'Press Start 2P', monospace",
+            color: 'var(--text)',
+            fontFamily: 'var(--font-sans)',
             textAlign: 'center',
             width: '100%',
             lineHeight: 1.3
           }}
         >
-          USER <span style={{ color: '#00f5ff' }}>PROFILE</span>
+          USER <span style={{ color: 'var(--accent)' }}>PROFILE</span>
         </h2>
 
         {/* Subtitle Status Pill */}
@@ -460,16 +460,16 @@ export function BaseAppProfileView(props) {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            background: 'rgba(0, 245, 255, 0.08)',
-            border: '1.5px solid rgba(0, 245, 255, 0.35)',
+            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+            border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
             borderRadius: '99px',
             padding: '7px 16px',
             maxWidth: '100%',
             boxSizing: 'border-box'
           }}
         >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
             BASE DOG IDENTITY &amp; DASHBOARD
           </span>
         </div>
@@ -480,14 +480,13 @@ export function BaseAppProfileView(props) {
         <div
           className="profile-user-card profile-connect-card"
           style={{
-            background: 'linear-gradient(180deg, rgba(6, 26, 60, 0.95) 0%, rgba(2, 11, 26, 0.98) 100%)',
-            border: '1.5px solid rgba(0, 245, 255, 0.3)',
+            background: 'color-mix(in srgb, var(--surface-2) 95%, transparent)',
+            border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)',
             borderRadius: '18px',
             padding: '28px 16px',
             textAlign: 'center',
             marginBottom: '24px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.7)'
-          }}
+            }}
         >
           <div
             className="profile-avatar-box"
@@ -496,37 +495,36 @@ export function BaseAppProfileView(props) {
               height: '84px',
               margin: '0 auto 16px auto',
               borderRadius: '16px',
-              border: '2px solid rgba(0, 245, 255, 0.5)',
+              border: '2px solid color-mix(in srgb, var(--accent) 50%, transparent)',
               overflow: 'hidden',
-              background: '#020b1a',
+              background: 'var(--bg)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(0, 245, 255, 0.35)'
-            }}
+              }}
           >
             <img src="/new-logo-vibe.png" alt="Vibe" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          <div className="profile-connect-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", marginBottom: '8px', fontWeight: 900 }}>
+          <div className="profile-connect-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', marginBottom: '8px', fontWeight: 900 }}>
             CONNECT YOUR WALLET
           </div>
-          <p className="profile-connect-desc" style={{ fontSize: '7px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", lineHeight: 1.6, margin: '0 0 18px 0' }}>
+          <p className="profile-connect-desc" style={{ fontSize: '7px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', lineHeight: 1.6, margin: '0 0 18px 0' }}>
             Connect to view your identity, holding balances and Vibe Club status.
           </p>
           <button
             onClick={login}
             className="profile-connect-btn"
             style={{
-              background: 'linear-gradient(135deg, #00f5ff 0%, #00b8ff 100%)',
-              border: '1.5px solid #00f5ff',
-              color: '#020b1a',
-              fontFamily: "'Press Start 2P', monospace",
+              background: 'var(--accent)',
+              border: '1.5px solid var(--accent)',
+              color: 'var(--bg)',
+              fontFamily: 'var(--font-sans)',
               fontSize: '8.5px',
               fontWeight: 900,
               padding: '12px 24px',
               borderRadius: '12px',
               cursor: 'pointer',
-              boxShadow: '0 0 18px rgba(0, 245, 255, 0.45)',
+              
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px'
@@ -579,8 +577,8 @@ export function BaseAppProfileView(props) {
             <div className="profile-card-dashboard-section">
               <div className="profile-card-dashboard-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
-                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)',  flexShrink: 0, display: 'inline-block' }} />
+                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
                     REWARD DASHBOARD
                   </h3>
                 </div>
@@ -591,27 +589,26 @@ export function BaseAppProfileView(props) {
                 <div
                   className="profile-stat-card profile-stat-card-claimed"
                   style={{
-                    background: 'rgba(4, 20, 48, 0.9)',
-                    border: '1.5px solid rgba(0, 255, 136, 0.35)',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)',
                     borderRadius: '14px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     gap: '8px',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-                  }}
+                    }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    <span className="profile-stat-label" style={{ color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                       TOTAL CLAIMED
                     </span>
-                    <CheckCircle2 size={16} color="#00ff88" className="profile-stat-icon" />
+                    <CheckCircle2 size={16} color="var(--green)" className="profile-stat-icon" />
                   </div>
                   <div>
-                    <div className="profile-stat-val" style={{ color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+                    <div className="profile-stat-val" style={{ color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
                       +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
                     </div>
-                    <div className="profile-stat-sub" style={{ color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                    <div className="profile-stat-sub" style={{ color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                       {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
                     </div>
                   </div>
@@ -621,27 +618,26 @@ export function BaseAppProfileView(props) {
                 <div
                   className="profile-stat-card profile-stat-card-staking"
                   style={{
-                    background: 'rgba(4, 20, 48, 0.9)',
-                    border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1.5px solid rgba(168, 85, 247, 0.35)',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: totalStakingEarned > 0 ? '1.5px solid var(--text-2)' : '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)',
                     borderRadius: '14px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     gap: '8px',
-                    boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-                  }}
+                    }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    <span className="profile-stat-label" style={{ color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                       STAKING REWARDS
                     </span>
-                    <Coins size={16} color="#c084fc" className="profile-stat-icon" />
+                    <Coins size={16} color="var(--text-2)" className="profile-stat-icon" />
                   </div>
                   <div>
-                    <div className="profile-stat-val" style={{ color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+                    <div className="profile-stat-val" style={{ color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
                       +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
                     </div>
-                    <div className="profile-stat-sub" style={{ color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                    <div className="profile-stat-sub" style={{ color: totalStakingEpochs > 0 ? 'var(--text-2)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                       {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
                     </div>
                   </div>
@@ -651,27 +647,26 @@ export function BaseAppProfileView(props) {
                 <div
                   className="profile-stat-card profile-stat-card-available"
                   style={{
-                    background: 'rgba(4, 20, 48, 0.9)',
-                    border: totalAvailableCount > 0 ? '1.5px solid #00f5ff' : '1.5px solid rgba(0, 245, 255, 0.25)',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: totalAvailableCount > 0 ? '1.5px solid var(--accent)' : '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                     borderRadius: '14px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     gap: '8px',
-                    boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-                  }}
+                    }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: '#00f5ff', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    <span className="profile-stat-label" style={{ color: 'var(--accent)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                       AVAILABLE NOW
                     </span>
-                    <Gift size={16} color="#00f5ff" className="profile-stat-icon" />
+                    <Gift size={16} color="var(--accent)" className="profile-stat-icon" />
                   </div>
                   <div>
-                    <div className="profile-stat-val" style={{ color: totalAvailableCount > 0 ? '#00f5ff' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 245, 255, 0.35)' : 'none' }}>
+                    <div className="profile-stat-val" style={{ color: totalAvailableCount > 0 ? 'var(--accent)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px', }}>
                       +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
                     </div>
-                    <div className="profile-stat-sub" style={{ color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                    <div className="profile-stat-sub" style={{ color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                       {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
                     </div>
                   </div>
@@ -681,27 +676,26 @@ export function BaseAppProfileView(props) {
                 <div
                   className="profile-stat-card profile-stat-card-expired"
                   style={{
-                    background: 'rgba(4, 20, 48, 0.9)',
-                    border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1.5px solid rgba(0, 245, 255, 0.2)',
+                    background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+                    border: totalExpiredCount > 0 ? '1.5px solid color-mix(in srgb, var(--red) 50%, transparent)' : '1.5px solid color-mix(in srgb, var(--accent) 20%, transparent)',
                     borderRadius: '14px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'space-between',
                     gap: '8px',
-                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-                  }}
+                    }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span className="profile-stat-label" style={{ color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+                    <span className="profile-stat-label" style={{ color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                       EXPIRED CLAIMS
                     </span>
-                    <Clock size={16} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
+                    <Clock size={16} color={totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)'} className="profile-stat-icon" />
                   </div>
                   <div>
-                    <div className="profile-stat-val" style={{ color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '4px' }}>
+                    <div className="profile-stat-val" style={{ color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '4px' }}>
                       {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
                     </div>
-                    <div className="profile-stat-sub" style={{ color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                    <div className="profile-stat-sub" style={{ color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                       {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
                     </div>
                   </div>
@@ -713,8 +707,8 @@ export function BaseAppProfileView(props) {
             <div className="profile-card-checkin-section">
               <div className="profile-card-checkin-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: hasCheckedInToday ? '#00ff88' : '#ffaa00', boxShadow: hasCheckedInToday ? '0 0 8px #00ff88' : '0 0 8px #ffaa00', flexShrink: 0, display: 'inline-block' }} />
-                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+                  <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: hasCheckedInToday ? 'var(--green)' : 'var(--amber)',  flexShrink: 0, display: 'inline-block' }} />
+                  <h3 className="profile-section-title" style={{ fontSize: '12px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
                     DAILY CHECK-IN
                   </h3>
                 </div>
@@ -750,7 +744,7 @@ export function BaseAppProfileView(props) {
                     title={`Next check-in resets at 00:00 UTC (in ${timeUntilNext})`}
                   >
                     <div className="profile-checkin-big-btn-title">
-                      <CheckCircle2 size={16} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                      <CheckCircle2 size={16} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                       <span>CHECKED IN TODAY</span>
                     </div>
                     <div className="profile-checkin-big-btn-timer">NEXT IN {timeUntilNext}</div>
@@ -773,8 +767,8 @@ export function BaseAppProfileView(props) {
       {/* ── 3. REWARD DASHBOARD ZONE (MOBILE ONLY - ON DESKTOP IT IS IN THE USER CARD) ── */}
       <div className="profile-dashboard-zone profile-dashboard-zone-mobile-only" style={{ marginBottom: '24px' }}>
         <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00f5ff', boxShadow: '0 0 8px #00f5ff', flexShrink: 0, display: 'inline-block' }} />
-          <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+          <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)',  flexShrink: 0, display: 'inline-block' }} />
+          <h3 className="profile-section-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
             REWARD DASHBOARD
           </h3>
         </div>
@@ -784,28 +778,27 @@ export function BaseAppProfileView(props) {
           <div
             className="profile-stat-card"
             style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: '1px solid rgba(0, 255, 136, 0.35)',
+              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+              border: '1px solid color-mix(in srgb, var(--green) 35%, transparent)',
               borderRadius: '14px',
               padding: '12px 10px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '6px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
+              }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                 TOTAL CLAIMED
               </span>
-              <CheckCircle2 size={13} color="#00ff88" className="profile-stat-icon" />
+              <CheckCircle2 size={13} color="var(--green)" className="profile-stat-icon" />
             </div>
             <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(0, 255, 136, 0.3)' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
                 +{totalClaimedTokens > 0 ? Math.round(totalClaimedTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                 {totalClaimedCount} {totalClaimedCount === 1 ? 'CLAIM' : 'CLAIMS'} COMPLETED
               </div>
             </div>
@@ -815,28 +808,27 @@ export function BaseAppProfileView(props) {
           <div
             className="profile-stat-card"
             style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalStakingEarned > 0 ? '1.5px solid #a855f7' : '1px solid rgba(168, 85, 247, 0.35)',
+              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+              border: totalStakingEarned > 0 ? '1.5px solid var(--text-2)' : '1px solid color-mix(in srgb, var(--text-2) 35%, transparent)',
               borderRadius: '14px',
               padding: '12px 10px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '6px',
-              boxShadow: totalStakingEarned > 0 ? '0 0 16px rgba(168, 85, 247, 0.25)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
+              }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                 STAKING REWARDS
               </span>
-              <Coins size={13} color="#c084fc" className="profile-stat-icon" />
+              <Coins size={13} color="var(--text-2)" className="profile-stat-icon" />
             </div>
             <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: '#c084fc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: '0 0 8px rgba(168, 85, 247, 0.35)' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: 'var(--text-2)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
                 +{totalStakingEarned > 0 ? Math.round(totalStakingEarned).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? '#d8b4fe' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalStakingEpochs > 0 ? 'var(--text-2)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                 {totalStakingEpochs} {totalStakingEpochs === 1 ? 'EPOCH' : 'EPOCHS'} PARTICIPATED
               </div>
             </div>
@@ -846,28 +838,27 @@ export function BaseAppProfileView(props) {
           <div
             className="profile-stat-card"
             style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalAvailableCount > 0 ? '1.5px solid #00ff88' : '1px solid rgba(0, 245, 255, 0.25)',
+              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+              border: totalAvailableCount > 0 ? '1.5px solid var(--green)' : '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
               borderRadius: '14px',
               padding: '12px 10px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '6px',
-              boxShadow: totalAvailableCount > 0 ? '0 0 16px rgba(0, 245, 255, 0.2)' : '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
+              }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                 AVAILABLE NOW
               </span>
-              <Gift size={13} color="#00ff88" className="profile-stat-icon" />
+              <Gift size={13} color="var(--green)" className="profile-stat-icon" />
             </div>
             <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px', textShadow: totalAvailableCount > 0 ? '0 0 8px rgba(0, 255, 136, 0.35)' : 'none' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px', }}>
                 +{totalAvailableTokens > 0 ? Math.round(totalAvailableTokens).toLocaleString('en-US') : '0'} $VIBE
               </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? '#00ff88' : '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: totalAvailableCount > 0 ? 'var(--green)' : 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                 {totalAvailableCount} {totalAvailableCount === 1 ? 'REWARD' : 'REWARDS'} READY
               </div>
             </div>
@@ -877,28 +868,27 @@ export function BaseAppProfileView(props) {
           <div
             className="profile-stat-card"
             style={{
-              background: 'rgba(4, 20, 48, 0.9)',
-              border: totalExpiredCount > 0 ? '1.5px solid rgba(255, 68, 102, 0.5)' : '1px solid rgba(0, 245, 255, 0.2)',
+              background: 'color-mix(in srgb, var(--surface) 90%, transparent)',
+              border: totalExpiredCount > 0 ? '1.5px solid color-mix(in srgb, var(--red) 50%, transparent)' : '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
               borderRadius: '14px',
               padding: '12px 10px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '6px',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.5)'
-            }}
+              }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900 }}>
+              <span className="profile-stat-label" style={{ fontSize: '6px', color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900 }}>
                 EXPIRED CLAIMS
               </span>
-              <Clock size={13} color={totalExpiredCount > 0 ? '#ff4466' : '#88aacc'} className="profile-stat-icon" />
+              <Clock size={13} color={totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)'} className="profile-stat-icon" />
             </div>
             <div>
-              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? '#ff4466' : '#88aacc', fontFamily: "'Press Start 2P', monospace", fontWeight: 900, marginBottom: '3px' }}>
+              <div className="profile-stat-val" style={{ fontSize: '9px', color: totalExpiredCount > 0 ? 'var(--red)' : 'var(--text-3)', fontFamily: 'var(--font-sans)', fontWeight: 900, marginBottom: '3px' }}>
                 {totalExpiredTokens > 0 ? `${Math.round(totalExpiredTokens).toLocaleString('en-US')}` : '0'} $VIBE
               </div>
-              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+              <div className="profile-stat-sub" style={{ fontSize: '5.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                 {totalExpiredCount} {totalExpiredCount === 1 ? 'REWARD' : 'REWARDS'} MISSED
               </div>
             </div>
@@ -926,8 +916,8 @@ export function BaseAppProfileView(props) {
                 width: '8px',
                 height: '8px',
                 borderRadius: '50%',
-                background: '#ffaa00',
-                boxShadow: '0 0 10px #ffaa00',
+                background: 'var(--amber)',
+                
                 flexShrink: 0,
                 display: 'inline-block'
               }}
@@ -936,8 +926,8 @@ export function BaseAppProfileView(props) {
               className="profile-section-title"
               style={{
                 fontSize: '11px',
-                color: '#ffffff',
-                fontFamily: "'Press Start 2P', monospace",
+                color: 'var(--text)',
+                fontFamily: 'var(--font-sans)',
                 margin: 0,
                 fontWeight: 900,
                 lineHeight: 1
@@ -949,7 +939,7 @@ export function BaseAppProfileView(props) {
 
           {/* Current Streak Badge in Section Header */}
           <div className="profile-checkin-header-streak">
-            <Flame size={12} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 4px #ffaa00)' }} />
+            <Flame size={12} color="var(--amber)" style={{ }} />
             <span>{streak} {streak === 1 ? 'DAY' : 'DAYS'} STREAK</span>
           </div>
         </div>
@@ -960,26 +950,26 @@ export function BaseAppProfileView(props) {
           <div className="profile-checkin-left">
             <div className={`profile-checkin-icon-box ${hasCheckedInToday ? 'checked-in' : ''}`}>
               {hasCheckedInToday ? (
-                <CheckCircle2 size={24} color="#00ff88" style={{ filter: 'drop-shadow(0 0 6px rgba(0, 255, 136, 0.9))' }} />
+                <CheckCircle2 size={24} color="var(--green)" style={{ }} />
               ) : (
-                <Flame size={26} color="#ffaa00" style={{ filter: 'drop-shadow(0 0 8px rgba(255, 170, 0, 0.9))' }} />
+                <Flame size={26} color="var(--amber)" style={{ }} />
               )}
             </div>
             <div>
               <div className="profile-checkin-title">
                 {!address ? (
-                  <>DAILY <span style={{ color: '#00f5ff' }}>STREAK</span></>
+                  <>DAILY <span style={{ color: 'var(--accent)' }}>STREAK</span></>
                 ) : hasCheckedInToday ? (
-                  <>CHECKED IN <span style={{ color: '#00ff88' }}>TODAY</span></>
+                  <>CHECKED IN <span style={{ color: 'var(--green)' }}>TODAY</span></>
                 ) : (
-                  <>KEEP YOUR <span style={{ color: '#ffaa00' }}>STREAK</span></>
+                  <>KEEP YOUR <span style={{ color: 'var(--amber)' }}>STREAK</span></>
                 )}
               </div>
               <div className="profile-checkin-sub">
                 {!address ? (
                   'Connect wallet to start your daily on-chain streak.'
                 ) : hasCheckedInToday ? (
-                  <>Next check-in unlocks in <span style={{ color: '#00f5ff', fontVariantNumeric: 'tabular-nums' }}>{timeUntilNext}</span>.</>
+                  <>Next check-in unlocks in <span style={{ color: 'var(--accent)', fontVariantNumeric: 'tabular-nums' }}>{timeUntilNext}</span>.</>
                 ) : (
                   'Check in every 24h to keep your daily streak alive.'
                 )}
@@ -995,12 +985,12 @@ export function BaseAppProfileView(props) {
               </button>
             ) : hasCheckedInToday ? (
               <div className="profile-checkin-checked" title={`Checked in today! Next reset in ${timeUntilNext}`}>
-                <CheckCircle2 size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
                 <span>NEXT: {timeUntilNext}</span>
               </div>
             ) : (
               <button onClick={performCheckIn} disabled={isCheckingIn} className="profile-checkin-btn">
-                <Flame size={14} color="#020b1a" strokeWidth={2.5} />
+                <Flame size={14} color="var(--bg)" strokeWidth={2.5} />
                 <span>{isCheckingIn ? 'CHECKING IN...' : 'CHECK IN NOW'}</span>
               </button>
             )}
@@ -1012,13 +1002,13 @@ export function BaseAppProfileView(props) {
       <div className="profile-achievements-zone" style={{ marginBottom: '24px' }}>
         <div className="profile-section-header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0, display: 'inline-block' }} />
-            <h3 className="profile-section-title" style={{ fontSize: '10px', color: '#ffffff', fontFamily: "'Press Start 2P', monospace", margin: 0, fontWeight: 900, lineHeight: 1 }}>
+            <span className="profile-section-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0, display: 'inline-block' }} />
+            <h3 className="profile-section-title" style={{ fontSize: '10px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, lineHeight: 1 }}>
               ACHIEVEMENTS
             </h3>
           </div>
-          <div className="profile-achievements-tracker" style={{ background: 'rgba(0, 255, 136, 0.12)', border: '1px solid rgba(0, 255, 136, 0.4)', borderRadius: '8px', padding: '5px 10px', fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 5px #00ff88' }} />
+          <div className="profile-achievements-tracker" style={{ background: 'color-mix(in srgb, var(--green) 12%, transparent)', border: '1px solid color-mix(in srgb, var(--green) 40%, transparent)', borderRadius: '8px', padding: '5px 10px', fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'var(--green)', }} />
             <span>{unlockedCount}/{totalAchievementsCount} UNLOCKED</span>
           </div>
         </div>
@@ -1063,7 +1053,7 @@ export function BaseAppProfileView(props) {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div className="profile-achievement-tooltip-title">
-                          <InfoSvgIcon size={11} color="#00f5ff" />
+                          <InfoSvgIcon size={11} color="var(--accent)" />
                           <span>{ach.name}</span>
                         </div>
                         <div className="profile-achievement-tooltip-desc">
@@ -1126,7 +1116,7 @@ export function BaseAppProfileView(props) {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div className="profile-achievement-tooltip-title">
-                          <InfoSvgIcon size={11} color="#00f5ff" />
+                          <InfoSvgIcon size={11} color="var(--accent)" />
                           <span>{ach.name}</span>
                         </div>
                         <div className="profile-achievement-tooltip-desc">
@@ -1204,7 +1194,7 @@ export function BaseAppProfileView(props) {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="profile-achievement-tooltip-title">
-                        <InfoSvgIcon size={11} color="#00f5ff" />
+                        <InfoSvgIcon size={11} color="var(--accent)" />
                         <span>{ach.name}</span>
                       </div>
                       <div className="profile-achievement-tooltip-desc">

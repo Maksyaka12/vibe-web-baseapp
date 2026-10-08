@@ -1778,7 +1778,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               background: 'var(--surface)',
               padding: '40px',
               borderRadius: '24px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.06)',
+              
               textAlign: 'center',
               maxWidth: 600,
               margin: '0 auto'
@@ -1816,10 +1816,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   <div
                     className="checker-avatar-box"
                     style={{
-                      border: (userNft || (nftCount && nftCount > 0)) ? '3px solid var(--blue)' : '2.5px solid #cbd5e1',
-                      background: (userNft || (nftCount && nftCount > 0)) ? '#ffffff' : '#f1f5f9',
-                      boxShadow: (userNft || (nftCount && nftCount > 0)) ? '0 8px 24px rgba(0, 82, 255, 0.2)' : '0 4px 12px rgba(0,0,0,0.05)'
-                    }}
+                      border: (userNft || (nftCount && nftCount > 0)) ? '3px solid var(--blue)' : '2.5px solid var(--text-2)',
+                      background: (userNft || (nftCount && nftCount > 0)) ? 'var(--text)' : 'var(--text-2)',
+                      }}
                   >
                     {userNft ? (
                       <img
@@ -1835,8 +1834,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       />
                     ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', color: '#94a3b8' }}>
-                        <User size={36} color="#64748b" />
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', color: 'var(--text-3)' }}>
+                        <User size={36} color="var(--text-3)" />
                       </div>
                     )}
                   </div>
@@ -1851,7 +1850,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       minWidth: 0
                     }}
                   >
-                    <div style={{ fontSize: '0.70rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em', lineHeight: 1 }}>
+                    <div style={{ fontSize: '0.70rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.05em', lineHeight: 1 }}>
                       Profile:
                     </div>
                     <h3 className="checker-profile-name">
@@ -1864,9 +1863,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           style={{
                             fontSize: '0.74rem',
                             fontWeight: 700,
-                            color: '#10b981',
-                            background: 'rgba(16, 185, 129, 0.12)',
-                            border: '1.5px solid rgba(16, 185, 129, 0.28)',
+                            color: 'var(--green)',
+                            background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                            border: '1.5px solid color-mix(in srgb, var(--green) 28%, transparent)',
                             padding: '2px 10px',
                             borderRadius: '99px',
                             display: 'inline-flex',
@@ -1884,9 +1883,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           style={{
                             fontSize: '0.74rem',
                             fontWeight: 700,
-                            color: '#059669',
-                            background: 'rgba(16, 185, 129, 0.12)',
-                            border: '1.5px solid rgba(16, 185, 129, 0.3)',
+                            color: 'var(--green)',
+                            background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                            border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)',
                             padding: '2px 10px',
                             borderRadius: '99px',
                             display: 'inline-flex',
@@ -1910,17 +1909,16 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     {/* Connected Wallet Address Pill */}
                     <div
                       style={{
-                        background: '#ffffff',
+                        background: 'var(--surface-2)',
                         border: '1.5px solid rgba(0, 140, 255, 0.2)',
                         borderRadius: '14px',
                         padding: '8px 16px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)'
-                      }}
+                        }}
                     >
-                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 8px #10b981', display: 'inline-block', flexShrink: 0 }} />
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--green)',  display: 'inline-block', flexShrink: 0 }} />
                       <span style={{ fontSize: '0.90rem', color: 'var(--ink)', fontWeight: 600 }}>
                         {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : ''}
                       </span>
@@ -1931,7 +1929,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           background: 'transparent',
                           border: 'none',
                           cursor: 'pointer',
-                          color: copied ? '#10b981' : 'var(--blue)',
+                          color: copied ? 'var(--green)' : 'var(--blue)',
                           display: 'inline-flex',
                           alignItems: 'center',
                           padding: '3px',
@@ -1953,7 +1951,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         disabled={loading}
                         title="Refresh On-Chain Balances"
                         style={{
-                          background: '#ffffff',
+                          background: 'var(--surface-2)',
                           border: '1.5px solid rgba(0, 140, 255, 0.22)',
                           padding: '10px 14px',
                           borderRadius: '14px',
@@ -1963,7 +1961,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           alignItems: 'center',
                           justifyContent: 'center',
                           gap: '6px',
-                          boxShadow: '0 2px 8px rgba(0, 82, 255, 0.04)',
+                          
                           fontSize: '0.84rem',
                           fontWeight: 700,
                           transition: 'all 0.15s ease'
@@ -2004,14 +2002,14 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     border: '1.5px solid rgba(0, 140, 255, 0.2)'
                   }}
                 >
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                     $VIBE Balance
                   </div>
                   <div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.15, marginBottom: '4px', whiteSpace: 'nowrap' }}>
                       {loading || balance === null ? <Loader2 size={15} className="spin" /> : formatCompactBalance(balance)}
                     </div>
-                    <div className="checker-tile-eligibility" style={{ fontSize: '0.67rem', color: isHolderEligibleLive ? '#10b981' : '#ef4444', fontWeight: 700, whiteSpace: 'nowrap', letterSpacing: '-0.02em' }}>
+                    <div className="checker-tile-eligibility" style={{ fontSize: '0.67rem', color: isHolderEligibleLive ? 'var(--green)' : '#ef4444', fontWeight: 700, whiteSpace: 'nowrap', letterSpacing: '-0.02em' }}>
                       {isHolderEligibleLive ? '✓ Eligible for Holder Rewards' : 'Not Eligible for Holder Rewards'}
                     </div>
                   </div>
@@ -2021,17 +2019,17 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 <div
                   className="checker-metric-tile"
                   style={{
-                    border: '1.5px solid rgba(16, 185, 129, 0.24)'
+                    border: '1.5px solid color-mix(in srgb, var(--green) 24%, transparent)'
                   }}
                 >
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                     Vibe Club Member
                   </div>
                   <div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.15, marginBottom: '4px', whiteSpace: 'nowrap' }}>
                       {loading || nftCount === null ? <Loader2 size={15} className="spin" /> : `${nftCount || 0} NFT${nftCount === 1 ? '' : 's'}`}
                     </div>
-                    <div className="checker-tile-eligibility" style={{ fontSize: '0.67rem', color: (nftCount && nftCount > 0) ? '#10b981' : '#ef4444', fontWeight: 700, whiteSpace: 'nowrap', letterSpacing: '-0.02em' }}>
+                    <div className="checker-tile-eligibility" style={{ fontSize: '0.67rem', color: (nftCount && nftCount > 0) ? 'var(--green)' : '#ef4444', fontWeight: 700, whiteSpace: 'nowrap', letterSpacing: '-0.02em' }}>
                       {(nftCount && nftCount > 0) ? '✓ Eligible for NFT Royalties' : 'Not Eligible for NFT Royalties'}
                     </div>
                   </div>
@@ -2047,14 +2045,14 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     transition: 'all 0.15s ease'
                   }}
                 >
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                     Available Rewards
                   </div>
                   <div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.15, marginBottom: '4px', whiteSpace: 'nowrap' }}>
                       {totalAvailableCount} Available
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-3)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
                       <span>Claim Rewards</span> ↓
                     </div>
                   </div>
@@ -2070,14 +2068,14 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     transition: 'all 0.15s ease'
                   }}
                 >
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                     Upcoming Unlocks
                   </div>
                   <div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.15, marginBottom: '4px', whiteSpace: 'nowrap' }}>
                       2 Upcoming
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-3)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
                       <span>View Schedule</span> ↓
                     </div>
                   </div>
@@ -2088,19 +2086,19 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   onClick={() => scrollToSection('claimed-rewards-section', setIsHistoryOpen)}
                   className="checker-metric-tile"
                   style={{
-                    border: '1.5px solid rgba(16, 185, 129, 0.2)',
+                    border: '1.5px solid color-mix(in srgb, var(--green) 20%, transparent)',
                     cursor: 'pointer',
                     transition: 'all 0.15s ease'
                   }}
                 >
-                  <div style={{ fontSize: '0.68rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '0.68rem', color: 'var(--text-3)', fontWeight: 700,  letterSpacing: '0.04em', marginBottom: '6px', whiteSpace: 'nowrap' }}>
                     Claim History
                   </div>
                   <div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--ink)', lineHeight: 1.15, marginBottom: '4px', whiteSpace: 'nowrap' }}>
                       {claimedHistory?.length || 0} Claimed
                     </div>
-                    <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-3)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap' }}>
                       <span>View History</span> ↓
                     </div>
                   </div>
@@ -2128,8 +2126,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     cursor: 'pointer',
                         transition: 'all 0.2s ease',
                         transform: isAvailableOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                        boxShadow: '0 2px 6px rgba(0, 82, 255, 0.05)'
-                      }}
+                        }}
                       title={isAvailableOpen ? "Collapse section" : "Expand section"}
                     >
                       <ChevronDown size={18} />
@@ -2147,7 +2144,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           className="checker-reward-card"
                           style={{
                             border: '2px solid var(--blue)',
-                            boxShadow: '0 10px 32px rgba(0, 82, 255, 0.12), 0 2px 6px rgba(0, 0, 0, 0.03)',
+                            
                             position: 'relative'
                           }}
                         >
@@ -2164,7 +2161,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     borderRadius: '50%',
                                     objectFit: 'cover',
                                     border: '2px solid var(--blue)',
-                                    boxShadow: '0 2px 8px rgba(0, 82, 255, 0.15)',
+                                    
                                     flexShrink: 0
                                   }}
                                 />
@@ -2172,7 +2169,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                                     Holder Rewards
                                   </h4>
-                                  <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'rgba(0, 82, 255, 0.08)', color: 'var(--blue)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
+                                  <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'color-mix(in srgb, var(--accent) 8%, transparent)', color: 'var(--blue)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
                                     {activeHolderRound?.name || 'Unlock 2'}
                                   </span>
                                 </div>
@@ -2183,20 +2180,19 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   borderRadius: '99px',
                                   fontSize: '0.66rem',
                                   fontWeight: 900,
-                                  textTransform: 'uppercase',
+                                  
                                   letterSpacing: '0.04em',
                                   background: '#ecfdf5',
-                                  color: '#059669',
+                                  color: 'var(--green)',
                                   border: '1px solid #a7f3d0',
                                   display: 'inline-flex',
                                   alignItems: 'center',
                                   gap: '4px',
                                   whiteSpace: 'nowrap',
                                   flexShrink: 0,
-                                  boxShadow: '0 2px 8px rgba(16, 185, 129, 0.15)'
-                                }}
+                                  }}
                               >
-                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
+                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
                                 Claim Live
                               </span>
                             </div>
@@ -2208,11 +2204,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 borderRadius: '16px',
                                 padding: '12px 16px',
                                 border: '1px solid rgba(0, 140, 255, 0.18)',
-                                boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)',
+                                
                                 marginBottom: '14px'
                               }}
                             >
-                              <div style={{ fontSize: '0.66rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
+                              <div style={{ fontSize: '0.66rem', color: 'var(--text-3)',  fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
                                 <Coins size={12} color="var(--blue)" /> Rewards Pool
                               </div>
                               <div style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
@@ -2225,7 +2221,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               {hasConfirmedHolderClaim ? (
                                 <div
                                   style={{
-                                    background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+                                    background: '#ecfdf5',
                                     border: '1.5px solid #a7f3d0',
                                     borderRadius: '18px',
                                     padding: '16px 14px',
@@ -2239,7 +2235,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     gap: '8px'
                                   }}
                                 >
-                                  <h5 style={{ fontSize: '1.10rem', color: '#10b981', margin: 0, fontWeight: 900 }}>
+                                  <h5 style={{ fontSize: '1.10rem', color: 'var(--green)', margin: 0, fontWeight: 900 }}>
                                     You're eligible for claim
                                   </h5>
                                   
@@ -2281,7 +2277,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                       alignItems: 'center',
                                       gap: '4px',
                                       background: '#ef4444',
-                                      color: '#ffffff',
+                                      color: 'var(--text)',
                                       padding: '7px 14px',
                                       borderRadius: '10px',
                                       fontSize: '0.78rem',
@@ -2310,7 +2306,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   fontSize: '0.90rem',
                                   fontWeight: 900,
                                   justifyContent: 'center',
-                                  boxShadow: '0 4px 18px rgba(0, 82, 255, 0.32)',
+                                  
                                   cursor: 'pointer'
                                 }}
                               >
@@ -2331,9 +2327,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   width: '100%',
                                   padding: '11px 16px',
                                   borderRadius: '12px',
-                                  background: '#f1f5f9',
-                                  border: '1px solid #cbd5e1',
-                                  color: '#94a3b8',
+                                  background: 'var(--text-2)',
+                                  border: '1px solid var(--text-2)',
+                                  color: 'var(--text-3)',
                                   fontWeight: 800,
                                   fontSize: '0.84rem',
                                   cursor: 'not-allowed'
@@ -2352,11 +2348,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 justifyContent: 'center',
                                 gap: '6px',
                                 fontSize: '0.74rem',
-                                color: '#64748b',
+                                color: 'var(--text-3)',
                                 fontWeight: 700
                               }}
                             >
-                              <Clock size={12} color="#64748b" />
+                              <Clock size={12} color="var(--text-3)" />
                               <span>Claim window ends:</span>
                               <span
                                 style={{
@@ -2384,7 +2380,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           className="checker-reward-card"
                           style={{
                             border: '2px solid #00c8ff',
-                            boxShadow: '0 10px 32px rgba(0, 200, 255, 0.12), 0 2px 6px rgba(0, 0, 0, 0.03)',
+                            
                             position: 'relative'
                           }}
                         >
@@ -2401,7 +2397,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     borderRadius: '10px',
                                     objectFit: 'cover',
                                     border: '2px solid #00c8ff',
-                                    boxShadow: '0 2px 8px rgba(0, 200, 255, 0.18)',
+                                    
                                     flexShrink: 0
                                   }}
                                   onError={(e) => { e.target.src = '/new-logo-vibe.png'; }}
@@ -2421,20 +2417,19 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   borderRadius: '99px',
                                   fontSize: '0.66rem',
                                   fontWeight: 900,
-                                  textTransform: 'uppercase',
+                                  
                                   letterSpacing: '0.04em',
                                   background: '#ecfdf5',
-                                  color: '#059669',
+                                  color: 'var(--green)',
                                   border: '1px solid #a7f3d0',
                                   display: 'inline-flex',
                                   alignItems: 'center',
                                   gap: '4px',
                                   whiteSpace: 'nowrap',
                                   flexShrink: 0,
-                                  boxShadow: '0 2px 8px rgba(16, 185, 129, 0.15)'
-                                }}
+                                  }}
                               >
-                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 6px #10b981', flexShrink: 0 }} />
+                                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
                                 Claim Live
                               </span>
                             </div>
@@ -2446,11 +2441,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 borderRadius: '16px',
                                 padding: '12px 16px',
                                 border: '1px solid rgba(0, 200, 255, 0.2)',
-                                boxShadow: '0 2px 8px rgba(0, 200, 255, 0.04)',
+                                
                                 marginBottom: '14px'
                               }}
                             >
-                              <div style={{ fontSize: '0.66rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
+                              <div style={{ fontSize: '0.66rem', color: 'var(--text-3)',  fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
                                 <Crown size={12} color="#0284c7" /> Royalty Pool
                               </div>
                               <div style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
@@ -2463,7 +2458,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               {(hasConfirmedRoyaltyClaim || isVibeClubEligible) ? (
                                 <div
                                   style={{
-                                    background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+                                    background: '#ecfdf5',
                                     border: '1.5px solid #a7f3d0',
                                     borderRadius: '18px',
                                     padding: '16px 14px',
@@ -2477,7 +2472,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     gap: '8px'
                                   }}
                                 >
-                                  <h5 style={{ fontSize: '1.10rem', color: '#10b981', margin: 0, fontWeight: 900 }}>
+                                  <h5 style={{ fontSize: '1.10rem', color: 'var(--green)', margin: 0, fontWeight: 900 }}>
                                     You're eligible for claim
                                   </h5>
                                   
@@ -2519,7 +2514,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                       alignItems: 'center',
                                       gap: '4px',
                                       background: '#ef4444',
-                                      color: '#ffffff',
+                                      color: 'var(--text)',
                                       padding: '7px 14px',
                                       borderRadius: '10px',
                                       fontSize: '0.78rem',
@@ -2547,7 +2542,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     fontSize: '0.90rem',
                                     fontWeight: 900,
                                     background: '#ecfdf5',
-                                    color: '#059669',
+                                    color: 'var(--green)',
                                     border: '1.5px solid #a7f3d0',
                                     display: 'flex',
                                     alignItems: 'center',
@@ -2556,7 +2551,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     cursor: 'default'
                                   }}
                                 >
-                                  <CheckCircle2 size={16} color="#059669" /> Claimed Successfully
+                                  <CheckCircle2 size={16} color="var(--green)" /> Claimed Successfully
                                 </button>
                                 <button
                                   onClick={() => {
@@ -2573,16 +2568,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     borderRadius: '12px',
                                     fontSize: '0.84rem',
                                     fontWeight: 800,
-                                    background: '#000000',
-                                    color: '#ffffff',
+                                    background: 'var(--bg)',
+                                    color: 'var(--text)',
                                     border: 'none',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     gap: '6px',
                                     cursor: 'pointer',
-                                    boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)'
-                                  }}
+                                    }}
                                 >
                                   <Share2 size={14} /> Share Claim on X
                                 </button>
@@ -2599,7 +2593,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   fontSize: '0.90rem',
                                   fontWeight: 900,
                                   justifyContent: 'center',
-                                  boxShadow: '0 4px 18px rgba(0, 180, 255, 0.32)',
+                                  
                                   cursor: 'pointer'
                                 }}
                               >
@@ -2620,9 +2614,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   width: '100%',
                                   padding: '11px 16px',
                                   borderRadius: '12px',
-                                  background: '#f1f5f9',
-                                  border: '1px solid #cbd5e1',
-                                  color: '#94a3b8',
+                                  background: 'var(--text-2)',
+                                  border: '1px solid var(--text-2)',
+                                  color: 'var(--text-3)',
                                   fontWeight: 800,
                                   fontSize: '0.84rem',
                                   cursor: 'not-allowed'
@@ -2641,11 +2635,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 justifyContent: 'center',
                                 gap: '6px',
                                 fontSize: '0.74rem',
-                                color: '#64748b',
+                                color: 'var(--text-3)',
                                 fontWeight: 700
                               }}
                             >
-                              <Clock size={12} color="#64748b" />
+                              <Clock size={12} color="var(--text-3)" />
                               <span>Claim window ends:</span>
                               <span
                                 style={{
@@ -2671,16 +2665,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   ) : (
                     <div
                       style={{
-                        background: '#ffffff',
+                        background: 'var(--surface-2)',
                         border: '1.5px solid rgba(0, 140, 255, 0.22)',
                         borderRadius: '18px',
                         padding: '24px 20px',
                         textAlign: 'center',
-                        color: '#64748b',
+                        color: 'var(--text-3)',
                         fontSize: '0.90rem',
                         fontWeight: 700,
-                        boxShadow: '0 4px 16px rgba(0, 82, 255, 0.04)'
-                      }}
+                        }}
                     >
                       No active claims available right now. Check upcoming rewards below.
                     </div>
@@ -2712,8 +2705,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     color: '#0284c7',
                     transition: 'all 0.2s ease',
                     transform: isUpcomingOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    boxShadow: '0 2px 6px rgba(0, 82, 255, 0.05)'
-                  }}
+                    }}
                   title={isUpcomingOpen ? "Collapse section" : "Expand section"}
                 >
                   <ChevronDown size={18} />
@@ -2729,7 +2721,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       className="checker-reward-card"
                       style={{
                         border: '1.5px solid rgba(0, 160, 255, 0.25)',
-                        boxShadow: '0 6px 24px rgba(0, 82, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+                        
                         position: 'relative'
                       }}
                     >
@@ -2746,7 +2738,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 borderRadius: '50%',
                                 objectFit: 'cover',
                                 border: '1.5px solid rgba(0, 160, 255, 0.3)',
-                                boxShadow: '0 2px 8px rgba(0, 82, 255, 0.15)',
+                                
                                 flexShrink: 0
                               }}
                             />
@@ -2754,7 +2746,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                                 Holder Rewards
                               </h4>
-                              <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'rgba(0, 82, 255, 0.08)', color: 'var(--blue)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
+                              <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'color-mix(in srgb, var(--accent) 8%, transparent)', color: 'var(--blue)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
                                 {upcomingHolderRound?.name || 'Unlock 1'}
                               </span>
                             </div>
@@ -2765,10 +2757,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               borderRadius: '99px',
                               fontSize: '0.66rem',
                               fontWeight: 900,
-                              textTransform: 'uppercase',
+                              
                               letterSpacing: '0.04em',
                               background: 'rgba(255, 255, 255, 0.9)',
-                              color: '#64748b',
+                              color: 'var(--text-3)',
                               border: '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
@@ -2777,7 +2769,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               flexShrink: 0
                             }}
                           >
-                            <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
+                            <Lock size={11} color="var(--text-3)" style={{ flexShrink: 0 }} />
                             Locked
                           </span>
                         </div>
@@ -2789,11 +2781,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             borderRadius: '16px',
                             padding: '12px 16px',
                             border: '1px solid rgba(0, 140, 255, 0.18)',
-                            boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)',
+                            
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: '0.66rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
+                          <div style={{ fontSize: '0.66rem', color: 'var(--text-3)',  fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
                             <Coins size={12} color="var(--blue)" /> Rewards Pool
                           </div>
                           <div style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
@@ -2806,7 +2798,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           {isHolderEligibleLive ? (
                             <div
                               style={{
-                                background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+                                background: '#ecfdf5',
                                 border: '1.5px solid #a7f3d0',
                                 borderRadius: '18px',
                                 padding: '16px 14px',
@@ -2825,7 +2817,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 alt="Eligible VIBE"
                                 style={{ width: 72, height: 72, objectFit: 'contain', margin: '-2px 0' }}
                               />
-                              <h5 style={{ fontSize: '1.10rem', color: '#10b981', margin: 0, fontWeight: 900 }}>
+                              <h5 style={{ fontSize: '1.10rem', color: 'var(--green)', margin: 0, fontWeight: 900 }}>
                                 You are Eligible!
                               </h5>
                             </div>
@@ -2894,7 +2886,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           boxSizing: 'border-box'
                         }}
                       >
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: 'var(--text-3)', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
                           <Lock size={13} /> Claim opens {upcomingHolderRound?.unlockDate || 'Sep 25'}
                         </span>
                         <span
@@ -2902,9 +2894,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                             fontSize: '0.76rem',
                             fontWeight: 900,
-                            background: 'rgba(0, 82, 255, 0.08)',
+                            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
                             color: 'var(--blue)',
-                            border: '1px solid rgba(0, 82, 255, 0.2)',
+                            border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
                             padding: '2px 6px',
                             borderRadius: '6px',
                             letterSpacing: '0.03em',
@@ -2924,18 +2916,18 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           justifyContent: 'center',
                           gap: '6px',
                           fontSize: '0.74rem',
-                          color: '#64748b',
+                          color: 'var(--text-3)',
                           fontWeight: 700
                         }}
                       >
                         {currentTime >= new Date(upcomingHolderRound?.snapshotIso) ? (
                           <>
-                            <Check size={12} color="#10b981" strokeWidth={3} />
+                            <Check size={12} color="var(--green)" strokeWidth={3} />
                             <span>Snapshot taken: {upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC'}</span>
                           </>
                         ) : (
                           <>
-                            <Clock size={12} color="#64748b" />
+                            <Clock size={12} color="var(--text-3)" />
                             <span>Snapshot date: {upcomingHolderRound?.snapshotDate || 'Aug 26, 00:00 UTC'}</span>
                           </>
                         )}
@@ -2947,7 +2939,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       className="checker-reward-card"
                       style={{
                         border: '1.5px solid rgba(0, 160, 255, 0.25)',
-                        boxShadow: '0 6px 24px rgba(0, 82, 255, 0.06), 0 2px 6px rgba(0, 0, 0, 0.03)',
+                        
                         position: 'relative'
                       }}
                     >
@@ -2960,12 +2952,12 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 width: '36px',
                                 height: '36px',
                                 borderRadius: '50%',
-                                background: 'rgba(0, 82, 255, 0.1)',
+                                background: 'color-mix(in srgb, var(--accent) 10%, transparent)',
                                 border: '1.5px solid rgba(0, 160, 255, 0.3)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                boxShadow: '0 2px 8px rgba(0, 82, 255, 0.15)',
+                                
                                 flexShrink: 0
                               }}
                             >
@@ -2975,7 +2967,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                                 Vibe Club
                               </h4>
-                              <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'rgba(0, 82, 255, 0.08)', color: 'var(--blue)', border: '1px solid rgba(0, 82, 255, 0.2)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
+                              <span style={{ fontSize: '0.66rem', fontWeight: 800, background: 'color-mix(in srgb, var(--accent) 8%, transparent)', color: 'var(--blue)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', padding: '2px 7px', borderRadius: '99px', lineHeight: 1.2, whiteSpace: 'nowrap', display: 'inline-flex', alignItems: 'center' }}>
                                 {upcomingVibeClubRound?.name || 'Royalty 1'}
                               </span>
                             </div>
@@ -2986,10 +2978,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               borderRadius: '99px',
                               fontSize: '0.66rem',
                               fontWeight: 900,
-                              textTransform: 'uppercase',
+                              
                               letterSpacing: '0.04em',
                               background: 'rgba(255, 255, 255, 0.9)',
-                              color: '#64748b',
+                              color: 'var(--text-3)',
                               border: '1px solid rgba(0, 160, 255, 0.25)',
                               display: 'inline-flex',
                               alignItems: 'center',
@@ -2998,7 +2990,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                               flexShrink: 0
                             }}
                           >
-                            <Lock size={11} color="#64748b" style={{ flexShrink: 0 }} />
+                            <Lock size={11} color="var(--text-3)" style={{ flexShrink: 0 }} />
                             Locked
                           </span>
                         </div>
@@ -3010,11 +3002,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             borderRadius: '16px',
                             padding: '12px 16px',
                             border: '1px solid rgba(0, 140, 255, 0.18)',
-                            boxShadow: '0 2px 8px rgba(0, 82, 255, 0.03)',
+                            
                             marginBottom: '14px'
                           }}
                         >
-                          <div style={{ fontSize: '0.66rem', color: '#64748b', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
+                          <div style={{ fontSize: '0.66rem', color: 'var(--text-3)',  fontWeight: 800, letterSpacing: '0.05em', display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
                             <Crown size={12} color="var(--blue)" /> Royalty Pool
                           </div>
                           <div style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'baseline', gap: '5px' }}>
@@ -3027,7 +3019,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           {isVibeClubEligible ? (
                             <div
                               style={{
-                                background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%)',
+                                background: '#ecfdf5',
                                 border: '1.5px solid #a7f3d0',
                                 borderRadius: '18px',
                                 padding: '16px 14px',
@@ -3046,7 +3038,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                 alt="Eligible NFT"
                                 style={{ width: 72, height: 72, objectFit: 'contain', margin: '-2px 0' }}
                               />
-                              <h5 style={{ fontSize: '1.10rem', color: '#10b981', margin: 0, fontWeight: 900 }}>
+                              <h5 style={{ fontSize: '1.10rem', color: 'var(--green)', margin: 0, fontWeight: 900 }}>
                                 Eligible Member!
                               </h5>
                             </div>
@@ -3087,7 +3079,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   fontWeight: 800,
                                   borderRadius: '10px',
                                   textDecoration: 'none',
-                                  background: '#10b981'
+                                  background: 'var(--green)'
                                 }}
                               >
                                 Mint Vibe Club NFT ↗
@@ -3115,7 +3107,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           boxSizing: 'border-box'
                         }}
                       >
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: '#64748b', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', color: 'var(--text-3)', fontSize: '0.80rem', whiteSpace: 'nowrap' }}>
                           <Lock size={13} /> Claim opens {upcomingVibeClubRound?.claimDate || 'Aug 28'}
                         </span>
                         <span
@@ -3123,9 +3115,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
                             fontSize: '0.76rem',
                             fontWeight: 900,
-                            background: 'rgba(0, 82, 255, 0.08)',
+                            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
                             color: 'var(--blue)',
-                            border: '1px solid rgba(0, 82, 255, 0.2)',
+                            border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
                             padding: '2px 6px',
                             borderRadius: '6px',
                             letterSpacing: '0.03em',
@@ -3145,18 +3137,18 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           justifyContent: 'center',
                           gap: '6px',
                           fontSize: '0.74rem',
-                          color: '#64748b',
+                          color: 'var(--text-3)',
                           fontWeight: 700
                         }}
                       >
                         {currentTime >= new Date(upcomingVibeClubRound?.snapshotIso) ? (
                           <>
-                            <Check size={12} color="#10b981" strokeWidth={3} />
+                            <Check size={12} color="var(--green)" strokeWidth={3} />
                             <span>Snapshot taken: {upcomingVibeClubRound?.snapshotDate || 'Aug 28, 00:00 UTC'}</span>
                           </>
                         ) : (
                           <>
-                            <Clock size={12} color="#64748b" />
+                            <Clock size={12} color="var(--text-3)" />
                             <span>Snapshot date: {upcomingVibeClubRound?.snapshotDate || 'Aug 28, 00:00 UTC'}</span>
                           </>
                         )}
@@ -3175,24 +3167,23 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
               {/* Section Header (Outside Panel) */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
                 <h3 style={{ fontSize: '1.35rem', fontWeight: 900, color: 'var(--ink)', letterSpacing: '-0.02em', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <CheckCircle2 size={20} color="#10b981" /> Claimed Rewards ({claimedHistory?.length || 0})
+                  <CheckCircle2 size={20} color="var(--green)" /> Claimed Rewards ({claimedHistory?.length || 0})
                 </h3>
                 <button
                   onClick={() => setIsHistoryOpen(!isHistoryOpen)}
                   style={{
                     background: 'rgba(255, 255, 255, 0.85)',
-                    border: '1.5px solid rgba(16, 185, 129, 0.25)',
+                    border: '1.5px solid color-mix(in srgb, var(--green) 25%, transparent)',
                     borderRadius: '10px',
                     padding: '5px 9px',
                     cursor: 'pointer',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: '#10b981',
+                    color: 'var(--green)',
                     transition: 'all 0.2s ease',
                     transform: isHistoryOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-                    boxShadow: '0 2px 6px rgba(16, 185, 129, 0.05)'
-                  }}
+                    }}
                   title={isHistoryOpen ? "Collapse section" : "Expand section"}
                 >
                   <ChevronDown size={18} />
@@ -3207,20 +3198,19 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         <div
                           key={item?.id || Math.random()}
                           style={{
-                            background: '#ffffff',
+                            background: 'var(--surface-2)',
                             border: '1.5px solid #a7f3d0',
                             borderRadius: '16px',
                             padding: '14px 18px',
                             display: 'flex',
                             flexDirection: 'column',
                             gap: '12px',
-                            boxShadow: '0 4px 14px rgba(16, 185, 129, 0.05)'
-                          }}
+                            }}
                         >
                           {/* Top Row: Checkmark + Title (no subtitle) */}
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <div style={{ width: '28px', height: '28px', borderRadius: '8px', background: '#ecfdf5', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                              <Check size={16} color="#10b981" strokeWidth={3} />
+                              <Check size={16} color="var(--green)" strokeWidth={3} />
                             </div>
                             <strong style={{ fontSize: '0.92rem', color: 'var(--ink)', fontWeight: 900, lineHeight: 1.25 }}>
                               {item?.title || 'Rewards Claim'}
@@ -3239,7 +3229,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   rel="noreferrer"
                                   style={{
                                     background: '#faf5ff',
-                                    border: '1.5px solid #d8b4fe',
+                                    border: '1.5px solid var(--text-2)',
                                     color: '#7e22ce',
                                     padding: '5px 10px',
                                     borderRadius: '8px',
@@ -3250,11 +3240,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     alignItems: 'center',
                                     gap: '4px',
                                     transition: 'all 0.15s ease',
-                                    boxShadow: '0 1px 3px rgba(168, 85, 247, 0.08)',
+                                    
                                     whiteSpace: 'nowrap'
                                   }}
-                                  onMouseEnter={(e) => { e.currentTarget.style.background = '#f3e8ff'; e.currentTarget.style.borderColor = '#c084fc'; }}
-                                  onMouseLeave={(e) => { e.currentTarget.style.background = '#faf5ff'; e.currentTarget.style.borderColor = '#d8b4fe'; }}
+                                  onMouseEnter={(e) => { e.currentTarget.style.background = '#f3e8ff'; e.currentTarget.style.borderColor = 'var(--text-2)'; }}
+                                  onMouseLeave={(e) => { e.currentTarget.style.background = '#faf5ff'; e.currentTarget.style.borderColor = 'var(--text-2)'; }}
                                 >
                                   <span>o1 Vault</span>
                                   <ArrowUpRight size={12} strokeWidth={2.5} />
@@ -3279,7 +3269,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                   alignItems: 'center',
                                   gap: '4px',
                                   transition: 'all 0.15s ease',
-                                  boxShadow: '0 1px 3px rgba(16, 185, 129, 0.08)',
+                                  
                                   whiteSpace: 'nowrap'
                                 }}
                                 onMouseEnter={(e) => { e.currentTarget.style.background = '#dcfce7'; e.currentTarget.style.borderColor = '#4ade80'; }}
@@ -3302,8 +3292,8 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     setShowRoyaltySuccessModal(true);
                                   }}
                                   style={{
-                                    background: '#000000',
-                                    color: '#ffffff',
+                                    background: 'var(--bg)',
+                                    color: 'var(--text)',
                                     border: 'none',
                                     padding: '5px 11px',
                                     borderRadius: '8px',
@@ -3314,11 +3304,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                                     alignItems: 'center',
                                     gap: '5px',
                                     transition: 'all 0.15s ease',
-                                    boxShadow: '0 1px 4px rgba(0, 0, 0, 0.12)',
+                                    
                                     whiteSpace: 'nowrap'
                                   }}
                                   onMouseEnter={(e) => { e.currentTarget.style.background = '#1e293b'; }}
-                                  onMouseLeave={(e) => { e.currentTarget.style.background = '#000000'; }}
+                                  onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--bg)'; }}
                                 >
                                   <Share2 size={12} />
                                   <span>Share</span>
@@ -3327,7 +3317,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                             </div>
 
                             {/* Amount */}
-                            <div style={{ fontSize: '1.02rem', fontWeight: 900, color: '#10b981', textAlign: 'right', whiteSpace: 'nowrap' }}>
+                            <div style={{ fontSize: '1.02rem', fontWeight: 900, color: 'var(--green)', textAlign: 'right', whiteSpace: 'nowrap' }}>
                               +{Math.round(Number(item?.amount || 0)).toLocaleString('en-US')}{' '}
                               <span style={{ fontSize: '0.78rem', color: 'var(--blue)', fontWeight: 800 }}>$VIBE</span>
                             </div>
@@ -3338,16 +3328,15 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   ) : (
                     <div
                       style={{
-                        background: '#ffffff',
-                        border: '1.5px solid rgba(16, 185, 129, 0.2)',
+                        background: 'var(--surface-2)',
+                        border: '1.5px solid color-mix(in srgb, var(--green) 20%, transparent)',
                         borderRadius: '18px',
                         padding: '24px 20px',
                         textAlign: 'center',
-                        color: '#64748b',
+                        color: 'var(--text-3)',
                         fontSize: '0.90rem',
                         fontWeight: 700,
-                        boxShadow: '0 4px 16px rgba(16, 185, 129, 0.04)'
-                      }}
+                        }}
                     >
                       No claimed rewards yet. Check available rewards above to claim.
                     </div>
@@ -3367,10 +3356,9 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   padding: '24px',
                   marginTop: '40px',
                   marginBottom: '20px',
-                  color: '#ffffff',
+                  color: 'var(--text)',
                   border: '1px solid #1e293b',
-                  boxShadow: '0 8px 30px rgba(0, 0, 0, 0.12)'
-                }}
+                  }}
               >
                 {/* Header */}
                 <div
@@ -3394,7 +3382,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     rel="noreferrer"
                     style={{
                       fontSize: '0.78rem',
-                      color: '#94a3b8',
+                      color: 'var(--text-3)',
                       textDecoration: 'none',
                       fontFamily: 'monospace',
                       background: 'rgba(255, 255, 255, 0.05)',
@@ -3422,7 +3410,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       borderRadius: '8px',
                       border: 'none',
                       background: adminDistributorType === 'holder' ? 'var(--blue)' : 'transparent',
-                      color: '#ffffff',
+                      color: 'var(--text)',
                       fontWeight: 800,
                       fontSize: '0.82rem',
                       cursor: 'pointer',
@@ -3445,7 +3433,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       borderRadius: '8px',
                       border: 'none',
                       background: adminDistributorType === 'royalty' ? '#0284c7' : 'transparent',
-                      color: '#ffffff',
+                      color: 'var(--text)',
                       fontWeight: 800,
                       fontSize: '0.82rem',
                       cursor: 'pointer',
@@ -3458,7 +3446,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                 {adminDistributorType === 'royalty' && (
                   <div style={{ background: 'rgba(2, 132, 199, 0.08)', border: '1px solid rgba(2, 132, 199, 0.25)', borderRadius: '12px', padding: '12px 16px', marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-                    <span style={{ fontSize: '0.78rem', color: '#38bdf8', fontWeight: 800 }}>Royalty Contract CA:</span>
+                    <span style={{ fontSize: '0.78rem', color: 'var(--accent)', fontWeight: 800 }}>Royalty Contract CA:</span>
                     <input
                       type="text"
                       value={adminCustomRoyaltyCa}
@@ -3477,7 +3465,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         border: '1px solid rgba(148, 163, 184, 0.25)',
                         borderRadius: '8px',
                         padding: '6px 12px',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         fontFamily: 'monospace',
                         fontSize: '0.78rem',
                         fontWeight: 700,
@@ -3497,28 +3485,28 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   }}
                 >
                   <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '14px 16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                    <div style={{ fontSize: '0.70rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '0.70rem', color: 'var(--text-3)',  fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
                       Contract $VIBE Balance
                     </div>
-                    <div style={{ fontSize: '1.20rem', fontWeight: 800, color: '#38bdf8' }}>
+                    <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--accent)' }}>
                       {adminMetrics.metricsLoading ? '...' : (adminMetrics.contractBalance || 0).toLocaleString('en-US') + ' $VIBE'}
                     </div>
                   </div>
 
                   <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '14px 16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                    <div style={{ fontSize: '0.70rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '0.70rem', color: 'var(--text-3)',  fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
                       Wallets Claimed
                     </div>
-                    <div style={{ fontSize: '1.20rem', fontWeight: 800, color: '#10b981' }}>
+                    <div style={{ fontSize: '1.20rem', fontWeight: 800, color: 'var(--green)' }}>
                       {adminMetrics.metricsLoading ? '...' : `${adminMetrics.claimedWalletsCount} / ${adminMetrics.totalWalletsCount}`}
-                      <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, marginLeft: '6px' }}>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-3)', fontWeight: 600, marginLeft: '6px' }}>
                         ({adminMetrics.totalWalletsCount > 0 ? ((adminMetrics.claimedWalletsCount / adminMetrics.totalWalletsCount) * 100).toFixed(1) : 0}%)
                       </span>
                     </div>
                   </div>
 
                   <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '14px 16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                    <div style={{ fontSize: '0.70rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '0.70rem', color: 'var(--text-3)',  fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
                       Total Claimed
                     </div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: '#f8fafc' }}>
@@ -3527,7 +3515,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   </div>
 
                   <div style={{ background: 'rgba(255, 255, 255, 0.03)', borderRadius: '12px', padding: '14px 16px', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
-                    <div style={{ fontSize: '0.70rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
+                    <div style={{ fontSize: '0.70rem', color: 'var(--text-3)',  fontWeight: 700, letterSpacing: '0.04em', marginBottom: '4px' }}>
                       Unclaimed in Round
                     </div>
                     <div style={{ fontSize: '1.20rem', fontWeight: 800, color: '#fbbf24' }}>
@@ -3574,7 +3562,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         border: '1px solid rgba(148, 163, 184, 0.25)',
                         borderRadius: '10px',
                         padding: '10px 12px',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         fontSize: '0.85rem',
                         fontWeight: 700,
                         outline: 'none',
@@ -3591,7 +3579,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                         border: '1px solid rgba(148, 163, 184, 0.25)',
                         borderRadius: '10px',
                         padding: '10px 14px',
-                        color: '#38bdf8',
+                        color: 'var(--accent)',
                         fontFamily: 'monospace',
                         fontSize: '0.82rem',
                         fontWeight: 700,
@@ -3604,7 +3592,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       disabled={adminLoading}
                       style={{
                         background: 'var(--blue)',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '10px 18px',
@@ -3637,7 +3625,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           border: '1px solid rgba(148, 163, 184, 0.25)',
                           borderRadius: '10px',
                           padding: '10px 65px 10px 14px',
-                          color: '#ffffff',
+                          color: 'var(--text)',
                           fontSize: '0.85rem',
                           fontWeight: 700,
                           outline: 'none',
@@ -3653,7 +3641,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           transform: 'translateY(-50%)',
                           background: 'rgba(255, 255, 255, 0.1)',
                           border: '1px solid rgba(255, 255, 255, 0.2)',
-                          color: '#94a3b8',
+                          color: 'var(--text-3)',
                           fontSize: '0.70rem',
                           fontWeight: 800,
                           padding: '3px 8px',
@@ -3669,7 +3657,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       disabled={adminLoading}
                       style={{
                         background: '#0284c7',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '10px 18px',
@@ -3702,7 +3690,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                           border: '1px solid rgba(148, 163, 184, 0.25)',
                           borderRadius: '10px',
                           padding: '10px 110px 10px 14px',
-                          color: '#ffffff',
+                          color: 'var(--text)',
                           fontSize: '0.85rem',
                           fontWeight: 700,
                           outline: 'none',
@@ -3734,7 +3722,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                       disabled={adminLoading}
                       style={{
                         background: '#dc2626',
-                        color: '#ffffff',
+                        color: 'var(--text)',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '10px 18px',
@@ -3751,7 +3739,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
 
                 {/* Status Feedback */}
                 {adminSuccess && (
-                  <div style={{ marginTop: '14px', background: 'rgba(16, 185, 129, 0.15)', border: '1px solid #10b981', borderRadius: '10px', padding: '10px 14px', color: '#a7f3d0', fontSize: '0.82rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                  <div style={{ marginTop: '14px', background: 'color-mix(in srgb, var(--green) 15%, transparent)', border: '1px solid var(--green)', borderRadius: '10px', padding: '10px 14px', color: '#a7f3d0', fontSize: '0.82rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
                     <span>Transaction confirmed successfully on Base!</span>
                     {adminTxHash && adminTxHash.startsWith('0x') && (
                       <a
@@ -3801,7 +3789,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 position: 'absolute',
                 top: '16px',
                 right: '16px',
-                background: '#f1f5f9',
+                background: 'var(--text-2)',
                 border: 'none',
                 borderRadius: '50%',
                 width: '34px',
@@ -3810,25 +3798,25 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                color: '#64748b',
+                color: 'var(--text-3)',
                 transition: 'all 0.2s ease',
                 zIndex: 2
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = '#e2e8f0'; e.currentTarget.style.color = '#0f172a'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = '#f1f5f9'; e.currentTarget.style.color = '#64748b'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--text-2)'; e.currentTarget.style.color = '#0f172a'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--text-2)'; e.currentTarget.style.color = 'var(--text-3)'; }}
             >
               <X size={18} />
             </button>
 
             {/* Success Green Badge (Desktop) */}
             <div className="royalty-modal-badge-desktop">
-              <Check size={32} color="#ffffff" strokeWidth={3.2} />
+              <Check size={32} color="var(--text)" strokeWidth={3.2} />
             </div>
 
             {/* Title with Inline Icon on Mobile */}
             <h3 className="royalty-modal-title">
               <span className="royalty-modal-check-inline">
-                <CheckCircle2 size={24} color="#10b981" strokeWidth={2.8} />
+                <CheckCircle2 size={24} color="var(--green)" strokeWidth={2.8} />
               </span>
               Claim Successful!
             </h3>
@@ -3845,7 +3833,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                 borderRadius: '18px',
                 overflow: 'hidden',
                 border: '1.5px solid rgba(0, 200, 255, 0.35)',
-                boxShadow: '0 12px 30px rgba(0, 102, 255, 0.16)',
+                
                 marginBottom: '20px'
               }}
             >
@@ -3880,7 +3868,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   marginBottom: '6px',
                   fontSize: '0.68rem',
                   fontWeight: 900,
-                  textTransform: 'uppercase',
+                  
                   letterSpacing: '0.04em',
                   color: '#0284c7'
                 }}>
@@ -3907,11 +3895,11 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                     width: '100%',
                     background: '#f8fafc',
                     color: '#334155',
-                    border: '1.5px solid #cbd5e1',
-                    boxShadow: '0 2px 6px rgba(0,0,0,0.04)',
+                    border: '1.5px solid var(--text-2)',
+                    
                     transition: 'all 0.2s ease'
                   }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = '#e2e8f0'; }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--text-2)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.background = '#f8fafc'; }}
                 >
                   {downloadingBanner ? (
@@ -3935,7 +3923,7 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   marginBottom: '6px',
                   fontSize: '0.68rem',
                   fontWeight: 900,
-                  textTransform: 'uppercase',
+                  
                   letterSpacing: '0.04em',
                   color: '#0f172a'
                 }}>
@@ -3981,10 +3969,10 @@ export default function Checker({ isBaseAppMode = false, isProfileMode = false }
                   className="royalty-modal-btn"
                   style={{
                     width: '100%',
-                    background: '#000000',
-                    color: '#ffffff',
+                    background: 'var(--bg)',
+                    color: 'var(--text)',
                     border: 'none',
-                    boxShadow: '0 6px 20px rgba(0, 0, 0, 0.25)',
+                    
                     transition: 'all 0.2s ease'
                   }}
                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.35)'; }}

@@ -44,7 +44,7 @@ function ActiveClaimCountdown({ targetDate }) {
   return <span>{timeLeft}</span>;
 }
 
-function InfoSvgIcon({ size = 18, color = '#00f5ff', className = '' }) {
+function InfoSvgIcon({ size = 18, color = 'var(--accent)', className = '' }) {
   return (
     <svg
       width={size}
@@ -55,7 +55,7 @@ function InfoSvgIcon({ size = 18, color = '#00f5ff', className = '' }) {
       className={className}
       style={{ display: 'block', flexShrink: 0 }}
     >
-      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="rgba(0, 245, 255, 0.15)" />
+      <circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2.2" fill="color-mix(in srgb, var(--accent) 15%, transparent)" />
       <path d="M12 11v5" stroke={color} strokeWidth="2.4" strokeLinecap="round" />
       <circle cx="12" cy="7.5" r="1.3" fill={color} />
     </svg>
@@ -116,18 +116,17 @@ function BaseAppClaimCountdownButton({ targetDate }) {
           justifyContent: 'center',
           gap: '8px',
           textDecoration: 'none',
-          background: 'rgba(0, 255, 136, 0.12)',
-          border: '1.5px solid #00ff88',
-          color: '#00ff88',
+          background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+          border: '1.5px solid var(--green)',
+          color: 'var(--green)',
           borderRadius: '10px',
-          fontFamily: "'Press Start 2P', monospace",
+          fontFamily: 'var(--font-sans)',
           fontWeight: 900,
           transition: 'all 0.2s',
           boxSizing: 'border-box',
-          textShadow: 'none'
-        }}
+          }}
       >
-        <span style={{ color: '#00ff88' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+        <span style={{ color: 'var(--green)' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
       </Link>
     );
   }
@@ -144,20 +143,19 @@ function BaseAppClaimCountdownButton({ targetDate }) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '8px',
-        background: 'rgba(0, 255, 136, 0.12)',
-        border: '1.5px solid #00ff88',
-        color: '#00ff88',
+        background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+        border: '1.5px solid var(--green)',
+        color: 'var(--green)',
         borderRadius: '10px',
-        fontFamily: "'Press Start 2P', monospace",
+        fontFamily: 'var(--font-sans)',
         fontWeight: 900,
         boxSizing: 'border-box',
-        textShadow: 'none',
+        
         cursor: 'default',
-        boxShadow: '0 0 16px rgba(0, 255, 136, 0.2)'
-      }}
+        }}
     >
-      <Clock size={14} color="#00ff88" strokeWidth={2.5} />
-      <span style={{ color: '#00ff88' }}>CLAIM IN {timeLeft}</span>
+      <Clock size={14} color="var(--green)" strokeWidth={2.5} />
+      <span style={{ color: 'var(--green)' }}>CLAIM IN {timeLeft}</span>
     </button>
   );
 }
@@ -345,15 +343,15 @@ export default function BaseAppRewardsView({
             fontSize: '18px',
             margin: '0 0 12px 0',
             letterSpacing: '0.6px',
-            color: '#ffffff',
-            fontFamily: "'Press Start 2P', monospace",
-            textShadow: 'none',
+            color: 'var(--text)',
+            fontFamily: 'var(--font-sans)',
+            
             textAlign: 'center',
             width: '100%',
             lineHeight: 1.3
           }}
         >
-          REWARDS <span style={{ color: '#00f5ff' }}>HUB</span>
+          REWARDS <span style={{ color: 'var(--accent)' }}>HUB</span>
         </h2>
 
         {/* Subtitle Status Pill */}
@@ -364,16 +362,16 @@ export default function BaseAppRewardsView({
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
-            background: 'rgba(0, 245, 255, 0.08)',
-            border: '1.5px solid rgba(0, 245, 255, 0.35)',
+            background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
+            border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
             borderRadius: '99px',
             padding: '7px 16px',
             maxWidth: '100%',
             boxSizing: 'border-box'
           }}
         >
-          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 8px #00ff88', flexShrink: 0 }} />
-          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: '#00f5ff', letterSpacing: '0.5px', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
+          <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
+          <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
             TRACK ACTIVE REWARDS. JOIN &amp; EARN
           </span>
         </div>
@@ -440,8 +438,8 @@ export default function BaseAppRewardsView({
           <div
             className="rewards-rule-strip"
             style={{
-              background: 'rgba(255, 215, 0, 0.08)',
-              border: '1.5px solid #ffd700',
+              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
+              border: '1.5px solid var(--amber)',
               borderRadius: '12px',
               padding: '10px 12px',
               marginBottom: '18px',
@@ -452,8 +450,8 @@ export default function BaseAppRewardsView({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
                 Hold 5M+ $VIBE at snapshot time to share the rewards pool.
               </span>
             </div>
@@ -464,23 +462,23 @@ export default function BaseAppRewardsView({
               className="rewards-rule-btn"
               style={{
                 fontSize: '6.5px',
-                color: '#ffd700',
-                border: '1px solid #ffd700',
+                color: 'var(--amber)',
+                border: '1px solid var(--amber)',
                 padding: '4px 8px',
                 borderRadius: '6px',
                 textDecoration: 'none',
                 whiteSpace: 'nowrap',
                 fontWeight: 800,
                 flexShrink: 0,
-                background: 'rgba(255, 215, 0, 0.15)',
-                fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none',
+                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
+                fontFamily: 'var(--font-sans)',
+                
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px'
               }}
             >
-              <span>RULES</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
+              <span>RULES</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
             </a>
           </div>
 
@@ -489,20 +487,19 @@ export default function BaseAppRewardsView({
             <div
               className="rewards-featured-card"
               style={{
-                background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00f5ff',
+                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
+                border: '2px solid var(--accent)',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
-              }}
+                }}
             >
               <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
                   <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredHolder.unlock}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '#00ff88' : featuredHolderStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredHolder.unlock}</div>
+                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'var(--green)' : featuredHolderStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                       {isFeaturedHolderClaimLive ? 'CLAIM IS LIVE' : featuredHolderStatus === 'active' ? 'ACTIVE' : featuredHolderStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
                     </div>
                   </div>
@@ -523,8 +520,8 @@ export default function BaseAppRewardsView({
                       <InfoSvgIcon className="rewards-timer-info-icon" />
                     </button>
                   )}
-                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredHolderStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '1px solid #00ff88' : featuredHolderStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '#00ff88' : featuredHolderStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                    {(isFeaturedHolderClaimLive || featuredHolderStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
+                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredHolderStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? '1px solid var(--green)' : featuredHolderStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedHolderClaimLive || featuredHolderStatus === 'active') ? 'var(--green)' : featuredHolderStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
+                    {(isFeaturedHolderClaimLive || featuredHolderStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)' }} />}
                     {isFeaturedHolderClaimLive ? (
                       <ActiveClaimCountdown targetDate={featuredHolder.nextSnapshotDate} />
                     ) : featuredHolderStatus === 'active' ? (
@@ -542,7 +539,7 @@ export default function BaseAppRewardsView({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="#00f5ff" />
+                        <InfoSvgIcon size={14} color="var(--accent)" />
                         <span>CLAIM WINDOW</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
@@ -554,25 +551,25 @@ export default function BaseAppRewardsView({
               </div>
 
               {/* Rewards Pool highlight (Clean Turquoise, No Neon Blur) */}
-              <div className="rewards-pool-box" style={{ background: 'rgba(2, 11, 26, 0.85)', border: '1px solid rgba(0, 245, 255, 0.25)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>REWARDS POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  {featuredHolder.poolAmount} <span className="rewards-pool-unit" style={{ fontSize: '8px', color: '#00f5ff' }}>$VIBE</span>
+              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
+                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>REWARDS POOL</div>
+                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
+                  {featuredHolder.poolAmount} <span className="rewards-pool-unit" style={{ fontSize: '8px', color: 'var(--accent)' }}>$VIBE</span>
                 </div>
               </div>
 
               {/* Two info pills */}
               <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>REQUIREMENT</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", whiteSpace: 'nowrap', textShadow: 'none' }}>Holder 5M+ $VIBE</div>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>REQUIREMENT</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap', }}>Holder 5M+ $VIBE</div>
                 </div>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '2px' }}>
-                    <CheckCircle2 className="rewards-snapshot-check-icon" size={9} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span className="rewards-info-label" style={{ fontSize: '6px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>SNAPSHOT COMPLETED</span>
+                    <CheckCircle2 className="rewards-snapshot-check-icon" size={9} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>SNAPSHOT COMPLETED</span>
                   </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredHolder.snapshotTime)}</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredHolder.snapshotTime)}</div>
                 </div>
               </div>
 
@@ -590,18 +587,17 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     gap: '8px',
                     textDecoration: 'none',
-                    background: 'rgba(0, 255, 136, 0.12)',
-                    border: '1.5px solid #00ff88',
-                    color: '#00ff88',
+                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                    border: '1.5px solid var(--green)',
+                    color: 'var(--green)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     transition: 'all 0.2s',
                     boxSizing: 'border-box',
-                    textShadow: 'none'
-                  }}
+                    }}
                 >
-                  <span style={{ color: '#00ff88' }}>CLAIM REWARD</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                  <span style={{ color: 'var(--green)' }}>CLAIM REWARD</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
                 </Link>
               ) : featuredHolderStatus === 'active' ? (
                 <BaseAppClaimCountdownButton targetDate={featuredHolder.dateObj} />
@@ -618,9 +614,9 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#94a3b8',
+                    color: 'var(--text-3)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900
                   }}
                 >
@@ -639,9 +635,9 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#94a3b8',
+                    color: 'var(--text-3)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900
                   }}
                 >
@@ -653,23 +649,23 @@ export default function BaseAppRewardsView({
               {authenticated ? (
                 isHolderActiveEligible ? (
                   <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                    <CheckCircle2 size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: '7px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800 }}>
                       You are eligible
                     </span>
                   </div>
                 ) : (
                   <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                    <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
+                    <XCircle size={13} color="var(--red)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: '6px', color: 'var(--red)', fontFamily: 'var(--font-sans)', fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
                       Not eligible for this unlock. Complete requirement for the next unlock.
                     </span>
                   </div>
                 )
               ) : (
                 <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                  <Info size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <Info size={11} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                     Connect wallet to check eligibility
                   </span>
                 </div>
@@ -678,10 +674,10 @@ export default function BaseAppRewardsView({
           )}
 
           {/* Upcoming Schedule Timeline List */}
-          <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: otherEndedHolders.length > 0 ? '20px' : '24px' }}>
+          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: otherEndedHolders.length > 0 ? '20px' : '24px' }}>
             <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>UNLOCK SCHEDULE</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>{otherUpcomingHolders.length} ROUNDS</div>
+              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>UNLOCK SCHEDULE</div>
+              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>{otherUpcomingHolders.length} ROUNDS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -693,8 +689,8 @@ export default function BaseAppRewardsView({
                     <div
                       className="rewards-schedule-row"
                       style={{
-                        background: 'rgba(2, 11, 26, 0.75)',
-                        border: isTooltipOpen ? '1px solid #ffd700' : '1px solid rgba(0, 245, 255, 0.15)',
+                        background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                        border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
                         borderRadius: '10px',
                         padding: '10px 12px',
                         display: 'flex',
@@ -705,7 +701,7 @@ export default function BaseAppRewardsView({
                     >
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.unlock}</span>
+                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.unlock}</span>
                           <button
                             type="button"
                             onClick={(e) => {
@@ -715,9 +711,9 @@ export default function BaseAppRewardsView({
                             onMouseEnter={() => setActiveTooltip(roundKey)}
                             onMouseLeave={() => setActiveTooltip(null)}
                             style={{
-                              background: isTooltipOpen ? 'rgba(255, 215, 0, 0.25)' : 'rgba(0, 245, 255, 0.15)',
-                              border: isTooltipOpen ? '1px solid #ffd700' : '1px solid rgba(0, 245, 255, 0.4)',
-                              color: isTooltipOpen ? '#ffd700' : '#00f5ff',
+                              background: isTooltipOpen ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                              border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 40%, transparent)',
+                              color: isTooltipOpen ? 'var(--amber)' : 'var(--accent)',
                               borderRadius: '50%',
                               width: '16px',
                               height: '16px',
@@ -732,13 +728,13 @@ export default function BaseAppRewardsView({
                             <Info size={10} strokeWidth={2.5} />
                           </button>
                         </div>
-                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#ffd700', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                           {stripYear(u.unlockDate)}
                         </div>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.poolAmount} $VIBE</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.poolAmount} $VIBE</div>
+                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: 'var(--font-sans)', }}>
                           <Lock size={9} /> LOCKED
                         </div>
                       </div>
@@ -750,18 +746,18 @@ export default function BaseAppRewardsView({
                         className="rewards-schedule-tooltip"
                         style={{
                           marginTop: '4px',
-                          background: 'rgba(0, 20, 40, 0.98)',
-                          border: '1.5px solid #ffd700',
+                          background: 'color-mix(in srgb, var(--bg) 98%, transparent)',
+                          border: '1.5px solid var(--amber)',
                           borderRadius: '8px',
                           padding: '8px 10px',
-                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.8)',
-                          fontFamily: "'Press Start 2P', monospace"
+                          
+                          fontFamily: 'var(--font-sans)'
                         }}
                       >
-                        <div style={{ fontSize: '6.5px', color: '#ffd700', fontWeight: 800, marginBottom: '3px', textShadow: 'none' }}>
+                        <div style={{ fontSize: '6.5px', color: 'var(--amber)', fontWeight: 800, marginBottom: '3px', }}>
                           📸 Snapshot: {stripYear(u.snapshotTime)}
                         </div>
-                        <div style={{ fontSize: '6px', color: '#cbd5e1', lineHeight: 1.5, textShadow: 'none' }}>
+                        <div style={{ fontSize: '6px', color: 'var(--text-2)', lineHeight: 1.5, }}>
                           Hold 5M+ $VIBE at snapshot time to be eligible.
                         </div>
                       </div>
@@ -774,11 +770,11 @@ export default function BaseAppRewardsView({
 
           {/* Previous Unlocks */}
           {otherEndedHolders.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS UNLOCKS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS UNLOCKS</div>
+                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="var(--green)" strokeWidth={3} />
                   <span>COMPLETED</span>
                 </div>
               </div>
@@ -789,8 +785,8 @@ export default function BaseAppRewardsView({
                     key={u.unlock || i}
                     className="rewards-schedule-row"
                     style={{
-                      background: 'rgba(2, 11, 26, 0.75)',
-                      border: '1px solid rgba(0, 245, 255, 0.2)',
+                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
                       borderRadius: '10px',
                       padding: '10px 12px',
                       display: 'flex',
@@ -800,13 +796,13 @@ export default function BaseAppRewardsView({
                     }}
                   >
                     <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.unlock}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.unlock}</div>
+                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                         ENDED: {u.nextSnapshotDate ? formatEpochEndedDate(u.nextSnapshotDate) : stripYear(u.unlockDate)}
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>
+                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>
                         {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : `${u.poolAmount} $VIBE`}
                       </div>
                     </div>
@@ -825,8 +821,8 @@ export default function BaseAppRewardsView({
           <div
             className="rewards-rule-strip"
             style={{
-              background: 'rgba(255, 215, 0, 0.08)',
-              border: '1.5px solid #ffd700',
+              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
+              border: '1.5px solid var(--amber)',
               borderRadius: '12px',
               padding: '10px 12px',
               marginBottom: '18px',
@@ -837,8 +833,8 @@ export default function BaseAppRewardsView({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
                 Hold Vibe Club NFT at snapshot time to share royalty pool.
               </span>
             </div>
@@ -847,23 +843,23 @@ export default function BaseAppRewardsView({
               className="rewards-rule-btn"
               style={{
                 fontSize: '6.5px',
-                color: '#ffd700',
-                border: '1px solid #ffd700',
+                color: 'var(--amber)',
+                border: '1px solid var(--amber)',
                 padding: '4px 8px',
                 borderRadius: '6px',
                 textDecoration: 'none',
                 whiteSpace: 'nowrap',
                 fontWeight: 800,
                 flexShrink: 0,
-                background: 'rgba(255, 215, 0, 0.15)',
-                fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none',
+                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
+                fontFamily: 'var(--font-sans)',
+                
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px'
               }}
             >
-              <span>MINT NFT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
+              <span>MINT NFT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
             </Link>
           </div>
 
@@ -872,20 +868,19 @@ export default function BaseAppRewardsView({
             <div
               className="rewards-featured-card"
               style={{
-                background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00f5ff',
+                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
+                border: '2px solid var(--accent)',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
-              }}
+                }}
             >
               <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
                   <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredVibeClub.epoch}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredVibeClub.epoch}</div>
+                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'var(--green)' : featuredVibeClubStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                       {isFeaturedVibeClubClaimLive ? 'CLAIM IS LIVE' : featuredVibeClubStatus === 'active' ? 'ACTIVE' : featuredVibeClubStatus === 'ended' ? 'ENDED' : 'UPCOMING'}
                     </div>
                   </div>
@@ -906,8 +901,8 @@ export default function BaseAppRewardsView({
                       <InfoSvgIcon className="rewards-timer-info-icon" />
                     </button>
                   )}
-                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'rgba(0, 255, 136, 0.15)' : featuredVibeClubStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid #00ff88' : featuredVibeClubStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '#00ff88' : featuredVibeClubStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                    {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88' }} />}
+                  <div className="rewards-countdown-pill" style={{ background: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredVibeClubStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? '1px solid var(--green)' : featuredVibeClubStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: (isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') ? 'var(--green)' : featuredVibeClubStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
+                    {(isFeaturedVibeClubClaimLive || featuredVibeClubStatus === 'active') && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)' }} />}
                     {isFeaturedVibeClubClaimLive ? (
                       <ActiveClaimCountdown targetDate={featuredVibeClub.nextSnapshotDate} />
                     ) : featuredVibeClubStatus === 'active' ? (
@@ -925,7 +920,7 @@ export default function BaseAppRewardsView({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="#00f5ff" />
+                        <InfoSvgIcon size={14} color="var(--accent)" />
                         <span>CLAIM WINDOW</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
@@ -937,25 +932,25 @@ export default function BaseAppRewardsView({
               </div>
 
               {/* Royalty Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'rgba(2, 11, 26, 0.85)', border: '1px solid rgba(0, 245, 255, 0.25)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>ROYALTY POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '11px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
+                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>ROYALTY POOL</div>
+                <div className="rewards-pool-value" style={{ fontSize: '11px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                   {featuredVibeClub.poolAmount}
                 </div>
               </div>
 
               {/* Two info pills */}
               <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>REQUIREMENT</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", whiteSpace: 'nowrap', textShadow: 'none' }}>Vibe Club NFT Holder</div>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>REQUIREMENT</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', whiteSpace: 'nowrap', }}>Vibe Club NFT Holder</div>
                 </div>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px', overflow: 'hidden' }}>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px', overflow: 'hidden' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '3px', overflow: 'hidden' }}>
-                    <CheckCircle2 className="rewards-snapshot-check-icon" size={8} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span className="rewards-info-label" style={{ fontSize: '4.8px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, whiteSpace: 'nowrap' }}>SNAPSHOT COMPLETED</span>
+                    <CheckCircle2 className="rewards-snapshot-check-icon" size={8} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span className="rewards-info-label" style={{ fontSize: '4.8px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, whiteSpace: 'nowrap' }}>SNAPSHOT COMPLETED</span>
                   </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredVibeClub.snapshotTime)}</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredVibeClub.snapshotTime)}</div>
                 </div>
               </div>
 
@@ -973,18 +968,17 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     gap: '8px',
                     textDecoration: 'none',
-                    background: 'rgba(0, 255, 136, 0.12)',
-                    border: '1.5px solid #00ff88',
-                    color: '#00ff88',
+                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                    border: '1.5px solid var(--green)',
+                    color: 'var(--green)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     transition: 'all 0.2s',
                     boxSizing: 'border-box',
-                    textShadow: 'none'
-                  }}
+                    }}
                 >
-                  <span style={{ color: '#00ff88' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                  <span style={{ color: 'var(--green)' }}>CLAIM ROYALTIES</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
                 </Link>
               ) : featuredVibeClubStatus === 'active' ? (
                 <BaseAppClaimCountdownButton targetDate={featuredVibeClub.dateObj} />
@@ -1001,9 +995,9 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#94a3b8',
+                    color: 'var(--text-3)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900
                   }}
                 >
@@ -1022,9 +1016,9 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#94a3b8',
+                    color: 'var(--text-3)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900
                   }}
                 >
@@ -1036,23 +1030,23 @@ export default function BaseAppRewardsView({
               {authenticated ? (
                 isVibeClubActiveEligible ? (
                   <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                    <CheckCircle2 size={13} color="#00ff88" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '7px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", fontWeight: 800 }}>
+                    <CheckCircle2 size={13} color="var(--green)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: '7px', color: 'var(--green)', fontFamily: 'var(--font-sans)', fontWeight: 800 }}>
                       You are eligible
                     </span>
                   </div>
                 ) : (
                   <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px', textAlign: 'center', width: '100%', boxSizing: 'border-box' }}>
-                    <XCircle size={13} color="#ff4466" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                    <span style={{ fontSize: '6px', color: '#ff4466', fontFamily: "'Press Start 2P', monospace", fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
+                    <XCircle size={13} color="var(--red)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                    <span style={{ fontSize: '6px', color: 'var(--red)', fontFamily: 'var(--font-sans)', fontWeight: 800, lineHeight: 1.5, wordBreak: 'break-word' }}>
                       Not eligible for this payout. Complete requirement for the next payout.
                     </span>
                   </div>
                 )
               ) : (
                 <div className="rewards-eligibility-msg" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginTop: '10px' }}>
-                  <Info size={11} color="#88aacc" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-                  <span style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace" }}>
+                  <Info size={11} color="var(--text-3)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)' }}>
                     Connect wallet to check eligibility
                   </span>
                 </div>
@@ -1061,10 +1055,10 @@ export default function BaseAppRewardsView({
           )}
 
           {/* Upcoming Royalty Schedule (Header: EVERY 10 DAYS + 11th Extra Card) */}
-          <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
+          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
             <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>MORE ROYALTY PAYOUTS</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>EVERY 10 DAYS</div>
+              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>MORE ROYALTY PAYOUTS</div>
+              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>EVERY 10 DAYS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1076,8 +1070,8 @@ export default function BaseAppRewardsView({
                     <div
                       className="rewards-schedule-row"
                       style={{
-                        background: 'rgba(2, 11, 26, 0.75)',
-                        border: isTooltipOpen ? '1px solid #ffd700' : '1px solid rgba(0, 245, 255, 0.15)',
+                        background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                        border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
                         borderRadius: '10px',
                         padding: '10px 12px',
                         display: 'flex',
@@ -1088,7 +1082,7 @@ export default function BaseAppRewardsView({
                     >
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</span>
+                          <span className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</span>
                           <button
                             type="button"
                             onClick={(e) => {
@@ -1098,9 +1092,9 @@ export default function BaseAppRewardsView({
                             onMouseEnter={() => setActiveTooltip(roundKey)}
                             onMouseLeave={() => setActiveTooltip(null)}
                             style={{
-                              background: isTooltipOpen ? 'rgba(255, 215, 0, 0.25)' : 'rgba(0, 245, 255, 0.15)',
-                              border: isTooltipOpen ? '1px solid #ffd700' : '1px solid rgba(0, 245, 255, 0.4)',
-                              color: isTooltipOpen ? '#ffd700' : '#00f5ff',
+                              background: isTooltipOpen ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'color-mix(in srgb, var(--accent) 15%, transparent)',
+                              border: isTooltipOpen ? '1px solid var(--amber)' : '1px solid color-mix(in srgb, var(--accent) 40%, transparent)',
+                              color: isTooltipOpen ? 'var(--amber)' : 'var(--accent)',
                               borderRadius: '50%',
                               width: '16px',
                               height: '16px',
@@ -1115,13 +1109,13 @@ export default function BaseAppRewardsView({
                             <Info size={10} strokeWidth={2.5} />
                           </button>
                         </div>
-                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#ffd700', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                           {stripYear(u.claimDate)}
                         </div>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.poolAmount}</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.poolAmount}</div>
+                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '3px', fontFamily: 'var(--font-sans)', }}>
                           <Lock size={9} /> LOCKED
                         </div>
                       </div>
@@ -1133,18 +1127,18 @@ export default function BaseAppRewardsView({
                         className="rewards-schedule-tooltip"
                         style={{
                           marginTop: '4px',
-                          background: 'rgba(0, 20, 40, 0.98)',
-                          border: '1.5px solid #ffd700',
+                          background: 'color-mix(in srgb, var(--bg) 98%, transparent)',
+                          border: '1.5px solid var(--amber)',
                           borderRadius: '8px',
                           padding: '8px 10px',
-                          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.8)',
-                          fontFamily: "'Press Start 2P', monospace"
+                          
+                          fontFamily: 'var(--font-sans)'
                         }}
                       >
-                        <div style={{ fontSize: '6.5px', color: '#ffd700', fontWeight: 800, marginBottom: '3px', textShadow: 'none' }}>
+                        <div style={{ fontSize: '6.5px', color: 'var(--amber)', fontWeight: 800, marginBottom: '3px', }}>
                           📸 Snapshot: {stripYear(u.snapshotTime || 'Snapshot Date')}
                         </div>
-                        <div style={{ fontSize: '6px', color: '#cbd5e1', lineHeight: 1.5, textShadow: 'none' }}>
+                        <div style={{ fontSize: '6px', color: 'var(--text-2)', lineHeight: 1.5, }}>
                           Hold Vibe Club NFT at snapshot time to be eligible.
                         </div>
                       </div>
@@ -1157,14 +1151,14 @@ export default function BaseAppRewardsView({
               <div
                 className="rewards-schedule-notice"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.75)',
-                  border: '1px dashed rgba(255, 215, 0, 0.45)',
+                  background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                  border: '1px dashed color-mix(in srgb, var(--amber) 45%, transparent)',
                   borderRadius: '10px',
                   padding: '12px 14px',
                   textAlign: 'center'
                 }}
               >
-                <span style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.6, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', display: 'block' }}>
+                <span style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.6, fontFamily: 'var(--font-sans)',  display: 'block' }}>
                   More royalty epochs will be added every 10 days
                 </span>
               </div>
@@ -1173,11 +1167,11 @@ export default function BaseAppRewardsView({
 
           {/* Previous Royalty Payouts */}
           {otherEndedVibeClubs.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS ROYALTY PAYOUTS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS ROYALTY PAYOUTS</div>
+                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="var(--green)" strokeWidth={3} />
                   <span>COMPLETED</span>
                 </div>
               </div>
@@ -1188,8 +1182,8 @@ export default function BaseAppRewardsView({
                     key={u.epoch || i}
                     className="rewards-schedule-row"
                     style={{
-                      background: 'rgba(2, 11, 26, 0.75)',
-                      border: '1px solid rgba(0, 245, 255, 0.2)',
+                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)',
                       borderRadius: '10px',
                       padding: '10px 12px',
                       display: 'flex',
@@ -1199,13 +1193,13 @@ export default function BaseAppRewardsView({
                     }}
                   >
                     <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
+                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                         ENDED: 7 Sep, 00:00 UTC
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
-                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>
+                      <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>
                         {u.poolAmount && u.poolAmount.includes('$VIBE') ? u.poolAmount : (u.poolAmount !== 'TBA' ? `${u.poolAmount} $VIBE` : u.poolAmount)}
                       </div>
                     </div>
@@ -1224,8 +1218,8 @@ export default function BaseAppRewardsView({
           <div
             className="rewards-rule-strip"
             style={{
-              background: 'rgba(255, 215, 0, 0.08)',
-              border: '1.5px solid #ffd700',
+              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
+              border: '1.5px solid var(--amber)',
               borderRadius: '12px',
               padding: '10px 12px',
               marginBottom: '18px',
@@ -1236,8 +1230,8 @@ export default function BaseAppRewardsView({
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Lightbulb size={13} color="#ffd700" strokeWidth={2.5} style={{ flexShrink: 0 }} />
-              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.4, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+              <Lightbulb size={13} color="var(--amber)" strokeWidth={2.5} style={{ flexShrink: 0 }} />
+              <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.4, fontFamily: 'var(--font-sans)', }}>
                 Stake $VIBE in active vault on o1 exchange to earn passive yield.
               </span>
             </div>
@@ -1248,23 +1242,23 @@ export default function BaseAppRewardsView({
               className="rewards-rule-btn"
               style={{
                 fontSize: '6.5px',
-                color: '#ffd700',
-                border: '1px solid #ffd700',
+                color: 'var(--amber)',
+                border: '1px solid var(--amber)',
                 padding: '4px 8px',
                 borderRadius: '6px',
                 textDecoration: 'none',
                 whiteSpace: 'nowrap',
                 fontWeight: 800,
                 flexShrink: 0,
-                background: 'rgba(255, 215, 0, 0.15)',
-                fontFamily: "'Press Start 2P', monospace",
-                textShadow: 'none',
+                background: 'color-mix(in srgb, var(--amber) 15%, transparent)',
+                fontFamily: 'var(--font-sans)',
+                
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px'
               }}
             >
-              <span>VAULT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="#ffd700" strokeWidth={2.5} />
+              <span>VAULT</span> <ArrowRight className="rewards-rule-arrow" size={10} color="var(--amber)" strokeWidth={2.5} />
             </a>
           </div>
 
@@ -1273,20 +1267,19 @@ export default function BaseAppRewardsView({
             <div
               className="rewards-featured-card"
               style={{
-                background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00f5ff',
+                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
+                border: '2px solid var(--accent)',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
-              }}
+                }}
             >
               <div className="rewards-featured-head-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', flexShrink: 0 }} />
+                  <img src="/new-logo-vibe.png" alt="VIBE" style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', flexShrink: 0 }} />
                   <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{featuredStaking.epoch}</div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: featuredStakingStatus === 'active' ? '#00ff88' : featuredStakingStatus === 'ended' ? '#00f5ff' : '#ffd700', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>{featuredStaking.epoch}</div>
+                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: featuredStakingStatus === 'active' ? 'var(--green)' : featuredStakingStatus === 'ended' ? 'var(--accent)' : 'var(--amber)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                       {featuredStakingStatus === 'active' ? 'STAKING IS LIVE' : featuredStakingStatus === 'ended' ? 'EPOCH ENDED' : 'STARTING SOON'}
                     </div>
                   </div>
@@ -1307,8 +1300,8 @@ export default function BaseAppRewardsView({
                       <InfoSvgIcon className="rewards-timer-info-icon" />
                     </button>
                   )}
-                  <div className="rewards-countdown-pill" style={{ background: featuredStakingStatus === 'active' ? 'rgba(0, 255, 136, 0.15)' : featuredStakingStatus === 'ended' ? 'rgba(0, 245, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)', border: featuredStakingStatus === 'active' ? '1px solid #00ff88' : featuredStakingStatus === 'ended' ? '1px solid #00f5ff' : '1px solid rgba(255, 255, 255, 0.2)', color: featuredStakingStatus === 'active' ? '#00ff88' : featuredStakingStatus === 'ended' ? '#00f5ff' : '#94a3b8', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                    {featuredStakingStatus === 'active' && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88' }} />}
+                  <div className="rewards-countdown-pill" style={{ background: featuredStakingStatus === 'active' ? 'color-mix(in srgb, var(--green) 15%, transparent)' : featuredStakingStatus === 'ended' ? 'color-mix(in srgb, var(--accent) 15%, transparent)' : 'rgba(255, 255, 255, 0.1)', border: featuredStakingStatus === 'active' ? '1px solid var(--green)' : featuredStakingStatus === 'ended' ? '1px solid var(--accent)' : '1px solid rgba(255, 255, 255, 0.2)', color: featuredStakingStatus === 'active' ? 'var(--green)' : featuredStakingStatus === 'ended' ? 'var(--accent)' : 'var(--text-3)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
+                    {featuredStakingStatus === 'active' && <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)', }} />}
                     {featuredStakingStatus === 'active' ? (
                       <ActiveClaimCountdown targetDate={featuredStaking.endDateObj} />
                     ) : featuredStakingStatus === 'ended' ? (
@@ -1324,7 +1317,7 @@ export default function BaseAppRewardsView({
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="rewards-timer-tooltip-title">
-                        <InfoSvgIcon size={14} color="#00f5ff" />
+                        <InfoSvgIcon size={14} color="var(--accent)" />
                         <span>ACTIVE VAULT</span>
                       </div>
                       <div className="rewards-timer-tooltip-desc">
@@ -1336,22 +1329,22 @@ export default function BaseAppRewardsView({
               </div>
 
               {/* Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'rgba(2, 11, 26, 0.85)', border: '1px solid rgba(0, 245, 255, 0.25)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>REWARDS POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  {featuredStaking.poolAmount} {featuredStaking.poolAmount !== 'TBA' && <span className="rewards-pool-unit" style={{ fontSize: '8px', color: '#00f5ff' }}>$VIBE</span>}
+              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
+                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>REWARDS POOL</div>
+                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
+                  {featuredStaking.poolAmount} {featuredStaking.poolAmount !== 'TBA' && <span className="rewards-pool-unit" style={{ fontSize: '8px', color: 'var(--accent)' }}>$VIBE</span>}
                 </div>
               </div>
 
               {/* Two info pills without Year (only Date and Time) */}
               <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '5.5px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>VAULT OPEN</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredStaking.startTime)}</div>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '5.5px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>VAULT OPEN</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredStaking.startTime)}</div>
                 </div>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '5px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', whiteSpace: 'nowrap' }}>CLAIM YIELD &amp; WITHDRAW</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{stripYear(featuredStaking.endTime)}</div>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '5px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)',  whiteSpace: 'nowrap' }}>CLAIM YIELD &amp; WITHDRAW</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{stripYear(featuredStaking.endTime)}</div>
                 </div>
               </div>
 
@@ -1371,18 +1364,17 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     gap: '8px',
                     textDecoration: 'none',
-                    background: 'rgba(0, 255, 136, 0.12)',
-                    border: '1.5px solid #00ff88',
-                    color: '#00ff88',
+                    background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                    border: '1.5px solid var(--green)',
+                    color: 'var(--green)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     transition: 'all 0.2s',
                     boxSizing: 'border-box',
-                    textShadow: 'none'
-                  }}
+                    }}
                 >
-                  <span style={{ color: '#00ff88' }}>STAKE &amp; EARN</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                  <span style={{ color: 'var(--green)' }}>STAKE &amp; EARN</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
                 </a>
               ) : featuredStakingStatus === 'ended' ? (
                 <a
@@ -1399,18 +1391,17 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     gap: '8px',
                     textDecoration: 'none',
-                    background: 'rgba(0, 245, 255, 0.12)',
-                    border: '1.5px solid #00f5ff',
-                    color: '#00f5ff',
+                    background: 'color-mix(in srgb, var(--accent) 12%, transparent)',
+                    border: '1.5px solid var(--accent)',
+                    color: 'var(--accent)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900,
                     transition: 'all 0.2s',
                     boxSizing: 'border-box',
-                    textShadow: 'none'
-                  }}
+                    }}
                 >
-                  <span style={{ color: '#00f5ff' }}>WITHDRAW &amp; CLAIM YIELD</span> <ArrowUpRight size={14} color="#00f5ff" strokeWidth={2.5} />
+                  <span style={{ color: 'var(--accent)' }}>WITHDRAW &amp; CLAIM YIELD</span> <ArrowUpRight size={14} color="var(--accent)" strokeWidth={2.5} />
                 </a>
               ) : (
                 <div
@@ -1424,9 +1415,9 @@ export default function BaseAppRewardsView({
                     justifyContent: 'center',
                     background: 'rgba(255, 255, 255, 0.05)',
                     border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#94a3b8',
+                    color: 'var(--text-3)',
                     borderRadius: '10px',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontWeight: 900
                   }}
                 >
@@ -1437,10 +1428,10 @@ export default function BaseAppRewardsView({
           )}
 
           {/* Staking Upcoming Epochs List */}
-          <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
+          <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '20px' }}>
             <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>MORE STAKING EPOCHS</div>
-              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#ffd700', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800 }}>EVERY 10 DAYS</div>
+              <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>MORE STAKING EPOCHS</div>
+              <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--amber)', fontFamily: 'var(--font-sans)',  fontWeight: 800 }}>EVERY 10 DAYS</div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1449,8 +1440,8 @@ export default function BaseAppRewardsView({
                   key={u.epoch || i}
                   className="rewards-schedule-row"
                   style={{
-                    background: 'rgba(2, 11, 26, 0.75)',
-                    border: '1px solid rgba(0, 245, 255, 0.15)',
+                    background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                    border: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
                     borderRadius: '10px',
                     padding: '10px 12px',
                     display: 'flex',
@@ -1460,16 +1451,16 @@ export default function BaseAppRewardsView({
                   }}
                 >
                   <div>
-                    <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
-                    <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#ffd700', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
+                    <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--amber)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                       {stripYear(u.startTime)}
                     </div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-schedule-amount" style={{ fontSize: '8px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
                       {u.poolAmount} {u.poolAmount !== 'TBA' && '$VIBE'}
                     </div>
-                    <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>UPCOMING</div>
+                    <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', fontFamily: 'var(--font-sans)', }}>UPCOMING</div>
                   </div>
                 </div>
               ))}
@@ -1478,14 +1469,14 @@ export default function BaseAppRewardsView({
               <div
                 className="rewards-schedule-notice"
                 style={{
-                  background: 'rgba(2, 11, 26, 0.75)',
-                  border: '1px dashed rgba(255, 215, 0, 0.45)',
+                  background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                  border: '1px dashed color-mix(in srgb, var(--amber) 45%, transparent)',
                   borderRadius: '10px',
                   padding: '12px 14px',
                   textAlign: 'center'
                 }}
               >
-                <span style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.6, fontFamily: "'Press Start 2P', monospace", textShadow: 'none', display: 'block' }}>
+                <span style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.6, fontFamily: 'var(--font-sans)',  display: 'block' }}>
                   More staking vaults will be added every 10 days
                 </span>
               </div>
@@ -1494,11 +1485,11 @@ export default function BaseAppRewardsView({
 
           {/* Staking Previous Epochs List */}
           {otherEndedStakings.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PREVIOUS STAKING EPOCHS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#00ff88', fontFamily: "'Press Start 2P', monospace", textShadow: 'none', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  <Check size={10} color="#00ff88" strokeWidth={3} />
+                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PREVIOUS STAKING EPOCHS</div>
+                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--green)', fontFamily: 'var(--font-sans)',  fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <Check size={10} color="var(--green)" strokeWidth={3} />
                   <span>COMPLETED</span>
                 </div>
               </div>
@@ -1509,8 +1500,8 @@ export default function BaseAppRewardsView({
                     key={u.epoch || i}
                     className="rewards-schedule-row"
                     style={{
-                      background: 'rgba(2, 11, 26, 0.75)',
-                      border: '1px solid rgba(0, 245, 255, 0.3)',
+                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 30%, transparent)',
                       borderRadius: '10px',
                       padding: '10px 12px',
                       display: 'flex',
@@ -1520,8 +1511,8 @@ export default function BaseAppRewardsView({
                     }}
                   >
                     <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.epoch}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.epoch}</div>
+                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '4px', fontFamily: 'var(--font-sans)', }}>
                         ENDED: {stripYear(u.endTime)}
                       </div>
                     </div>
@@ -1533,21 +1524,21 @@ export default function BaseAppRewardsView({
                         className="rewards-action-sm-btn"
                         style={{
                           fontSize: '6.5px',
-                          color: '#00f5ff',
-                          border: '1px solid #00f5ff',
-                          background: 'rgba(0, 245, 255, 0.15)',
+                          color: 'var(--accent)',
+                          border: '1px solid var(--accent)',
+                          background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
                           padding: '6px 9px',
                           borderRadius: '6px',
                           textDecoration: 'none',
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '4px',
-                          fontFamily: "'Press Start 2P', monospace",
+                          fontFamily: 'var(--font-sans)',
                           fontWeight: 800,
                           whiteSpace: 'nowrap'
                         }}
                       >
-                        <span style={{ color: '#00f5ff' }}>Withdraw &amp; Claim</span> <ArrowUpRight size={10} color="#00f5ff" />
+                        <span style={{ color: 'var(--accent)' }}>Withdraw &amp; Claim</span> <ArrowUpRight size={10} color="var(--accent)" />
                       </a>
                     </div>
                   </div>
@@ -1565,8 +1556,8 @@ export default function BaseAppRewardsView({
           <div
             className="rewards-rule-strip"
             style={{
-              background: 'rgba(255, 215, 0, 0.08)',
-              border: '1.5px solid #ffd700',
+              background: 'color-mix(in srgb, var(--amber) 8%, transparent)',
+              border: '1.5px solid var(--amber)',
               borderRadius: '12px',
               padding: '10px 12px',
               marginBottom: '18px',
@@ -1576,7 +1567,7 @@ export default function BaseAppRewardsView({
             }}
           >
             <span style={{ fontSize: '13px', flexShrink: 0 }}>💡</span>
-            <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: '#ffd700', lineHeight: 1.5, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+            <span className="rewards-rule-text" style={{ fontSize: '6.5px', color: 'var(--amber)', lineHeight: 1.5, fontFamily: 'var(--font-sans)', }}>
               Community giveaways distributed directly to eligible winners.
             </span>
           </div>
@@ -1587,57 +1578,56 @@ export default function BaseAppRewardsView({
               key={g.id}
               className="rewards-featured-card"
               style={{
-                background: 'rgba(4, 20, 48, 0.94)',
-                border: '2px solid #00f5ff',
+                background: 'color-mix(in srgb, var(--surface) 94%, transparent)',
+                border: '2px solid var(--accent)',
                 borderRadius: '18px',
                 padding: '18px 16px',
                 marginBottom: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 20px rgba(0, 245, 255, 0.25)'
-              }}
+                }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <img
                     src="/new-logo-vibe.png"
                     alt="VIBE"
-                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid #00f5ff', objectFit: 'cover' }}
+                    style={{ width: '34px', height: '34px', borderRadius: '50%', border: '2px solid var(--accent)', objectFit: 'cover' }}
                   />
                   <div>
-                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-featured-title" style={{ fontSize: '9px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                       {g.title}
                     </div>
-                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: '#00ff88', marginTop: '3px', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                    <div className="rewards-featured-status" style={{ fontSize: '6.5px', color: 'var(--green)', marginTop: '3px', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                       EVENT IS LIVE
                     </div>
                   </div>
                 </div>
-                <div className="rewards-countdown-pill" style={{ background: 'rgba(0, 255, 136, 0.15)', border: '1px solid #00ff88', color: '#00ff88', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
-                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 6px #00ff88' }} />
+                <div className="rewards-countdown-pill" style={{ background: 'color-mix(in srgb, var(--green) 15%, transparent)', border: '1px solid var(--green)', color: 'var(--green)', padding: '4px 8px', borderRadius: '8px', fontSize: '6.5px', display: 'flex', alignItems: 'center', gap: '5px', fontFamily: 'var(--font-sans)', }}>
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green)', }} />
                   ONGOING
                 </div>
               </div>
 
               {/* Prize Pool highlight */}
-              <div className="rewards-pool-box" style={{ background: 'rgba(2, 11, 26, 0.85)', border: '1px solid rgba(0, 245, 255, 0.25)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
-                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: '#88aacc', marginBottom: '4px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PRIZE POOL</div>
-                <div className="rewards-pool-value" style={{ fontSize: '13px', color: '#00f5ff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+              <div className="rewards-pool-box" style={{ background: 'color-mix(in srgb, var(--bg) 85%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '12px', padding: '12px 14px', marginBottom: '12px' }}>
+                <div className="rewards-pool-label" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginBottom: '4px', fontFamily: 'var(--font-sans)', }}>PRIZE POOL</div>
+                <div className="rewards-pool-value" style={{ fontSize: '13px', color: 'var(--accent)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>
                   {g.prizePool}
                 </div>
               </div>
 
               {/* Two info pills: Distribution & Deadline / Winners */}
               <div className="rewards-info-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '14px' }}>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>DISTRIBUTION</div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>DISTRIBUTION</div>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
                     {g.distribution || 'Not Started'}
                   </div>
                 </div>
-                <div className="rewards-info-box" style={{ background: 'rgba(2, 11, 26, 0.75)', border: '1px solid rgba(0, 245, 255, 0.2)', borderRadius: '10px', padding: '8px 10px' }}>
-                  <div className="rewards-info-label" style={{ fontSize: '6px', color: '#88aacc', marginBottom: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                <div className="rewards-info-box" style={{ background: 'color-mix(in srgb, var(--bg) 75%, transparent)', border: '1px solid color-mix(in srgb, var(--accent) 20%, transparent)', borderRadius: '10px', padding: '8px 10px' }}>
+                  <div className="rewards-info-label" style={{ fontSize: '6px', color: 'var(--text-3)', marginBottom: '2px', fontFamily: 'var(--font-sans)', }}>
                     {g.deadlineDate ? 'DEADLINE' : 'WINNERS'}
                   </div>
-                  <div className="rewards-info-value" style={{ fontSize: '7px', color: g.deadlineDate ? '#00ff88' : '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                  <div className="rewards-info-value" style={{ fontSize: '7px', color: g.deadlineDate ? 'var(--green)' : 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>
                     {g.deadlineDate ? <ActiveClaimCountdown targetDate={g.deadlineDate} /> : (g.winners || 'TBA')}
                   </div>
                 </div>
@@ -1658,28 +1648,27 @@ export default function BaseAppRewardsView({
                   justifyContent: 'center',
                   gap: '8px',
                   textDecoration: 'none',
-                  background: 'rgba(0, 255, 136, 0.12)',
-                  border: '1.5px solid #00ff88',
-                  color: '#00ff88',
+                  background: 'color-mix(in srgb, var(--green) 12%, transparent)',
+                  border: '1.5px solid var(--green)',
+                  color: 'var(--green)',
                   borderRadius: '10px',
-                  fontFamily: "'Press Start 2P', monospace",
+                  fontFamily: 'var(--font-sans)',
                   fontWeight: 900,
                   transition: 'all 0.2s',
                   boxSizing: 'border-box',
-                  textShadow: 'none'
-                }}
+                  }}
               >
-                <span style={{ color: '#00ff88' }}>JOIN GIVEAWAY</span> <ArrowUpRight size={14} color="#00ff88" strokeWidth={2.5} />
+                <span style={{ color: 'var(--green)' }}>JOIN GIVEAWAY</span> <ArrowUpRight size={14} color="var(--green)" strokeWidth={2.5} />
               </a>
             </div>
           ))}
 
           {/* Past Giveaways (7 NFTs Vibe Club & Base App Welcome Bonus with 350 Winners & View Button) */}
           {pastGiveaways.length > 0 && (
-            <div className="rewards-schedule-card" style={{ background: 'rgba(4, 20, 48, 0.88)', border: '1.5px solid rgba(0, 245, 255, 0.25)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
+            <div className="rewards-schedule-card" style={{ background: 'color-mix(in srgb, var(--surface) 88%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)', borderRadius: '16px', padding: '16px 14px', marginBottom: '24px' }}>
               <div className="rewards-schedule-head" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>PAST GIVEAWAYS</div>
-                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: '#88aacc', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{pastGiveaways.length} EVENTS</div>
+                <div className="rewards-schedule-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, fontFamily: 'var(--font-sans)', }}>PAST GIVEAWAYS</div>
+                <div className="rewards-schedule-count" style={{ fontSize: '6.5px', color: 'var(--text-3)', fontFamily: 'var(--font-sans)', }}>{pastGiveaways.length} EVENTS</div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1688,8 +1677,8 @@ export default function BaseAppRewardsView({
                     key={u.id || i}
                     className="rewards-schedule-row"
                     style={{
-                      background: 'rgba(2, 11, 26, 0.75)',
-                      border: '1px solid rgba(0, 245, 255, 0.15)',
+                      background: 'color-mix(in srgb, var(--bg) 75%, transparent)',
+                      border: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)',
                       borderRadius: '10px',
                       padding: '10px 12px',
                       display: 'flex',
@@ -1699,13 +1688,13 @@ export default function BaseAppRewardsView({
                     }}
                   >
                     <div>
-                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: '#ffffff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.title}</div>
-                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: '#88aacc', marginTop: '3px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.winners}</div>
+                      <div className="rewards-schedule-name" style={{ fontSize: '7.5px', color: 'var(--text)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.title}</div>
+                      <div className="rewards-schedule-date" style={{ fontSize: '6.5px', color: 'var(--text-3)', marginTop: '3px', fontFamily: 'var(--font-sans)', }}>{u.winners}</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                       <div style={{ textAlign: 'right' }}>
-                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: '#00f5ff', fontWeight: 800, fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>{u.prizePool}</div>
-                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: '#64748b', marginTop: '2px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>ENDED</div>
+                        <div className="rewards-schedule-amount" style={{ fontSize: '7.5px', color: 'var(--accent)', fontWeight: 800, fontFamily: 'var(--font-sans)', }}>{u.prizePool}</div>
+                        <div className="rewards-schedule-locked" style={{ fontSize: '6px', color: 'var(--text-3)', marginTop: '2px', fontFamily: 'var(--font-sans)', }}>ENDED</div>
                       </div>
                       <a
                         href={u.link}
@@ -1714,21 +1703,21 @@ export default function BaseAppRewardsView({
                         className="rewards-action-sm-btn"
                         style={{
                           fontSize: '6.5px',
-                          color: '#00f5ff',
-                          border: '1px solid #00f5ff',
-                          background: 'rgba(0, 245, 255, 0.15)',
+                          color: 'var(--accent)',
+                          border: '1px solid var(--accent)',
+                          background: 'color-mix(in srgb, var(--accent) 15%, transparent)',
                           padding: '6px 9px',
                           borderRadius: '6px',
                           textDecoration: 'none',
                           display: 'inline-flex',
                           alignItems: 'center',
                           gap: '4px',
-                          fontFamily: "'Press Start 2P', monospace",
+                          fontFamily: 'var(--font-sans)',
                           fontWeight: 800,
                           whiteSpace: 'nowrap'
                         }}
                       >
-                        <span style={{ color: '#00f5ff' }}>View</span> <ArrowUpRight size={10} color="#00f5ff" />
+                        <span style={{ color: 'var(--accent)' }}>View</span> <ArrowUpRight size={10} color="var(--accent)" />
                       </a>
                     </div>
                   </div>
@@ -1741,7 +1730,7 @@ export default function BaseAppRewardsView({
 
       {/* ── 7. FAQ ACCORDION (COMPACT) ── */}
       <div className="rewards-faq-container" style={{ marginTop: '20px', marginBottom: '40px' }}>
-        <div className="rewards-faq-title" style={{ fontSize: '8.5px', color: '#ffffff', fontWeight: 900, textAlign: 'center', marginBottom: '12px', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+        <div className="rewards-faq-title" style={{ fontSize: '8.5px', color: 'var(--text)', fontWeight: 900, textAlign: 'center', marginBottom: '12px', fontFamily: 'var(--font-sans)', }}>
           RULES &amp; FAQ
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1754,12 +1743,11 @@ export default function BaseAppRewardsView({
                   <Link
                     to="/claim"
                     style={{
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       textDecoration: 'underline',
                       fontWeight: 800,
-                      fontFamily: "'Press Start 2P', monospace",
-                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
-                    }}
+                      fontFamily: 'var(--font-sans)',
+                      }}
                   >
                     Claim Portal ↗
                   </Link>
@@ -1776,12 +1764,11 @@ export default function BaseAppRewardsView({
                     target="_blank"
                     rel="noreferrer"
                     style={{
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       textDecoration: 'underline',
                       fontWeight: 800,
-                      fontFamily: "'Press Start 2P', monospace",
-                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
-                    }}
+                      fontFamily: 'var(--font-sans)',
+                      }}
                   >
                     o1 Exchange ↗
                   </a>{' '}
@@ -1799,12 +1786,11 @@ export default function BaseAppRewardsView({
                     target="_blank"
                     rel="noreferrer"
                     style={{
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       textDecoration: 'underline',
                       fontWeight: 800,
-                      fontFamily: "'Press Start 2P', monospace",
-                      textShadow: '0 0 8px rgba(0, 245, 255, 0.4)'
-                    }}
+                      fontFamily: 'var(--font-sans)',
+                      }}
                   >
                     o1 Exchange ↗
                   </a>{' '}
@@ -1835,8 +1821,8 @@ export default function BaseAppRewardsView({
                 key={idx}
                 className="rewards-faq-card"
                 style={{
-                  background: 'rgba(4, 20, 48, 0.88)',
-                  border: '1px solid rgba(0, 245, 255, 0.25)',
+                  background: 'color-mix(in srgb, var(--surface) 88%, transparent)',
+                  border: '1px solid color-mix(in srgb, var(--accent) 25%, transparent)',
                   borderRadius: '12px',
                   overflow: 'hidden'
                 }}
@@ -1855,25 +1841,24 @@ export default function BaseAppRewardsView({
                     justifyContent: 'space-between',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    fontFamily: "'Press Start 2P', monospace",
+                    fontFamily: 'var(--font-sans)',
                     fontSize: '7px',
-                    color: '#ffffff',
-                    textShadow: 'none'
-                  }}
+                    color: 'var(--text)',
+                    }}
                 >
-                  <span style={{ color: '#ffffff' }}>{faq.question}</span>
+                  <span style={{ color: 'var(--text)' }}>{faq.question}</span>
                   <ChevronDown
                     size={14}
                     style={{
                       transform: isOpen ? 'rotate(180deg)' : 'none',
                       transition: 'transform 0.2s ease',
-                      color: '#00f5ff',
+                      color: 'var(--accent)',
                       flexShrink: 0
                     }}
                   />
                 </button>
                 {isOpen && (
-                  <div className="rewards-faq-ans" style={{ padding: '0 14px 12px 14px', fontSize: '6.5px', color: '#cbd5e1', lineHeight: 1.6, borderTop: '1px solid rgba(0, 245, 255, 0.15)', fontFamily: "'Press Start 2P', monospace", textShadow: 'none' }}>
+                  <div className="rewards-faq-ans" style={{ padding: '0 14px 12px 14px', fontSize: '6.5px', color: 'var(--text-2)', lineHeight: 1.6, borderTop: '1px solid color-mix(in srgb, var(--accent) 15%, transparent)', fontFamily: 'var(--font-sans)', }}>
                     <div style={{ paddingTop: '8px' }}>{faq.answer}</div>
                   </div>
                 )}
