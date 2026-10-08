@@ -217,58 +217,11 @@ export function BaseAppView({ RewardsComponent }) {
             ) : (activeTab === 'claim' || activeTab === 'profile') ? (
               <Checker isBaseAppMode={true} isProfileMode={activeTab === 'profile'} />
             ) : activeTab === 'vibeclub' ? (
-              <div className="vibeclub-view-container" style={{ width: '100%', boxSizing: 'border-box', padding: '20px 12px 60px 12px' }}>
-                {/* Vibe Club Hero Header */}
-                <div
-                  className="rewards-hero-header"
-                  style={{
-                    width: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                    padding: '12px 8px 8px 8px'
-                  }}
-                >
-                  <h2
-                    className="rewards-hero-title"
-                    style={{
-                      fontSize: '18px',
-                      margin: '0 0 12px 0',
-                      letterSpacing: '0.6px',
-                      color: 'var(--text)',
-                      fontFamily: 'var(--font-sans)',
-                      textAlign: 'center',
-                      width: '100%',
-                      lineHeight: 1.3
-                    }}
-                  >
-                    VIBE CLUB <span style={{ color: 'var(--accent)' }}>NFT</span>
-                  </h2>
-
-                  <div
-                    className="rewards-hero-pill"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      background: 'color-mix(in srgb, var(--accent) 8%, transparent)',
-                      border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)',
-                      borderRadius: '99px',
-                      padding: '7px 16px',
-                      maxWidth: '100%',
-                      boxSizing: 'border-box'
-                    }}
-                  >
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--green)',  flexShrink: 0 }} />
-                    <span className="rewards-hero-pill-text" style={{ fontSize: '6.5px', color: 'var(--accent)', letterSpacing: '0.5px', fontFamily: 'var(--font-sans)', fontWeight: 800, textAlign: 'center', lineHeight: 1.4 }}>
-                      EXCLUSIVE 333 MEMBERSHIP · PASSIVE ROYALTIES
-                    </span>
-                  </div>
-                </div>
+              <div className="o1-nft-page-container" style={{ padding: '0 14px' }}>
+                <PageHeader
+                  title="Vibe Club NFT"
+                  description="Exclusive 333 genesis membership pass on Base with lifetime royalty dividends"
+                />
                 <NftClubPage isEmbeddedInBaseApp={true} />
               </div>
             ) : activeTab === 'tokenomics' ? (
