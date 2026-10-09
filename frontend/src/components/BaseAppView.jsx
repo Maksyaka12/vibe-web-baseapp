@@ -241,7 +241,13 @@ export function BaseAppView({ RewardsComponent }) {
                 <ContractsPage isBaseAppMode={true} />
               </div>
             ) : activeTab === 'admin' ? (
-              <BaseAppAdminView />
+              <div className="o1-admin-page-wrapper" style={{ padding: '0 14px' }}>
+                <PageHeader
+                  title="Admin controls"
+                  description="Merkle root publishers, distributor controls, and NFT contract operations"
+                />
+                <BaseAppAdminView />
+              </div>
             ) : (
               RewardsComponent ? <RewardsComponent isBaseAppMode={true} /> : null
             )}

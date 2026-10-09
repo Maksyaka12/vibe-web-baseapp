@@ -1,7 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import { useAccount, useDisconnect } from 'wagmi';
-import { parseEther, formatEther, parseUnits, formatUnits, encodeFunctionData, parseAbi } from 'viem';
+import { parseEther, parseUnits, formatUnits, encodeFunctionData, parseAbi } from 'viem';
+import {
+  Coins,
+  Crown,
+  Sparkles,
+  ShieldAlert,
+  ArrowUpRight,
+  ExternalLink,
+  Flame,
+  Users,
+  Wallet
+} from 'lucide-react';
 import { publicClient } from '../config/rpc';
 import { DATA_SUFFIX, appendBuilderSuffix } from '../config/builderCode';
 import { useVibeNftContract } from '../hooks/useVibeNftContract';
@@ -12,13 +23,7 @@ import royalty2Data from '../data/royalty_2_proofs.json';
 import royalty3Data from '../data/royalty_3_proofs.json';
 import royalty4Data from '../data/royalty_4_proofs.json';
 import royalty5Data from '../data/royalty_5_proofs.json';
-import {
-  Coins,
-  Crown,
-  Sparkles,
-  AlertTriangle,
-  RefreshCw
-} from 'lucide-react';
+import { Card, Tile, Button, Badge, StatusPill, Alert } from './ui';
 
 export const ADMIN_WALLET = '0x4c91d3bed372c11795b9ce9a9017dfe447bf050a';
 export const VIBE_TOKEN_CA = '0xb200000000000000000000df24ecb8bf51100a01';
@@ -58,15 +63,13 @@ export function BaseAppAdminView() {
   // Active module tab: 'holder' | 'royalty' | 'nft'
   const [activeTab, setActiveTab] = useState('holder');
 
-  // Generic status & feedback state
+  // Status & feedback state
   const [loading, setLoading] = useState(false);
   const [txHash, setTxHash] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  // ═════════════════════════════════════════════════════════════════════════
-  // 1. HOLDER & ROYALTIES STATES
-  // ═════════════════════════════════════════════════════════════════════════
+  // 1. Holder & Royalties states
   const [holderEpochId, setHolderEpochId] = useState('2');
   const [holderMerkleRoot, setHolderMerkleRoot] = useState(round2Data?.merkleRoot || round1Data?.merkleRoot || '');
   const [holderWithdrawAmount, setHolderWithdrawAmount] = useState('');
@@ -81,7 +84,7 @@ export function BaseAppAdminView() {
 
   const [nftCommunityAmount, setNftCommunityAmount] = useState('');
 
-  // Multicall Live Metrics
+  // Live Metrics
   const [holderMetrics, setHolderMetrics] = useState({
     contractBalance: 0,
     claimedTokens: 0,
@@ -100,9 +103,7 @@ export function BaseAppAdminView() {
     loading: false
   });
 
-  // ═════════════════════════════════════════════════════════════════════════
-  // 2. NFT CLUB CONTRACT HOOK
-  // ═════════════════════════════════════════════════════════════════════════
+  // 2. NFT Contract hook
   const {
     contractEthBalance,
     contractVibeBalance,
@@ -141,7 +142,7 @@ export function BaseAppAdminView() {
   const [isOverridePriceSaving, setIsOverridePriceSaving] = useState(false);
   const [overridePriceSuccess, setOverridePriceSuccess] = useState(false);
 
-  // Live $VIBE ratio for dynamic VIBE Mint price
+  // Live VIBE ratio
   const [vibePerEthRatio, setVibePerEthRatio] = useState(50000000);
 
   useEffect(() => {
@@ -175,7 +176,6 @@ export function BaseAppAdminView() {
   const ethPriceNum = parseFloat(ethPriceFormatted) || 0.005;
   const currentDynamicVibeAmount = Math.floor(ethPriceNum * vibePerEthRatio);
 
-  // Generic Admin Transaction Sender
   const sendAdminTx = async (to, data, value = '0x0') => {
     const activeWallet = wallets.find(w => w.address.toLowerCase() === activeAddress?.toLowerCase()) || wallets[0];
     if (!activeWallet) throw new Error('No active wallet found. Please connect your admin wallet.');
@@ -223,9 +223,6 @@ export function BaseAppAdminView() {
     }
   };
 
-  // ═════════════════════════════════════════════════════════════════════════
-  // 3. HIGH-SPEED PROD MULTICALL (<350ms) FOR HOLDERS & ROYALTIES
-  // ═════════════════════════════════════════════════════════════════════════
   const fetchDistributorMetrics = useCallback(async (type, overrideEpoch) => {
     const isHolder = type === 'holder';
     const contractAddress = isHolder ? DISTRIBUTOR_CA : ROYALTY_DISTRIBUTOR_CA;
@@ -241,7 +238,6 @@ export function BaseAppAdminView() {
           : (epoch === '5' ? (royalty5Data?.claims || {}) : (epoch === '4' ? (royalty4Data?.claims || {}) : (epoch === '3' ? (royalty3Data?.claims || {}) : (epoch === '2' ? (royalty2Data?.claims || {}) : (royalty1Data?.claims || {})))))
       );
 
-      // Single multicall for contract token balance + all hasClaimed boolean statuses
       const calls = [
         {
           address: VIBE_TOKEN_CA,
@@ -272,7 +268,7 @@ export function BaseAppAdminView() {
         }
       }
 
-      const totalWalletsCount = claims.length || (isHolder ? (epoch === '2' ? Object.keys(round2Data?.claims || {}).length : 42) : (epoch === '5' ? 111 : (epoch === '4' ? 111 : (epoch === '3' ? 111 : (epoch === '2' ? 111 : 109)))));
+      const totalWalletsCount = claims.length || (isHolder ? (epoch === '2' ? Object.keys(round2Data?.claims || {}).length : 42) : 111);
       const totalPool = isHolder ? 10000000 : (epoch === '5' ? (royalty5Data?.poolAmount || 800000) : (epoch === '4' ? 1100000 : (epoch === '3' ? 2000000 : (epoch === '2' ? 1900000 : 2500000))));
       const unclaimedTokens = Math.max(0, totalPool - claimedTokens);
 
@@ -302,14 +298,11 @@ export function BaseAppAdminView() {
       const interval = setInterval(() => {
         fetchDistributorMetrics('holder', holderEpochId);
         fetchDistributorMetrics('royalty', royaltyEpochId);
-      }, 12000);
+      }, 15000);
       return () => clearInterval(interval);
     }
   }, [isAdmin, holderEpochId, royaltyEpochId, fetchDistributorMetrics]);
 
-  // ═════════════════════════════════════════════════════════════════════════
-  // 4. ACTION HANDLERS FOR HOLDERS / ROYALTIES
-  // ═════════════════════════════════════════════════════════════════════════
   const handleSetMerkleRoot = async (type) => {
     const isHolder = type === 'holder';
     const contractAddress = isHolder ? DISTRIBUTOR_CA : ROYALTY_DISTRIBUTOR_CA;
@@ -335,7 +328,7 @@ export function BaseAppAdminView() {
 
       const hash = await sendAdminTx(contractAddress, dataHex);
       setTxHash(hash);
-      setSuccessMessage(`Merkle Root for ${isHolder ? 'Holder Round' : 'Royalty Epoch'} #${epoch} published successfully!`);
+      setSuccessMessage(`Merkle root for ${isHolder ? 'Holder round' : 'Royalty epoch'} #${epoch} published successfully`);
       setTimeout(() => fetchDistributorMetrics(type, epoch), 3000);
     } catch (e) {
       console.error('Set Merkle Root error:', e);
@@ -372,7 +365,7 @@ export function BaseAppAdminView() {
 
       const hash = await sendAdminTx(contractAddress, dataHex);
       setTxHash(hash);
-      setSuccessMessage(`Successfully withdrawn ${amountNum.toLocaleString()} $VIBE from ${isHolder ? 'Holders' : 'Royalties'} contract to Admin Wallet!`);
+      setSuccessMessage(`Withdrawn ${amountNum.toLocaleString()} $VIBE from ${isHolder ? 'Holders' : 'Royalties'} contract to admin wallet`);
       if (isHolder) setHolderWithdrawAmount('');
       else setRoyaltyWithdrawAmount('');
       setTimeout(() => fetchDistributorMetrics(type), 3000);
@@ -404,16 +397,13 @@ export function BaseAppAdminView() {
     try {
       const amountWei = parseUnits(amountNum.toString(), 18);
 
-      // Step 1: Emergency withdraw from distributor to Admin
       const withdrawDataHex = encodeFunctionData({
         abi: DISTRIBUTOR_ABI,
         functionName: 'emergencyWithdraw',
         args: [VIBE_TOKEN_CA, amountWei]
       });
-
       await sendAdminTx(contractAddress, withdrawDataHex);
 
-      // Step 2: Transfer to Dead address
       const burnDataHex = encodeFunctionData({
         abi: ERC20_ABI,
         functionName: 'transfer',
@@ -422,7 +412,7 @@ export function BaseAppAdminView() {
 
       const hash2 = await sendAdminTx(VIBE_TOKEN_CA, burnDataHex);
       setTxHash(hash2);
-      setSuccessMessage(`Successfully burned ${amountNum.toLocaleString()} $VIBE by sending to 0x0...dEaD!`);
+      setSuccessMessage(`Burned ${amountNum.toLocaleString()} $VIBE by transferring to dead address`);
       if (isHolder) setHolderBurnAmount('');
       else setRoyaltyBurnAmount('');
       setTimeout(() => fetchDistributorMetrics(type), 3000);
@@ -454,7 +444,7 @@ export function BaseAppAdminView() {
     }
 
     if (!amountNum || amountNum <= 0) {
-      setErrorMessage('Please specify an amount to withdraw to Community Wallet');
+      setErrorMessage('Please specify an amount to withdraw to community wallet');
       return;
     }
 
@@ -467,14 +457,12 @@ export function BaseAppAdminView() {
       const amountWei = parseUnits(amountNum.toString(), 18);
 
       if (isNft) {
-        // Step 1: Withdraw VIBE from NFT contract to Admin wallet
         const withdrawDataHex = encodeFunctionData({
           abi: parseAbi(['function withdrawVIBE() external']),
           functionName: 'withdrawVIBE'
         });
         await sendAdminTx(NFT_CONTRACT_ADDRESS, withdrawDataHex);
       } else {
-        // Step 1: Emergency withdraw from Distributor contract to Admin wallet
         const withdrawDataHex = encodeFunctionData({
           abi: DISTRIBUTOR_ABI,
           functionName: 'emergencyWithdraw',
@@ -483,7 +471,6 @@ export function BaseAppAdminView() {
         await sendAdminTx(contractAddress, withdrawDataHex);
       }
 
-      // Step 2: Transfer VIBE from Admin wallet to Community wallet (0x067c66aDdD3C6D484c1882B68E197B614f7f3Ebf)
       const transferDataHex = encodeFunctionData({
         abi: ERC20_ABI,
         functionName: 'transfer',
@@ -492,17 +479,14 @@ export function BaseAppAdminView() {
 
       const hash2 = await sendAdminTx(VIBE_TOKEN_CA, transferDataHex);
       setTxHash(hash2);
-      setSuccessMessage(`Successfully transferred ${amountNum.toLocaleString()} $VIBE to Community Wallet (${COMMUNITY_WALLET.slice(0, 6)}...${COMMUNITY_WALLET.slice(-4)})!`);
+      setSuccessMessage(`Transferred ${amountNum.toLocaleString()} $VIBE to community wallet`);
 
       if (isHolder) setHolderCommunityAmount('');
       else if (isRoyalty) setRoyaltyCommunityAmount('');
       else setNftCommunityAmount('');
 
-      if (isNft) {
-        await refetchNftState();
-      } else {
-        setTimeout(() => fetchDistributorMetrics(type), 3000);
-      }
+      if (isNft) await refetchNftState();
+      else setTimeout(() => fetchDistributorMetrics(type), 3000);
     } catch (e) {
       console.error('Withdraw to community error:', e);
       setErrorMessage(e?.shortMessage || e?.message || 'Withdraw to community failed');
@@ -511,7 +495,6 @@ export function BaseAppAdminView() {
     }
   };
 
-  // Custom Router Setter Handler
   const handleSaveCustomRouter = async () => {
     const routerToSet = (customRouterInput && customRouterInput.trim().length === 42)
       ? customRouterInput.trim()
@@ -540,7 +523,6 @@ export function BaseAppAdminView() {
     }
   };
 
-  // Set Override Mint Price Handler
   const handleSetOverrideMintPrice = async (customPrice) => {
     const priceEth = customPrice !== undefined ? customPrice : overridePriceInput;
     setIsOverridePriceSaving(true);
@@ -561,8 +543,8 @@ export function BaseAppAdminView() {
       setTxHash(hash);
       setOverridePriceSuccess(true);
       setSuccessMessage(Number(priceEth) === 0
-        ? 'Mint price reset to automated 4-phase calculation!'
-        : `Mint price set to ${priceEth} ETH successfully!`);
+        ? 'Mint price reset to automated 4-phase calculation'
+        : `Mint price set to ${priceEth} ETH successfully`);
       await refetchNftState();
     } catch (e) {
       console.error('Set Override Mint Price error:', e);
@@ -572,1195 +554,547 @@ export function BaseAppAdminView() {
     }
   };
 
-  // Non-Admin Access Wall
+  // Non-Admin Access Gate
   if (!authenticated || !isAdmin) {
     return (
-      <div className="admin-view-container" style={{ padding: '40px 16px 80px 16px', maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-        <div
-          style={{
-            background: 'color-mix(in srgb, var(--bg) 95%, transparent)',
-            border: '2px solid var(--red)',
-            borderRadius: '20px',
-            padding: '36px 20px',
-            }}
-        >
-          <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'color-mix(in srgb, var(--red) 15%, transparent)', border: '2px solid var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px auto' }}>
-            <AlertTriangle size={30} color="var(--red)" />
-          </div>
-          <h2 style={{ fontSize: '14px', color: 'var(--red)', fontFamily: 'var(--font-sans)', marginBottom: '14px' }}>
-            ACCESS RESTRICTED
-          </h2>
-          <p style={{ fontSize: '8px', color: 'var(--text-2)', lineHeight: 1.8, fontFamily: 'var(--font-sans)', maxWidth: '520px', margin: '0 auto 24px auto' }}>
-            THIS ADMIN PANEL IS RESERVED EXCLUSIVELY FOR THE VIBE PROTOCOL OWNER. CONNECT WITH THE AUTHORIZED WALLET TO PROCEED.
-          </p>
-          <div style={{ fontSize: '7px', color: 'var(--text-3)', fontFamily: 'monospace', marginBottom: '24px', background: 'color-mix(in srgb, var(--bg) 80%, transparent)', padding: '10px', borderRadius: '8px', display: 'inline-block' }}>
-            REQUIRED: {ADMIN_WALLET}
+      <div className="o1-admin-container" style={{ maxWidth: '640px', margin: '40px auto', textAlign: 'center' }}>
+        <Card style={{ padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
+          <div style={{ width: '48px', height: '48px', borderRadius: 'var(--r-sm)', background: 'var(--surface-2)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--warning)' }}>
+            <ShieldAlert size={24} />
           </div>
           <div>
-            {!authenticated ? (
-              <button
-                onClick={login}
-                style={{
-                  background: 'var(--red)',
-                  color: 'var(--text)',
-                  border: 'none',
-                  borderRadius: '10px',
-                  padding: '12px 24px',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '8.5px',
-                  fontWeight: 900,
-                  cursor: 'pointer',
-                  }}
-              >
-                CONNECT ADMIN WALLET
-              </button>
-            ) : (
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                <button
-                  onClick={() => {
-                    disconnect?.();
-                    logout?.();
-                  }}
-                  style={{
-                    background: 'color-mix(in srgb, var(--red) 20%, transparent)',
-                    border: '1.5px solid var(--red)',
-                    color: 'var(--red)',
-                    borderRadius: '10px',
-                    padding: '10px 18px',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '8px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  DISCONNECT (CURRENT: {activeAddress?.slice(0, 6)}...{activeAddress?.slice(-4)})
-                </button>
-              </div>
-            )}
+            <h2 style={{ fontSize: '18px', fontWeight: 600, margin: '0 0 6px 0', color: 'var(--text)' }}>
+              Access restricted
+            </h2>
+            <p style={{ fontSize: '13px', color: 'var(--text-3)', margin: 0, lineHeight: 1.5 }}>
+              This administration dashboard requires authorization from the protocol owner address.
+            </p>
           </div>
-        </div>
+          <div style={{ padding: '8px 12px', background: 'var(--surface-2)', borderRadius: 'var(--r-sm)', border: '1px solid var(--border)', fontSize: '12px', fontFamily: 'var(--mono)', color: 'var(--text-2)' }}>
+            Required: {ADMIN_WALLET}
+          </div>
+          {!authenticated ? (
+            <Button variant="primary" size="lg" onClick={login}>
+              <Wallet size={16} /> Connect admin wallet
+            </Button>
+          ) : (
+            <Button variant="secondary" size="md" onClick={() => { disconnect?.(); logout?.(); }}>
+              Disconnect ({activeAddress?.slice(0, 6)}...{activeAddress?.slice(-4)})
+            </Button>
+          )}
+        </Card>
       </div>
     );
   }
 
-  // Consistent Pixel UI Style Constants
-  const ACTION_CARD_STYLE = (borderColor) => ({
-    background: 'color-mix(in srgb, var(--surface) 85%, transparent)',
-    border: `1.5px solid ${borderColor}`,
-    borderRadius: '16px',
-    padding: '18px',
-    });
-
-  const ACTION_HEADER_STYLE = (color) => ({
-    fontSize: '8px',
-    color: color,
-    fontFamily: 'var(--font-sans)',
-    fontWeight: 900,
-    marginBottom: '14px',
-    letterSpacing: '0.4px',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px'
-  });
-
-  const INPUT_STYLE = (borderColor, textColor = 'var(--border-strong)', isMonospace = false) => ({
-    height: '42px',
-    background: 'color-mix(in srgb, var(--bg) 90%, transparent)',
-    border: `1.5px solid ${borderColor}`,
-    borderRadius: '10px',
-    padding: '0 14px',
-    color: textColor,
-    fontFamily: isMonospace ? 'monospace' : 'var(--font-sans)',
-    fontSize: isMonospace ? '8.5px' : '8px',
-    outline: 'none',
-    boxSizing: 'border-box'
-  });
-
-  const ACTION_BTN_STYLE = (bgGradient, borderColor, textColor = 'var(--bg)', isDanger = false) => ({
-    height: '42px',
-    background: bgGradient,
-    border: `1.5px solid ${borderColor}`,
-    color: textColor,
-    fontFamily: 'var(--font-sans)',
-    fontSize: '8px',
-    fontWeight: 900,
-    letterSpacing: '0.4px',
-    padding: '0 16px',
-    borderRadius: '10px',
-    cursor: 'pointer',
-    whiteSpace: 'nowrap',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxSizing: 'border-box',
-    
-    transition: 'all 0.15s ease'
-  });
-
-  const BADGE_BTN_STYLE = (bg, border, color) => ({
-    height: '26px',
-    background: bg,
-    border: `1px solid ${border}`,
-    color: color,
-    fontFamily: 'var(--font-sans)',
-    fontSize: '6.5px',
-    fontWeight: 800,
-    padding: '0 8px',
-    borderRadius: '6px',
-    cursor: 'pointer',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    boxSizing: 'border-box',
-    transition: 'all 0.15s ease'
-  });
-
   return (
-    <div className="admin-view-container" style={{ padding: '20px 12px 80px 12px', maxWidth: '1100px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-      
-      {/* Header Banner */}
-      <div style={{ textAlign: 'center', marginBottom: '24px', width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <h2 style={{ fontSize: '18px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: '0', letterSpacing: '0.6px', textAlign: 'center' }}>
-          ADMIN <span style={{ color: 'var(--red)' }}>PANEL</span>
-        </h2>
-      </div>
-
-      {/* Global Status Banner (Success / Error / TxHash) */}
+    <div className="o1-admin-container">
+      {/* Feedback alerts */}
       {(errorMessage || nftErrorMessage) && (
-        <div
-          style={{
-            background: 'color-mix(in srgb, var(--red) 15%, transparent)',
-            border: '1.5px solid var(--red)',
-            borderRadius: '12px',
-            padding: '12px 16px',
-            fontSize: '8px',
-            color: 'var(--red)',
-            fontFamily: 'var(--font-sans)',
-            lineHeight: 1.6,
-            marginBottom: '20px',
-            }}
-        >
-          ⚠️ {errorMessage || nftErrorMessage}
-        </div>
+        <Alert tone="danger">{errorMessage || nftErrorMessage}</Alert>
       )}
 
       {(successMessage || withdrawSuccess || withdrawVibeSuccess || adminSwapSuccess || setRouterSuccess || customRouterSuccess || adminPaidMintSuccess) && (
-        <div
-          style={{
-            background: 'color-mix(in srgb, var(--green) 15%, transparent)',
-            border: '1.5px solid var(--green)',
-            borderRadius: '12px',
-            padding: '12px 16px',
-            fontSize: '8.5px',
-            color: 'var(--green)',
-            fontFamily: 'var(--font-sans)',
-            lineHeight: 1.6,
-            marginBottom: '20px',
-            }}
-        >
+        <Alert tone="success">
           {successMessage || (
-            withdrawSuccess ? '✓ ETH WITHDRAWN TO ADMIN WALLET SUCCESSFULLY!' :
-            withdrawVibeSuccess ? '✓ ALL CONTRACT $VIBE WITHDRAWN TO ADMIN WALLET SUCCESSFULLY!' :
-            adminSwapSuccess ? '✓ SWAP & AUTO-BURN EXECUTED ON BASE! 80% $VIBE BURNED!' :
-            (setRouterSuccess || customRouterSuccess) ? '✓ DEX ROUTER CONNECTED SUCCESSFULLY!' :
-            adminPaidMintSuccess ? `✓ ADMIN NFT MINTED & DELIVERED (ID #${adminPaidMintedTokenId || '?'}) TO ${adminPaidRecipient ? (adminPaidRecipient.slice(0, 6) + '...' + adminPaidRecipient.slice(-4)) : 'ADMIN'}!` :
-            '✓ ACTION COMPLETED SUCCESSFULLY!'
+            withdrawSuccess ? 'ETH withdrawn to admin wallet successfully' :
+            withdrawVibeSuccess ? 'All contract $VIBE withdrawn to admin wallet successfully' :
+            adminSwapSuccess ? 'Swap & auto-burn executed on Base' :
+            (setRouterSuccess || customRouterSuccess) ? 'DEX router connected successfully' :
+            adminPaidMintSuccess ? `Admin NFT minted (ID #${adminPaidMintedTokenId || '?'})` :
+            'Action completed successfully'
           )}
           {(txHash || adminTxHash) && (
-            <div style={{ marginTop: '8px' }}>
-              <a
-                href={`https://basescan.org/tx/${txHash || adminTxHash}`}
-                target="_blank"
-                rel="noreferrer"
-                style={{ color: 'var(--accent)', textDecoration: 'underline', fontSize: '7.5px' }}
-              >
-                VIEW TX ON BASESCAN ↗
-              </a>
-            </div>
+            <a
+              href={`https://basescan.org/tx/${txHash || adminTxHash}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: 'var(--accent)', textDecoration: 'underline', marginLeft: '8px' }}
+            >
+              View on BaseScan ↗
+            </a>
           )}
-        </div>
+        </Alert>
       )}
 
-      {/* 3 Main Module Tabs */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '8px',
-          background: 'color-mix(in srgb, var(--surface) 80%, transparent)',
-          border: '1.5px solid color-mix(in srgb, var(--accent) 25%, transparent)',
-          borderRadius: '14px',
-          padding: '6px',
-          marginBottom: '24px'
-        }}
-      >
+      {/* Navigation tabs */}
+      <div className="o1-admin-tabs">
         <button
+          className={`o1-admin-tab-btn ${activeTab === 'holder' ? 'active' : ''}`}
           onClick={() => setActiveTab('holder')}
-          style={{
-            padding: '12px 8px',
-            borderRadius: '10px',
-            border: activeTab === 'holder' ? '1.5px solid var(--accent)' : '1px solid transparent',
-            background: activeTab === 'holder' ? 'color-mix(in srgb, var(--accent) 25%, transparent)' : 'transparent',
-            color: activeTab === 'holder' ? 'var(--accent)' : 'var(--text-3)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '8px',
-            fontWeight: 900,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-            textAlign: 'center'
-          }}
         >
-          <Coins size={16} color={activeTab === 'holder' ? 'var(--accent)' : 'var(--text-3)'} />
-          <span>HOLDERS</span>
+          <Coins size={15} /> Holders
         </button>
-
         <button
+          className={`o1-admin-tab-btn ${activeTab === 'royalty' ? 'active' : ''}`}
           onClick={() => setActiveTab('royalty')}
-          style={{
-            padding: '12px 8px',
-            borderRadius: '10px',
-            border: activeTab === 'royalty' ? '1.5px solid var(--text-2)' : '1px solid transparent',
-            background: activeTab === 'royalty' ? 'color-mix(in srgb, var(--text-2) 25%, transparent)' : 'transparent',
-            color: activeTab === 'royalty' ? 'var(--text-2)' : 'var(--text-3)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '8px',
-            fontWeight: 900,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-            textAlign: 'center'
-          }}
         >
-          <Crown size={16} color={activeTab === 'royalty' ? 'var(--text-2)' : 'var(--text-3)'} />
-          <span>ROYALTIES</span>
+          <Crown size={15} /> Royalties
         </button>
-
         <button
+          className={`o1-admin-tab-btn ${activeTab === 'nft' ? 'active' : ''}`}
           onClick={() => setActiveTab('nft')}
-          style={{
-            padding: '12px 8px',
-            borderRadius: '10px',
-            border: activeTab === 'nft' ? '1.5px solid var(--amber)' : '1px solid transparent',
-            background: activeTab === 'nft' ? 'color-mix(in srgb, var(--amber) 25%, transparent)' : 'transparent',
-            color: activeTab === 'nft' ? 'var(--amber)' : 'var(--text-3)',
-            fontFamily: 'var(--font-sans)',
-            fontSize: '8px',
-            fontWeight: 900,
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '6px',
-            textAlign: 'center'
-          }}
         >
-          <Sparkles size={16} color={activeTab === 'nft' ? 'var(--amber)' : 'var(--text-3)'} />
-          <span>VIBE CLUB</span>
+          <Sparkles size={15} /> Vibe Club
         </button>
       </div>
 
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* TAB 1: HOLDERS                                                      */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* ── TAB 1: HOLDERS ── */}
       {activeTab === 'holder' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          
-          {/* Header & Contract Link */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent)', }} />
-              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
-                HOLDER REWARDS VESTING CONTROLS
-              </h3>
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
+              Holder rewards vesting distributor
+            </span>
             <a
               href="https://basescan.org/address/0x77e04dd8c45725d2b2b3c8eebac2f3f1708fd089"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: 'var(--text-3)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
+              style={{ fontSize: '12px', color: 'var(--text-3)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
             >
-              CA: 0x77e0...d089 ↗
+              <span style={{ fontFamily: 'var(--mono)' }}>0x77e0...d089</span>
+              <ExternalLink size={12} />
             </a>
           </div>
 
-          {/* 4 Metric Cards */}
-          <div className="admin-metrics-grid">
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                CONTRACT $VIBE BALANCE
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--accent)' }}>
-                {holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                WALLETS CLAIMED
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
-                {holderMetrics.loading ? '...' : `${holderMetrics.claimedWalletsCount} / ${holderMetrics.totalWalletsCount}`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                TOTAL CLAIMED
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--text)' }}>
-                {holderMetrics.loading ? '...' : `+${holderMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                UNCLAIMED IN ROUND
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
-                {holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
+          <div className="o1-admin-metrics-grid">
+            <Tile
+              label="Contract balance"
+              value={holderMetrics.loading ? '...' : `${holderMetrics.contractBalance.toLocaleString()} $VIBE`}
+            />
+            <Tile
+              label="Wallets claimed"
+              value={holderMetrics.loading ? '...' : `${holderMetrics.claimedWalletsCount} / ${holderMetrics.totalWalletsCount}`}
+            />
+            <Tile
+              label="Total claimed"
+              value={holderMetrics.loading ? '...' : `${holderMetrics.claimedTokens.toLocaleString()} $VIBE`}
+            />
+            <Tile
+              label="Unclaimed in round"
+              value={holderMetrics.loading ? '...' : `${holderMetrics.unclaimedTokens.toLocaleString()} $VIBE`}
+            />
           </div>
 
-          {/* Action 1: Set Merkle Root */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
-              1. PUBLISH MERKLE ROOT PROOF
-            </div>
-            <div className="admin-merkle-row">
-              <div className="admin-merkle-inputs">
-                <input
-                  type="number"
-                  value={holderEpochId}
-                  onChange={(e) => {
-                    const newEpoch = e.target.value;
-                    setHolderEpochId(newEpoch);
-                    if (newEpoch === '2') {
-                      setHolderMerkleRoot(round2Data?.merkleRoot || '');
-                    } else if (newEpoch === '1') {
-                      setHolderMerkleRoot(round1Data?.merkleRoot || '');
-                    }
-                    fetchDistributorMetrics('holder', newEpoch);
-                  }}
-                  placeholder="Round"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--text)'),
-                    width: '80px',
-                    textAlign: 'center'
-                  }}
-                />
-                <input
-                  type="text"
-                  value={holderMerkleRoot}
-                  onChange={(e) => setHolderMerkleRoot(e.target.value)}
-                  placeholder="0x... Merkle Root"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)', true),
-                    flex: 1
-                  }}
-                />
-              </div>
-              <button
-                onClick={() => handleSetMerkleRoot('holder')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
-                  cursor: loading ? 'not-allowed' : 'pointer'
+          {/* Action 1: Merkle Root */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              1. Publish Merkle root proof
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={holderEpochId}
+                onChange={(e) => {
+                  const newEpoch = e.target.value;
+                  setHolderEpochId(newEpoch);
+                  if (newEpoch === '2') setHolderMerkleRoot(round2Data?.merkleRoot || '');
+                  else if (newEpoch === '1') setHolderMerkleRoot(round1Data?.merkleRoot || '');
+                  fetchDistributorMetrics('holder', newEpoch);
                 }}
-              >
-                {loading ? 'SAVING...' : 'PUBLISH ROOT'}
-              </button>
+                placeholder="Round"
+                className="o1-admin-input"
+                style={{ maxWidth: '100px' }}
+              />
+              <input
+                type="text"
+                value={holderMerkleRoot}
+                onChange={(e) => setHolderMerkleRoot(e.target.value)}
+                placeholder="0x... Merkle root bytes32"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="primary" size="md" onClick={() => handleSetMerkleRoot('holder')} disabled={loading}>
+                {loading ? 'Saving...' : 'Publish root'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
-          {/* Action 2: Withdraw Tokens */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
-              2. WITHDRAW $VIBE TO ADMIN WALLET
+          {/* Action 2: Withdraw to Admin */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              2. Withdraw $VIBE to admin wallet
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={holderWithdrawAmount}
+                onChange={(e) => setHolderWithdrawAmount(e.target.value)}
+                placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString()} $VIBE`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setHolderWithdrawAmount(holderMetrics.contractBalance.toString())}>
+                Max
+              </Button>
+              <Button variant="secondary" size="md" onClick={() => handleWithdrawDistributorTokens('holder')} disabled={loading}>
+                {loading ? 'Processing...' : 'Withdraw'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={holderWithdrawAmount}
-                  onChange={(e) => setHolderWithdrawAmount(e.target.value)}
-                  placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)'),
-                    width: '100%',
-                    paddingRight: '65px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setHolderWithdrawAmount(holderMetrics.contractBalance.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--accent) 18%, transparent)', 'color-mix(in srgb, var(--accent) 45%, transparent)', 'var(--accent)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  MAX
-                </button>
-              </div>
-              <button
-                onClick={() => handleWithdrawDistributorTokens('holder')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
-                  cursor: loading ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'WITHDRAW TO ADMIN'}
-              </button>
-            </div>
-          </div>
+          </Card>
 
-          {/* Action 3: Burn Unclaimed Tokens */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--red) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--red)' }}>
-              3. BURN UNCLAIMED TOKENS
+          {/* Action 3: Burn Unclaimed */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--danger)' }}>
+              3. Burn unclaimed tokens
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={holderBurnAmount}
+                onChange={(e) => setHolderBurnAmount(e.target.value)}
+                placeholder="Amount in $VIBE to burn"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setHolderBurnAmount(holderMetrics.unclaimedTokens.toString())}>
+                All unclaimed
+              </Button>
+              <Button variant="primary" size="md" onClick={() => handleBurnDistributorTokens('holder')} disabled={loading}>
+                {loading ? 'Processing...' : 'Burn tokens'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={holderBurnAmount}
-                  onChange={(e) => setHolderBurnAmount(e.target.value)}
-                  placeholder="Amount in $VIBE to burn"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--red) 30%, transparent)', 'var(--red)'),
-                    width: '100%',
-                    paddingRight: '125px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setHolderBurnAmount(holderMetrics.unclaimedTokens.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--red) 18%, transparent)', 'color-mix(in srgb, var(--red) 45%, transparent)', 'var(--red)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  ALL UNCLAIMED
-                </button>
-              </div>
-              <button
-                onClick={() => handleBurnDistributorTokens('holder')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--red)', '#ff4466', 'var(--text)', true),
-                  cursor: loading ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'BURN TOKENS'}
-              </button>
-            </div>
-          </div>
+          </Card>
 
-          {/* Action 4: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
-              4. WITHDRAW COMMUNITY
+          {/* Action 4: Withdraw to Community */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              4. Transfer to community wallet
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={holderCommunityAmount}
+                onChange={(e) => setHolderCommunityAmount(e.target.value)}
+                placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString()} $VIBE`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setHolderCommunityAmount(holderMetrics.contractBalance.toString())}>
+                Max
+              </Button>
+              <Button variant="secondary" size="md" onClick={() => handleWithdrawCommunityTokens('holder')} disabled={loading || holderMetrics.contractBalance <= 0}>
+                {loading ? 'Processing...' : 'Transfer'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={holderCommunityAmount}
-                  onChange={(e) => setHolderCommunityAmount(e.target.value)}
-                  placeholder={`Max: ${holderMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
-                    width: '100%',
-                    paddingRight: '65px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setHolderCommunityAmount(holderMetrics.contractBalance.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  MAX
-                </button>
-              </div>
-              <button
-                onClick={() => handleWithdrawCommunityTokens('holder')}
-                disabled={loading || holderMetrics.contractBalance <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
-                  cursor: (loading || holderMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
-              </button>
-            </div>
-          </div>
-
+          </Card>
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* TAB 2: ROYALTIES                                                    */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* ── TAB 2: ROYALTIES ── */}
       {activeTab === 'royalty' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          
-          {/* Header & Contract Link */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--text-2)', }} />
-              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
-                VIBE CLUB ROYALTIES CONTROLS
-              </h3>
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
+              Vibe Club NFT royalty distributor
+            </span>
             <a
               href="https://basescan.org/address/0x3753EE7fa9538087f901aa5E4afc12dBA57B97c1"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: 'var(--text-2)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
+              style={{ fontSize: '12px', color: 'var(--text-3)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
             >
-              CA: 0x3753...97c1 ↗
+              <span style={{ fontFamily: 'var(--mono)' }}>0x3753...97c1</span>
+              <ExternalLink size={12} />
             </a>
           </div>
 
-          {/* 4 Metric Cards */}
-          <div className="admin-metrics-grid">
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                CONTRACT $VIBE BALANCE
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--text-2)' }}>
-                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                WALLETS CLAIMED
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
-                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.claimedWalletsCount} / ${royaltyMetrics.totalWalletsCount}`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--text-2) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                TOTAL CLAIMED
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--text)' }}>
-                {royaltyMetrics.loading ? '...' : `+${royaltyMetrics.claimedTokens.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                UNCLAIMED IN ROUND
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
-                {royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString('en-US')} $VIBE`}
-              </div>
-            </div>
+          <div className="o1-admin-metrics-grid">
+            <Tile
+              label="Contract balance"
+              value={royaltyMetrics.loading ? '...' : `${royaltyMetrics.contractBalance.toLocaleString()} $VIBE`}
+            />
+            <Tile
+              label="Wallets claimed"
+              value={royaltyMetrics.loading ? '...' : `${royaltyMetrics.claimedWalletsCount} / ${royaltyMetrics.totalWalletsCount}`}
+            />
+            <Tile
+              label="Total claimed"
+              value={royaltyMetrics.loading ? '...' : `${royaltyMetrics.claimedTokens.toLocaleString()} $VIBE`}
+            />
+            <Tile
+              label="Unclaimed in round"
+              value={royaltyMetrics.loading ? '...' : `${royaltyMetrics.unclaimedTokens.toLocaleString()} $VIBE`}
+            />
           </div>
 
-          {/* Action 1: Set Merkle Root */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
-              1. PUBLISH ROYALTIES MERKLE ROOT
-            </div>
-            <div className="admin-merkle-row">
-              <div className="admin-merkle-inputs">
-                <input
-                  type="number"
-                  value={royaltyEpochId}
-                  onChange={(e) => {
-                    const ep = e.target.value;
-                    setRoyaltyEpochId(ep);
-                    if (ep === '5') setRoyaltyMerkleRoot(royalty5Data?.merkleRoot || '0xf9b9bfb3b409ed97ed3923b0d8c506a057ec659feb2d9199831369373c7d3903');
-                    else if (ep === '4') setRoyaltyMerkleRoot(royalty4Data?.merkleRoot || '0xc0623fa72aa0c8e17c3b91d6e44707cb8222b323390ced057b7d233105682b8f');
-                    else if (ep === '3') setRoyaltyMerkleRoot(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
-                    else if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
-                    else if (ep === '1') setRoyaltyMerkleRoot(royalty1Data?.merkleRoot || '0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');
-                    fetchDistributorMetrics('royalty', ep);
-                  }}
-                  placeholder="Epoch"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text)'),
-                    width: '80px',
-                    textAlign: 'center'
-                  }}
-                />
-                <input
-                  type="text"
-                  value={royaltyMerkleRoot}
-                  onChange={(e) => setRoyaltyMerkleRoot(e.target.value)}
-                  placeholder="0x... Merkle Root"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)', true),
-                    flex: 1
-                  }}
-                />
-              </div>
-              <button
-                onClick={() => handleSetMerkleRoot('royalty')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
-                  cursor: loading ? 'not-allowed' : 'pointer'
+          {/* Action 1: Merkle Root */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              1. Publish royalties Merkle root
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={royaltyEpochId}
+                onChange={(e) => {
+                  const ep = e.target.value;
+                  setRoyaltyEpochId(ep);
+                  if (ep === '5') setRoyaltyMerkleRoot(royalty5Data?.merkleRoot || '0xf9b9bfb3b409ed97ed3923b0d8c506a057ec659feb2d9199831369373c7d3903');
+                  else if (ep === '4') setRoyaltyMerkleRoot(royalty4Data?.merkleRoot || '0xc0623fa72aa0c8e17c3b91d6e44707cb8222b323390ced057b7d233105682b8f');
+                  else if (ep === '3') setRoyaltyMerkleRoot(royalty3Data?.merkleRoot || '0xc733c726b9082f9038c5d1ea28f7ca7cc7e72783f5f7f80258246c95c0a6c706');
+                  else if (ep === '2') setRoyaltyMerkleRoot(royalty2Data?.merkleRoot || '0x6d1de63ef8aa00a4c851ce6ec950e9424961c6e1b8df44e344bfbc5d13b31766');
+                  else if (ep === '1') setRoyaltyMerkleRoot(royalty1Data?.merkleRoot || '0xb07d57c152a5a549646b9bb74b62fbe755910c2cfae868a2bf613e5bc8565a0c');
+                  fetchDistributorMetrics('royalty', ep);
                 }}
-              >
-                {loading ? 'SAVING...' : 'PUBLISH ROOT'}
-              </button>
+                placeholder="Epoch"
+                className="o1-admin-input"
+                style={{ maxWidth: '100px' }}
+              />
+              <input
+                type="text"
+                value={royaltyMerkleRoot}
+                onChange={(e) => setRoyaltyMerkleRoot(e.target.value)}
+                placeholder="0x... Merkle root bytes32"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="primary" size="md" onClick={() => handleSetMerkleRoot('royalty')} disabled={loading}>
+                {loading ? 'Saving...' : 'Publish root'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
-          {/* Action 2: Withdraw Tokens */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
-              2. WITHDRAW $VIBE TO ADMIN WALLET
+          {/* Action 2: Withdraw to Admin */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              2. Withdraw $VIBE to admin wallet
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={royaltyWithdrawAmount}
+                onChange={(e) => setRoyaltyWithdrawAmount(e.target.value)}
+                placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString()} $VIBE`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setRoyaltyWithdrawAmount(royaltyMetrics.contractBalance.toString())}>
+                Max
+              </Button>
+              <Button variant="secondary" size="md" onClick={() => handleWithdrawDistributorTokens('royalty')} disabled={loading}>
+                {loading ? 'Processing...' : 'Withdraw'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={royaltyWithdrawAmount}
-                  onChange={(e) => setRoyaltyWithdrawAmount(e.target.value)}
-                  placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)'),
-                    width: '100%',
-                    paddingRight: '65px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setRoyaltyWithdrawAmount(royaltyMetrics.contractBalance.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--text-2) 18%, transparent)', 'color-mix(in srgb, var(--text-2) 45%, transparent)', 'var(--text-2)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  MAX
-                </button>
-              </div>
-              <button
-                onClick={() => handleWithdrawDistributorTokens('royalty')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
-                  cursor: loading ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'WITHDRAW TO ADMIN'}
-              </button>
-            </div>
-          </div>
+          </Card>
 
-          {/* Action 3: Burn Unclaimed Tokens */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--red) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--red)' }}>
-              3. BURN UNCLAIMED TOKENS
+          {/* Action 3: Burn Unclaimed */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--danger)' }}>
+              3. Burn unclaimed tokens
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={royaltyBurnAmount}
+                onChange={(e) => setRoyaltyBurnAmount(e.target.value)}
+                placeholder="Amount in $VIBE to burn"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setRoyaltyBurnAmount(royaltyMetrics.unclaimedTokens.toString())}>
+                All unclaimed
+              </Button>
+              <Button variant="primary" size="md" onClick={() => handleBurnDistributorTokens('royalty')} disabled={loading}>
+                {loading ? 'Processing...' : 'Burn tokens'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={royaltyBurnAmount}
-                  onChange={(e) => setRoyaltyBurnAmount(e.target.value)}
-                  placeholder="Amount in $VIBE to burn"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--red) 30%, transparent)', 'var(--red)'),
-                    width: '100%',
-                    paddingRight: '125px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setRoyaltyBurnAmount(royaltyMetrics.unclaimedTokens.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--red) 18%, transparent)', 'color-mix(in srgb, var(--red) 45%, transparent)', 'var(--red)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  ALL UNCLAIMED
-                </button>
-              </div>
-              <button
-                onClick={() => handleBurnDistributorTokens('royalty')}
-                disabled={loading}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--red)', '#ff4466', 'var(--text)', true),
-                  cursor: loading ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'BURN TOKENS'}
-              </button>
-            </div>
-          </div>
+          </Card>
 
-          {/* Action 4: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
-              4. WITHDRAW COMMUNITY
+          {/* Action 4: Withdraw to Community */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              4. Transfer to community wallet
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                value={royaltyCommunityAmount}
+                onChange={(e) => setRoyaltyCommunityAmount(e.target.value)}
+                placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString()} $VIBE`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setRoyaltyCommunityAmount(royaltyMetrics.contractBalance.toString())}>
+                Max
+              </Button>
+              <Button variant="secondary" size="md" onClick={() => handleWithdrawCommunityTokens('royalty')} disabled={loading || royaltyMetrics.contractBalance <= 0}>
+                {loading ? 'Processing...' : 'Transfer'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={royaltyCommunityAmount}
-                  onChange={(e) => setRoyaltyCommunityAmount(e.target.value)}
-                  placeholder={`Max: ${royaltyMetrics.contractBalance.toLocaleString('en-US')} $VIBE`}
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
-                    width: '100%',
-                    paddingRight: '65px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setRoyaltyCommunityAmount(royaltyMetrics.contractBalance.toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  MAX
-                </button>
-              </div>
-              <button
-                onClick={() => handleWithdrawCommunityTokens('royalty')}
-                disabled={loading || royaltyMetrics.contractBalance <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
-                  cursor: (loading || royaltyMetrics.contractBalance <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
-              </button>
-            </div>
-          </div>
-
+          </Card>
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* TAB 3: VIBE CLUB (MATCHING HOLDERS & ROYALTIES UNIFIED STRUCTURE)    */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
+      {/* ── TAB 3: VIBE CLUB NFT ── */}
       {activeTab === 'nft' && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          
-          {/* Header & Contract Link */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--amber)', }} />
-              <h3 style={{ fontSize: '10.5px', color: 'var(--text)', fontFamily: 'var(--font-sans)', margin: 0, fontWeight: 900, letterSpacing: '0.4px' }}>
-                VIBE CLUB NFT CONTROLS
-              </h3>
-            </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text)' }}>
+              Vibe Club NFT contract operations
+            </span>
             <a
               href="https://basescan.org/address/0x9E92307Dbec2d0aE4BBF14cA93E1cA00edC4b886"
               target="_blank"
               rel="noreferrer"
-              style={{ fontSize: '7.5px', color: 'var(--amber)', textDecoration: 'none', fontFamily: 'var(--font-sans)', letterSpacing: '0.3px' }}
+              style={{ fontSize: '12px', color: 'var(--text-3)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'none' }}
             >
-              CA: 0x9E92...b886 ↗
+              <span style={{ fontFamily: 'var(--mono)' }}>0x9E92...b886</span>
+              <ExternalLink size={12} />
             </a>
           </div>
 
-          {/* 3 Metric Cards (Balance VIBE, Balance ETH, Current DEX Router) */}
-          <div className="admin-metrics-grid-3">
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--amber) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                CONTRACT $VIBE BALANCE
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--amber)' }}>
-                {Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--accent) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                CONTRACT ETH BALANCE
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--accent)' }}>
-                {parseFloat(contractEthBalance || '0').toFixed(4)} ETH
-              </div>
-            </div>
-
-            <div className="admin-metric-card" style={{ border: '1.5px solid color-mix(in srgb, var(--green) 35%, transparent)' }}>
-              <div className="admin-metric-label">
-                CURRENT DEX ROUTER
-              </div>
-              <div className="admin-metric-value" style={{ color: 'var(--green)' }}>
-                {aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'}
-              </div>
-            </div>
+          <div className="o1-admin-metrics-grid">
+            <Tile
+              label="Contract $VIBE balance"
+              value={`${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
+            />
+            <Tile
+              label="Contract ETH balance"
+              value={`${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
+            />
+            <Tile
+              label="DEX Router"
+              value={aggregatorRouterAddress ? `${aggregatorRouterAddress.slice(0, 6)}...${aggregatorRouterAddress.slice(-4)}` : '0x6131...37b5'}
+            />
+            <Tile
+              label="Mint price"
+              value={`${ethPriceFormatted} ETH`}
+            />
           </div>
 
           {/* Action 1: Execute Swap & Burn */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
-              1. EXECUTE SWAP & BURN
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              1. Execute swap & burn
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                step="0.001"
+                min="0.0001"
+                value={adminEthInput}
+                onChange={(e) => setAdminEthInput(e.target.value)}
+                placeholder="0.005 ETH"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => setAdminEthInput('0.001')}>0.001</Button>
+              <Button variant="secondary" size="md" onClick={() => setAdminEthInput('0.005')}>0.005</Button>
+              <Button variant="secondary" size="md" onClick={() => setAdminEthInput(Number(contractEthBalance || '0.005').toFixed(4))}>Max</Button>
+              <Button variant="primary" size="md" onClick={() => executeAdminSwapAndBurn(adminEthInput)} disabled={isAdminSwapping || parseFloat(adminEthInput || '0') <= 0}>
+                {isAdminSwapping ? 'Processing...' : 'Swap & burn'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  step="0.001"
-                  min="0.0001"
-                  value={adminEthInput}
-                  onChange={(e) => setAdminEthInput(e.target.value)}
-                  placeholder="0.005"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
-                    width: '100%',
-                    paddingRight: '155px'
-                  }}
-                />
-                <div style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '4px' }}>
-                  {['0.001', '0.005', contractEthBalance || '0.005'].map((preset, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setAdminEthInput(Number(preset).toFixed(4))}
-                      className="admin-badge-btn"
-                      style={{
-                        ...BADGE_BTN_STYLE('color-mix(in srgb, var(--amber) 18%, transparent)', 'color-mix(in srgb, var(--amber) 45%, transparent)', 'var(--amber)'),
-                        padding: '0 6px'
-                      }}
-                    >
-                      {idx === 2 ? 'MAX' : `${preset}`}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <button
-                onClick={() => executeAdminSwapAndBurn(adminEthInput)}
-                disabled={isAdminSwapping || parseFloat(adminEthInput || '0') <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--amber)', '#ffffff', 'var(--text)', true),
-                  cursor: (isAdminSwapping || parseFloat(adminEthInput || '0') <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {isAdminSwapping ? 'PROCESSING...' : 'SWAP & BURN'}
-              </button>
-            </div>
-          </div>
+          </Card>
 
-          {/* Action 2: Withdraw $VIBE to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
-              2. WITHDRAW $VIBE TO ADMIN WALLET
-            </div>
-            <div className="admin-action-row">
+          {/* Action 2: Withdraw $VIBE */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              2. Withdraw $VIBE to admin wallet
+            </span>
+            <div className="o1-admin-action-row">
               <input
                 type="text"
                 readOnly
-                value={`CONTRACT BALANCE: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
-                className="admin-input"
-                style={{
-                  ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
-                  flex: 1,
-                  width: '100%'
-                }}
+                value={`Available: ${Number(contractVibeBalance || 0).toLocaleString()} $VIBE`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
               />
-              <button
-                onClick={executeWithdrawVibe}
-                disabled={isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--amber)', '#ffd700', 'var(--bg)'),
-                  cursor: (isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {isWithdrawingVibe ? 'PROCESSING...' : 'WITHDRAW $VIBE'}
-              </button>
+              <Button variant="secondary" size="md" onClick={executeWithdrawVibe} disabled={isWithdrawingVibe || parseFloat(contractVibeBalance || '0') <= 0}>
+                {isWithdrawingVibe ? 'Processing...' : 'Withdraw $VIBE'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
-          {/* Action 3: Withdraw $ETH to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
-              3. WITHDRAW $ETH TO ADMIN WALLET
-            </div>
-            <div className="admin-action-row">
+          {/* Action 3: Withdraw ETH */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              3. Withdraw ETH to admin wallet
+            </span>
+            <div className="o1-admin-action-row">
               <input
                 type="text"
                 readOnly
-                value={`CONTRACT BALANCE: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
-                className="admin-input"
-                style={{
-                  ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)'),
-                  flex: 1,
-                  width: '100%'
-                }}
+                value={`Available: ${parseFloat(contractEthBalance || '0').toFixed(4)} ETH`}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
               />
-              <button
-                onClick={executeWithdrawEth}
-                disabled={isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
-                  cursor: (isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {isWithdrawingEth ? 'PROCESSING...' : 'WITHDRAW $ETH'}
-              </button>
+              <Button variant="secondary" size="md" onClick={executeWithdrawEth} disabled={isWithdrawingEth || parseFloat(contractEthBalance || '0') <= 0}>
+                {isWithdrawingEth ? 'Processing...' : 'Withdraw ETH'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
           {/* Action 4: Mint to Admin Wallet */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--accent) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--accent)' }}>
-              4. MINT TO ADMIN WALLET
-            </div>
-            <div className="admin-mint-action-row">
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              4. Mint NFT to recipient or admin
+            </span>
+            <div className="o1-admin-action-row">
               <input
                 type="text"
                 value={adminGiveawayRecipient}
                 onChange={(e) => setAdminGiveawayRecipient(e.target.value)}
-                placeholder={activeAddress || '0x... (Winner Address or Leave empty for Admin)'}
-                className="admin-input"
-                style={{
-                  ...INPUT_STYLE('color-mix(in srgb, var(--accent) 30%, transparent)', 'var(--accent)', true),
-                  flex: 1,
-                  width: '100%'
-                }}
+                placeholder={activeAddress ? `Default: ${activeAddress.slice(0, 6)}...${activeAddress.slice(-4)}` : '0x... recipient address'}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
               />
-              <div className="admin-mint-buttons-grid">
-                <button
-                  onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)}
-                  disabled={isAdminPaidMinting}
-                  className="admin-action-btn"
-                  style={{
-                    ...ACTION_BTN_STYLE('var(--accent)', '#00f5ff', 'var(--bg)'),
-                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer'
-                  }}
-                >
-                  {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH ETH'}
-                </button>
-                <button
-                  onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))}
-                  disabled={isAdminPaidMinting}
-                  className="admin-action-btn"
-                  style={{
-                    ...ACTION_BTN_STYLE('var(--amber)', '#ff9900', 'var(--text)'),
-                    cursor: isAdminPaidMinting ? 'not-allowed' : 'pointer'
-                  }}
-                >
-                  {isAdminPaidMinting ? 'MINTING...' : 'MINT WITH $VIBE'}
-                </button>
-              </div>
+              <Button variant="primary" size="md" onClick={() => executeAdminPaidMintWithEth(adminGiveawayRecipient)} disabled={isAdminPaidMinting}>
+                {isAdminPaidMinting ? 'Minting...' : 'Mint with ETH'}
+              </Button>
+              <Button variant="secondary" size="md" onClick={() => executeAdminPaidMintWithVibe(adminGiveawayRecipient, parseEther(String(currentDynamicVibeAmount)))} disabled={isAdminPaidMinting}>
+                {isAdminPaidMinting ? 'Minting...' : 'Mint with $VIBE'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
-          {/* Action 5: Set New DEX Router */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--text-2) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--text-2)' }}>
-              5. SET NEW DEX ROUTER
-            </div>
-            <div className="admin-action-row">
+          {/* Action 5: Set DEX Router */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              5. Set aggregator DEX router
+            </span>
+            <div className="o1-admin-action-row">
               <input
                 type="text"
                 value={customRouterInput}
                 onChange={(e) => setCustomRouterInput(e.target.value)}
                 placeholder={aggregatorRouterAddress || '0x6131B5fae19EA4f9D964eAc0408E4408b66337b5'}
-                className="admin-input"
-                style={{
-                  ...INPUT_STYLE('color-mix(in srgb, var(--text-2) 30%, transparent)', 'var(--text-2)', true),
-                  flex: 1,
-                  width: '100%'
-                }}
+                className="o1-admin-input"
+                style={{ flex: 1 }}
               />
-              <button
-                onClick={handleSaveCustomRouter}
-                disabled={isCustomRouterSaving}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--text-2)', '#c084fc', 'var(--bg)'),
-                  cursor: isCustomRouterSaving ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {isCustomRouterSaving ? 'SAVING...' : 'SET ROUTER'}
-              </button>
+              <Button variant="secondary" size="md" onClick={handleSaveCustomRouter} disabled={isCustomRouterSaving}>
+                {isCustomRouterSaving ? 'Saving...' : 'Set router'}
+              </Button>
             </div>
-          </div>
+          </Card>
 
-          {/* Action 6: Withdraw Community */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--green) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--green)' }}>
-              6. WITHDRAW COMMUNITY
+          {/* Action 6: Set Mint Price Override */}
+          <Card style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text)' }}>
+              6. Set override mint price
+            </span>
+            <div className="o1-admin-action-row">
+              <input
+                type="number"
+                step="0.001"
+                min="0"
+                value={overridePriceInput}
+                onChange={(e) => setOverridePriceInput(e.target.value)}
+                placeholder="0.005 ETH"
+                className="o1-admin-input"
+                style={{ flex: 1 }}
+              />
+              <Button variant="secondary" size="md" onClick={() => { setOverridePriceInput('0.005'); handleSetOverrideMintPrice('0.005'); }}>0.005</Button>
+              <Button variant="secondary" size="md" onClick={() => { setOverridePriceInput('0.015'); handleSetOverrideMintPrice('0.015'); }}>0.015</Button>
+              <Button variant="secondary" size="md" onClick={() => { setOverridePriceInput('0'); handleSetOverrideMintPrice('0'); }}>Auto</Button>
+              <Button variant="primary" size="md" onClick={() => handleSetOverrideMintPrice(overridePriceInput)} disabled={isOverridePriceSaving}>
+                {isOverridePriceSaving ? 'Saving...' : 'Set price'}
+              </Button>
             </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  value={nftCommunityAmount}
-                  onChange={(e) => setNftCommunityAmount(e.target.value)}
-                  placeholder={`Max: ${Number(contractVibeBalance || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} $VIBE`}
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--green) 30%, transparent)', 'var(--green)'),
-                    width: '100%',
-                    paddingRight: '65px'
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={() => setNftCommunityAmount(Math.floor(Number(contractVibeBalance || 0)).toString())}
-                  className="admin-badge-btn"
-                  style={{
-                    ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
-                    position: 'absolute',
-                    right: '8px',
-                    top: '50%',
-                    transform: 'translateY(-50%)'
-                  }}
-                >
-                  MAX
-                </button>
-              </div>
-              <button
-                onClick={() => handleWithdrawCommunityTokens('nft')}
-                disabled={loading || parseFloat(contractVibeBalance || '0') <= 0}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--green)', '#00ff88', 'var(--bg)'),
-                  cursor: (loading || parseFloat(contractVibeBalance || '0') <= 0) ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {loading ? 'PROCESSING...' : 'WITHDRAW COMMUNITY'}
-              </button>
-            </div>
-          </div>
-
-          {/* Action 7: Set Mint Price (Override) */}
-          <div className="admin-action-card" style={{ background: 'color-mix(in srgb, var(--surface) 90%, transparent)', border: '1.5px solid color-mix(in srgb, var(--amber) 30%, transparent)' }}>
-            <div className="admin-action-header" style={{ color: 'var(--amber)' }}>
-              7. SET MINT PRICE
-            </div>
-            <div className="admin-action-row">
-              <div style={{ position: 'relative', flex: 1, width: '100%', height: '42px' }}>
-                <input
-                  type="number"
-                  step="0.001"
-                  min="0"
-                  value={overridePriceInput}
-                  onChange={(e) => setOverridePriceInput(e.target.value)}
-                  placeholder="0.005 (in ETH)"
-                  className="admin-input"
-                  style={{
-                    ...INPUT_STYLE('color-mix(in srgb, var(--amber) 30%, transparent)', 'var(--amber)'),
-                    width: '100%',
-                    paddingRight: '190px'
-                  }}
-                />
-                <div style={{ position: 'absolute', right: '6px', top: '50%', transform: 'translateY(-50%)', display: 'flex', gap: '4px' }}>
-                  <button
-                    type="button"
-                    onClick={() => { setOverridePriceInput('0.005'); handleSetOverrideMintPrice('0.005'); }}
-                    className="admin-badge-btn"
-                    style={{
-                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--green) 18%, transparent)', 'color-mix(in srgb, var(--green) 45%, transparent)', 'var(--green)'),
-                      padding: '0 6px'
-                    }}
-                  >
-                    0.005
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setOverridePriceInput('0.015'); handleSetOverrideMintPrice('0.015'); }}
-                    className="admin-badge-btn"
-                    style={{
-                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--amber) 18%, transparent)', 'color-mix(in srgb, var(--amber) 45%, transparent)', 'var(--amber)'),
-                      padding: '0 6px'
-                    }}
-                  >
-                    0.015
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => { setOverridePriceInput('0'); handleSetOverrideMintPrice('0'); }}
-                    className="admin-badge-btn"
-                    style={{
-                      ...BADGE_BTN_STYLE('color-mix(in srgb, var(--accent) 18%, transparent)', 'color-mix(in srgb, var(--accent) 45%, transparent)', 'var(--accent)'),
-                      padding: '0 6px'
-                    }}
-                  >
-                    AUTO
-                  </button>
-                </div>
-              </div>
-              <button
-                onClick={() => handleSetOverrideMintPrice(overridePriceInput)}
-                disabled={isOverridePriceSaving}
-                className="admin-action-btn"
-                style={{
-                  ...ACTION_BTN_STYLE('var(--amber)', '#ffd700', 'var(--bg)'),
-                  cursor: isOverridePriceSaving ? 'not-allowed' : 'pointer'
-                }}
-              >
-                {isOverridePriceSaving ? 'SAVING...' : 'SET PRICE'}
-              </button>
-            </div>
-          </div>
-
+          </Card>
         </div>
       )}
-
     </div>
   );
 }

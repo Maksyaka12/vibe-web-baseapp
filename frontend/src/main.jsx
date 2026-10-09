@@ -11,6 +11,7 @@ import './styles/o1-swap.css';
 import './styles/o1-nft.css';
 import './styles/o1-tokenomics.css';
 import './styles/o1-contracts.css';
+import './styles/o1-admin.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
