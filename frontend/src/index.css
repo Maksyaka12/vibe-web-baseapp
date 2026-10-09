@@ -606,9 +606,7 @@ footer { border-top: 1px solid var(--border); padding: 38px 0; }
 
 /* divider */
 .divr { height: 1px; background: var(--border); }
-/* ── COMPREHENSIVE MOBILE RESPONSIVENESS (DOLLARCAT REFERENCE) ── */
-@media(max-width: 768px) {
-  
+
 /* ROADMAP TIMELINE */
 .roadmap-timeline {
   position: relative;
