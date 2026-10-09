@@ -233,7 +233,13 @@ export function BaseAppView({ RewardsComponent }) {
                 <TokenomicsPage isBaseAppMode={true} />
               </div>
             ) : activeTab === 'contracts' ? (
-              <ContractsPage isBaseAppMode={true} />
+              <div className="o1-contracts-page-wrapper" style={{ padding: '0 14px' }}>
+                <PageHeader
+                  title="Official addresses"
+                  description="Verified smart contracts and operational protocol addresses on Base"
+                />
+                <ContractsPage isBaseAppMode={true} />
+              </div>
             ) : activeTab === 'admin' ? (
               <BaseAppAdminView />
             ) : (
