@@ -225,7 +225,13 @@ export function BaseAppView({ RewardsComponent }) {
                 <NftClubPage isEmbeddedInBaseApp={true} />
               </div>
             ) : activeTab === 'tokenomics' ? (
-              <TokenomicsPage isBaseAppMode={true} />
+              <div className="o1-tokenomics-page-wrapper" style={{ padding: '0 14px' }}>
+                <PageHeader
+                  title="Tokenomics"
+                  description="Fair launch with zero team allocations, deflationary buybacks, and community vesting"
+                />
+                <TokenomicsPage isBaseAppMode={true} />
+              </div>
             ) : activeTab === 'contracts' ? (
               <ContractsPage isBaseAppMode={true} />
             ) : activeTab === 'admin' ? (

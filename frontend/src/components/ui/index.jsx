@@ -6,6 +6,7 @@ import React from 'react';
  * size: 'sm' | 'md' | 'lg'
  */
 export function Button({
+  as: Component = 'button',
   children,
   variant = 'secondary',
   size = 'md',
@@ -18,14 +19,14 @@ export function Button({
   const varCls = `btn-${variant}`;
   const fullCls = fullWidth ? 'btn-full' : '';
   return (
-    <button
+    <Component
       className={`btn ${varCls} ${sizeCls} ${fullCls} ${className}`.trim()}
-      disabled={disabled}
+      disabled={Component === 'button' ? disabled : undefined}
       aria-disabled={disabled}
       {...props}
     >
       {children}
-    </button>
+    </Component>
   );
 }
 
@@ -57,12 +58,22 @@ export function Tile({
   children,
   ...props
 }) {
+  const renderIcon = () => {
+    if (!icon) return null;
+    if (React.isValidElement(icon)) return icon;
+    if (typeof icon === 'function' || (typeof icon === 'object' && icon !== null && (icon.$$typeof || icon.render))) {
+      const IconComp = icon;
+      return <IconComp size={14} />;
+    }
+    return icon;
+  };
+
   return (
     <div className={`tile ${className}`.trim()} style={style} {...props}>
       {label && (
         <div className="tile-label">
           <span>{label}</span>
-          {icon}
+          {renderIcon()}
         </div>
       )}
       {value !== undefined && <div className="tile-value">{value}</div>}
@@ -71,6 +82,7 @@ export function Tile({
     </div>
   );
 }
+
 
 /**
  * Badge & Status Pill per o1-dark-ui-design §5.9
